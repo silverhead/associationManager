@@ -125,24 +125,24 @@ $.AdminBSB.leftSideBar = {
         }
     },
     checkStatuForResize: function (firstTime) {
-        var $body = $('body');
-        var $openCloseBar = $('.navbar .navbar-header .bars');
-        var width = $body.width();
-
-        if (firstTime) {
-            $body.find('.content, .sidebar').addClass('no-animate').delay(1000).queue(function () {
-                $(this).removeClass('no-animate').dequeue();
-            });
-        }
-
-        if (width < 1170) {
-            $body.addClass('ls-closed');
-            $openCloseBar.fadeIn();
-        }
-        else {
-            $body.removeClass('ls-closed');
-            $openCloseBar.fadeOut();
-        }
+        // var $body = $('body');
+        // var $openCloseBar = $('.navbar .navbar-header .bars');
+        // var width = $body.width();
+        //
+        // if (firstTime) {
+        //     $body.find('.content, .sidebar').addClass('no-animate').delay(1000).queue(function () {
+        //         $(this).removeClass('no-animate').dequeue();
+        //     });
+        // }
+        //
+        // if (width < 1170) {
+        //     $body.addClass('ls-closed');
+        //     $openCloseBar.fadeIn();
+        // }
+        // else {
+        //     $body.removeClass('ls-closed');
+        //     $openCloseBar.fadeOut();
+        // }
     },
     isOpen: function () {
         return $('body').hasClass('overlay-open');
