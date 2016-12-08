@@ -44,11 +44,14 @@
 
 <!-- Waves Effect Plugin Js -->
 <script src="{{ asset('plugins/node-waves/waves.js') }}"></script>
+<script src="{{ asset('plugins/raphael/raphael.min.js') }}"></script>
+<script src="{{ asset('plugins/morrisjs/morris.js') }}"></script>
 
 <!-- Custom Js -->
 <script src="{{ asset('js/admin.js') }}"></script>
 
 <!-- Demo Js -->
 <script src="{{ asset('js/demo.js') }}"></script>
+{% block javascript %}{% endblock %}
 </body>
 </html>

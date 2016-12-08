@@ -1,4 +1,28 @@
 {% extends 'layoutLogin.html.twig' %}
+{% block javascript %}
+    <script type="text/javascript">
+        new Morris.Donut({
+            element: 'abo_chart',
+            data: [{
+                label: 'Premium 1 an',
+                value: 25
+            }, {
+                label: 'Standard 1 an',
+                value: 40
+            }, {
+                label: 'Standard 3 mois',
+                value: 25
+            }, {
+                label: 'Standard 1 mois',
+                value: 10
+            }],
+            colors: ['rgb(233, 30, 99)', 'rgb(0, 188, 212)', 'rgb(255, 152, 0)', 'rgb(0, 150, 136)'],
+            formatter: function (y) {
+                return y + '%'
+            }
+        });
+    </script>
+{% endblock %}
 {% block content %}
 
 <div class="block-header">
@@ -15,15 +39,126 @@
                 <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">50</div>
             </div>
         </div>
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Liste des 5 derniers membres inscrits
+                    {#<small>Use <code>.table-striped</code> to add zebra-striping to any table row within the <code>&lt;tbody&gt;</code></small>#}
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Rôle</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>Membre</td>
+                        <td>
+                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" class="btn btn-danger material-icons">delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>Membre</td>
+                        <td>
+                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" class="btn btn-danger material-icons">delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>Membre</td>
+                        <td>
+                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" class="btn btn-danger material-icons">delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>Membre</td>
+                        <td>
+                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" class="btn btn-danger material-icons">delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>Membre</td>
+                        <td>
+                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" class="btn btn-danger material-icons">delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="info-box bg-orange hover-expand-effect">
             <div class="icon">
-                <i class="material-icons">school</i>
+                <i class="material-icons">cached</i>
             </div>
             <div class="content">
-                <div class="text">Total abonnements</div>
-                <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">4</div>
+                <div class="text">Total cotisation</div>
+                <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">2000 €</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="header">
+                <h2>Pourcentage type d'abonnement</h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <div id="abo_chart" class="graph"></div>
             </div>
         </div>
     </div>
