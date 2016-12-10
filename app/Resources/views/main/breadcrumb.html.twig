@@ -1,0 +1,7 @@
+<ol class="col-xs-12 breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+        <li {% if loop.last == true %}class="active"{% endif %}>
+            {% if breadcrumb.href is defined %}<a href="{{ breadcrumb.href }}" title="{{ breadcrumb.title }}">{% endif %}{{ breadcrumb.label }}{% if breadcrumb.href is defined %}</a>{% endif %}
+        </li>
+    {% endfor %}
+</ol>

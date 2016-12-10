@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-xs-12">
+        <a href="#" class="btn bg-green waves-effect">Ajouter un adhérent</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <form action="#">
+            <div class="input-group">
+                <div class="form-line">
+                    <input type="text" class="form-control date" placeholder="Rechercher">
+                </div>
+                <span class="input-group-addon">
+                    <i class="material-icons">search</i>
+                </span>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <a href="#" class="btn bg-grey waves-effect pull-right">
+            <i class="material-icons">archive</i>
+            Export C.S.V.
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="body table-responsive">
+            <form action="#">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Photo</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Statut</th>
+                        <th>Abonnements</th>
+                        <th>Anniversaire</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    {#<thead>#}
+                    {#<tr>#}
+                        {#<th>&nbsp;</th>#}
+                        {#<th>&nbsp;</th>#}
+                        {#<th>#}
+                            {#<input type="text" placeholder="Nom" class="form-control">#}
+                        {#</th>#}
+                        {#<th>#}
+                            {#<input type="text" placeholder="Prénom" class="form-control">#}
+                        {#</th>#}
+                        {#<th>#}
+                            {#<select name="statutFilter" id="statutFilter" class="form-control selectpicker">#}
+                                {#<option value="1">Membre</option>#}
+                                {#<option value="1">Membre premium</option>#}
+                                {#<option value="1">Président</option>#}
+                                {#<option value="1">Secrétaire</option>#}
+                            {#</select>#}
+                        {#</th>#}
+                        {#<th>#}
+                            {#<select name="abonnementFilter" id="abonnementFilter" class="form-control selectpicker">#}
+                                {#<option value="1">Premium 1 an</option>#}
+                                {#<option value="1">Standard 1 an</option>#}
+                                {#<option value="1">Standard 3 mois</option>#}
+                                {#<option value="1">Standard 1 mois</option>#}
+                            {#</select>#}
+                        {#</th>#}
+                        {#<th>#}
+                            {#<div class="input-group">#}
+                                            {#<span class="input-group-addon">#}
+                                                {#<i class="material-icons">date_range</i>#}
+                                            {#</span>#}
+                                {#<div class="form-line">#}
+                                    {#<input type="text" class="form-control date" placeholder="Ex: 30/07/2016">#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</th>#}
+                        {#<th>#}
+                            {#<input type="submit" value="Filtrer">#}
+                        {#</th>#}
+                    {#</tr>#}
+                    {#</thead>#}
+                    <tbody>
+                    {% for i in 0..20 %}
+                        <tr>
+                            <th scope="row">{{ i }}</th>
+                            <th>
+                                <img src="{{ asset('images/avatars/user.png') }}" class="img-circle">
+                            </th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>Adhérent</td>
+                            <td>Standard 1 an</td>
+                            <td>10/12/2016</td>
+                            <td>
+                                <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                                <a href="#" class="btn btn-warning material-icons">edit</a>
+                                <a href="#" class="btn btn-danger material-icons">delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+            <div class="pull-right">
+                {% include 'main/pagination.html.twig' %}
+            </div>
+        </div>
+    </div>
+</div>

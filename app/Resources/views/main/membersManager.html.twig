@@ -1,0 +1,49 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+        {
+            'href': path('dashboard'),
+            'title': 'retour tableau de bord',
+            'label': 'Tableau de bord'
+        },
+        {
+        'label': 'Gestion adhérents'
+        }
+        ] } %}
+        <h2 class="col-xs-12">
+            Gestion adhérents
+            <span class="pull-right">40 membres</span>
+        </h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" data-toggle="tab">Liste des adhérents</a></li>
+                        <li role="presentation"><a href="#profile" data-toggle="tab">Statuts</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="home">
+                            {% include 'main/membersList.html.twig' %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="profile">
+                            <b>Profile Content</b>
+                            <p>
+                                Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
+                                Per te suavitate democritum. Duis nemore probatus ne quo, ad liber essent aliquid
+                                pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergren
+                                sadipscing mel.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

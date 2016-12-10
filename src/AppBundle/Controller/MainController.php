@@ -26,4 +26,12 @@ class MainController extends Controller
     {
         return $this->render('main/dashboard.html.twig');
     }
+
+    /**
+     * @Route("/members/manager", name="members_manager")
+     */
+    public function membersListAction()
+    {
+        return $this->render('main/membersManager.html.twig');
+    }
 }
