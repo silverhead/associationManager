@@ -23,23 +23,21 @@
                 <div class="body">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                        <li role="presentation" class="active"><a href="#home" data-toggle="tab">Liste des adhérents</a></li>
-                        <li role="presentation"><a href="#profile" data-toggle="tab">Statuts</a></li>
+                        <li role="presentation" class="active"><a href="#members" data-toggle="tab">Liste des adhérents</a></li>
+                        <li role="presentation"><a href="#status" data-toggle="tab">Statuts</a></li>
+                        <li role="presentation"><a href="#groups" data-toggle="tab">Groupes</a></li>
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade in active" id="home">
-                            {% include 'main/membersList.html.twig' %}
+                        <div role="tabpanel" class="tab-pane fade in active" id="members">
+                            {% include 'member/membersList.html.twig' %}
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="profile">
-                            <b>Profile Content</b>
-                            <p>
-                                Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
-                                Per te suavitate democritum. Duis nemore probatus ne quo, ad liber essent aliquid
-                                pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergren
-                                sadipscing mel.
-                            </p>
+                        <div role="tabpanel" class="tab-pane fade" id="status">
+                            {% include 'member/statusList.html.twig' %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="groups">
+                            {% include 'member/groupsList.html.twig' %}
                         </div>
                     </div>
                 </div>

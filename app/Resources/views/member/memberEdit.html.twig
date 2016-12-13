@@ -1,0 +1,33 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+        {
+            'href': path('dashboard'),
+            'title': 'retour tableau de bord',
+            'label': 'Tableau de bord'
+        },
+        {
+            'label': 'Gestion adhérents',
+            'href': path('members_manager'),
+            'title': 'retour gestion adhérents'
+        },
+        {
+        'label': "Edition d'un membre"
+        }
+        ] } %}
+        <h2 class="col-xs-12">
+            <a class="btn btn-default"><i class="material-icons">keyboard_arrow_left</i>&nbsp;Retour</a>&nbsp;
+            Edition d'un membre
+        </h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
