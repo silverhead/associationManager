@@ -1,5 +1,42 @@
 {% extends 'layoutLogin.html.twig' %}
 
+{% block javascript %}
+    <script src="{{ asset('plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('plugins/fileinput/locales/fr.js') }}"></script>
+    <script>
+//        var btnCust = '<button type="button" class="btn btn-default" title="Add picture tags" ' +
+//            'onclick="alert(\'Call your custom code here.\')">' +
+//            '<i class="glyphicon glyphicon-tag"></i>' +
+//            '</button>';
+        $("#avatar-2").fileinput({
+            overwriteInitial: true,
+            maxFileSize: 1500,
+            showZoom: false,
+            showRemove: true,
+            showClose: false,
+            showCaption: false,
+            browseOnZoneClick: true,
+            browseLabel: '',
+            removeLabel: '',
+            browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+            removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+            removeTitle: 'Cancel or reset changes',
+            elErrorContainer: '#kv-avatar-errors-2',
+            msgErrorClass: 'alert alert-block alert-danger',
+            defaultPreviewContent: '<img src="{{ asset('images/avatars/user.png') }}" alt="Your Avatar" style="width:160px"><h6 class="text-muted">Cliquer sur la photo pour la changer</h6>',
+            layoutTemplates: {main2: '{preview} {remove} {browse}'},
+            allowedFileExtensions: ["jpg", "png", "gif"]
+        });
+
+//        $('.selectpicker').selectpicker({
+//            style: 'btn-info',
+//            size: 4
+//        });
+
+
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
@@ -18,7 +55,7 @@
         }
         ] } %}
         <h2 class="col-xs-12">
-            <a class="btn btn-default"><i class="material-icons">keyboard_arrow_left</i>&nbsp;Retour</a>&nbsp;
+            <a href="{{ path('members_manager') }}" class="btn bg-grey waves-effect">Retour</a>&nbsp;
             Edition d'un membre
         </h2>
     </div>
@@ -26,7 +63,35 @@
         <div class="col-xs-12">
             <div class="card">
                 <div class="body">
-                </div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        <li role="presentation" class="active"><a href="#identity" data-toggle="tab">Identité <i class="material-icons text-danger">warning</i></a></li>
+                        <li role="presentation"><a href="#coordonates" data-toggle="tab">Coordonnées</a></li>
+                        <li role="presentation"><a href="#infos_connection" data-toggle="tab">Connexion</a></li>
+                        <li role="presentation"><a href="#infos_membre" data-toggle="tab">Infos membre</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="identity">
+                            {% include 'member/memberIdentityEdit.html.twig' %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="coordonates">
+                            {% include 'member/memberCoordonatesEdit.html.twig' %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="infos_connection">
+                            {% include 'member/memberInfosConnectionEdit.html.twig' %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="infos_membre">
+                            {% include 'member/memberInfosMemberEdit.html.twig' %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <input class="btn btn-success" type="submit" value="Enregistrer et revenir sur la liste">
+                            <input class="btn btn-success"  type="submit" value="Enregistrer et rester">
+                        </div>
+                    </div>
+               </div>
             </div>
         </div>
     </div>
