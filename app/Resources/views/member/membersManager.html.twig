@@ -1,5 +1,140 @@
 {% extends 'layoutLogin.html.twig' %}
 
+{% block javascript %}
+    <script type="text/javascript">
+        $(function(){
+            $('#addStatus').on('click', function(e){
+                e.preventDefault();
+
+                swal({
+                    title: "Ajouter un statut",
+                    text: "",
+                    type: 'input',
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+
+            $('#addGroup').on('click', function(e){
+                e.preventDefault();
+
+                swal({
+                    title: "Ajouter un groupe",
+                    text: "",
+                    type: 'input',
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+
+            $('.editStatus').on('click', function(e){
+                e.preventDefault();
+
+                var label = $(this).data('label');
+
+                swal({
+                    title: "Modifier le statut",
+                    text: "",
+                    type: 'input',
+                    inputValue: label,
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+
+            $('.editGroup').on('click', function(e){
+                e.preventDefault();
+
+                var label = $(this).data('label');
+
+                swal({
+                    title: "Modifier le groupe",
+                    text: "",
+                    type: 'input',
+                    inputValue: label,
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+
+
+            $('#delMember').on('click', function(e){
+                e.preventDefault();
+
+                swal({
+                    title: "Ajouter un groupe",
+                    text: "",
+                    type: 'input',
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+
+            $('#delStatus').on('click', function(e){
+                e.preventDefault();
+
+                swal({
+                    title: "Ajouter un groupe",
+                    text: "",
+                    type: 'input',
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+
+            $('#delGroup').on('click', function(e){
+                e.preventDefault();
+
+                swal({
+                    title: "Ajouter un groupe",
+                    text: "",
+                    type: 'input',
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+        });
+
+
+    </script>
+
+{% endblock %}
+
 {% block content %}
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [

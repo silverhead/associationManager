@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <a href="{{ path('member_edit') }}" class="btn bg-green waves-effect">Ajouter un statut</a>
+        <a href="{{ path('member_edit') }}" id="addStatus" class="btn bg-green waves-effect">Ajouter un statut</a>
     </div>
 </div>
 <div class="row">
@@ -18,73 +18,73 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">1</th>
+                            <td scope="row">1</td>
                             <td>Président</td>
                             <td>1</td>
                             <td>
                                 <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                                <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" class="btn btn-danger material-icons">delete</a>
+                                <a href="#" data-label="Président"  class="btn btn-warning material-icons editStatus">edit</a>
+                                <a href="#" class="btn btn-danger material-icons disabled">delete</a>
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">2</th>
+                            <td scope="row">2</td>
                             <td>Trésorier</td>
                             <td>1</td>
                             <td>
                                 <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                                <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" class="btn btn-danger material-icons">delete</a>
+                                <a href="#" data-label="Trésorier" class="btn btn-warning material-icons editStatus">edit</a>
+                                <a href="#" class="btn btn-danger material-icons disabled">delete</a>
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">3</th>
+                            <td scope="row">3</td>
                             <td>Vice président projet</td>
                             <td>1</td>
                             <td>
                                 <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                                <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" class="btn btn-danger material-icons">delete</a>
+                                <a href="#" data-label="Vice président projet" class="btn btn-warning material-icons editStatus">edit</a>
+                                <a href="#" class="btn btn-danger material-icons disabled">delete</a>
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">4</th>
+                            <td scope="row">4</td>
                             <td>Responsable communication externe</td>
                             <td>1</td>
                             <td>
                                 <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
                                 <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" class="btn btn-danger material-icons">delete</a>
+                                <a href="#" class="btn btn-danger material-icons disabled">delete</a>
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">5</th>
+                            <td scope="row">5</td>
                             <td>Responsable communication interne</td>
                             <td>1</td>
                             <td>
                                 <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
                                 <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" class="btn btn-danger material-icons">delete</a>
+                                <a href="#" class="btn btn-danger material-icons disabled">delete</a>
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">6</th>
+                            <td scope="row">6</td>
                             <td>Membre 1 an</td>
                             <td>10</td>
                             <td>
                                 <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
                                 <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" class="btn btn-danger material-icons">delete</a>
+                                <a href="#" class="btn btn-danger material-icons disabled">delete</a>
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">7</th>
+                            <td scope="row">7</td>
                             <td>Membre 1 mois</td>
                             <td>5</td>
                             <td>
                                 <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
                                 <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" class="btn btn-danger material-icons">delete</a>
+                                <a href="#" class="btn btn-danger material-icons disabled">delete</a>
                             </td>
                         </tr>
                     </tbody>

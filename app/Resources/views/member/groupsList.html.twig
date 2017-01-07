@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <a href="{{ path('member_edit') }}" class="btn bg-green waves-effect">Ajouter un groupe</a>
+        <a href="{{ path('member_edit') }}" id="addGroup" class="btn bg-green waves-effect">Ajouter un groupe</a>
     </div>
 </div>
 <div class="row">
@@ -18,32 +18,32 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <th scope="row">1</th>
+                        <td scope="row">1</td>
                         <td>Administrateur</td>
                         <td>1</td>
                         <td>
                             <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" data-label="Administrateur" class="btn btn-warning material-icons editGroup">edit</a>
                             <a href="#" class="btn btn-danger material-icons disabled">delete</a>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">2</th>
+                        <td scope="row">2</td>
                         <td>Membre</td>
                         <td>40</td>
                         <td>
                             <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" data-label="Membre" class="btn btn-warning material-icons editGroup">edit</a>
                             <a href="#" class="btn btn-danger material-icons disabled">delete</a>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">2</th>
+                        <td scope="row">2</td>
                         <td>Modérateur</td>
                         <td>0</td>
                         <td>
                             <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" data-label="Modérateur" class="btn btn-warning material-icons editGroup">edit</a>
                             <a href="#" class="btn btn-danger material-icons">delete</a>
                         </td>
                     </tr>
