@@ -78,55 +78,73 @@
             });
 
 
-            $('#delMember').on('click', function(e){
+            $('.delMember').on('click', function(e){
                 e.preventDefault();
 
+                var id = $(this).data('id');
+
                 swal({
-                    title: "Ajouter un groupe",
-                    text: "",
-                    type: 'input',
+                    title: "Êtes-vous sûr ?",
+                    text: "La suppression du membre est définitf !",
+                    type: "warning",
                     showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Oui, je veux le supprimer !",
+                    cancelButtonText: "Non, n'annule ma demande !",
                     closeOnConfirm: false,
-                    animation: "slide-from-top",
-                    confirmButtonText: "Valider",
-                    cancelButtonText: "Annuler",
-                }, function(inputValue){
-                    console.log("You wrote", inputValue);
+                    closeOnCancel: true
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        swal("Supprimé !", "Le membre a été supprimé.", "success");
+                    }
                 });
             });
 
-            $('#delStatus').on('click', function(e){
+            $('.delStatus').on('click', function(e){
                 e.preventDefault();
 
+                var id = $(this).data('id');
+
                 swal({
-                    title: "Ajouter un groupe",
-                    text: "",
-                    type: 'input',
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    animation: "slide-from-top",
-                    confirmButtonText: "Valider",
-                    cancelButtonText: "Annuler",
-                }, function(inputValue){
-                    console.log("You wrote", inputValue);
-                });
+                        title: "Êtes-vous sûr ?",
+                        text: "La suppression du status est définitf !",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Oui, je veux le supprimer !",
+                        cancelButtonText: "Non, n'annule ma demande !",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            swal("Supprimé !", "Le status a été supprimé.", "success");
+                        }
+                    });
             });
 
-            $('#delGroup').on('click', function(e){
+            $('.delGroup').on('click', function(e){
                 e.preventDefault();
 
+                var id = $(this).data('id');
+
                 swal({
-                    title: "Ajouter un groupe",
-                    text: "",
-                    type: 'input',
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    animation: "slide-from-top",
-                    confirmButtonText: "Valider",
-                    cancelButtonText: "Annuler",
-                }, function(inputValue){
-                    console.log("You wrote", inputValue);
-                });
+                        title: "Êtes-vous sûr ?",
+                        text: "La suppression du groupe est définitf !",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Oui, je veux le supprimer !",
+                        cancelButtonText: "Non, n'annule ma demande !",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            swal("Supprimé !", "Le groupe a été supprimé.", "success");
+                        }
+                    });
             });
         });
 
