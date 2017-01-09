@@ -21,9 +21,18 @@
     <div class="col-xs-12">
         <div class="card">
             <div class="body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <a href="#" class="btn bg-green waves-effect">Ajouter un abonnement</a>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                    <li role="presentation" class="active"><a href="#subscription" data-toggle="tab">Abonnements</a></li>
+                    <li role="presentation"><a href="#periodicity" data-toggle="tab">Periodicités</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="subscription">
+                        {% include 'subscription/subscriptionList.html.twig' %}
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="periodicity">
+                        {% include 'subscription/periodicityList.html.twig' %}
                     </div>
                 </div>
             </div>
