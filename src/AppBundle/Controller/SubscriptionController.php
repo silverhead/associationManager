@@ -15,4 +15,13 @@ class SubscriptionController extends Controller
     {
         return $this->render('subscription/subscriptionManager.html.twig', array());
     }
+
+    /**
+     * @Route("/subscription/edit", name="subscription_edit")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction()
+    {
+        return $this->render('subscription/subscriptionEdit.html.twig', array());
+    }
 }
