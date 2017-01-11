@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <a href="{{ path('subscription_edit') }}" class="btn bg-green waves-effect">Ajouter un abonnement</a>
+        <a href="{{ path('subscription_add') }}" class="btn bg-green waves-effect">Ajouter un abonnement</a>
     </div>
 </div>
 <div class="row">
@@ -48,9 +48,9 @@
                             <td class="text-right">365</td>
                             <td>Actif</td>
                             <td>
-                                <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                                <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="1" class="btn btn-danger material-icons delSubscription">delete</a>
+                                {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
+                                <a href="{{ path('subscription_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
+                                <a href="#" data-id="1" class="btn btn-danger disabled material-icons delSubscription">delete</a>
                             </td>
                         </tr>
                         <tr>
@@ -61,21 +61,21 @@
                             <td class="text-right">365</td>
                             <td>Actif</td>
                             <td>
-                                <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                                <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="2" class="btn btn-danger material-icons delSubscription">delete</a>
+                                {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
+                                <a href="{{ path('subscription_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
+                                <a href="#" data-id="2" class="btn btn-danger disabled material-icons delSubscription">delete</a>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">3</th>
                             <td>Abonnement standard 1 mois</td>
-                            <td class="text-center">5</td>
+                            <td class="text-center">0</td>
                             <td class="text-right">5, 00€</td>
                             <td class="text-right">30</td>
                             <td>Actif</td>
                             <td>
-                                <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                                <a href="#" class="btn btn-warning material-icons">edit</a>
+                                {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
+                                <a href="{{ path('subscription_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
                                 <a href="#" data-id="3" class="btn btn-danger material-icons delSubscription">delete</a>
                             </td>
                         </tr>

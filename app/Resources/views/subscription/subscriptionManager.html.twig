@@ -1,5 +1,34 @@
 {% extends 'layoutLogin.html.twig' %}
 
+{% block javascript %}
+    <script type="text/javascript">
+        $(function(){
+            $('.delSubscription').on('click', function(e){
+                e.preventDefault();
+
+                var id = $(this).data('id');
+
+                swal({
+                    title: "Êtes-vous sûr ?",
+                    text: "La suppression de l'abonnemeent est définitf !",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Oui, je veux le supprimer !",
+                    cancelButtonText: "Non, n'annule ma demande !",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        swal("Supprimé !", "L'abonnement a été supprimé.", "success");
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
 <div class="row block-header">
     {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [

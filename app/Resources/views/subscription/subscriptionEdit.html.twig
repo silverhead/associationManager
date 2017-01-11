@@ -5,8 +5,8 @@
     <script src="{{ asset('plugins/jquery-inputmask/jquery.inputmask.bundle.js') }}"></script>
     <script type="text/javascript">
         $(function(){
-            $('.money-euro').inputmask('99,99 €', { placeholder: '___,__ €' });
-            $('.day-duration').inputmask('365 J', { placeholder: '___ J' });
+            $('.money-euro').inputmask('999,99 €', { placeholder: '___,__ €' });
+            $('.day-duration').inputmask('999 J', { placeholder: '___ J' });
         });
     </script>
 {% endblock %}
@@ -43,47 +43,64 @@
                                 <div class="form-group">
                                     {#<label class="col-sm-2">Libellé</label>#}
                                     <div class="col-sm-10 form-line">
-                                        <input type="text" title="Libelle" class="form-control" id="" placeholder="Libellé">
+                                        <input type="text" value="{{ abonnement.libelle }}" title="Libelle" class="form-control" id="" placeholder="Libellé">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    {#<label class="col-sm-2">Coût</label>#}
-                                    <div class="col-sm-10 form-line">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="material-icons">euro_symbol</i>
-                                            </span>
-                                            <div class="form-line">
-                                                <input type="text" title="Coût" class="form-control money-euro" placeholder="Coût">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="col-sm-12" style="padding: 0;">
                                         <select class="form-control selectpicker" multiple="multiple" id="" title="Choix périodicité">
-                                            <option value="1">1 mois</option>
-                                            <option value="2">3 mois</option>
-                                            <option value="3">6 mois</option>
-                                            <option value="4">1 an</option>
+                                            <option value="1" {% if 1 in abonnement.periodicites  %}selected{% endif %}>1 mois</option>
+                                            <option value="2" {% if 2 in abonnement.periodicites  %}selected{% endif %}>3 mois</option>
+                                            <option value="3" {% if 3 in abonnement.periodicites  %}selected{% endif %}>6 mois</option>
+                                            <option value="4" {% if 4 in abonnement.periodicites  %}selected{% endif %}>1 an</option>
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    {#<label class="col-sm-2">Coût</label>#}
-                                    <div class="col-sm-10 form-line">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="material-icons">date_range</i>
-                                            </span>
-                                            <div class="form-line">
-                                                <input type="text" class="form-control day-duration" title="Durée" placeholder="Durée (en jours)">
-                                            </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">euro_symbol</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" value="{{ abonnement.cout|number_format(2, ',') }}" title="Coût" class="form-control money-euro" placeholder="Coût">
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">date_range</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" value="{{ abonnement.duree }}" title="Durée" class="form-control day-duration" placeholder="Durée (en jours)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="col-sm-12" style="padding: 0;">
+                                        <select class="form-control selectpicker" id="" title="Statut">
+                                            <option value="1" {% if 1 == abonnement.statut  %}selected{% endif %}>Actif</option>
+                                            <option value="0" {% if 0 == abonnement.statut  %}selected{% endif %}>Non actif</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <input class="btn btn-success" type="submit" value="Enregistrer et revenir sur la liste">
+                                <input class="btn btn-success"  type="submit" value="Enregistrer et rester">
                             </div>
                         </div>
                     </form>
