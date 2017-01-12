@@ -1,5 +1,158 @@
 {% extends 'layoutLogin.html.twig' %}
 
+{% block javascript %}
+    <script type="text/javascript">
+        $(function(){
+            $('#addStatus').on('click', function(e){
+                e.preventDefault();
+
+                swal({
+                    title: "Ajouter un statut",
+                    text: "",
+                    type: 'input',
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+
+            $('#addGroup').on('click', function(e){
+                e.preventDefault();
+
+                swal({
+                    title: "Ajouter un groupe",
+                    text: "",
+                    type: 'input',
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+
+            $('.editStatus').on('click', function(e){
+                e.preventDefault();
+
+                var label = $(this).data('label');
+
+                swal({
+                    title: "Modifier le statut",
+                    text: "",
+                    type: 'input',
+                    inputValue: label,
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+
+            $('.editGroup').on('click', function(e){
+                e.preventDefault();
+
+                var label = $(this).data('label');
+
+                swal({
+                    title: "Modifier le groupe",
+                    text: "",
+                    type: 'input',
+                    inputValue: label,
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    confirmButtonText: "Valider",
+                    cancelButtonText: "Annuler",
+                }, function(inputValue){
+                    console.log("You wrote", inputValue);
+                });
+            });
+
+
+            $('.delMember').on('click', function(e){
+                e.preventDefault();
+
+                var id = $(this).data('id');
+
+                swal({
+                    title: "Êtes-vous sûr ?",
+                    text: "La suppression du membre est définitf !",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Oui, je veux le supprimer !",
+                    cancelButtonText: "Non, n'annule ma demande !",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        swal("Supprimé !", "Le membre a été supprimé.", "success");
+                    }
+                });
+            });
+
+            $('.delStatus').on('click', function(e){
+                e.preventDefault();
+
+                var id = $(this).data('id');
+
+                swal({
+                        title: "Êtes-vous sûr ?",
+                        text: "La suppression du status est définitf !",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Oui, je veux le supprimer !",
+                        cancelButtonText: "Non, n'annule ma demande !",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            swal("Supprimé !", "Le status a été supprimé.", "success");
+                        }
+                    });
+            });
+
+            $('.delGroup').on('click', function(e){
+                e.preventDefault();
+
+                var id = $(this).data('id');
+
+                swal({
+                        title: "Êtes-vous sûr ?",
+                        text: "La suppression du groupe est définitf !",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Oui, je veux le supprimer !",
+                        cancelButtonText: "Non, n'annule ma demande !",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            swal("Supprimé !", "Le groupe a été supprimé.", "success");
+                        }
+                    });
+            });
+        });
+
+
+    </script>
+
+{% endblock %}
+
 {% block content %}
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [

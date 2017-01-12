@@ -31,4 +31,12 @@ class MemberController extends Controller
     {
         return $this->render('member/memberEdit.html.twig');
     }
+
+    /***
+     * @Route("/members/view/{id}", name="member_view", requirements={"id": "\d+"});
+     */
+    public function viewMemberAction(Request $request, $id)
+    {
+        return $this->render('member/memberView.html.twig');
+    }
 }

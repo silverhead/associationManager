@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-xs-12">
+        <a href="#" class="btn bg-green waves-effect">Ajouter une périodicité de paiement</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="body table-responsive">
+            <form action="#">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Périodicité</th>
+                        <th>durée (jours)</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>1 mois</td>
+                        <td class="text-center">30</td>
+                        <td>Actif</td>
+                        <td>
+                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" data-id="1" class="btn btn-danger material-icons delPériodicity">delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>3 mois</td>
+                        <td class="text-center">90</td>
+                        <td>Actif</td>
+                        <td>
+                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" data-id="2" class="btn btn-danger material-icons delPériodicity">delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>6 mois</td>
+                        <td class="text-center">180</td>
+                        <td>Actif</td>
+                        <td>
+                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" data-id="3" class="btn btn-danger material-icons delPériodicity">delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>1 an</td>
+                        <td class="text-center">365</td>
+                        <td>Actif</td>
+                        <td>
+                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" data-id="3" class="btn btn-danger material-icons delPériodicity">delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+            <div class="pull-right">
+                {% include 'main/pagination.html.twig' %}
+            </div>
+        </div>
+    </div>
+</div>

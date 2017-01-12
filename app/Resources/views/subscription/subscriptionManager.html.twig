@@ -1,0 +1,71 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        $(function(){
+            $('.delSubscription').on('click', function(e){
+                e.preventDefault();
+
+                var id = $(this).data('id');
+
+                swal({
+                    title: "Êtes-vous sûr ?",
+                    text: "La suppression de l'abonnemeent est définitf !",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Oui, je veux le supprimer !",
+                    cancelButtonText: "Non, n'annule ma demande !",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        swal("Supprimé !", "L'abonnement a été supprimé.", "success");
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="row block-header">
+    {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+    {
+    'href': path('dashboard'),
+    'title': 'retour tableau de bord',
+    'label': 'Tableau de bord'
+    },
+    {
+    'label': 'Gestion abonnements'
+    }
+    ] } %}
+    <h2 class="col-xs-12">
+        Gestion abonnements
+        <span class="pull-right"><b>Total :</b> 2 000€</span>
+    </h2>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card">
+            <div class="body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                    <li role="presentation" class="active"><a href="#subscription" data-toggle="tab">Abonnements</a></li>
+                    <li role="presentation"><a href="#periodicity" data-toggle="tab">Periodicités</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="subscription">
+                        {% include 'subscription/subscriptionList.html.twig' %}
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="periodicity">
+                        {% include 'subscription/periodicityList.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
