@@ -19,7 +19,15 @@ class MemberController extends Controller
     /**
      * @Route("/members/edit/{id}", name="member_edit", requirements={"id": "\d+"}, defaults={"id": 0});
      */
-    public function editMemberAction(Request $request, $id)
+    public function editMemberAction(Request $request, $id = 0)
+    {
+        return $this->render('member/memberEdit.html.twig');
+    }
+
+    /**
+     * @Route("/member/fiche/{id}", name="member_fiche", requirements={"di": "\d+"})
+     */
+    public function ficheMemberAction(Request $request, $id)
     {
         return $this->render('member/memberEdit.html.twig');
     }
