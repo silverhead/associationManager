@@ -51,11 +51,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="col-sm-12" style="padding: 0;">
-                                        <select class="form-control selectpicker" multiple="multiple" id="" title="Choix périodicité">
-                                            <option value="1" {% if 1 in abonnement.periodicites  %}selected{% endif %}>1 mois</option>
-                                            <option value="2" {% if 2 in abonnement.periodicites  %}selected{% endif %}>3 mois</option>
-                                            <option value="3" {% if 3 in abonnement.periodicites  %}selected{% endif %}>6 mois</option>
-                                            <option value="4" {% if 4 in abonnement.periodicites  %}selected{% endif %}>1 an</option>
+                                        <select class="form-control selectpicker" id="" title="Rythme de paiement">
+                                            <option value="fr">1 an (60€)</option>
+                                            <option value="es">6 mois (30€)</option>
+                                            <option value="es">3 mois (15€)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -69,7 +68,7 @@
                                             <i class="material-icons">euro_symbol</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" value="{{ abonnement.cout|number_format(2, ',') }}" title="Coût" class="form-control money-euro" placeholder="Coût">
+                                            <input type="text" value="{{ abonnement.cout }}" title="Coût" class="form-control money-euro text-right" placeholder="Coût">
                                         </div>
                                     </div>
                                 </div>
