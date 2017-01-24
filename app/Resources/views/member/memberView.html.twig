@@ -1,0 +1,51 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+        {
+        'href': path('dashboard'),
+        'title': 'retour tableau de bord',
+        'label': 'Tableau de bord'
+        },
+        {
+        'label': 'Gestion adhérents',
+        'href': path('members_manager'),
+        'title': 'retour gestion adhérents'
+        },
+        {
+        'label': "Fiche d'un membre"
+        }
+        ] } %}
+        <h2 class="col-xs-12">
+            <a href="{{ path('members_manager') }}" class="btn bg-grey waves-effect">Retour</a>&nbsp;
+            Fiche de {{ member.firstName }} {{ member.lastName }}
+        </h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        <li role="presentation" class="active"><a href="#identity" data-toggle="tab">Identité</a></li>
+                        <li role="presentation"><a href="#subscription" data-toggle="tab">Abonnement</a></li>
+                        <li role="presentation"><a href="#tickets" data-toggle="tab">Reçu</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="identity">
+                            {% include 'member/memberIdentityView.html.twig' %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="subscription">
+                            {#{% include 'member/memberCoordonatesEdit.html.twig' %}#}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tickets">
+                            {#{% include 'member/memberInfosConnectionEdit.html.twig' %}#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

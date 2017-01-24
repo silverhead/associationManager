@@ -32,7 +32,9 @@
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="info-box bg-orange hover-expand-effect">
             <div class="icon">
-                <i class="material-icons">person_add</i>
+                <a href="{{ path('member_edit') }}" title="Ajouter un nouveau membre">
+                    <i class="material-icons">person_add</i>
+                </a>
             </div>
             <div class="content">
                 <div class="text">Total membres</div>
@@ -45,18 +47,18 @@
                     Liste des 5 derniers membres inscrits
                     {#<small>Use <code>.table-striped</code> to add zebra-striping to any table row within the <code>&lt;tbody&gt;</code></small>#}
                 </h2>
-                <ul class="header-dropdown m-r--5">
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                {#<ul class="header-dropdown m-r--5">#}
+                    {#<li class="dropdown">#}
+                        {#<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#}
+                            {#<i class="material-icons">more_vert</i>#}
+                        {#</a>#}
+                        {#<ul class="dropdown-menu pull-right">#}
+                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>#}
+                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>#}
+                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>#}
+                        {#</ul>#}
+                    {#</li>#}
+                {#</ul>#}
             </div>
             <div class="body table-responsive">
                 <table class="table table-striped">
@@ -76,8 +78,8 @@
                         <td>Otto</td>
                         <td>Membre</td>
                         <td>
-                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="{{ path('member_view', {'id': 1}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="{{ path('member_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
                             <a href="#" class="btn btn-danger material-icons">delete</a>
                         </td>
                     </tr>
@@ -87,8 +89,8 @@
                         <td>Otto</td>
                         <td>Membre</td>
                         <td>
-                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="{{ path('member_view', {'id': 1}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="{{ path('member_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
                             <a href="#" class="btn btn-danger material-icons">delete</a>
                         </td>
                     </tr>
@@ -98,8 +100,8 @@
                         <td>Otto</td>
                         <td>Membre</td>
                         <td>
-                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="{{ path('member_view', {'id': 1}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="{{ path('member_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
                             <a href="#" class="btn btn-danger material-icons">delete</a>
                         </td>
                     </tr>
@@ -109,8 +111,8 @@
                         <td>Otto</td>
                         <td>Membre</td>
                         <td>
-                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="{{ path('member_view', {'id': 1}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="{{ path('member_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
                             <a href="#" class="btn btn-danger material-icons">delete</a>
                         </td>
                     </tr>
@@ -120,8 +122,8 @@
                         <td>Otto</td>
                         <td>Membre</td>
                         <td>
-                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="{{ path('member_view', {'id': 1}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="{{ path('member_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
                             <a href="#" class="btn btn-danger material-icons">delete</a>
                         </td>
                     </tr>
@@ -131,8 +133,8 @@
                         <td>Otto</td>
                         <td>Membre</td>
                         <td>
-                            <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
-                            <a href="#" class="btn btn-warning material-icons">edit</a>
+                            <a href="{{ path('member_view', {'id': 1}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
+                            <a href="{{ path('member_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
                             <a href="#" class="btn btn-danger material-icons">delete</a>
                         </td>
                     </tr>
@@ -155,18 +157,18 @@
         <div class="card">
             <div class="header">
                 <h2>Taux types d'abonnement</h2>
-                <ul class="header-dropdown m-r--5">
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                {#<ul class="header-dropdown m-r--5">#}
+                    {#<li class="dropdown">#}
+                        {#<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#}
+                            {#<i class="material-icons">more_vert</i>#}
+                        {#</a>#}
+                        {#<ul class="dropdown-menu pull-right">#}
+                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>#}
+                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>#}
+                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>#}
+                        {#</ul>#}
+                    {#</li>#}
+                {#</ul>#}
             </div>
             <div class="body">
                 <div id="abo_chart" class="graph"></div>
