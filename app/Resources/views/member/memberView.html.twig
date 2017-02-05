@@ -30,7 +30,7 @@
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
                         <li role="presentation" class="active"><a href="#identity" data-toggle="tab">Identité</a></li>
                         <li role="presentation"><a href="#subscription" data-toggle="tab">Abonnement</a></li>
-                        <li role="presentation"><a href="#tickets" data-toggle="tab">Reçu</a></li>
+                        {#<li role="presentation"><a href="#tickets" data-toggle="tab">Reçu</a></li>#}
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -38,11 +38,11 @@
                             {% include 'member/memberIdentityView.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="subscription">
-                            {#{% include 'member/memberCoordonatesEdit.html.twig' %}#}
+                            {% include 'member/memberSubscriptionsView.html.twig' %}
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tickets">
+                        {#<div role="tabpanel" class="tab-pane fade" id="tickets">#}
                             {#{% include 'member/memberInfosConnectionEdit.html.twig' %}#}
-                        </div>
+                        {#</div>#}
                     </div>
                 </div>
             </div>
