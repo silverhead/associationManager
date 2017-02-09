@@ -29,20 +29,20 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
                         <li role="presentation" class="active"><a href="#identity" data-toggle="tab">Identité</a></li>
-                        <li role="presentation"><a href="#subscription" data-toggle="tab">Abonnement</a></li>
-                        {#<li role="presentation"><a href="#tickets" data-toggle="tab">Reçu</a></li>#}
+                        <li role="presentation"><a href="#subscription" data-toggle="tab">Abonnements</a></li>
+                        <li role="presentation"><a href="#contribution" data-toggle="tab">Historique des cotisations</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="identity">
-                            {% include 'member/memberIdentityView.html.twig' %}
+                            {% include 'member/view/memberIdentityView.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="subscription">
-                            {% include 'member/memberSubscriptionsView.html.twig' %}
+                            {% include 'member/view/memberSubscriptionsView.html.twig' %}
                         </div>
-                        {#<div role="tabpanel" class="tab-pane fade" id="tickets">#}
-                            {#{% include 'member/memberInfosConnectionEdit.html.twig' %}#}
-                        {#</div>#}
+                        <div role="tabpanel" class="tab-pane fade" id="contribution">
+                            {% include 'member/view/memberContributionView.html.twig' %}
+                        </div>
                     </div>
                 </div>
             </div>
