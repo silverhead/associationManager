@@ -13,7 +13,9 @@ class MemberController extends Controller
      */
     public function indexAction($name)
     {
-        return $this->render('member/membersManager.html.twig');
+        return $this->render('member/membersManager.html.twig', array(
+            'menuSelect' => 'members_manager'
+        ));
     }
 
     /**
@@ -39,7 +41,8 @@ class MemberController extends Controller
     {
         $member = $this->getMemberInfos();
         return $this->render('member/memberView.html.twig', [
-            'member' => $member
+            'member' => $member,
+            'menuSelect' => 'member_manager'
         ]);
     }
 

@@ -14,7 +14,9 @@ class SubscriptionController extends Controller
      */
     public function managerAction()
     {
-        return $this->render('subscription/subscriptionManager.html.twig', array());
+        return $this->render('subscription/subscriptionManager.html.twig', array(
+            'menuSelect' => 'subscription_manager'
+        ));
     }
 
     /**
