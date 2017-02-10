@@ -42,7 +42,7 @@ class SubscriptionController extends Controller
             ];
         }
 
-        return $this->render('subscription/subscriptionEdit.html.twig', array(
+        return $this->render('subscription/subscription/subscriptionEdit.html.twig', array(
             'abonnement' => $abonnement
         ));
     }

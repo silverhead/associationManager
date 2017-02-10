@@ -25,6 +25,29 @@
                     }
                 });
             });
+
+            $('.delPeriodicity').on('click', function(e){
+                e.preventDefault();
+
+                var id = $(this).data('id');
+
+                swal({
+                        title: "Êtes-vous sûr ?",
+                        text: "La suppression de la périodicité de paiement est définitf !",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Oui, je veux le supprimer !",
+                        cancelButtonText: "Non, n'annule ma demande !",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            swal("Supprimé !", "La périodicité a été supprimée.", "success");
+                        }
+                    });
+            });
         });
     </script>
 {% endblock %}
@@ -58,10 +81,10 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="subscription">
-                        {% include 'subscription/subscriptionList.html.twig' %}
+                        {% include 'subscription/subscription/subscriptionList.html.twig' %}
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="periodicity">
-                        {% include 'subscription/periodicityList.html.twig' %}
+                        {% include 'subscription/periodicity/periodicityList.html.twig' %}
                     </div>
                 </div>
             </div>
