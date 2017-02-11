@@ -23,16 +23,10 @@ class MemberController extends Controller
      */
     public function editMemberAction(Request $request, $id = 0)
     {
-        return $this->render('member/memberEdit.html.twig');
+        return $this->render('member/memberEdit.html.twig', [
+            'menuSelect' => 'members_manager'
+        ]);
     }
-
-//    /**
-//     * @Route("/member/fiche/{id}", name="member_fiche", requirements={"di": "\d+"})
-//     */
-//    public function viewMemberAction(Request $request, $id)
-//    {
-//        return $this->render('member/memberEdit.html.twig');
-//    }
 
     /**
      * @Route("/members/view/{id}", name="member_view", requirements={"id": "\d+"});

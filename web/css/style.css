@@ -7734,6 +7734,64 @@ fieldset[disabled] .form-control {
       color: #fff;
       margin-top: -5px; }
 
+/* Inscription Page ============================ */
+    .inscription-box{
+        max-width: 500px;
+        margin: 5% auto;
+        overflow-x: hidden;
+    }
+
+    .inscription-box h1, .inscription-box h2{
+        text-align: center;
+    }
+
+    .inscription-box .logo {
+        margin-bottom: 20px;
+    }
+    .inscription-box .logo a {
+        font-size: 36px;
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: #fff;
+    }
+    .inscription-box .logo small {
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: #fff;
+        margin-top: -5px;
+    }
+
+    .avatar-group{
+        display: flex;
+        align-content: flex-end;
+    }
+
+    .avatar-group .avatar-holder{
+        width: 150px;
+        height: 110px;
+    }
+    .avatar-group .avatar-holder img{
+        width: 100%;
+        -webkit-border-radius: 60px;
+        -moz-border-radius: 60px;
+        border-radius: 60px;
+        /*border: 1px solid #E0E0E0;*/
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .inscription-box .paymentsList{
+        list-style: none;
+    }
+
+    .inscription-box .paymentsList li{
+        text-align: center;
+    }
+    .inscription-box .paymentsList li img{
+        width: 70%;
+    }
+
 /* Sign Up Page ================================ */
 .signup-page {
   background-color: #00BCD4;

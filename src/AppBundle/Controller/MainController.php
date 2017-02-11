@@ -27,4 +27,12 @@ class MainController extends Controller
         return $this->render('main/dashboard.html.twig');
     }
 
+    /**
+     * @Route("/forgot_password", name="forgot_password")
+     * @param Request $request
+     */
+    public function forgotPassword(Request $request)
+    {
+        return $this->render('main/forgotPassword.html.twig');
+    }
 }

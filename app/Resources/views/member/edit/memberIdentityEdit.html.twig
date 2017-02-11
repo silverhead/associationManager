@@ -1,33 +1,43 @@
 <div class="row">
-    <div class="col-lg-2 col-md-6">
-        <div class="kv-avatar center-block">
-            <input id="avatar-2" name="avatar-2" type="file" class="file-loading">
+    <div class="col-lg-4 col-md-6 avatar-group">
+        <div class="avatar-holder">
+            <img src="{{ asset('images/avatars/user.png') }}" alt="">
         </div>
-    </div>
-    <div class="col-lg-5 col-md-6">
-        <div class="form-group">
+        <div class="form-group col-sm-6">
+            <label class="control-label col-sm-10">Photo</label>
             <div class="col-sm-10 form-line">
-                <input type="text" title="Nom" class="form-control" id="" placeholder="Nom">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-10 form-line">
-                <input type="text" title="Prénom" class="form-control" id="" placeholder="Prénom">
+                <input id="avatar" name="avatar" class="form-control" type="file">
             </div>
         </div>
     </div>
-    <div class="col-lg-5 col-md-6">
+    <div class="col-lg-4 col-md-6">
         <div class="form-group">
+            <label class="control-label">Organisation</label>
+            <div class="col-sm-10 form-line">
+                <input type="text" class="form-control" id="" placeholder="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Nom</label>
+            <div class="col-sm-10 form-line">
+                <input type="text" class="form-control" id="" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="form-group">
+            <label class="control-label">Genre</label>
             <div class="col-sm-12" style="padding: 0;">
-                <select class="form-control selectpicker" id="" title="Genre">
+                <select class="form-control selectpicker" id="" title="Choisir">
                     <option value="1">Femme</option>
                     <option value="2">Homme</option>
                 </select>
-                </div>
+            </div>
         </div>
         <div class="form-group">
+            <label class="control-label">Prénom</label>
             <div class="col-sm-10 form-line">
-                <input type="text" title="Prénom" class="form-control" id="" placeholder="Prénom">
+                <input type="text" class="form-control" id="" placeholder="">
             </div>
         </div>
     </div>
