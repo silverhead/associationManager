@@ -9,6 +9,8 @@
         $(function(){
             $('.money-euro').inputmask('999,99 €', { placeholder: '___,__ €' });
             $('.day-duration').inputmask('999 J', { placeholder: '___ J' });
+
+            autosize($('textarea.auto-growth'));
         });
 
         $("#logo").fileinput({
@@ -26,7 +28,7 @@
             removeTitle: 'Cancel or reset changes',
             elErrorContainer: '#kv-avatar-errors-2',
             msgErrorClass: 'alert alert-block alert-danger',
-            defaultPreviewContent: '<img src="{{ asset('images/avatars/user.png') }}" alt="Your Avatar" style="width:50%" class="img-responsive"><h6 class="text-muted">Cliquer sur la photo pour la changer</h6>',
+            defaultPreviewContent: '<img src="{{ asset('images/avatars/user.png') }}" alt="Your Avatar" style="width:50%" class="img-responsive"><h6 class="text-muted">Cliquer sur le logo pour le changer</h6>',
             layoutTemplates: {main2: '{preview} {remove} {browse}'},
             allowedFileExtensions: ["jpg", "png", "gif"]
         });
@@ -62,21 +64,25 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label for="">Nom de l'association</label>
                                     <div class="col-sm-10 form-line">
-                                        <input type="text" title="Nom de l'associaton" class="form-control" id="" placeholder="Nom de l'associaton">
+                                        <input type="text" class="form-control" id="" placeholder="Saisir le nom de votre association">
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">E-mail de contact</label>
                                     <div class="col-sm-10 form-line">
-                                        <input type="text" title="E-mail de contact" class="form-control" id="" placeholder="E-mail de contact">
+                                        <input type="text" class="form-control" id="" placeholder="L'e-mail sur laquelle vous souhaitez communiquer">
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">E-mail robot <br/><small>Pour les envois d'e-mail</small></label>
                                     <div class="col-sm-10 form-line">
                                         <input type="text" title="E-mail robot" class="form-control" id="" placeholder="E-mail robot">
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Téléphone</label>
                                     <div class="col-sm-10 form-line">
                                         <input type="text" title="Téléphone" class="form-control" id="" placeholder="Téléphone">
                                     </div>
@@ -85,6 +91,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label for="">Pays</label>
                                     <div class="col-sm-12" style="padding: 0;">
                                         <select class="form-control selectpicker" id="" title="Pays">
                                             <option value="1">France</option>
@@ -93,16 +100,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Ville</label>
                                     <div class="col-sm-10 form-line">
                                         <input type="text" title="Ville" class="form-control" id="" placeholder="Ville">
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Code postal</label>
                                     <div class="col-sm-10 form-line">
                                         <input type="text" title="Code postal" class="form-control" id="" placeholder="Code postal">
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Adresse</label>
                                     <div class="col-sm-10 form-line">
                                         <input type="text" title="Adresse" class="form-control" id="" placeholder="Adresse">
                                     </div>
@@ -110,9 +120,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group">
-                                <div class="col-sm-10 form-line">
-                                    <textarea title="Description" class="form-control" id="" placeholder="Description" style="height:150px"></textarea>
+                            <div class="col-sm-12 form-group">
+                                <label for="">Description</label>
+                                <div class="form-line">
+                                    <textarea title="Description" class="form-control no-resize auto-growth" id="" placeholder="Description de votre association" style="overflow: hidden; word-wrap: break-word; height: 32px;"></textarea>
                                 </div>
                             </div>
                         </div>

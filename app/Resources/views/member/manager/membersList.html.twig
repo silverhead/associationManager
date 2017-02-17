@@ -83,11 +83,11 @@
                     {#</thead>#}
                     <tbody>
                     {% for i in 0..20 %}
-                        <tr>
-                            <th scope="row">{{ i }}</th>
-                            <th>
+                        <tr {% if i % 4 == 0 %}class="bg-danger"{% endif %} >
+                            <td scope="row">{{ i }}</td>
+                            <td>
                                 <img src="{{ asset('images/avatars/user.png') }}" class="img-circle">
-                            </th>
+                            </td>
                             <td>Mark</td>
                             <td>Otto</td>
                             <td>Adhérent</td>
