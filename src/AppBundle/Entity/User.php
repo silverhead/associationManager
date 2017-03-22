@@ -10,15 +10,44 @@ namespace AppBundle\Entity;
 
 
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * Class User
+ * @package AppBundle\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ */
 class User implements UserInterface
 {
+    /**
+     * @var int
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var array
+     * @ORM\Column(type="array", nullable=false)
+     */
     private $roles;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
     private $password;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
     private $salt;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     */
     private $username;
 
     /**
@@ -69,27 +98,48 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
+        return $this->roles;
     }
 
     public function getPassword()
     {
-        // TODO: Implement getPassword() method.
+        $this->password;
     }
 
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+        return $this->salt;
     }
 
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+        return $this->username;
     }
 
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return User
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+
 
 }

@@ -4,12 +4,15 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory:
-                users:
-                    admin:
-                        password: admin
-                        roles: 'ROLE_ADMIN'
+        users_provider:
+            entity:
+                class: AppBundle:User
+#        in_memory:
+#            memory:
+#                users:
+#                    admin:
+#                        password: admin
+#                        roles: 'ROLE_ADMIN'
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -18,12 +21,18 @@ security:
 
         main:
             anonymous: ~
-            logout:
-                path:   /logout
-                target: /
             guard:
                 authenticators:
                     - form_authenticator
+            logout:
+                path:   /logout
+                target: /
+                invalidate_session: false
+                delete_cookies:
+                    a: { path: null, domain: null }
+                    b: { path: null, domain: null }
+#                handlers: [some.service.id, another.service.id]
+#                success_handler: some.service.id
             # activate different ways to authenticate
 
             # http_basic: ~

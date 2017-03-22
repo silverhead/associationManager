@@ -1,8 +1,12 @@
 <?php
 namespace AppBundle\Security;
 
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -17,13 +21,30 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     private $userPasswordEncoder;
 
-    public function __construct(UserPasswordEncoderInterface $userPasswordEncoder)
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * @var Router
+     */
+    private $router;
+
+    public function __construct(EntityManager $em, Router $router, UserPasswordEncoderInterface $userPasswordEncoder)
     {
+        $this->em = $em;
         $this->userPasswordEncoder = $userPasswordEncoder;
+
+        $this->router = $router;
     }
 
     public function getCredentials(Request $request)
     {
+        if ($request->getPathInfo() != '/login' || !$request->isMethod('POST')) {
+            return;
+        }
+
        return [
            'username' => $request->get('username'),
            'password' => $request->get('password'),
@@ -32,23 +53,35 @@ class FormAuthenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        return $userProvider->loadUserByUsername($credentials['username']);
+        $username = $credentials['username'];
+
+        return $this->em->getRepository('AppBundle:User')
+            ->findOneBy(['username' => $username]);
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->userPasswordEncoder->isPasswordValid($user, $credentials['password']);
+//        return $this->userPasswordEncoder->isPasswordValid($user, $credentials['password']);
+//
+        dump($credentials);
 
+        return true;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        // TODO: Implement onAuthenticationFailure() method.
+        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+
+        return new RedirectResponse(
+            $this->router->generate('login')
+        );
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        // TODO: Implement onAuthenticationSuccess() method.
+        return new RedirectResponse(
+            $this->router->generate('dashboard')
+        );
     }
 
     public function supportsRememberMe()
@@ -58,7 +91,9 @@ class FormAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        // TODO: Implement start() method.
+        return new RedirectResponse(
+            $this->router->generate('login')
+        );
     }
 
 }
