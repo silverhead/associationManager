@@ -61,11 +61,7 @@ class FormAuthenticator extends AbstractGuardAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-//        return $this->userPasswordEncoder->isPasswordValid($user, $credentials['password']);
-//
-        dump($credentials);
-
-        return true;
+        return $this->userPasswordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
