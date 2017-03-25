@@ -14,6 +14,8 @@ security:
 #                    admin:
 #                        password: admin
 #                        roles: 'ROLE_ADMIN'
+    role_hierarchy:
+            ROLE_ADMIN:       ROLE_USER
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -29,9 +31,9 @@ security:
                 path: /logout
                 target: /
                 invalidate_session: true
-                delete_cookies:
-                    a: { path: null, domain: null }
-                    b: { path: null, domain: null }
+#                delete_cookies:
+#                    a: { path: null, domain: null }
+#                    b: { path: null, domain: null }
 #                handlers: [some.service.id, another.service.id]
 #                success_handler: some.service.id
             # activate different ways to authenticate
@@ -42,4 +44,4 @@ security:
             # form_login: ~
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_ADMIN }
+        - { path: ^/, roles: [ROLE_USER, ROLE_ADMIN] }

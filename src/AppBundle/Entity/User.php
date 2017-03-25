@@ -121,7 +121,7 @@ class User implements UserInterface
 
     public function getPassword()
     {
-        $this->password;
+        return $this->password;
     }
 
     public function getSalt()
