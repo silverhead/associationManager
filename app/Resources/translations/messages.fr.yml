@@ -1,0 +1,14 @@
+app:
+    default:
+        appName: Association manager
+        appSlogan: Gérer votre association
+    security:
+        login:
+            title: Page de connection
+            formTitle: Formulaire de connexion
+            inputLogin: E-mail ou nom d'utilisateur
+            inputPassword: Mot de passe
+            inputRememberMe: Se souvenir de moi
+            submitBtn: Se connecter
+            becomeMemberLink: Devenir membre maintenant !
+            forgottenPassword: Mot de passe oublié ?

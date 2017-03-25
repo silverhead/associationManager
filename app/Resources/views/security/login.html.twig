@@ -1,24 +1,24 @@
 {% extends 'layoutNotLogin.html.twig' %}
-
+{% block title %}{{ parent() }} - {{ 'app.security.login.title'|trans }}{% endblock %}
 {% block content %}
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">Avilab</a>
-            <small>Premier fablab d'Avignon</small>
+            <a href="#">{{ 'app.default.appName'|trans }}</a>
+            <small>{{ 'app.default.appSlogan'|trans }}</small>
         </div>
         <div class="card">
             <div class="body">
                 {% if error is not null %}
-                {{ error.message }}
+                    {{ error.message }}
                 {% endif %}
                 <form action="{{ path('login') }}" id="sign_in" method="POST">
-                    <div class="msg">Formulaire de connexion</div>
+                    <div class="msg">{{ 'app.security.login.formTitle'|trans }}</div>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="username" placeholder="E-mail" required="" autofocus="" aria-required="true">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="{{ 'app.security.login.inputLogin'|trans }}" required="" autofocus="" aria-required="true">
                         </div>
                     </div>
                     <div class="input-group">
@@ -26,24 +26,24 @@
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control" name="password" placeholder="Mot de passe" required="" aria-required="true">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="{{ 'app.security.login.inputPassword'|trans }}" required="" aria-required="true">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-7 p-t-5">
                             <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
-                            <label for="rememberme">Se souvenir de moi</label>
+                            <label for="rememberme">{{ 'app.security.login.inputRememberMe'|trans }}</label>
                         </div>
                         <div class="col-xs-5">
-                            <button class="btn btn-block bg-pink waves-effect" type="submit">Se connecter</button>
+                            <button class="btn btn-block bg-pink waves-effect" type="submit">{{ 'app.security.login.submitBtn'|trans }}</button>
                         </div>
                     </div>
                     <div class="row m-t-15 m-b--20">
                         <div class="col-xs-6">
-                            <a href="{{ path('inscription') }}">Devenir membre, maintenant!</a>
+                            <a href="{{ path('inscription') }}">{{ 'app.security.login.becomeMemberLink'|trans }}</a>
                         </div>
                         <div class="col-xs-6 align-right">
-                            <a href="{{ path('forgot_password') }}">Mot de passe oublié ?</a>
+                            <a href="{{ path('forgot_password') }}">{{ 'app.security.login.forgottenPassword'|trans }}</a>
                         </div>
                     </div>
                 </form>
