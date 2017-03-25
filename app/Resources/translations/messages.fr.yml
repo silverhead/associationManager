@@ -12,3 +12,11 @@ app:
             submitBtn: Se connecter
             becomeMemberLink: Devenir membre maintenant !
             forgottenPassword: Mot de passe oublié ?
+        forgotPassword:
+            title: Mot de passe oublié ?
+            text: >
+                    Entrer votre e-mail que vous avez utilisé pour vous enregistrer. Nous vous envoyons un e-mail
+                    avec un lien pour pour réinitialiser votre mot de passe.
+            inputEmail: E-mail
+            submitBtn: Réinitialiser votre mot de passe
+            loginLink: Connectez-vous !

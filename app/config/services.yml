@@ -7,6 +7,15 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    # Security
     form_authenticator:
         class: AppBundle\Security\FormAuthenticator
         arguments: ['@doctrine.orm.entity_manager', '@router', '@security.password_encoder']
+    # Service helper
+    app_email_templating:
+        class: AppBundle\Service\MailerTemplating
+        arguments: ['@mailer', '@templating']
+    # Form Handler
+    app_form_handler_security_forgot_password:
+        class: AppBundle\Form\Handler\ForgotPasswordFormHandler
+        arguments: ['@form.factory', '@translator', '@app_email_templating', '%senderMail%']
