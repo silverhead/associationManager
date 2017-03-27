@@ -46,9 +46,11 @@ class SecurityController extends Controller
     {
         $formHandler = $this->get('app_form_handler_security_forgot_password');
 
-        if($formHandler->process())
+        if($formHandler->process($request))
         {
-            //todo
+            $data = $formHandler->getData();
+            $email = $data['email'];
+
         }
 
 //        $form = $this->createForm(ForgotPasswordFormType::class, null);
@@ -60,7 +62,7 @@ class SecurityController extends Controller
 //        }
 
         return $this->render('security/forgotPassword.html.twig', [
-            'form' => $formHandler-getForm()->createView()
+            'form' => $formHandler->getForm()->createView()
         ]);
     }
 

@@ -12,6 +12,7 @@ namespace AppBundle\Form\Handler;
 use AppBundle\Form\Type\ForgotPasswordFormType;
 use AppBundle\Service\MailerTemplating;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\Translator;
 
 class ForgotPasswordFormHandler
@@ -35,12 +36,12 @@ class ForgotPasswordFormHandler
 
     public function __construct(FormFactory $formFactory, Translator $translator , MailerTemplating $mailTemplating, string $fromMail)
     {
-        $this->form = $this->formFactory->create(ForgotPasswordFormType::class, null);
-
         $this->formFactory = $formFactory;
         $this->mailTemplating = $mailTemplating;
         $this->fromMail = $fromMail;
         $this->translator = $translator;
+
+        $this->form = $this->formFactory->create(ForgotPasswordFormType::class);
     }
 
     public function getForm()
@@ -53,11 +54,16 @@ class ForgotPasswordFormHandler
         $this->form->handleRequest($request);
 
         if($this->form->isSubmitted() && $this->form->isValid()){
-            $this->sendMail($this->form->get('email'));
+//            $this->sendMail($this->form->get('email'));
             return true;
         }
 
         return false;
+    }
+
+    public function getData()
+    {
+        return $this->form->getData();
     }
 
     public function sendMail($toMail)
@@ -72,4 +78,9 @@ class ForgotPasswordFormHandler
             toMail
         );
     }
+
+//    public function updateUserTokenAskPasswordByEmail()
+//    {
+//        $user
+//    }
 }

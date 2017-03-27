@@ -69,6 +69,18 @@ class User implements UserInterface
     private $lastName;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastDateAskNewPassword;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     */
+    private $temporaryToken;
+
+    /**
      * @param mixed $roles
      * @return User
      */
@@ -220,4 +232,41 @@ class User implements UserInterface
         return $this->getFirstName().' '.$this->getLastName();
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getLastDateAskNewPassword()
+    {
+        return $this->lastDateAskNewPassword;
+    }
+
+    /**
+     * @param \DateTime $lastDateAskNewPassword
+     * @return User
+     */
+    public function setLastDateAskNewPassword(\DateTime $lastDateAskNewPassword): User
+    {
+        $this->lastDateAskNewPassword = $lastDateAskNewPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemporaryToken()
+    {
+        return $this->temporaryToken;
+    }
+
+    /**
+     * @param string $temporaryToken
+     * @return User
+     */
+    public function setTemporaryToken(string $temporaryToken): User
+    {
+        $this->temporaryToken = $temporaryToken;
+
+        return $this;
+    }
 }

@@ -18,4 +18,4 @@ services:
     # Form Handler
     app_form_handler_security_forgot_password:
         class: AppBundle\Form\Handler\ForgotPasswordFormHandler
-        arguments: ['@form.factory', '@translator', '@app_email_templating', '%senderMail%']
+        arguments: ['@form.factory', '@translator.default', '@app_email_templating', '%senderMail%']
