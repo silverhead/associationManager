@@ -44,13 +44,19 @@ class SecurityController extends Controller
      */
     public function forgotPassword(Request $request)
     {
-        $formHandler = $this->get('app_form_handler_security_forgot_password');
+        $formHandler = $this->get('app.form.handler.security_forgot_password');
 
         if($formHandler->process($request))
         {
             $data = $formHandler->getData();
             $email = $data['email'];
 
+            $askPasswordManager = $this->get('app.manager.security_ask_password');
+            $user = $askPasswordManager->getUserByEmail($email);
+
+            $askPasswordManager->setNewAskPasswordToken($user);
+
+            $askPasswordManager->sendAskNewPasswordMail($user);
         }
 
 //        $form = $this->createForm(ForgotPasswordFormType::class, null);

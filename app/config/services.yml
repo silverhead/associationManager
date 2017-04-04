@@ -12,10 +12,13 @@ services:
         class: AppBundle\Security\FormAuthenticator
         arguments: ['@doctrine.orm.entity_manager', '@router', '@security.password_encoder']
     # Service helper
-    app_email_templating:
+    app.email_templating:
         class: AppBundle\Service\MailerTemplating
         arguments: ['@mailer', '@templating']
     # Form Handler
-    app_form_handler_security_forgot_password:
+    app.form.handler.security_forgot_password:
         class: AppBundle\Form\Handler\ForgotPasswordFormHandler
-        arguments: ['@form.factory', '@translator.default', '@app_email_templating', '%senderMail%']
+        arguments: ['@form.factory', '@translator.default', '@app.email_templating', '%senderMail%']
+    app.manager.security_ask_password:
+        class: AppBundle\Manager\SecurityAskPasswordManager
+        arguments: ['@doctrine.orm.entity_manager', '@translator.default' , '@app.email_templating', 'security/askPasswordEmail.html.twig', '%sendermail%']

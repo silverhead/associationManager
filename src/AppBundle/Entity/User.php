@@ -81,6 +81,12 @@ class User implements UserInterface
     private $temporaryToken;
 
     /**
+     * @var string
+     * @ORM\Column(name="ask_password_token", type="string", length=255)
+     */
+    private $askPasswordToken;
+
+    /**
      * @param mixed $roles
      * @return User
      */
@@ -269,4 +275,25 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getAskPasswordToken()
+    {
+        return $this->askPasswordToken;
+    }
+
+    /**
+     * @param string $askPasswordToken
+     * @return User
+     */
+    public function setAskPasswordToken(string $askPasswordToken): User
+    {
+        $this->askPasswordToken = $askPasswordToken;
+
+        return $this;
+    }
+
+
 }

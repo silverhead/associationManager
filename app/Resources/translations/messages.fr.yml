@@ -20,3 +20,14 @@ app:
             inputEmail: E-mail
             submitBtn: Réinitialiser votre mot de passe
             loginLink: Connectez-vous !
+        askNewPasswordMail:
+            subject: Demande de changement de mot de passe
+            message: |
+                        Bonjour [name],<br/>
+                        <br/>
+                        Une demande de modification de mot de passe a été effectué pour cet e-mail.<br/>
+                        Si vous n'êtes pas l'auteur de cette demande veuillez simplement l'ignorer, <br/>
+                        sinon veuillez cliquer le lien suivant <a href="[link]">changer de mot de passe</a><br/>
+                        et suivre les instructions de la page qui va s'afficher.<br/>
+                        <br/>
+                        Cordialement,

@@ -30,5 +30,12 @@ monolog:
         #    type:   chromephp
         #    level:  info
 
-#swiftmailer:
-#    delivery_address: me@example.com
+swiftmailer:
+    delivery_address: '%sendermail%'
+    spool:     { type: memory }
+    transport: smtp
+    host:      mailtrap.io
+    username:  b354a86ef04ed6
+    password:  2fb43d6cdaae93
+    auth_mode: cram-md5
+    port: 2525
