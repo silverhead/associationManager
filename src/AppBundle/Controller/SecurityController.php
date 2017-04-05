@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\Type\ChangePasswordFormType;
 use AppBundle\Form\Type\ForgotPasswordFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -77,6 +78,10 @@ class SecurityController extends Controller
      */
     public function changePassword()
     {
-        return $this->render('');
+        $form = $this->createForm(ChangePasswordFormType::class);
+
+        return $this->render('security/changePassword.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
