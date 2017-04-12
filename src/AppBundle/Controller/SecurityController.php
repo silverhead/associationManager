@@ -78,10 +78,15 @@ class SecurityController extends Controller
      */
     public function changePassword()
     {
-        $form = $this->createForm(ChangePasswordFormType::class);
+        $changePasswordHandler = $this->get('app.form.handler.security_change_password');
+
+        if($changePasswordHandler->process()){
+
+        }
+
 
         return $this->render('security/changePassword.html.twig', [
-            'form' => $form->createView()
+            'form' => $changePasswordHandler->getForm()->createView()
         ]);
     }
 }
