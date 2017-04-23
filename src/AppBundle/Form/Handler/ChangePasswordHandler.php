@@ -9,8 +9,11 @@
 namespace AppBundle\Form\Handler;
 
 
+use AppBundle\Entity\User;
 use AppBundle\Form\Type\ChangePasswordFormType;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\Request;
 
 class ChangePasswordHandler
 {
@@ -26,12 +29,22 @@ class ChangePasswordHandler
 
     public function __construct(FormFactory $formFactory){
         $this->formFactory = $formFactory;
+    }
 
-        $this->form = $this->formFactory->create(ChangePasswordFormType::class);
+    public function setForm(User $user)
+    {
+        $data = [
+            'userToken' => $user->getAskPasswordToken()
+        ];
+        $this->form = $this->formFactory->create(ChangePasswordFormType::class, $data);
     }
 
     public function getForm()
     {
+        if(null === $this->form){
+            throw new Exception("the form is not init, please use ::setForm before!");
+        }
+
         return $this->form;
     }
 
@@ -46,8 +59,8 @@ class ChangePasswordHandler
         return false;
     }
 
-    public function getData()
+    public function getNewPassword()
     {
-        return $this->form->getData();
+        $data = $this->form->getData();
     }
 }

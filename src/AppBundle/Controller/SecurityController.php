@@ -52,21 +52,22 @@ class SecurityController extends Controller
             $data = $formHandler->getData();
             $email = $data['email'];
 
-            $askPasswordManager = $this->get('app.manager.security_ask_password');
+            $askPasswordManager = $this->get('app.manager.security');
             $user = $askPasswordManager->getUserByEmail($email);
 
-            $askPasswordManager->setNewAskPasswordToken($user);
+            if(!$askPasswordManager->declareNewAskPassword($user)){
+                $this->addFlash('error',
+                    "Une erreur est intervenue : <br />".implode('<br/>'.
+                            $askPasswordManager->getErrors()));
+                return $this->render('security/forgotPassword.html.twig', [
+                    'form' => $formHandler->getForm()->createView()
+                ]);
+            }
 
+            $this->addFlash('success',
+                "Un e-mail vous a été envoyé, veuillez suivre les intructions qui y sont inscrites !");
             $askPasswordManager->sendAskNewPasswordMail($user);
         }
-
-//        $form = $this->createForm(ForgotPasswordFormType::class, null);
-//
-//        $form->handleRequest($request);
-//
-//        if($form->isSubmitted() && $form->isValid()){
-//            return $this->redirectToRoute('login');
-//        }
 
         return $this->render('security/forgotPassword.html.twig', [
             'form' => $formHandler->getForm()->createView()
@@ -76,12 +77,23 @@ class SecurityController extends Controller
     /**
      * @Route("/change-password", name="change_password")
      */
-    public function changePassword()
+    public function changePassword(Request $request)
     {
+        $token = $request->get('token');
+
+        if(null === $token){
+            $this->addFlash('error', "token non trouvé !");
+            return $this->redirectToRoute('login');
+        }
+
+        $securyManager = $this->get('app.manager.security');
+        $user = $securyManager->getUserByToken($token);
+
         $changePasswordHandler = $this->get('app.form.handler.security_change_password');
+        $changePasswordHandler->setForm($user);
 
-        if($changePasswordHandler->process()){
-
+        if($changePasswordHandler->process($request)){
+            $changePasswordHandler->getNewPassword();
         }
 
 

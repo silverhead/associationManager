@@ -23,6 +23,6 @@ services:
         class: AppBundle\Form\Handler\ChangePasswordHandler
         arguments: ['@form.factory']
     # Manager
-    app.manager.security_ask_password:
-        class: AppBundle\Manager\SecurityAskPasswordManager
+    app.manager.security:
+        class: AppBundle\Manager\SecurityManager
         arguments: ['@doctrine.orm.entity_manager', '@translator.default' , '@app.email_templating', 'security/askPasswordEmail.html.twig', '%sendermail%']

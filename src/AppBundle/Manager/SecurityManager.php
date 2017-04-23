@@ -14,7 +14,7 @@ use AppBundle\Service\MailerTemplating;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Translation\Translator;
 
-class SecurityAskPasswordManager
+class SecurityManager
 {
 
     /**
@@ -70,9 +70,15 @@ class SecurityAskPasswordManager
         return $this->userRepo->findOneByEmail($email);
     }
 
+    public function getUserByToken(string $token): User
+    {
+        return $this->userRepo->findOneByAskPasswordToken($token);
+    }
+
     public function setNewAskPasswordToken(User $user)
     {
         $user->setAskPasswordToken(uniqid());
+        $this->em->flush();
     }
 
     public function declareNewAskPassword(User $user): bool
@@ -87,7 +93,7 @@ class SecurityAskPasswordManager
             return true;
         }
         catch(\Exception $e){
-            $errors[] = $e->getCode()." : ".$e->getMessage();
+            $this->errors[] = $e->getCode()." : ".$e->getMessage();
 
             return false;
         }
@@ -102,5 +108,10 @@ class SecurityAskPasswordManager
             $this->robotMail,
             $user->getEmail()
         );
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 }

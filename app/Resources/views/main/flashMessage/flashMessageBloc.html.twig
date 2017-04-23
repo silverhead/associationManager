@@ -1,0 +1,9 @@
+{% for message in app.session.flashBag.get("notice") %}
+    {% include ':main/flashMessage:flashMessageContent.html.twig' with {'type':'info', 'message': message} %}
+{% endfor %}
+{% for message in app.session.flashBag.get("success") %}
+    {% include ':main/flashMessage:flashMessageContent.html.twig' with {'type':'success', 'message': message} %}
+{% endfor %}
+{% for message in app.session.flashBag.get("error") %}
+    {% include ':main/flashMessage:flashMessageContent.html.twig' with {'type':'danger', 'message': message} %}
+{% endfor %}
