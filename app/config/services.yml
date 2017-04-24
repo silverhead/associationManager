@@ -25,4 +25,4 @@ services:
     # Manager
     app.manager.security:
         class: AppBundle\Manager\SecurityManager
-        arguments: ['@doctrine.orm.entity_manager', '@translator.default' , '@app.email_templating', 'security/askPasswordEmail.html.twig', '%sendermail%']
+        arguments: ['@doctrine.orm.entity_manager', '@security.password_encoder', '@translator.default' , '@app.email_templating', 'security/askPasswordEmail.html.twig', '%sendermail%']

@@ -62,5 +62,7 @@ class ChangePasswordHandler
     public function getNewPassword()
     {
         $data = $this->form->getData();
+
+        return $data['password'];
     }
 }

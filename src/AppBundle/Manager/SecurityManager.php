@@ -12,6 +12,7 @@ namespace AppBundle\Manager;
 use AppBundle\Entity\User;
 use AppBundle\Service\MailerTemplating;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Translation\Translator;
 
 class SecurityManager
@@ -53,7 +54,12 @@ class SecurityManager
      */
     private $robotMail;
 
-    public function __construct(EntityManager $em, Translator $translator, MailerTemplating $emailTemplating, $templatingPath, $robotMail)
+    /**
+     * @var UserPasswordEncoder
+     */
+    private $userPasswordEncoder;
+
+    public function __construct(EntityManager $em, UserPasswordEncoder $userPasswordEncoder, Translator $translator, MailerTemplating $emailTemplating, $templatingPath, $robotMail)
     {
         $this->em = $em;
         $this->emailTemplating = $emailTemplating;
@@ -63,6 +69,7 @@ class SecurityManager
         $this->translator = $translator;
         $this->templatingPath = $templatingPath;
         $this->robotMail = $robotMail;
+        $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
     public function getUserByEmail(string $email): User
@@ -108,6 +115,26 @@ class SecurityManager
             $this->robotMail,
             $user->getEmail()
         );
+    }
+
+
+    public function changeUserPassword(User $user, string $password)
+    {
+        try{
+            $user->setPassword(
+                $this->userPasswordEncoder->encodePassword($user, $password)
+            );
+            $this->em->flush();
+
+            return true;
+        }
+        catch(\Exception $e){
+
+            $this->errors[] = $e->getMessage();
+
+            return false;
+        }
+
     }
 
     public function getErrors()

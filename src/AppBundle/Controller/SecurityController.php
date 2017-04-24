@@ -93,9 +93,22 @@ class SecurityController extends Controller
         $changePasswordHandler->setForm($user);
 
         if($changePasswordHandler->process($request)){
-            $changePasswordHandler->getNewPassword();
-        }
+            $password = $changePasswordHandler->getNewPassword();
 
+            if(!$securyManager->changeUserPassword($user, $password)){
+                $this->addFlash(
+                    'error',
+                    "Une erreur est intervenur lors de l'enregistrement du nouveau mot de passe : <br />".
+                    implode("<br />", $securyManager->getErrors())
+                );
+
+                return $this->render('security/changePassword.html.twig', [
+                    'form' => $changePasswordHandler->getForm()->createView()
+                ]);
+            }
+
+            return $this->render('security/changePasswordSuccess.html.twig');
+        }
 
         return $this->render('security/changePassword.html.twig', [
             'form' => $changePasswordHandler->getForm()->createView()

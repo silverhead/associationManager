@@ -34,6 +34,9 @@ app:
         changePassword:
             text: >
                     Vous pouvez réinitialiser votre mot de passe, attention votre mot de passe
-                    doit faire au moins 6 caractères et contenir des caractères spéciaux et des chiffres
+                    doit faire au moins 6 caractères et contenir des caractères spéciaux et des chiffres.
+            successText: >
+                    Votre mot de passe a été changé avec succès, vous pouvez vous connecter en cliquant sur le lien si
+                    dessous.
             inputPassword: Mot de passe
             inputPasswordCheck: Vérification
