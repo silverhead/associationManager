@@ -2,6 +2,8 @@ app:
     default:
         appName: Association manager
         appSlogan: Gérer votre association
+    common:
+        errorComming: Une erreur est intervenue
     security:
         login:
             title: Page de connection
@@ -20,6 +22,7 @@ app:
             inputEmail: E-mail
             submitBtn: Réinitialiser votre mot de passe
             loginLink: Connectez-vous !
+            sendMailText: Un e-mail vous a été envoyé, veuillez suivre les intructions qui y sont inscrites !
         askNewPasswordMail:
             subject: Demande de changement de mot de passe
             message: |
@@ -40,3 +43,5 @@ app:
                     dessous.
             inputPassword: Mot de passe
             inputPasswordCheck: Vérification
+            tokenNotFoundMessage: token non trouvé !
+            errorOnSaveNewPassword: Une erreur est intervenur lors de l'enregistrement du nouveau mot de passe :

@@ -55,9 +55,12 @@ class SecurityController extends Controller
             $askPasswordManager = $this->get('app.manager.security');
             $user = $askPasswordManager->getUserByEmail($email);
 
+            $translator = $this->get('translator');
+
+
             if(!$askPasswordManager->declareNewAskPassword($user)){
                 $this->addFlash('error',
-                    "Une erreur est intervenue : <br />".implode('<br/>'.
+                    $translator->trans('app.common.errorComming') . " : <br />".implode('<br/>'.
                             $askPasswordManager->getErrors()));
                 return $this->render('security/forgotPassword.html.twig', [
                     'form' => $formHandler->getForm()->createView()
@@ -65,7 +68,8 @@ class SecurityController extends Controller
             }
 
             $this->addFlash('success',
-                "Un e-mail vous a été envoyé, veuillez suivre les intructions qui y sont inscrites !");
+                $translator->trans('app.security.forgotPassword.sendMailText')
+            );
             $askPasswordManager->sendAskNewPasswordMail($user);
         }
 
@@ -81,8 +85,10 @@ class SecurityController extends Controller
     {
         $token = $request->get('token');
 
+        $translator = $this->get('translator');
+
         if(null === $token){
-            $this->addFlash('error', "token non trouvé !");
+            $this->addFlash('error', $translator->trans('app.security.changePassword.tokenNotFoundMessage'));
             return $this->redirectToRoute('login');
         }
 
@@ -98,7 +104,7 @@ class SecurityController extends Controller
             if(!$securyManager->changeUserPassword($user, $password)){
                 $this->addFlash(
                     'error',
-                    "Une erreur est intervenur lors de l'enregistrement du nouveau mot de passe : <br />".
+                    $translator->trans('app.security.changePassword.errorOnSaveNewPassword') . " <br />".
                     implode("<br />", $securyManager->getErrors())
                 );
 
