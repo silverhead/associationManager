@@ -8,9 +8,9 @@
 
 namespace AppBundle\Entity;
 
-
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Class User
  * @package AppBundle\Entity
