@@ -24,4 +24,50 @@ class LoadSettingData implements FixtureInterface, ContainerAwareInterface
     {
 
     }
+
+    public function getFakeSetting()
+    {
+        $settings = [
+            (object) [
+                'code' => 'app.setting.association_name',
+                'type' => 'string',
+                'value' => '',
+            ],
+            (object) [
+                'code' => 'app.setting.contact_email',
+                'type' => 'string',
+                'value' => '',
+            ],
+            (object) [
+                'code' => 'app.setting.robot_email',
+                'type' => 'string',
+                'value' => '',
+            ],
+            (object) [
+                'code' => 'app.setting.phone',
+                'type' => 'string',
+                'value' => '',
+            ],
+            (object) [
+                'code' => 'app.setting.country',
+                'type' => 'string',
+                'value' => '',
+            ],
+            (object) [
+                'code' => 'app.setting.city',
+                'type' => 'string',
+                'value' => '',
+            ],
+            (object) [
+                'code' => 'app.setting.zipcode',
+                'type' => 'string',
+                'value' => '',
+            ],
+            (object) [
+                'code' => 'app.setting.address',
+                'type' => 'string',
+                'value' => '',
+            ]
+        ];
+    }
 }
