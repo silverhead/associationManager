@@ -22,7 +22,19 @@ services:
     app.form.handler.security_change_password:
         class: AppBundle\Form\Handler\ChangePasswordHandler
         arguments: ['@form.factory']
+    app.form.handler.setting_app:
+        class: AppBundle\Form\Handler\SettingAppHandler
+        arguments: ['@form.factory']
+    # Repository
+    app.repository.setting:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Setting
     # Manager
     app.manager.security:
         class: AppBundle\Manager\SecurityManager
         arguments: ['@doctrine.orm.entity_manager', '@security.password_encoder', '@translator.default' , '@app.email_templating', 'security/askPasswordEmail.html.twig', '%sendermail%']
+    app.manager.setting:
+        class: AppBundle\Manager\SettingManager
+        arguments: ['@app.repository.setting']

@@ -2,19 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: nicolaspin
- * Date: 12/04/2017
- * Time: 22:56
+ * Date: 27/04/2017
+ * Time: 22:12
  */
 
 namespace AppBundle\Form\Handler;
 
-use AppBundle\Entity\User;
-use AppBundle\Form\Type\ChangePasswordFormType;
+use AppBundle\Form\Model\SettingAppModel;
+use AppBundle\Form\Type\SettingAppFormType;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-class ChangePasswordHandler
+class SettingAppHandler
 {
     /**
      * @var FormFactory
@@ -30,12 +30,9 @@ class ChangePasswordHandler
         $this->formFactory = $formFactory;
     }
 
-    public function setForm(User $user)
+    public function setForm(SettingAppModel $settingAppModel)
     {
-        $data = [
-            'userToken' => $user->getAskPasswordToken()
-        ];
-        $this->form = $this->formFactory->create(ChangePasswordFormType::class, $data);
+        $this->form = $this->formFactory->create(SettingAppFormType::class, $settingAppModel);
     }
 
     public function getForm()

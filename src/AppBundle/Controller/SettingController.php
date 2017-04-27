@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\Model\SettingAppModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -13,22 +14,49 @@ class SettingController extends Controller
      */
     public function ManagerAction()
     {
-        $settingApp = (object) [
-            'logo' => '',
-            'name' => '',
-            'description' => '',
-            'country' => '',
-            'city' => '',
-            'zipCode' => '',
-            'address' => '',
-            'emailContact' => '',
-            'emailRobot' => '',
-            'phone' => '',
-        ];
+        $formSettingAppHandler = $this->get('app.form.handler.setting_app');
+
+        $settingManager = $this->get('app.manager.setting');
+
+        $settingApp = new SettingAppModel();
+        $settingApp
+            ->setLogo(
+                $settingManager->getSetting('app.setting.logo')->getValue()
+            )
+            ->setAssociationName(
+                $settingManager->getSetting('app.setting.association_name')->getValue()
+            )
+            ->setContactEmail(
+                $settingManager->getSetting('app.setting.contact_email')->getValue()
+            )
+            ->setRobotEmail(
+                $settingManager->getSetting('app.setting.robot_email')->getValue()
+            )
+            ->setPhone(
+                $settingManager->getSetting('app.setting.phone')->getValue()
+            )
+            ->setDescription(
+                $settingManager->getSetting('app.setting.description')->getValue()
+            )
+            ->setCountry(
+                $settingManager->getSetting('app.setting.country')->getValue()
+            )
+            ->setCity(
+                $settingManager->getSetting('app.setting.city')->getValue()
+            )
+            ->setZipcode(
+                $settingManager->getSetting('app.setting.zipcode')->getValue()
+            )
+            ->setAddress(
+                $settingManager->getSetting('app.setting.address')->getValue()
+            )
+        ;
+
+        $formSettingAppHandler->setForm($settingApp);
 
         return $this->render('setting/settingManager.html.twig', array(
-            'settingApp' => $settingApp,
-            'menuSelect' => 'setting_manager'
+            'menuSelect' => 'setting_manager',
+            'formSetting' => $formSettingAppHandler->getForm()->createView()
         ));
     }
 }

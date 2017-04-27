@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\Setting;
 use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -22,12 +23,30 @@ class LoadSettingData implements FixtureInterface, ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
+        $settings = $this->getFakeSetting();
 
+        foreach ($settings as $fakeSetting){
+            $setting = new Setting();
+
+            $setting->setType($fakeSetting->type)
+                ->setCode($fakeSetting->code)
+                ->setValue($fakeSetting->value)
+            ;
+
+            $manager->persist($setting);
+        }
+
+        $manager->flush();
     }
 
     public function getFakeSetting()
     {
-        $settings = [
+        return [
+            (object) [
+                'code' => 'app.setting.logo',
+                'type' => 'file',
+                'value' => '',
+            ],
             (object) [
                 'code' => 'app.setting.association_name',
                 'type' => 'string',
@@ -67,7 +86,13 @@ class LoadSettingData implements FixtureInterface, ContainerAwareInterface
                 'code' => 'app.setting.address',
                 'type' => 'string',
                 'value' => '',
+            ],
+            (object) [
+                'code' => 'app.setting.description',
+                'type' => 'text',
+                'value' => '',
             ]
+
         ];
     }
 }
