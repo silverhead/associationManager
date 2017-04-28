@@ -36,16 +36,20 @@ class SettingAppHandler
      * @var SettingManager
      */
     private $settingManager;
+    private $rootDir;
 
-    public function __construct(FormFactory $formFactory, SettingAppModel  $settingAppModel, SettingManager $settingManager){
+    public function __construct(FormFactory $formFactory, SettingAppModel  $settingAppModel, SettingManager $settingManager, $rootDir){
         $this->formFactory = $formFactory;
         $this->settingAppModel = $settingAppModel;
         $this->settingManager = $settingManager;
+
+        $this->rootDir = $rootDir;
     }
 
     public function setForm()
     {
         $currentLogo = $this->settingManager->getSettingValue('app.setting.logo');
+
 
         if('' === $currentLogo){
             $currentLogo= '/images/avatars/user.png';
@@ -103,8 +107,6 @@ class SettingAppHandler
     {
         $this->form->handleRequest($request);
 
-//        $data = $this->form->getData();
-
         if($this->form->isSubmitted() && $this->form->isValid()){
             $this->saveSetting();
 
@@ -114,20 +116,40 @@ class SettingAppHandler
         return false;
     }
 
-    public function getData()
-    {
-        return $this->form->getData();
-    }
-
     private function saveSetting()
     {
         $data = $this->form->getData();
 
-        dump($data->getLogo());
+        $this->settingManager->save('app.setting.association_name', $data->getAssociationName());
+        $this->settingManager->save('app.setting.contact_email', $data->getContactEmail());
+        $this->settingManager->save('app.setting.robot_email', $data->getRobotEmail());
+        $this->settingManager->save('app.setting.phone', $data->getPhone());
+        $this->settingManager->save('app.setting.description', $data->getDescription());
+        $this->settingManager->save('app.setting.country', $data->getCountry());
+        $this->settingManager->save('app.setting.city', $data->getCity());
+        $this->settingManager->save('app.setting.zipcode', $data->getZipcode());
+        $this->settingManager->save('app.setting.address', $data->getAddress());
 
-        $data->getLogo()->move(
-            '/images/avatars/',
-            'test.png'
+        if(null !== $data->getLogo()){
+            $logoFullPath = $this->saveLogo($data->getLogo());
+            $this->settingManager->save('app.setting.logo', $logoFullPath);
+        }
+
+        $this->setForm();
+    }
+
+    private function saveLogo($logoFile)
+    {
+        $webDir = $this->rootDir.'/../web';
+
+        $logoExt  = $logoFile->guessExtension();
+        $logoName = 'logo.'.$logoExt;
+        $path =  '/images/logo/';
+
+        $logoFile->move(
+            $webDir.$path,
+            $logoName
         );
+        return $path.$logoName;
     }
 }

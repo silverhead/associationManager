@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
 
 class SettingRepository extends EntityRepository
 {
+    public function save($code, $value)
+    {
+        $setting = $this->findOneByCode($code);
+
+        if(null === $setting){
+            throw new \Exception("the code \“".$code."\" not found!");
+        }
+
+        $setting->setValue($value);
+
+        $this->_em->flush();
+    }
 }

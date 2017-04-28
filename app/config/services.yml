@@ -30,7 +30,7 @@ services:
         arguments: ['@form.factory']
     app.form.handler.setting_app:
         class: AppBundle\Form\Handler\SettingAppHandler
-        arguments: ['@form.factory', '@app.form.model.app_setting', '@app.manager.setting']
+        arguments: ['@form.factory', '@app.form.model.app_setting', '@app.manager.setting', '%kernel.root_dir%']
     # Twig extension
     app.twig_extension.setting:
         class: AppBundle\Twig\SettingExtension

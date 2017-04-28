@@ -45,3 +45,29 @@ app:
             inputPasswordCheck: Vérification
             tokenNotFoundMessage: token non trouvé !
             errorOnSaveNewPassword: Une erreur est intervenur lors de l'enregistrement du nouveau mot de passe :
+    dashboard:
+        callback: retour tableau de bord
+        title: tableau de bord
+    setting:
+        title: Paramétrage de l'application
+        form:
+            label:
+                associationName: Nom de l'association
+                contactEmail: E-mail de contact
+                robotEmail: E-mail robot <br/><small>Pour les envois d'e-mail</small>
+                phone: Saisir le nom de votre association
+                country: Saisir le nom de votre association
+                city: Saisir le nom de votre association
+                zipcode: Saisir le nom de votre association
+                address: Saisir le nom de votre association
+                description: Saisir le nom de votre association
+            placeholder:
+                associationName: Saisir le nom de votre association
+                contactEmail: L'e-mail sur laquelle vous souhaitez communiquer
+                robotEmail: Saisir le nom de votre association
+                phone: Saisir le nom de votre association
+                country: Saisir le nom de votre association
+                city: Saisir le nom de votre association
+                zipcode: Saisir le nom de votre association
+                address: Saisir le nom de votre association
+                description: Saisir le nom de votre association

@@ -43,15 +43,15 @@
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
         {
         'href': path('dashboard'),
-        'title': 'retour tableau de bord',
-        'label': 'Tableau de bord'
+        'title': 'app.dashboard.callback'|trans,
+        'label': 'app.dashboard.title'|trans
         },
         {
-        'label': "Paramétrage de l'application"
+        'label': 'app.setting.title'|trans
         }
         ] } %}
         <h2 class="col-xs-12">
-            Paramétrage de l'application
+            {{ 'app.setting.title'|trans }}
         </h2>
     </div>
     <div class="row">
@@ -71,27 +71,28 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group {% if not formSetting.associationName.vars.valid %}text-danger{% endif %}">
-                                    <label for="">Nom de l'association</label>
+                                    {{ form_label(formSetting.associationName, 'app.setting.form.label.associationName'|trans) }}
                                     <div class="col-sm-10 form-line">
                                         {{ form_widget(formSetting.associationName, {'attr': {
-                                            'class': 'form-control', 'placeholder': "Saisir le nom de votre association"}}
+                                            'class': 'form-control', 'placeholder': 'app.setting.form.placeholder.associationName'|trans}}
                                         ) }}
                                         {{ form_errors(formSetting.associationName) }}
                                         {# <input type="text" class="form-control" id="" placeholder="Saisir le nom de votre association">#}
                                     </div>
                                 </div>
                                 <div class="form-group {% if not formSetting.contactEmail.vars.valid %}text-danger{% endif %}">
-                                    <label for="">E-mail de contact</label>
+                                    {#<label for="">E-mail de contact</label>#}
+                                    {{ form_label(formSetting.contactEmail, 'app.setting.form.label.contactEmail'|trans) }}
                                     <div class="col-sm-10 form-line">
                                         {{ form_widget(formSetting.contactEmail, {'attr': {
-                                            'class': 'form-control', 'placeholder': "L'e-mail sur laquelle vous souhaitez communiquer"}}
+                                            'class': 'form-control', 'placeholder': 'app.setting.form.placeholder.contactEmail'|trans}}
                                         ) }}
                                         {{ form_errors(formSetting.contactEmail) }}
                                         {#<input type="text" class="form-control" id="" placeholder="">#}
                                     </div>
                                 </div>
                                 <div class="form-group {% if not formSetting.robotEmail.vars.valid %}text-danger{% endif %}">
-                                    <label for="">E-mail robot <br/><small>Pour les envois d'e-mail</small></label>
+                                    {{ form_label(formSetting.contactEmail, 'app.setting.form.label.robotEmail'|trans) }}
                                     <div class="col-sm-10 form-line">
                                         {{ form_widget(formSetting.robotEmail, {'attr': {
                                             'class': 'form-control', 'placeholder': "E-mail robot", 'title': "E-mail robot"}}

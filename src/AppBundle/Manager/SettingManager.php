@@ -33,5 +33,8 @@ class SettingManager
     }
 
 
-
+    public function save($code, $value)
+    {
+        $this->repository->save($code, $value);
+    }
 }
