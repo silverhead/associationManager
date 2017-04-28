@@ -4,9 +4,12 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    # Repository
+    app.repository.setting:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Setting
     # Security
     form_authenticator:
         class: AppBundle\Security\FormAuthenticator
@@ -15,6 +18,9 @@ services:
     app.email_templating:
         class: AppBundle\Service\MailerTemplating
         arguments: ['@mailer', '@templating']
+    # Form Model
+    app.form.model.app_setting:
+        class: AppBundle\Form\Model\SettingAppModel
     # Form Handler
     app.form.handler.security_forgot_password:
         class: AppBundle\Form\Handler\ForgotPasswordFormHandler
@@ -24,13 +30,13 @@ services:
         arguments: ['@form.factory']
     app.form.handler.setting_app:
         class: AppBundle\Form\Handler\SettingAppHandler
-        arguments: ['@form.factory']
-    # Repository
-    app.repository.setting:
-        class: Doctrine\ORM\EntityRepository
-        factory: ['@doctrine.orm.default_entity_manager', getRepository]
-        arguments:
-            - AppBundle\Entity\Setting
+        arguments: ['@form.factory', '@app.form.model.app_setting', '@app.manager.setting']
+    # Twig extension
+    app.twig_extension.setting:
+        class: AppBundle\Twig\SettingExtension
+        arguments: ['@app.repository.setting']
+        tags:
+            - {name: twig.extension}
     # Manager
     app.manager.security:
         class: AppBundle\Manager\SecurityManager

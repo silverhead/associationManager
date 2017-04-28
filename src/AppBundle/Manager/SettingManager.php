@@ -6,6 +6,9 @@ use Doctrine\Common\Persistence\ObjectRepository;
 
 class SettingManager
 {
+    /**
+     * @var ObjectRepository
+     */
     private $repository;
 
     public function __construct(ObjectRepository $repository)
@@ -17,4 +20,18 @@ class SettingManager
     {
         return $this->repository->findOneByCode($code);
     }
+
+    public function getSettingValue($code)
+    {
+        $setting = $this->getSetting($code);
+
+        if(null === $setting){
+            throw new \Exception($code." not found in database!");
+        }
+
+        return $setting->getValue();
+    }
+
+
+
 }

@@ -10,7 +10,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadSettingData implements FixtureInterface, ContainerAwareInterface
 {
-
     /**
      * @var ContainerInterface
      */
@@ -50,7 +49,12 @@ class LoadSettingData implements FixtureInterface, ContainerAwareInterface
             (object) [
                 'code' => 'app.setting.association_name',
                 'type' => 'string',
-                'value' => '',
+                'value' => "Association manager",
+            ],
+            (object) [
+                'code' => 'app.setting.description',
+                'type' => 'text',
+                'value' => 'Gérer votre association',
             ],
             (object) [
                 'code' => 'app.setting.contact_email',
@@ -86,13 +90,7 @@ class LoadSettingData implements FixtureInterface, ContainerAwareInterface
                 'code' => 'app.setting.address',
                 'type' => 'string',
                 'value' => '',
-            ],
-            (object) [
-                'code' => 'app.setting.description',
-                'type' => 'text',
-                'value' => '',
             ]
-
         ];
     }
 }

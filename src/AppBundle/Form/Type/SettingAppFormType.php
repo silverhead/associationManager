@@ -10,19 +10,26 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\EmailValidator;
 
 class SettingAppFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('logo', TextType::class, [])
+            ->add('logo', FileType::class, [
+                'required' => false,
+                'attr' => [
+                    'data-current' => $options['currentLogo']
+                ]
+            ])
             ->add('associationName', TextType::class)
             ->add('contactEmail', EmailType::class, [
-                'constraints' => new EmailType()
+                'constraints' => new Email()
             ])
             ->add('robotEmail', EmailType::class, [
-                'constraints' => new EmailType()
+                'constraints' => new Email()
             ])
             ->add('phone', TextType::class, [])
             ->add('country', CountryType::class, [])
@@ -35,7 +42,9 @@ class SettingAppFormType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-
+        $resolver->setRequired(array(
+            'currentLogo'
+        ));
     }
 
     public function getBlockPrefix()

@@ -13,7 +13,10 @@
             autosize($('textarea.auto-growth'));
         });
 
-        $("#logo").fileinput({
+        var $logoInput = $("#app_bundle_setting_app_form_type_logo");
+        var logo = $logoInput.data('current');
+
+        $logoInput.fileinput({
             overwriteInitial: true,
             maxFileSize: 1500,
             showZoom: false,
@@ -28,7 +31,7 @@
             removeTitle: 'Cancel or reset changes',
             elErrorContainer: '#kv-avatar-errors-2',
             msgErrorClass: 'alert alert-block alert-danger',
-            defaultPreviewContent: '<img src="{{ asset('images/avatars/user.png') }}" alt="Your Avatar" style="width:50%" class="img-responsive"><h6 class="text-muted">Cliquer sur le logo pour le changer</h6>',
+            defaultPreviewContent: '<img src="'+logo+'" alt="Your Avatar" style="width:50%" class="img-responsive"><h6 class="text-muted">Cliquer sur le logo pour le changer</h6>',
             layoutTemplates: {main2: '{preview} {remove} {browse}'},
             allowedFileExtensions: ["jpg", "png", "gif"]
         });
@@ -56,89 +59,122 @@
             <div class="card">
                 <div class="body">
                     {{ form_start(formSetting, {'attr': {'class': 'form-horizontal'}}) }}
+                    {{ form_errors(formSetting) }}
                     {#<form action="" class="form-horizontal">#}
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="kv-logo center-block">
-                                    {{ form_widget(formSetting.logo) }}
+                                    {{ form_widget(formSetting.logo, {'attr': {'class': 'file-loading'}}) }}
                                     {#<input id="logo" name="logo" type="file" class="file-loading">#}
+
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
+                                <div class="form-group {% if not formSetting.associationName.vars.valid %}text-danger{% endif %}">
                                     <label for="">Nom de l'association</label>
                                     <div class="col-sm-10 form-line">
                                         {{ form_widget(formSetting.associationName, {'attr': {
                                             'class': 'form-control', 'placeholder': "Saisir le nom de votre association"}}
                                         ) }}
+                                        {{ form_errors(formSetting.associationName) }}
                                         {# <input type="text" class="form-control" id="" placeholder="Saisir le nom de votre association">#}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {% if not formSetting.contactEmail.vars.valid %}text-danger{% endif %}">
                                     <label for="">E-mail de contact</label>
                                     <div class="col-sm-10 form-line">
-                                        <input type="text" class="form-control" id="" placeholder="L'e-mail sur laquelle vous souhaitez communiquer">
+                                        {{ form_widget(formSetting.contactEmail, {'attr': {
+                                            'class': 'form-control', 'placeholder': "L'e-mail sur laquelle vous souhaitez communiquer"}}
+                                        ) }}
+                                        {{ form_errors(formSetting.contactEmail) }}
+                                        {#<input type="text" class="form-control" id="" placeholder="">#}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {% if not formSetting.robotEmail.vars.valid %}text-danger{% endif %}">
                                     <label for="">E-mail robot <br/><small>Pour les envois d'e-mail</small></label>
                                     <div class="col-sm-10 form-line">
-                                        <input type="text" title="E-mail robot" class="form-control" id="" placeholder="E-mail robot">
+                                        {{ form_widget(formSetting.robotEmail, {'attr': {
+                                            'class': 'form-control', 'placeholder': "E-mail robot", 'title': "E-mail robot"}}
+                                        ) }}
+                                        {{ form_errors(formSetting.robotEmail) }}
+                                        {#<input type="text" title="E-mail robot" class="form-control" id="" placeholder="E-mail robot">#}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {% if not formSetting.phone.vars.valid %}text-danger{% endif %}">
                                     <label for="">Téléphone</label>
                                     <div class="col-sm-10 form-line">
-                                        <input type="text" title="Téléphone" class="form-control" id="" placeholder="Téléphone">
+                                        {{ form_widget(formSetting.phone, {'attr': {
+                                            'class': 'form-control', 'placeholder': "Téléphone", 'title': "Téléphone"}}
+                                        ) }}
+                                        {{ form_errors(formSetting.phone) }}
+                                        {#<input type="text" title="Téléphone" class="form-control" id="" placeholder="Téléphone">#}
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
-                                <div class="form-group">
+                                <div class="form-group {% if not formSetting.country.vars.valid %}text-danger{% endif %}">
                                     <label for="">Pays</label>
                                     <div class="col-sm-12" style="padding: 0;">
-                                        <select class="form-control selectpicker" id="" title="Pays">
-                                            <option value="1">France</option>
-                                            <option value="2">Belgique</option>
-                                        </select>
+                                        {{ form_widget(formSetting.country, {'attr': {
+                                            'class': 'form-control selectpicker', 'title': "Pays"}}
+                                        ) }}
+                                        {{ form_errors(formSetting.country) }}
+                                        {#<select class="form-control selectpicker" id="" title="Pays">#}
+                                            {#<option value="1">France</option>#}
+                                            {#<option value="2">Belgique</option>#}
+                                        {#</select>#}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {% if not formSetting.city.vars.valid %}text-danger{% endif %}">
                                     <label for="">Ville</label>
                                     <div class="col-sm-10 form-line">
-                                        <input type="text" title="Ville" class="form-control" id="" placeholder="Ville">
+                                        {{ form_widget(formSetting.city, {'attr': {
+                                            'class': 'form-control', 'placeholder': "Ville", 'title': "Ville"}}
+                                        ) }}
+                                        {{ form_errors(formSetting.city) }}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {% if not formSetting.zipcode.vars.valid %}text-danger{% endif %}">
                                     <label for="">Code postal</label>
                                     <div class="col-sm-10 form-line">
-                                        <input type="text" title="Code postal" class="form-control" id="" placeholder="Code postal">
+                                        {{ form_widget(formSetting.zipcode, {'attr': {
+                                            'class': 'form-control', 'placeholder': "Code postal", 'title': "Code postal"}}
+                                        ) }}
+                                        {{ form_errors(formSetting.zipcode) }}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {% if not formSetting.address.vars.valid %}text-danger{% endif %}">
                                     <label for="">Adresse</label>
                                     <div class="col-sm-10 form-line">
-                                        <input type="text" title="Adresse" class="form-control" id="" placeholder="Adresse">
+                                        {{ form_widget(formSetting.address, {'attr': {
+                                            'class': 'form-control', 'placeholder': "Adresse", 'title': "Adresse"}}
+                                        ) }}
+                                        {{ form_errors(formSetting.address) }}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 form-group">
+                            <div class="col-sm-12 form-group {% if not formSetting.description.vars.valid %}text-danger{% endif %}">
                                 <label for="">Description</label>
                                 <div class="form-line">
-                                    <textarea title="Description" class="form-control no-resize auto-growth" id="" placeholder="Description de votre association" style="overflow: hidden; word-wrap: break-word; height: 32px;"></textarea>
+                                    {{ form_widget(formSetting.description, {'attr': {
+                                        'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
+                                        'class': 'form-control no-resize auto-growth', 'placeholder': "Description de votre association", 'title': "Description"}}
+                                    ) }}
+                                    {{ form_errors(formSetting.description) }}
+                                    {#<textarea title="Description" class="form-control no-resize auto-growth" id="" placeholder="Description de votre association" style="overflow: hidden; word-wrap: break-word; height: 32px;"></textarea>#}
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <input class="btn btn-success" type="submit" value="Enregistrer et revenir sur la liste">
-                                <input class="btn btn-success"  type="submit" value="Enregistrer et rester">
+                                {#<input class="btn btn-success" name="save_and_leave" type="submit" value="Enregistrer et revenir sur la liste">#}
+                                <input class="btn btn-success" name="save"  type="submit" value="Enregistrer">
                             </div>
                         </div>
-                    </form>
+                    {#</form>#}
                     {{ form_end(formSetting) }}
                 </div>
             </div>
