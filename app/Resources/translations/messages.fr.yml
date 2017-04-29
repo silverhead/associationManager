@@ -51,6 +51,10 @@ app:
     setting:
         title: Paramétrage de l'application
         form:
+            logo:
+                cancel: Annuler
+                alt: Ajouter votre logo
+                clickToChange: Cliquer sur le logo pour le changer
             label:
                 associationName: Nom de l'association
                 contactEmail: E-mail de contact
