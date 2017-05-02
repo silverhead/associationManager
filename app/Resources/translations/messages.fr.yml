@@ -4,6 +4,12 @@ app:
         appSlogan: Gérer votre association
     common:
         errorComming: Une erreur est intervenue
+        returnBtn: Retour
+        form:
+            submit:
+                save: Enregistrer
+                saveAndLeave: Enregistrer et revenir sur la liste
+                saveAndStay: Enregistrer et rester
     security:
         login:
             title: Page de connection
@@ -75,3 +81,19 @@ app:
                 zipcode: Saisir le nom de votre association
                 address: Saisir le nom de votre association
                 description: Saisir le nom de votre association
+    subscription:
+        subscription:
+            list:
+                title: Gestion des abonnements
+                callback: Retour gestion des abonnements
+        periodicity:
+            edit:
+                title: Edition d'une périodicité
+                label: Libellé
+                duration: Durée
+                status:
+                    label: Statut
+                    enabled: Actif
+                    disabled: Non actif
+                placeholder:
+                    duration: Durée (en jours)

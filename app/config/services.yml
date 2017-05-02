@@ -31,6 +31,9 @@ services:
     app.form.handler.setting_app:
         class: AppBundle\Form\Handler\SettingAppHandler
         arguments: ['@form.factory', '@app.form.model.app_setting', '@app.manager.setting', '%kernel.root_dir%']
+    app.subscription.form.handler.periodicity:
+        class: AppBundle\Form\Handler\PeriodicityFormHandler
+        arguments: ['@form.factory']
     # Twig extension
     app.twig_extension.setting:
         class: AppBundle\Twig\SettingExtension
@@ -44,3 +47,6 @@ services:
     app.manager.setting:
         class: AppBundle\Manager\SettingManager
         arguments: ['@app.repository.setting']
+    app.subscription.manager.periodicity:
+        class: AppBundle\Manager\PeriodicityManager
+        arguments: ['@doctrine.orm.entity_manager']

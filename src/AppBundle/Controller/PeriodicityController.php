@@ -18,23 +18,20 @@ class PeriodicityController extends Controller
      */
     public function editAction(Request $request, $id = null)
     {
-        $periodicity = (object) [
-            'label' => '',
-            'duration' => '',
-            'status' => -1,
-        ];
+        $periodicityManager = $this->get('app.subscription.manager.periodicity');
+        $formHandler = $this->get('app.subscription.form.handler.periodicity');
 
-        if(null !== $id){
-            $periodicity = (object) [
-                'label' => '1 mois',
-                'duration' => 30,
-                'status' => 1,
-            ];
+        $periodicity = $periodicityManager->find($id);
+        $formHandler->setForm($periodicity);
+
+        if($formHandler->process($request)){
+            $periodicity = $formHandler->getData();
+
+            $periodicityManager->save($periodicity);
         }
 
-
         return $this->render('/subscription/periodicity/periodicityEdit.html.twig', array(
-            'periodicity' => $periodicity
+            'formPeriodicity' => $formHandler->getForm()->createView()
         ));
     }
 }

@@ -5,8 +5,38 @@
     <script src="{{ asset('plugins/jquery-inputmask/jquery.inputmask.bundle.js') }}"></script>
     <script type="text/javascript">
         $(function(){
-            $('.money-euro').inputmask('999,99 €', { placeholder: '___,__ €' });
-            $('.day-duration').inputmask('999 J', { placeholder: '___ J' });
+//            var $dayDuration = $('.day-duration');
+//            $dayDuration.inputmask('999 J', { placeholder: '___ J' });
+//
+//            $dayDuration.parents('form').on('submit', function(e){
+//                e.preventDefault();
+//
+//                var val = $dayDuration.val();
+//                var formatedVal = parseInt(val);
+//
+//                console.log(formatedVal);
+//                $dayDuration.val(formatedVal);
+//
+//
+//                return false;
+//            });
+//
+//            $('input[type=submit]').on('click', function(e){
+//                e.preventDefault();
+//
+//                var val = $dayDuration.val();
+//                var formatedVal = parseInt(val);
+//
+//                console.log(formatedVal);
+//
+//                $dayDuration.removeClass('day-duration');
+//
+//                $dayDuration.val(formatedVal);
+//
+//                return false;
+//
+//
+//            });
         });
     </script>
 {% endblock %}
@@ -16,71 +46,60 @@
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
         {
         'href': path('dashboard'),
-        'title': 'retour tableau de bord',
-        'label': 'Tableau de bord'
+        'title': 'app.dashboard.callback'|trans,
+        'label': 'app.dashboard.title'|trans
         },
         {
-        'label': 'Gestion abonnements',
+        'label': 'app.subscription.subscription.list.title'|trans,
         'href': path('subscription_manager'),
-        'title': 'retour gestion abonnements'
+        'title': 'app.subscription.subscription.list.callback'|trans
         },
         {
-        'label': "Edition d'une périodicité"
+        'label': 'app.subscription.periodicity.edit.title'|trans
         }
         ] } %}
         <h2 class="col-xs-12">
-            <a href="{{ path('subscription_manager') }}" class="btn bg-grey waves-effect">Retour</a>&nbsp;
-            Edition d'une périodicité
+            <a href="{{ path('subscription_manager') }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
+            {{ 'app.subscription.periodicity.edit.title'|trans }}
         </h2>
     </div>
     <div class="row">
         <div class="col-xs-12">
             <div class="card">
                 <div class="body">
-                    <form action="" class="form-horizontal">
+                    {{ form_start(formPeriodicity) }}
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="col-sm-12">Libellé</label>
-                                    <div class="col-sm-10 form-line">
-                                        <input type="text" value="{{ periodicity.label }}" title="Libellé" class="form-control" id="" placeholder="Libellé">
-                                    </div>
-                                </div>
-
+                                {{ form_row(formPeriodicity.label, {
+                                    'label': 'app.subscription.periodicity.edit.label'|trans,
+                                    'attr': {
+                                        'placeholder': 'app.subscription.periodicity.edit.label'|trans
+                                    }
+                                }) }}
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="col-sm-12">Durée</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="material-icons">date_range</i>
-                                        </span>
-                                        <div class="form-line">
-                                            <input type="text" value="{{ periodicity.duration }}" title="Durée" class="form-control day-duration text-right" placeholder="Durée (en jours)">
-                                        </div>
-                                    </div>
-                                </div>
+                                {{ form_row(formPeriodicity.duration, {
+                                    'label': 'app.subscription.periodicity.edit.duration'|trans,
+                                    'attr': {
+                                        'inputGroup': true,
+                                        'inputGroupIcon': 'date_range',
+                                        'class':  'text-right',
+                                        'title': 'app.subscription.periodicity.edit.duration'|trans,
+                                        'placeholder': 'app.subscription.periodicity.edit.placeholder.duration'|trans
+                                    }
+                                }) }}
+                                {# day-duration #}
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="col-sm-12">Statut</label>
-                                    <div class="col-sm-12" style="padding: 0;">
-                                        <select class="form-control selectpicker" id="" title="Statut">
-                                            <option value="-1">Statut</option>
-                                            <option value="1" {% if 1 == periodicity.status  %}selected{% endif %}>Actif</option>
-                                            <option value="0" {% if 0 == periodicity.status  %}selected{% endif %}>Non actif</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                {{ form_row(formPeriodicity.status, {'label': 'app.subscription.periodicity.edit.status.label'|trans}) }}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <input class="btn btn-success" type="submit" value="Enregistrer et revenir sur la liste">
-                                <input class="btn btn-success"  type="submit" value="Enregistrer et rester">
+                                {% include ':form:bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
                             </div>
                         </div>
-                    </form>
+                    {{ form_end(formPeriodicity) }}
                 </div>
             </div>
         </div>
