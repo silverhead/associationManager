@@ -9,12 +9,12 @@
         <i class="material-icons">{{ attr.inputGroupIcon }}</i>
         </span>
     {% endif %}
-    <div class="{{ attr.blockClass|default('col-sm-10') }} form-line">
+{#    <div class="{{ attr.blockClass|default('col-sm-10') }} form-line">#}
         {% if type is not defined or type not in ['file', 'hidden'] %}
             {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
         {% endif %}
         {{- parent() -}}
-    </div>
+{#    </div>#}
     {% if attr.inputGroup is defined %}
         </div>
     {% endif %}
@@ -185,10 +185,28 @@
 
 {# Labels #}
 
-{% block form_label -%}
-    {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ 'col-sm-12 control-label')|trim}) -%}
-    {{- parent() -}}
-{%- endblock form_label %}
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('col-sm-12') ~ ' control-label')|trim}) %}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+                })|raw %}
+            {%- else -%}
+                {% set label = name|humanize|raw %}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ (translation_domain is same as(false) ? label|raw : label|trans({}, translation_domain)|raw) }}</label>
+    {%- endif -%}
+{%- endblock form_label -%}
 
 {% block choice_label -%}
     {# remove the checkbox-inline and radio-inline class, it's only useful for embed labels #}
