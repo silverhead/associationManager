@@ -18,46 +18,48 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {#<tr>#}
+                        {#<th scope="row">1</th>#}
+                        {#<td>1 mois</td>#}
+                        {#<td class="text-center">30</td>#}
+                        {#<td>Actif</td>#}
+                        {#<td>#}
+                            {#<a href="{{ path('periodicity_edit', {'id' : 1}) }}" class="btn btn-warning material-icons">edit</a>#}
+                            {#<a href="#" data-id="1" class="btn btn-danger material-icons delPeriodicity">delete</a>#}
+                        {#</td>#}
+                    {#</tr>#}
+                    {% for periodicity in periodicities %}
                     <tr>
-                        <th scope="row">1</th>
-                        <td>1 mois</td>
-                        <td class="text-center">30</td>
-                        <td>Actif</td>
+                        <th scope="row">{{ periodicity.getId() }}</th>
+                        <td>{{ periodicity.getLabel() }}</td>
+                        <td class="text-center">{{ periodicity.getDuration() }}</td>
+                        <td>{{ periodicity.isActive()? 'Actif':'Non actif' }}</td>
                         <td>
-                            <a href="{{ path('periodicity_edit', {'id' : 1}) }}" class="btn btn-warning material-icons">edit</a>
-                            <a href="#" data-id="1" class="btn btn-danger material-icons delPeriodicity">delete</a>
+                            <a href="{{ path('periodicity_edit', {'id' : periodicity.getId()}) }}" class="btn btn-warning material-icons">edit</a>
+                            <a href="#" data-id="{{ periodicity.getId() }}" class="btn btn-danger material-icons delPeriodicity">delete</a>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>3 mois</td>
-                        <td class="text-center">90</td>
-                        <td>Actif</td>
-                        <td>
-                            <a href="{{ path('periodicity_edit', {'id' : 1}) }}" class="btn btn-warning material-icons">edit</a>
-                            <a href="#" data-id="2" class="btn btn-danger material-icons delPeriodicity">delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>6 mois</td>
-                        <td class="text-center">180</td>
-                        <td>Actif</td>
-                        <td>
-                            <a href="{{ path('periodicity_edit', {'id' : 1}) }}" class="btn btn-warning material-icons">edit</a>
-                            <a href="#" data-id="3" class="btn btn-danger material-icons delPeriodicity">delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>1 an</td>
-                        <td class="text-center">365</td>
-                        <td>Actif</td>
-                        <td>
-                            <a href="{{ path('periodicity_edit', {'id' : 1}) }}" class="btn btn-warning material-icons">edit</a>
-                            <a href="#" data-id="3" class="btn btn-danger material-icons delPeriodicity">delete</a>
-                        </td>
-                    </tr>
+                    {% endfor %}
+                    {#<tr>#}
+                        {#<th scope="row">3</th>#}
+                        {#<td>6 mois</td>#}
+                        {#<td class="text-center">180</td>#}
+                        {#<td>Actif</td>#}
+                        {#<td>#}
+                            {#<a href="{{ path('periodicity_edit', {'id' : 1}) }}" class="btn btn-warning material-icons">edit</a>#}
+                            {#<a href="#" data-id="3" class="btn btn-danger material-icons delPeriodicity">delete</a>#}
+                        {#</td>#}
+                    {#</tr>#}
+                    {#<tr>#}
+                        {#<th scope="row">4</th>#}
+                        {#<td>1 an</td>#}
+                        {#<td class="text-center">365</td>#}
+                        {#<td>Actif</td>#}
+                        {#<td>#}
+                            {#<a href="{{ path('periodicity_edit', {'id' : 1}) }}" class="btn btn-warning material-icons">edit</a>#}
+                            {#<a href="#" data-id="3" class="btn btn-danger material-icons delPeriodicity">delete</a>#}
+                        {#</td>#}
+                    {#</tr>#}
                     </tbody>
                 </table>
             </form>

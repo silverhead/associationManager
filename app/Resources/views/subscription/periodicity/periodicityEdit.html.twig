@@ -63,6 +63,7 @@
             {{ 'app.subscription.periodicity.edit.title'|trans }}
         </h2>
     </div>
+    {% include ':main/flashMessage:flashMessageBloc.html.twig' %}
     <div class="row">
         <div class="col-xs-12">
             <div class="card">
@@ -91,7 +92,7 @@
                                 {# day-duration #}
                             </div>
                             <div class="col-md-4">
-                                {{ form_row(formPeriodicity.status, {'label': 'app.subscription.periodicity.edit.status.label'|trans}) }}
+                                {{ form_row(formPeriodicity.active, {'label': 'app.subscription.periodicity.edit.status.label'|trans}) }}
                             </div>
                         </div>
                         <div class="row">

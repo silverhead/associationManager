@@ -27,11 +27,41 @@ class PeriodicityController extends Controller
         if($formHandler->process($request)){
             $periodicity = $formHandler->getData();
 
-            $periodicityManager->save($periodicity);
+            if($periodicityManager->save($periodicity)){
+
+                $this->addFlash('success', "Periode enregistrée avec succés !");
+
+                if(null !== $request->get('save_and_leave', null)){
+                    return $this->redirect(
+                        $this->generateUrl('subscription_manager').'#periodicities'
+                    );
+                }
+
+                if(null !== $request->get('save_and_stay', null)){
+                    return $this->redirectToRoute('periodicity_edit', [
+                        'id' => $periodicity->getId()
+                    ]);
+                }
+            }
+
+            $this->addFlash(
+                'error',
+                "Une erreur est intervenue !<br />" . implode('<br />', $periodicityManager->getErrors()));
         }
 
         return $this->render('/subscription/periodicity/periodicityEdit.html.twig', array(
             'formPeriodicity' => $formHandler->getForm()->createView()
+        ));
+    }
+
+    public function listAction()
+    {
+        $periodicityManager = $this->get('app.subscription.manager.periodicity');
+
+        $periodicities = $periodicityManager->findALl();
+
+        return $this->render('/subscription/periodicity/periodicityList.html.twig', array(
+            'periodicities' => $periodicities
         ));
     }
 }

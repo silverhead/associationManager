@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolaspin
- * Date: 02/05/2017
- * Time: 22:29
- */
 
 namespace AppBundle\Form\Handler;
-
 
 use AppBundle\Entity\Periodicity;
 use AppBundle\Form\Type\PeriodicityFormType;
@@ -49,10 +42,6 @@ class PeriodicityFormHandler
     {
         $this->form->handleRequest($request);
 
-        $data = $this->form->getData();
-
-        dump($data);
-
         if($this->form->isSubmitted() && $this->form->isValid()){
             return true;
         }
@@ -62,6 +51,6 @@ class PeriodicityFormHandler
 
     public function getData()
     {
-        return $this->form->getData();
+        return  $this->form->getData();
     }
 }

@@ -81,6 +81,7 @@ app:
                 zipcode: Saisir le nom de votre association
                 address: Saisir le nom de votre association
                 description: Saisir le nom de votre association
+            saveSuccessText: Paramètres de l'application enregistrés avec succès !
     subscription:
         subscription:
             list:

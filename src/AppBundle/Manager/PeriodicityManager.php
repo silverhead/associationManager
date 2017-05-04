@@ -8,6 +8,11 @@ use Doctrine\ORM\EntityManager;
 class PeriodicityManager
 {
     /**
+     * @var array
+     */
+    protected $errors = [];
+
+    /**
      * @var EntityManager
      */
     private $entityManager;
@@ -32,9 +37,28 @@ class PeriodicityManager
         return $periodicity;
     }
 
+    public function findALl()
+    {
+        return $this->entityManager->getRepository("AppBundle:Periodicity")->findAll();
+    }
+
     public function save(Periodicity $periodicity)
     {
-        $this->entityManager->persist($periodicity);
-        $this->entityManager->flush();
+        try{
+            $this->entityManager->persist($periodicity);
+            $this->entityManager->flush();
+
+            return true;
+        }
+        catch(\Exception $e){
+            $this->errors[] = $e->getMessage();
+
+            return false;
+        }
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 }

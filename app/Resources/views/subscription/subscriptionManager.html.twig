@@ -69,6 +69,7 @@
         <span class="pull-right"><b>Total :</b> 2 000€</span>
     </h2>
 </div>
+{% include ':main/flashMessage:flashMessageBloc.html.twig' %}
 <div class="row">
     <div class="col-xs-12">
         <div class="card">
@@ -76,15 +77,16 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tab-nav-right" role="tablist">
                     <li role="presentation" class="active"><a href="#subscription" data-toggle="tab">Abonnements</a></li>
-                    <li role="presentation"><a href="#periodicity" data-toggle="tab">Periodicités</a></li>
+                    <li role="presentation"><a href="#periodicities" data-toggle="tab">Periodicités</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="subscription">
                         {% include 'subscription/subscription/subscriptionList.html.twig' %}
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="periodicity">
-                        {% include 'subscription/periodicity/periodicityList.html.twig' %}
+                    <div role="tabpanel" class="tab-pane fade" id="periodicities">
+                        {{ render(controller('AppBundle:Periodicity:list')) }}
+                        {#{% include 'subscription/periodicity/periodicityList.html.twig' %}#}
                     </div>
                 </div>
             </div>

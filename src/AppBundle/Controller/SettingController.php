@@ -19,7 +19,8 @@ class SettingController extends Controller
         $formSettingAppHandler->setForm();
 
         if($formSettingAppHandler->process($request)){
-
+            $translator = $this->get('translator');
+            $this->addFlash('success', $translator->trans('app.setting.form.saveSuccessText'));
         }
 
         return $this->render('setting/settingManager.html.twig', array(

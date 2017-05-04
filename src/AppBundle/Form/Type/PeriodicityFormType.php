@@ -18,7 +18,7 @@ class PeriodicityFormType extends AbstractType
         $builder
             ->add('label', TextType::class)
             ->add('duration', IntegerType::class)
-            ->add('status', ChoiceType::class, [
+            ->add('active', ChoiceType::class, [
                 'choices' => [
                     'app.subscription.periodicity.edit.status.enabled' => true,
                     'app.subscription.periodicity.edit.status.disabled' => false,

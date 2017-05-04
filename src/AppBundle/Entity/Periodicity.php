@@ -35,7 +35,7 @@ class Periodicity
      * @var boolean
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $status;
+    private $active;
 
     /**
      * @return int
@@ -97,18 +97,18 @@ class Periodicity
     /**
      * @return bool
      */
-    public function isStatus()
+    public function isActive()
     {
-        return $this->status;
+        return $this->active;
     }
 
     /**
-     * @param bool $status
+     * @param bool $active
      * @return Periodicity
      */
-    public function setStatus(bool $status): Periodicity
+    public function setActive(bool $active): Periodicity
     {
-        $this->status = $status;
+        $this->active = $active;
 
         return $this;
     }
