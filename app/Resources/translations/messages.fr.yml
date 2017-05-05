@@ -10,6 +10,8 @@ app:
                 save: Enregistrer
                 saveAndLeave: Enregistrer et revenir sur la liste
                 saveAndStay: Enregistrer et rester
+        table:
+            action: Action
     security:
         login:
             title: Page de connection
@@ -88,6 +90,7 @@ app:
                 title: Gestion des abonnements
                 callback: Retour gestion des abonnements
         periodicity:
+            add: Ajouter une périodicité de paiement
             edit:
                 title: Edition d'une périodicité
                 label: Libellé
@@ -98,3 +101,8 @@ app:
                     disabled: Non actif
                 placeholder:
                     duration: Durée (en jours)
+            list:
+                table:
+                    periodicity: Périodicité
+                    duration: Durée (jours)
+                    status: Statut

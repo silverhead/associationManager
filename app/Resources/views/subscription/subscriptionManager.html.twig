@@ -85,7 +85,7 @@
                         {% include 'subscription/subscription/subscriptionList.html.twig' %}
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="periodicities">
-                        {{ render(controller('AppBundle:Periodicity:list')) }}
+                        {{ render(controller('AppBundle:Periodicity:list', {'request': app.request})) }}
                         {#{% include 'subscription/periodicity/periodicityList.html.twig' %}#}
                     </div>
                 </div>

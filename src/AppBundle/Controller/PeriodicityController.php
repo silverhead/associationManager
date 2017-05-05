@@ -56,10 +56,15 @@ class PeriodicityController extends Controller
 
     public function listAction(Request $request)
     {
+
+        $page =  $request->get("pageTab2", 1);
+
+        dump($page);
+
         $periodicityManager = $this->get('app.subscription.manager.periodicity');
 
         $results = $periodicityManager->paginatedList(
-            $request->get("page", 1)
+            $page
         );
 
         return $this->render('/subscription/periodicity/periodicityList.html.twig', array(

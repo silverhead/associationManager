@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <a href="{{ path('periodicity_add') }}" class="btn bg-green waves-effect">Ajouter une périodicité de paiement</a>
+        <a href="{{ path('periodicity_add') }}" class="btn bg-green waves-effect">{{ 'app.subscription.periodicity.add'|trans }}</a>
     </div>
 </div>
 <div class="row">
@@ -11,10 +11,10 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Périodicité</th>
-                        <th>durée (jours)</th>
-                        <th>Statut</th>
-                        <th>Action</th>
+                        <th>{{ 'app.subscription.periodicity.list.table.periodicity'|trans }}</th>
+                        <th>{{ 'app.subscription.periodicity.list.table.duration'|trans }}</th>
+                        <th>{{ 'app.subscription.periodicity.list.table.status'|trans }}</th>
+                        <th>{{ 'app.common.table.action'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -23,7 +23,7 @@
                         <th scope="row">{{ periodicity.getId() }}</th>
                         <td>{{ periodicity.getLabel() }}</td>
                         <td class="text-center">{{ periodicity.getDuration() }}</td>
-                        <td>{{ periodicity.isActive()? 'Actif':'Non actif' }}</td>
+                        <td>{{ periodicity.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
                         <td>
                             <a href="{{ path('periodicity_edit', {'id' : periodicity.getId()}) }}" class="btn btn-warning material-icons">edit</a>
                             <a href="#" data-id="{{ periodicity.getId() }}" class="btn btn-danger material-icons delPeriodicity">delete</a>
@@ -34,7 +34,7 @@
                 </table>
             <div class="pull-right">
                     {{ knp_pagination_render(results) }}
-{#                {% include 'main/pagination.html.twig' %}#}{##}
+                {#{% include 'main/pagination.html.twig' %}#}
             </div>
             {% endif %}
         </div>
