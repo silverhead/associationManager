@@ -645,7 +645,7 @@ if (!document.createElement('canvas').getContext) {
     bezierCurveTo(this, cp1, cp2, p);
   };
 
-  // Helper function that takes the already fixed cordinates.
+  // Handler function that takes the already fixed cordinates.
   function bezierCurveTo(self, cp1, cp2, p) {
     self.currentPath_.push({
       type: 'bezierCurveTo',

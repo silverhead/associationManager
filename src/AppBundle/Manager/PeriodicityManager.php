@@ -3,23 +3,31 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Entity\Periodicity;
+use AppBundle\Handler\ErrorHandlerTrait;
+use AppBundle\Handler\ErrorHandlerInterface;
 use Doctrine\ORM\EntityManager;
+use Knp\Component\Pager\PaginatorInterface;
 
-class PeriodicityManager
+class PeriodicityManager implements ErrorHandlerInterface
 {
-    /**
-     * @var array
-     */
-    protected $errors = [];
+    use ErrorHandlerTrait;
+
+
+    const ITEMS_PER_PAGE = 10;
 
     /**
      * @var EntityManager
      */
     private $entityManager;
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator )
     {
         $this->entityManager = $entityManager;
+        $this->paginator = $paginator;
     }
 
     public function find($id = null)
@@ -37,11 +45,6 @@ class PeriodicityManager
         return $periodicity;
     }
 
-    public function findALl()
-    {
-        return $this->entityManager->getRepository("AppBundle:Periodicity")->findAll();
-    }
-
     public function save(Periodicity $periodicity)
     {
         try{
@@ -51,14 +54,23 @@ class PeriodicityManager
             return true;
         }
         catch(\Exception $e){
-            $this->errors[] = $e->getMessage();
+            $this->addError($e->getMessage());
 
             return false;
         }
     }
 
-    public function getErrors()
+    public function paginatedList($page = 1)
     {
-        return $this->errors;
+        $qb = getRepository()->getQbPaginatedList();
+
+        return $this->paginator->paginate($qb, $page, self::ITEMS_PER_PAGE);
     }
+
+
+    public function getRepository()
+    {
+        return $this->entityManager->getRepository("AppBundle:Periodicity");
+    }
+
 }

@@ -12022,7 +12022,7 @@ module.exports = function(Chart) {
 		}
 	};
 
-	// Helper to push or concat based on if the 2nd parameter is an array or not
+	// Handler to push or concat based on if the 2nd parameter is an array or not
 	function pushOrConcat(base, toPush) {
 		if (toPush) {
 			if (helpers.isArray(toPush)) {
@@ -12780,7 +12780,7 @@ module.exports = function(Chart) {
 			var ctx = me._chart.ctx;
 			ctx.save();
 
-			// Helper function to draw a line to a point
+			// Handler function to draw a line to a point
 			function lineToPoint(previousPoint, point) {
 				var vm = point._view;
 				if (point._view.steppedLine === true) {

@@ -54,14 +54,16 @@ class PeriodicityController extends Controller
         ));
     }
 
-    public function listAction()
+    public function listAction(Request $request)
     {
         $periodicityManager = $this->get('app.subscription.manager.periodicity');
 
-        $periodicities = $periodicityManager->findALl();
+        $results = $periodicityManager->paginatedList(
+            $request->get("page", 1)
+        );
 
         return $this->render('/subscription/periodicity/periodicityList.html.twig', array(
-            'periodicities' => $periodicities
+            'results' => $results
         ));
     }
 }

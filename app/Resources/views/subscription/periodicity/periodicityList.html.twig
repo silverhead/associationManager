@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="body table-responsive">
-            <form action="#">
+            {% if results|length > 0 %}
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -18,17 +18,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {#<tr>#}
-                        {#<th scope="row">1</th>#}
-                        {#<td>1 mois</td>#}
-                        {#<td class="text-center">30</td>#}
-                        {#<td>Actif</td>#}
-                        {#<td>#}
-                            {#<a href="{{ path('periodicity_edit', {'id' : 1}) }}" class="btn btn-warning material-icons">edit</a>#}
-                            {#<a href="#" data-id="1" class="btn btn-danger material-icons delPeriodicity">delete</a>#}
-                        {#</td>#}
-                    {#</tr>#}
-                    {% for periodicity in periodicities %}
+                    {% for periodicity in results %}
                     <tr>
                         <th scope="row">{{ periodicity.getId() }}</th>
                         <td>{{ periodicity.getLabel() }}</td>
@@ -40,32 +30,13 @@
                         </td>
                     </tr>
                     {% endfor %}
-                    {#<tr>#}
-                        {#<th scope="row">3</th>#}
-                        {#<td>6 mois</td>#}
-                        {#<td class="text-center">180</td>#}
-                        {#<td>Actif</td>#}
-                        {#<td>#}
-                            {#<a href="{{ path('periodicity_edit', {'id' : 1}) }}" class="btn btn-warning material-icons">edit</a>#}
-                            {#<a href="#" data-id="3" class="btn btn-danger material-icons delPeriodicity">delete</a>#}
-                        {#</td>#}
-                    {#</tr>#}
-                    {#<tr>#}
-                        {#<th scope="row">4</th>#}
-                        {#<td>1 an</td>#}
-                        {#<td class="text-center">365</td>#}
-                        {#<td>Actif</td>#}
-                        {#<td>#}
-                            {#<a href="{{ path('periodicity_edit', {'id' : 1}) }}" class="btn btn-warning material-icons">edit</a>#}
-                            {#<a href="#" data-id="3" class="btn btn-danger material-icons delPeriodicity">delete</a>#}
-                        {#</td>#}
-                    {#</tr>#}
                     </tbody>
                 </table>
-            </form>
             <div class="pull-right">
-                {% include 'main/pagination.html.twig' %}
+                    {{ knp_pagination_render(results) }}
+{#                {% include 'main/pagination.html.twig' %}#}{##}
             </div>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -49,4 +49,4 @@ services:
         arguments: ['@app.repository.setting']
     app.subscription.manager.periodicity:
         class: AppBundle\Manager\PeriodicityManager
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
