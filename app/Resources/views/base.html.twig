@@ -55,6 +55,8 @@
         <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
         <script src="{{ asset('js/translations/config.js') }}"></script>
         <script src="{{ asset('js/translations/messages/fr.js') }}"></script>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
         <!-- Custom Js -->
         <script src="{{ asset('js/admin.js') }}"></script>
         <script src="{{ asset('js/app/bsTabs.js') }}"></script>

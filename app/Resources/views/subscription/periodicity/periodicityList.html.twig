@@ -1,42 +1,44 @@
-<div class="row">
-    <div class="col-xs-12">
-        <a href="{{ path('periodicity_add') }}" class="btn bg-green waves-effect">{{ 'app.subscription.periodicity.add'|trans }}</a>
+<div id="periodicitiesContainer">
+    <div class="row">
+        <div class="col-xs-12">
+            <a href="{{ path('subscription_periodicity_edit') }}" class="btn bg-green waves-effect">{{ 'app.subscription.periodicity.add'|trans }}</a>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="body table-responsive">
-            {% if results|length > 0 %}
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>{{ 'app.subscription.periodicity.list.table.periodicity'|trans }}</th>
-                        <th>{{ 'app.subscription.periodicity.list.table.duration'|trans }}</th>
-                        <th>{{ 'app.subscription.periodicity.list.table.status'|trans }}</th>
-                        <th>{{ 'app.common.table.action'|trans }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for periodicity in results %}
-                    <tr>
-                        <th scope="row">{{ periodicity.getId() }}</th>
-                        <td>{{ periodicity.getLabel() }}</td>
-                        <td class="text-center">{{ periodicity.getDuration() }}</td>
-                        <td>{{ periodicity.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
-                        <td>
-                            <a href="{{ path('periodicity_edit', {'id' : periodicity.getId()}) }}" class="btn btn-warning material-icons">edit</a>
-                            <a href="#" data-id="{{ periodicity.getId() }}" class="btn btn-danger material-icons delPeriodicity">delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            <div class="pull-right">
-                    {{ knp_pagination_render(results) }}
-                {#{% include 'main/pagination.html.twig' %}#}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="body table-responsive">
+                {% if results|length > 0 %}
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ 'app.subscription.periodicity.list.table.periodicity'|trans }}</th>
+                            <th>{{ 'app.subscription.periodicity.list.table.duration'|trans }}</th>
+                            <th>{{ 'app.subscription.periodicity.list.table.status'|trans }}</th>
+                            <th>{{ 'app.common.table.action'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for periodicity in results %}
+                            <tr>
+                                <th scope="row">{{ periodicity.getId() }}</th>
+                                <td>{{ periodicity.getLabel() }}</td>
+                                <td class="text-center">{{ periodicity.getDuration() }}</td>
+                                <td>{{ periodicity.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
+                                <td>
+                                    <a href="{{ path('subscription_periodicity_edit', {'id' : periodicity.getId()}) }}" class="btn btn-warning material-icons">edit</a>
+                                    <a href="#" data-id="{{ periodicity.getId() }}" class="btn btn-danger material-icons delPeriodicity">delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="pull-right">
+                        {{ knp_pagination_render(results) }}
+                        {#{% include 'main/pagination.html.twig' %}#}
+                    </div>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
     </div>
 </div>

@@ -3,7 +3,13 @@ app:
         appName: Association manager
         appSlogan: Gérer votre association
     common:
-        errorComming: Une erreur est intervenue
+        errorUnknow: Erreur inconnu, veuillez contacter l'administrateur de l'application !
+        errorComming: Une erreur est intervenue ! %error%
+        errorTitle: Une erreur est intervenue !
+        deleteTitle: Supprimé !
+        deleteQuestionTitle: Êtes-vous sûr ?
+        deleteQuestionYes: Oui, je veux le supprimer !
+        deleteQuestionNo: Non, n'annule ma demande !
         returnBtn: Retour
         form:
             submit:
@@ -101,8 +107,13 @@ app:
                     disabled: Non actif
                 placeholder:
                     duration: Durée (en jours)
+                saveSucessText: Periode enregistrée avec succés !
             list:
                 table:
                     periodicity: Périodicité
                     duration: Durée (jours)
                     status: Statut
+            delete:
+                deleteErrorMissingText: La période que vous voulez suprpimé n'a pas été trouvé !
+                deleteSuccessText: La période %label% à bien été supprimée !
+                deleteQuestionText: La suppression de la périodicité de paiement est définitf !

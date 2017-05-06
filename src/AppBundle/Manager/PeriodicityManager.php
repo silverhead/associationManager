@@ -8,7 +8,7 @@ use AppBundle\Handler\ErrorHandlerInterface;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 
-class PeriodicityManager implements ErrorHandlerInterface
+class PeriodicityManager implements EntityManagerInterface, ErrorHandlerInterface
 {
     use ErrorHandlerTrait;
 
@@ -45,7 +45,7 @@ class PeriodicityManager implements ErrorHandlerInterface
         return $periodicity;
     }
 
-    public function save(Periodicity $periodicity)
+    public function save($periodicity)
     {
         try{
             $this->entityManager->persist($periodicity);
@@ -76,4 +76,18 @@ class PeriodicityManager implements ErrorHandlerInterface
         return $this->entityManager->getRepository("AppBundle:Periodicity");
     }
 
+    public function delete($periodicity)
+    {
+        try{
+            $this->entityManager->remove($periodicity);
+            $this->entityManager->flush();
+
+            return true;
+        }
+        catch(\Exception $e){
+            $this->addError($e->getMessage());
+
+            return false;
+        }
+    }
 }
