@@ -12,9 +12,6 @@ class PeriodicityManager implements EntityManagerInterface, ErrorHandlerInterfac
 {
     use ErrorHandlerTrait;
 
-
-    const ITEMS_PER_PAGE = 4;
-
     /**
      * @var EntityManager
      */
@@ -60,12 +57,12 @@ class PeriodicityManager implements EntityManagerInterface, ErrorHandlerInterfac
         }
     }
 
-    public function paginatedList($page = 1)
+    public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page')
     {
         $qb = $this->getRepository()->getQbPaginatedList();
 
-        return $this->paginator->paginate($qb, $page, self::ITEMS_PER_PAGE, [
-            'pageParameterName' => 'pageTab2',
+        return $this->paginator->paginate($qb, $page, $itemPerPage, [
+            'pageParameterName' => $pageParameterName,
             'anchor' => '#periodicities'
         ]);
     }

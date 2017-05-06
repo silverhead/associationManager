@@ -12,6 +12,8 @@ use Symfony\Component\Serializer\Serializer;
 
 class PeriodicityController extends Controller
 {
+    const ITEMS_PER_PAGE = 4;
+    const PAGE_PARAMETER_NAME = 'pageTab2';
     /**
      * @Route("/subscription/periodicity_edit/{id}", name="subscription_periodicity_edit")
      * @Route("/periodicity_add", name="periodicity_add")
@@ -44,7 +46,7 @@ class PeriodicityController extends Controller
                 }
 
                 if(null !== $request->get('save_and_stay', null)){
-                    return $this->redirectToRoute('periodicity_edit', [
+                    return $this->redirectToRoute('subscription_periodicity_edit', [
                         'id' => $periodicity->getId()
                     ]);
                 }
@@ -120,11 +122,11 @@ class PeriodicityController extends Controller
      */
     public function listAction(Request $request)
     {
-        $page =  $request->get("pageTab2", 1);
+        $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
 
         $periodicityManager = $this->get('app.subscription.manager.periodicity');
 
-        $results = $periodicityManager->paginatedList($page);
+        $results = $periodicityManager->paginatedList($page, self::ITEMS_PER_PAGE, self::PAGE_PARAMETER_NAME);
 
         return $this->render('/subscription/periodicity/periodicityList.html.twig', array(
             'results' => $results

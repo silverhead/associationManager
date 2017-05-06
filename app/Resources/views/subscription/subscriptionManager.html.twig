@@ -69,8 +69,6 @@
                                 'url': Routing.generate('subscription_periodicity_delete', {'id': id}),
                                 'dataType': 'json',
                                 'success': function(data){
-//                                    var data = $.parseJSON (dataJson);
-
 
                                     var title = Translator.trans('app.common.errorTitle');
                                     if(data.code == 'success'){
@@ -93,9 +91,41 @@
 
         function reloadPeriodicitiesList()
         {
+            var $periodicitiesContainer = $('#periodicitiesContainer');
+            var paginatorPageParam = $periodicitiesContainer.data('page-parameter-name');
+            var nbRow = $periodicitiesContainer.find('table tbody tr').length;
+            var url = window.location.href;
+
+//            var regExp = new RegExp(".*"+paginatorPageParam+"=(\d+).*");
+            var regExp = new RegExp(".*pageTab2=(\d+).*");
+
+            console.log(regExp);
+            console.log("/.*pageTab2=(\d+).*/");
+
+            var pageTag = url.replace(regExp., "$1");
+//            var pageTag = url.replace(/.*pageTab2=(\d+).*/, "$1");
+
+                console.log("page count :" +pageTag);
+
+                pageTag = parseInt(pageTag);
+
+            console.log("tr : " + nbRow);
+            console.log("page count :" +pageTag);
+
+            if(isNaN(pageTag)){
+                pageTag = 1;
+            }
+
+            if(nbRow ==  1 && pageTag > 1){
+                pageTag = pageTag -1;
+            }
+
+            console.log("page count :" +pageTag);
+
             $.ajax({
                 'url': Routing.generate('subscription_periodicity_list_part'),
                 'type': 'GET',
+                'data': paginatorPageParam+'='+pageTag,
                 'dataType': 'html',
                 'success': function(template){
                     $('#periodicitiesContainer').html(template);

@@ -1,4 +1,4 @@
-<div id="periodicitiesContainer">
+<div id="periodicitiesContainer" data-page-parameter-name="{{ constant('AppBundle\\Controller\\PeriodicityController::PAGE_PARAMETER_NAME') }}">
     <div class="row">
         <div class="col-xs-12">
             <a href="{{ path('subscription_periodicity_edit') }}" class="btn bg-green waves-effect">{{ 'app.subscription.periodicity.add'|trans }}</a>
@@ -11,7 +11,7 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th onclick="reloadPeriodicitiesList();">#</th>
                             <th>{{ 'app.subscription.periodicity.list.table.periodicity'|trans }}</th>
                             <th>{{ 'app.subscription.periodicity.list.table.duration'|trans }}</th>
                             <th>{{ 'app.subscription.periodicity.list.table.status'|trans }}</th>
