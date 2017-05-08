@@ -50,3 +50,7 @@ services:
     app.subscription.manager.periodicity:
         class: AppBundle\Manager\PeriodicityManager
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    # Handler
+    app.handler.page_historical:
+        class: AppBundle\Handler\PageHistoricalHandler
+        arguments: ['@session', 'page_historical']

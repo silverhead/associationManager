@@ -40,6 +40,13 @@ class PeriodicityController extends Controller
                 $this->addFlash('success', $translator->trans('app.subscription.periodicity.edit.saveSucessText'));
 
                 if(null !== $request->get('save_and_leave', null)){
+                    $pageH = $this->get('app.handler.page_historical');
+                    $callBackUrl = $pageH->getCallbackUrl('subscription_periodicity_edit');
+
+                    if(null!== $callBackUrl){
+                        return $this->redirect($callBackUrl);
+                    }
+
                     return $this->redirect(
                         $this->generateUrl('subscription_manager').'#periodicities'
                     );
@@ -120,13 +127,24 @@ class PeriodicityController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request, $anchor = null)
     {
         $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
+        $currentRoute = $request->get('_route');
 
         $periodicityManager = $this->get('app.subscription.manager.periodicity');
 
         $results = $periodicityManager->paginatedList($page, self::ITEMS_PER_PAGE, self::PAGE_PARAMETER_NAME);
+
+        $pageH = $this->get('app.handler.page_historical');
+
+        $pageH->setCallbackUrl('subscription_periodicity_edit',
+            $this->generateUrl($currentRoute),
+            [
+                self::PAGE_PARAMETER_NAME => $page
+            ],
+            $anchor
+            );
 
         return $this->render('/subscription/periodicity/periodicityList.html.twig', array(
             'results' => $results
