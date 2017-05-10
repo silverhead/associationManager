@@ -28,6 +28,11 @@ class PeriodicityController extends Controller
         $formHandler = $this->get('app.subscription.form.handler.periodicity');
 
         $periodicity = $periodicityManager->find($id);
+
+        if(null === $periodicity){
+            $periodicity = $periodicityManager->getNewEntity();
+        }
+
         $formHandler->setForm($periodicity);
 
         if($formHandler->process($request)){
@@ -140,11 +145,9 @@ class PeriodicityController extends Controller
 
         $pageH->setCallbackUrl('subscription_periodicity_edit',
             $this->generateUrl($currentRoute),
-            [
-                self::PAGE_PARAMETER_NAME => $page
-            ],
+            [self::PAGE_PARAMETER_NAME => $page],
             $anchor
-            );
+        );
 
         return $this->render('/subscription/periodicity/periodicityList.html.twig', array(
             'results' => $results

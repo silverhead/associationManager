@@ -5,7 +5,7 @@ namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class PeriodicityRepository extends EntityRepository
+class PeriodicityRepository extends EntityRepository implements PaginatorRepositoryInterface
 {
     public function getQbPaginatedList()
     {

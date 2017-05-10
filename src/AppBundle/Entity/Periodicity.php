@@ -15,7 +15,7 @@ class Periodicity
      * @var integer
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Id();
+     * @ORM\Id()
      */
     private $id;
 
@@ -113,5 +113,14 @@ class Periodicity
         return $this;
     }
 
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
 
 }

@@ -1,16 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolaspin
- * Date: 06/05/2017
- * Time: 12:30
- */
 
 namespace AppBundle\Manager;
 
+use AppBundle\Handler\ErrorHandlerInterface;
 
-interface EntityManagerInterface
+interface EntityManagerInterface extends ErrorHandlerInterface
 {
+    public function getNewEntity();
+
     public function find($id = null);
 
     public function save($entity);
@@ -18,6 +15,5 @@ interface EntityManagerInterface
     public function delete($entity);
 
     public function getRepository();
-
 
 }
