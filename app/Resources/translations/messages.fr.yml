@@ -16,6 +16,10 @@ app:
                 save: Enregistrer
                 saveAndLeave: Enregistrer et revenir sur la liste
                 saveAndStay: Enregistrer et rester
+            choice: Choisir
+        status:
+            enabled: Actif
+            disabled: Non actif
         table:
             action: Action
     security:
@@ -95,6 +99,12 @@ app:
             list:
                 title: Gestion des abonnements
                 callback: Retour gestion des abonnements
+            edit:
+                label: Libellé
+                cost: Coût
+                duration: Durée
+                periodicities: Rythme de paiement possible
+                status: Statut
         periodicity:
             add: Ajouter une périodicité de paiement
             edit:
@@ -103,8 +113,6 @@ app:
                 duration: Durée
                 status:
                     label: Statut
-                    enabled: Actif
-                    disabled: Non actif
                 placeholder:
                     duration: Durée (en jours)
                 saveSucessText: Periode enregistrée avec succés !

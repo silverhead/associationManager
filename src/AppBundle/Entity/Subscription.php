@@ -60,7 +60,7 @@ class Subscription
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -79,7 +79,7 @@ class Subscription
     /**
      * @return string
      */
-    public function getLabel(): string
+    public function getLabel()
     {
         return $this->label;
     }
@@ -98,7 +98,7 @@ class Subscription
     /**
      * @return float
      */
-    public function getCost(): float
+    public function getCost()
     {
         return $this->cost;
     }
@@ -117,7 +117,7 @@ class Subscription
     /**
      * @return int
      */
-    public function getDuration(): int
+    public function getDuration()
     {
         return $this->duration;
     }

@@ -34,6 +34,9 @@ services:
     app.subscription.form.handler.periodicity:
         class: AppBundle\Form\Handler\PeriodicityFormHandler
         arguments: ['@form.factory']
+    app.subscription.form.handler.subscription:
+        class: AppBundle\Form\Handler\SubscriptionFormHandler
+        arguments: ['@form.factory']
     # Twig extension
     app.twig_extension.setting:
         class: AppBundle\Twig\SettingExtension
@@ -49,6 +52,9 @@ services:
         arguments: ['@app.repository.setting']
     app.subscription.manager.periodicity:
         class: AppBundle\Manager\PeriodicityManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    app.subscription.manager.subscription:
+        class: AppBundle\Manager\SubscriptionManager
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     # Handler
     app.handler.page_historical:

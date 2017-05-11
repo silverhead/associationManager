@@ -1,21 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolaspin
- * Date: 06/05/2017
- * Time: 20:10
- */
 
 namespace AppBundle\Manager;
 
-
+use AppBundle\Entity\Subscription;
 use AppBundle\Handler\ErrorHandlerTrait;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 
-class SubscriptionManager implements EntityManagerInterface, ErrorHandlerInterface
+class SubscriptionManager implements PaginatorManagerInterface
 {
-    use ErrorHandlerTrait;
+    use EntityManagerTrait,
+        PaginatorManagerTrait,
+        ErrorHandlerTrait;
 
     /**
      * @var EntityManager
@@ -32,24 +28,14 @@ class SubscriptionManager implements EntityManagerInterface, ErrorHandlerInterfa
         $this->paginator = $paginator;
     }
 
-    public function find($id = null)
-    {
-        // TODO: Implement find() method.
-    }
-
-    public function save($entity)
-    {
-        // TODO: Implement save() method.
-    }
-
-    public function delete($entity)
-    {
-        // TODO: Implement delete() method.
-    }
-
     public function getRepository()
     {
-        $this->entityManager->getRepository("");
+        $this->entityManager->getRepository("AppBundle:Subscription");
+    }
+
+    public function getNewEntity()
+    {
+        return new Subscription();
     }
 
 

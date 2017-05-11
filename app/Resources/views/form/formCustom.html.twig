@@ -3,21 +3,23 @@
 {# Widgets #}
 
 {% block form_widget_simple -%}
+
     {% if attr.inputGroup is defined %}
         <div class="input-group">
         <span class="input-group-addon">
         <i class="material-icons">{{ attr.inputGroupIcon }}</i>
         </span>
     {% endif %}
-{#    <div class="{{ attr.blockClass|default('col-sm-10') }} form-line">#}
+    <div class="{{ attr.blockClass|default('col-sm-10') }} form-line">
         {% if type is not defined or type not in ['file', 'hidden'] %}
             {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
         {% endif %}
         {{- parent() -}}
-{#    </div>#}
+    </div>
     {% if attr.inputGroup is defined %}
         </div>
     {% endif %}
+
 {%- endblock form_widget_simple %}
 
 {% block textarea_widget -%}

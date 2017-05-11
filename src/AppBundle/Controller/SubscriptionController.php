@@ -26,26 +26,42 @@ class SubscriptionController extends Controller
      */
     public function editAction(Request $request, $id = 0)
     {
-        $abonnement = [
-            'libelle' => null,
-            'cout' => null,
-            'duree' => null,
-            'periodicites' => array(),
-            'statut' => null
-        ];
+//        $abonnement = [
+//            'libelle' => null,
+//            'cout' => null,
+//            'duree' => null,
+//            'periodicites' => array(),
+//            'statut' => null
+//        ];
+//
+//        if($id > 0){
+//            $abonnement = [
+//                'libelle' => 'Abonnement premium 1 an',
+//                'cout' => 240.00,
+//                'duree' => 365,
+//                'periodicites' => array(1,2,3),
+//                'statut' => 1
+//            ];
+//        }
+        $subscriptionManager = $this->get('app.subscription.manager.subscription');
+        $subscription = $subscriptionManager->getNewEntity();
 
-        if($id > 0){
-            $abonnement = [
-                'libelle' => 'Abonnement premium 1 an',
-                'cout' => 240.00,
-                'duree' => 365,
-                'periodicites' => array(1,2,3),
-                'statut' => 1
-            ];
+        $formHandler = $this->get('app.subscription.form.handler.subscription');
+
+        $formHandler->setForm($subscription);
+
+        if($formHandler->process($request)){
+            $translator = $this->get('translator');
+
+            $subscription = $formHandler->getData();
+
+            if($subscriptionManager->save($subscription)){
+            }
         }
 
+
         return $this->render('subscription/subscription/subscriptionEdit.html.twig', array(
-            'abonnement' => $abonnement
+            'formSubscription' => $formHandler->getForm()->createView()
         ));
     }
 }
