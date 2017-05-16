@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolaspin
- * Date: 10/05/2017
- * Time: 23:51
- */
 
 namespace AppBundle\Manager;
 
@@ -21,11 +15,15 @@ Trait PaginatorManagerTrait
         }
 
         if( !($this->getRepository() instanceof PaginatorRepositoryInterface)){
-            throw new \Exception("The repository must implements PaginatorRepository");
+            throw new \Exception("The repository must implements PaginatorRepositoryInterface!");
         }
 
-        if( !isset($this->paginator) || !($this->paginator instanceof PaginatorInterface)){
+        if( !isset($this->paginator)){
             throw new \Exception("You need to create a property named \"paginator\" which implements PaginatorInterface!");
+        }
+
+        if(!($this->paginator instanceof PaginatorInterface)){
+            throw new \Exception("The paginator property must to implement PaginatorInterface!");
         }
 
         $qb = $this->getRepository()->getQbPaginatedList();

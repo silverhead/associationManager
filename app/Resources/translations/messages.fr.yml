@@ -105,6 +105,7 @@ app:
                 duration: Durée
                 periodicities: Rythme de paiement possible
                 status: Statut
+                saveSucessText: Abonnement enregistré avec succès !
         periodicity:
             add: Ajouter une périodicité de paiement
             edit:
@@ -115,7 +116,7 @@ app:
                     label: Statut
                 placeholder:
                     duration: Durée (en jours)
-                saveSucessText: Periode enregistrée avec succés !
+                saveSucessText: Période enregistrée avec succés !
             list:
                 table:
                     periodicity: Périodicité

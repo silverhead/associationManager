@@ -158,13 +158,14 @@
             <div class="body">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                    <li role="presentation" class="active"><a href="#subscription" data-toggle="tab">Abonnements</a></li>
+                    <li role="presentation" class="active"><a href="#subscriptions" data-toggle="tab">Abonnements</a></li>
                     <li role="presentation"><a href="#periodicities" data-toggle="tab">Periodicités</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="subscription">
-                        {% include 'subscription/subscription/subscriptionList.html.twig' %}
+                    <div role="tabpanel" class="tab-pane fade in active" id="subscriptions">
+                        {#{% include 'subscription/subscription/subscriptionList.html.twig' %}#}
+                        {{ render(controller('AppBundle:Subscription:list')) }}
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="periodicities">
                         {{ render(controller('AppBundle:Periodicity:list', {'request': app.request, 'anchor': '#periodicities'})) }}

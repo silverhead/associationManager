@@ -69,7 +69,7 @@ class Subscription
      * @param int $id
      * @return Subscription
      */
-    public function setId(int $id): Subscription
+    public function setId($id): Subscription
     {
         $this->id = $id;
 

@@ -22,7 +22,7 @@ class SubscriptionManager implements PaginatorManagerInterface
      */
     private $paginator;
 
-    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator )
+    public function __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, PaginatorInterface $paginator )
     {
         $this->entityManager = $entityManager;
         $this->paginator = $paginator;
@@ -30,7 +30,7 @@ class SubscriptionManager implements PaginatorManagerInterface
 
     public function getRepository()
     {
-        $this->entityManager->getRepository("AppBundle:Subscription");
+        return $this->entityManager->getRepository("AppBundle:Subscription");
     }
 
     public function getNewEntity()
