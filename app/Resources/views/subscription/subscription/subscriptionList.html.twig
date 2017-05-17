@@ -1,28 +1,28 @@
 <div class="row">
     <div class="col-xs-12">
-        <a href="{{ path('subscription_add') }}" class="btn bg-green waves-effect">Ajouter un abonnement</a>
+        <a href="{{ path('subscription_add') }}" class="btn bg-green waves-effect">{{ 'app.subscription.subscription.addBtn'|trans }}</a>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-6">
-        <form action="#">
-            <div class="input-group">
-                <div class="form-line">
-                    <input type="text" class="form-control date" placeholder="Rechercher">
-                </div>
-                <span class="input-group-addon">
-                    <i class="material-icons">search</i>
-                </span>
-            </div>
-        </form>
-    </div>
-    <div class="col-md-6">
-        <a href="#" class="btn bg-grey waves-effect pull-right">
-            <i class="material-icons">archive</i>
-            Export C.S.V.
-        </a>
-    </div>
-</div>
+{#<div class="row">#}
+    {#<div class="col-md-6">#}
+        {#<form action="#">#}
+            {#<div class="input-group">#}
+                {#<div class="form-line">#}
+                    {#<input type="text" class="form-control date" placeholder="Rechercher">#}
+                {#</div>#}
+                {#<span class="input-group-addon">#}
+                    {#<i class="material-icons">search</i>#}
+                {#</span>#}
+            {#</div>#}
+        {#</form>#}
+    {#</div>#}
+    {#<div class="col-md-6">#}
+        {#<a href="#" class="btn bg-grey waves-effect pull-right">#}
+            {#<i class="material-icons">archive</i>#}
+            {#Export C.S.V.#}
+        {#</a>#}
+    {#</div>#}
+{#</div>#}
 <div class="row">
     <div class="col-xs-12">
         <div class="body table-responsive">
@@ -31,12 +31,12 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Abonnement</th>
-                        <th>Nb membres</th>
-                        <th>Coût</th>
-                        <th>Durée (jour)</th>
-                        <th>Statut</th>
-                        <th>Action</th>
+                        <th>{{ 'app.subscription.subscription.list.table.label'|trans }}</th>
+                        <th>{{ 'app.subscription.subscription.list.table.membersNumber'|trans }}</th>
+                        <th>{{ 'app.subscription.subscription.list.table.cost'|trans }}</th>
+                        <th>{{ 'app.subscription.subscription.list.table.duration'|trans }}</th>
+                        <th>{{ 'app.subscription.subscription.list.table.status'|trans }}</th>
+                        <th>{{ 'app.common.table.action'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -45,7 +45,7 @@
                             <th scope="row">{{ subscription.getId() }}</th>
                             <td>{{ subscription.getLabel() }}</td>
                             <td class="text-center">NF</td>
-                            <td class="text-right">{{ subscription.getCost() }}</td>
+                            <td class="text-right">{{ subscription.getCost()|number_format(2,',',' ') }} €</td>
                             <td class="text-right">{{ subscription.getDuration() }}</td>
                             <td>{{ subscription.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
                             <td>
@@ -55,50 +55,11 @@
                             </td>
                         </tr>
                     {% endfor %}
-                        {#<tr>#}
-                            {#<th scope="row">1</th>#}
-                            {#<td>Abonnement prenium 1 an</td>#}
-                            {#<td class="text-center">10</td>#}
-                            {#<td class="text-right">240, 00€</td>#}
-                            {#<td class="text-right">365</td>#}
-                            {#<td>Actif</td>#}
-                            {#<td>#}
-                                {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                {#<a href="{{ path('subscription_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>#}
-                                {#<a href="#" data-id="1" class="btn btn-danger disabled material-icons delSubscription">delete</a>#}
-                            {#</td>#}
-                        {#</tr>#}
-                        {#<tr>#}
-                            {#<th scope="row">2</th>#}
-                            {#<td>Abonnement standard 1 an</td>#}
-                            {#<td class="text-center">20</td>#}
-                            {#<td class="text-right">60, 00€</td>#}
-                            {#<td class="text-right">365</td>#}
-                            {#<td>Actif</td>#}
-                            {#<td>#}
-                                {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                {#<a href="{{ path('subscription_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>#}
-                                {#<a href="#" data-id="2" class="btn btn-danger disabled material-icons delSubscription">delete</a>#}
-                            {#</td>#}
-                        {#</tr>#}
-                        {#<tr>#}
-                            {#<th scope="row">3</th>#}
-                            {#<td>Abonnement standard 1 mois</td>#}
-                            {#<td class="text-center">0</td>#}
-                            {#<td class="text-right">5, 00€</td>#}
-                            {#<td class="text-right">30</td>#}
-                            {#<td>Actif</td>#}
-                            {#<td>#}
-                                {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                {#<a href="{{ path('subscription_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>#}
-                                {#<a href="#" data-id="3" class="btn btn-danger material-icons delSubscription">delete</a>#}
-                            {#</td>#}
-                        {#</tr>#}
                     </tbody>
                 </table>
             </form>
             <div class="pull-right">
-                {#{{ knp_pagination_render(results) }}#}
+                {{ knp_pagination_render(results) }}
             </div>
         </div>
     </div>

@@ -5,7 +5,7 @@ namespace AppBundle\Manager;
 use AppBundle\Entity\Periodicity;
 use AppBundle\Handler\ErrorHandlerTrait;
 use Knp\Component\Pager\PaginatorInterface;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 
 class PeriodicityManager implements PaginatorManagerInterface
 {
@@ -14,7 +14,7 @@ class PeriodicityManager implements PaginatorManagerInterface
         ErrorHandlerTrait;
 
     /**
-     * @var EntityManagerInterface
+     * @var EntityManager
      */
     private $entityManager;
 
@@ -23,7 +23,7 @@ class PeriodicityManager implements PaginatorManagerInterface
      */
     private $paginator;
 
-    public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator )
+    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator )
     {
         $this->entityManager = $entityManager;
         $this->paginator = $paginator;

@@ -23,8 +23,10 @@
 {%- endblock form_widget_simple %}
 
 {% block textarea_widget -%}
+    <div class="{{ attr.blockClass|default('col-sm-10') }} form-line">
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
     {{- parent() -}}
+    </div>
 {%- endblock textarea_widget %}
 
 {% block button_widget -%}

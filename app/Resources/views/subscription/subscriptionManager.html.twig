@@ -164,10 +164,11 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="subscriptions">
-                        {#{% include 'subscription/subscription/subscriptionList.html.twig' %}#}
+                        {#{% include 'subscription/subscription/subscriptionList.html.twig' with {'results': subscriptionsList} only %}#}
                         {{ render(controller('AppBundle:Subscription:list')) }}
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="periodicities">
+                        {#{% include 'subscription/periodicity/:subscription/periodicity:periodicityList.html.twig' with {'results': periodicitiesList} only %}#}
                         {{ render(controller('AppBundle:Periodicity:list', {'request': app.request, 'anchor': '#periodicities'})) }}
                     </div>
                 </div>

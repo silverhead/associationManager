@@ -70,92 +70,73 @@
                             <div class="col-md-4">
                                 <div class="form-group {% if not formSetting.associationName.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.associationName, 'app.setting.form.label.associationName'|trans) }}
-                                    <div class="col-sm-10 form-line">
-                                        {{ form_widget(formSetting.associationName, {'attr': {
-                                            'class': 'form-control', 'placeholder': 'app.setting.form.placeholder.associationName'|trans}}
-                                        ) }}
-                                        {{ form_errors(formSetting.associationName) }}
-                                    </div>
+                                    {{ form_widget(formSetting.associationName, {'attr': {
+                                        'class': 'form-control', 'placeholder': 'app.setting.form.placeholder.associationName'|trans}}
+                                    ) }}
+                                    {{ form_errors(formSetting.associationName) }}
                                 </div>
                                 <div class="form-group {% if not formSetting.contactEmail.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.contactEmail, 'app.setting.form.label.contactEmail'|trans) }}
-                                    <div class="col-sm-10 form-line">
-                                        {{ form_widget(formSetting.contactEmail, {'attr': {
-                                            'class': 'form-control', 'placeholder': 'app.setting.form.placeholder.contactEmail'|trans}}
-                                        ) }}
-                                        {{ form_errors(formSetting.contactEmail) }}
-                                    </div>
+                                    {{ form_widget(formSetting.contactEmail, {'attr': {
+                                        'class': 'form-control', 'placeholder': 'app.setting.form.placeholder.contactEmail'|trans}}
+                                    ) }}
+                                    {{ form_errors(formSetting.contactEmail) }}
                                 </div>
                                 <div class="form-group {% if not formSetting.robotEmail.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.contactEmail, 'app.setting.form.label.robotEmail'|trans) }}
-{#                                    <label for="{{ formSetting.robotEmail.vars.id }}">{{ 'app.setting.form.label.robotEmail'|trans }}</label>#}
-                                    <div class="col-sm-10 form-line">
-                                        {{ form_widget(formSetting.robotEmail, {'attr': {
-                                            'class': 'form-control', 'placeholder': "E-mail robot", 'title': "E-mail robot"}}
-                                        ) }}
-                                        {{ form_errors(formSetting.robotEmail) }}
-                                    </div>
+                                    {{ form_widget(formSetting.robotEmail, {'attr': {
+                                        'class': 'form-control', 'placeholder': "E-mail robot", 'title': "E-mail robot"}}
+                                    ) }}
+                                    {{ form_errors(formSetting.robotEmail) }}
                                 </div>
                                 <div class="form-group {% if not formSetting.phone.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.phone, 'app.setting.form.label.phone'|trans) }}
-                                    <div class="col-sm-10 form-line">
-                                        {{ form_widget(formSetting.phone, {'attr': {
-                                            'class': 'form-control', 'placeholder': "Téléphone", 'title': "Téléphone"}}
-                                        ) }}
-                                        {{ form_errors(formSetting.phone) }}
-                                    </div>
+                                    {{ form_widget(formSetting.phone, {'attr': {
+                                        'class': 'form-control', 'placeholder': "Téléphone", 'title': "Téléphone"}}
+                                    ) }}
+                                    {{ form_errors(formSetting.phone) }}
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group {% if not formSetting.country.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.country, 'app.setting.form.label.country'|trans) }}
-                                    <div class="col-sm-12" style="padding: 0;">
-                                        {{ form_widget(formSetting.country, {'attr': {
-                                            'class': 'form-control selectpicker', 'title': "Pays"}}
-                                        ) }}
-                                        {{ form_errors(formSetting.country) }}
-                                    </div>
+                                    {{ form_widget(formSetting.country, {'attr': {
+                                        'class': 'form-control selectpicker', 'title': "Pays"}}
+                                    ) }}
+                                    {{ form_errors(formSetting.country) }}
                                 </div>
                                 <div class="form-group {% if not formSetting.city.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.city, 'app.setting.form.label.city'|trans) }}
-                                    <div class="col-sm-10 form-line">
-                                        {{ form_widget(formSetting.city, {'attr': {
-                                            'class': 'form-control', 'placeholder': "Ville", 'title': "Ville"}}
-                                        ) }}
-                                        {{ form_errors(formSetting.city) }}
-                                    </div>
+                                    {{ form_widget(formSetting.city, {'attr': {
+                                        'class': 'form-control', 'placeholder': "Ville", 'title': "Ville"}}
+                                    ) }}
+                                    {{ form_errors(formSetting.city) }}
                                 </div>
                                 <div class="form-group {% if not formSetting.zipcode.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.zipcode, 'app.setting.form.label.zipcode'|trans) }}
-                                    <div class="col-sm-10 form-line">
-                                        {{ form_widget(formSetting.zipcode, {'attr': {
-                                            'class': 'form-control', 'placeholder': "Code postal", 'title': "Code postal"}}
-                                        ) }}
-                                        {{ form_errors(formSetting.zipcode) }}
-                                    </div>
+                                    {{ form_widget(formSetting.zipcode, {'attr': {
+                                        'class': 'form-control', 'placeholder': "Code postal", 'title': "Code postal"}}
+                                    ) }}
+                                    {{ form_errors(formSetting.zipcode) }}
                                 </div>
                                 <div class="form-group {% if not formSetting.address.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.address, 'app.setting.form.label.address'|trans) }}
-                                    <div class="col-sm-10 form-line">
-                                        {{ form_widget(formSetting.address, {'attr': {
-                                            'class': 'form-control', 'placeholder': "Adresse", 'title': "Adresse"}}
-                                        ) }}
-                                        {{ form_errors(formSetting.address) }}
-                                    </div>
+                                    {{ form_widget(formSetting.address, {'attr': {
+                                        'class': 'form-control', 'placeholder': "Adresse", 'title': "Adresse"}}
+                                    ) }}
+                                    {{ form_errors(formSetting.address) }}
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12 form-group {% if not formSetting.description.vars.valid %}text-danger{% endif %}">
                                 {{ form_label(formSetting.description, 'app.setting.form.label.description'|trans) }}
-                                <div class="form-line">
-                                    {{ form_widget(formSetting.description, {'attr': {
-                                        'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
-                                        'class': 'form-control no-resize auto-growth', 'placeholder': "Description de votre association", 'title': "Description"}}
-                                    ) }}
-                                    {{ form_errors(formSetting.description) }}
-                                </div>
+                                {{ form_widget(formSetting.description, {'attr': {
+                                    'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
+                                    'class': 'form-control no-resize auto-growth', 'placeholder': "Description de votre association", 'title': "Description"}}
+                                ) }}
+                                {{ form_errors(formSetting.description) }}
                             </div>
                         </div>
                         <div class="row">

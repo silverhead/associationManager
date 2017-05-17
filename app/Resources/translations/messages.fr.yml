@@ -96,9 +96,16 @@ app:
             saveSuccessText: Paramètres de l'application enregistrés avec succès !
     subscription:
         subscription:
+            addBtn: Ajouter un abonnement
             list:
                 title: Gestion des abonnements
                 callback: Retour gestion des abonnements
+                table:
+                    label: Libellé
+                    membersNumber: Nombre d'adhérents
+                    cost: Coût
+                    duration: Durée (jour)
+                    status: Statut
             edit:
                 label: Libellé
                 cost: Coût

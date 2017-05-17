@@ -15,27 +15,10 @@ class SubscriptionController extends Controller
      * @Route("/subscription/manager", name="subscription_manager")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function managerAction(Request $request, $anchor = null)
+    public function managerAction()
     {
-//        $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
-//        $currentRoute = $request->get('_route');
-//
-//        $subscriptionManager = $this->get('app.subscription.manager.subscription');
-//
-//        $results = $subscriptionManager->paginatedList($page, self::ITEMS_PER_PAGE, self::PAGE_PARAMETER_NAME);
-//
-//        $pageH = $this->get('app.handler.page_historical');
-//
-//        $pageH->setCallbackUrl('subscription_subscription_edit',
-//            $this->generateUrl($currentRoute),
-//            [self::PAGE_PARAMETER_NAME => $page],
-//            $anchor
-//        );
-
-
         return $this->render('subscription/subscriptionManager.html.twig', array(
-            'menuSelect' => 'subscription_manager',
-//            'results' => $results
+            'menuSelect' => 'subscription_manager'
         ));
     }
 
@@ -52,7 +35,7 @@ class SubscriptionController extends Controller
 
         $subscriptionManager = $this->get('app.subscription.manager.subscription');
 
-        $results = null;// $subscriptionManager->paginatedList($page, self::ITEMS_PER_PAGE, self::PAGE_PARAMETER_NAME);
+        $results = $subscriptionManager->paginatedList($page, self::ITEMS_PER_PAGE, self::PAGE_PARAMETER_NAME);
 
         $pageH = $this->get('app.handler.page_historical');
 
