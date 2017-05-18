@@ -113,6 +113,10 @@ app:
                 periodicities: Rythme de paiement possible
                 status: Statut
                 saveSucessText: Abonnement enregistré avec succès !
+            delete:
+                deleteErrorMissingText: L'abonnement que vous voulez suprpimer n'a pas été trouvé !
+                deleteSuccessText: L'abonnement %label% à bien été supprimé !
+                deleteQuestionText: La suppression de l'abonnement de paiement est définitf !
         periodicity:
             add: Ajouter une périodicité de paiement
             edit:
@@ -130,6 +134,6 @@ app:
                     duration: Durée (jours)
                     status: Statut
             delete:
-                deleteErrorMissingText: La période que vous voulez suprpimé n'a pas été trouvé !
+                deleteErrorMissingText: La période que vous voulez suprpimer n'a pas été trouvée !
                 deleteSuccessText: La période %label% à bien été supprimée !
                 deleteQuestionText: La suppression de la périodicité de paiement est définitf !

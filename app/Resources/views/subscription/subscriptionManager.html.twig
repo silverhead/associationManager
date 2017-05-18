@@ -9,39 +9,39 @@
                 var id = $(this).data('id');
 
                 swal({
-                    title: "Êtes-vous sûr ?",
-                    text: "La suppression de l'abonnemeent est définitf !",
+                    title: Translator.trans('app.common.deleteQuestionTitle'),
+                    text: Translator.trans('app.subscription.subscription.delete.deleteQuestionText'),
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Oui, je veux le supprimer !",
-                    cancelButtonText: "Non, n'annule ma demande !",
+                    confirmButtonText: Translator.trans('app.common.deleteQuestionYes'),
+                    cancelButtonText: Translator.trans('app.common.deleteQuestionNo'),
                     closeOnConfirm: false,
                     closeOnCancel: true
                 },
                 function(isConfirm){
-
-                    $.ajax({
-                        'type':'POST',
-                        'url': Routing.generate('subscription_periodicity_delete', {'id': id}),
-                        'dataType': 'json',
-                        'success': function(data){
-                            var data = $.parseJSON(data);
-
-                            if(data.code == 'ok'){
-                                swal("Supprimé !", "L'abonnement a été supprimé.", "success");
-                            }
-                            else{
-                                swal("Supprimé !", "L'abonnement a été supprimé.", "error");
-                            }
-                        },
-                        'error': function(){
-
-                        }
-                    });
-
                     if (isConfirm) {
+                        $.ajax({
+                            'type':'POST',
+                            'url': Routing.generate('subscription_subscription_delete', {'id': id}),
+                            'dataType': 'json',
+                            'success': function(data){
+                                var data = $.parseJSON(data);
 
+                                var title = Translator.trans('app.common.errorTitle');
+                                if(data.code == 'success'){
+                                    title = Translator.trans('app.common.deleteTitle');
+
+                                    reloadPeriodicitiesList();
+                                }
+
+                                swal(title, data.message, data.code);
+                            },
+                            'error': function(){
+                                swal(Translator.trans('app.common.errorTitle'),
+                                    Translator.trans('app.common.errorUnknow'), "error");
+                            }
+                        });
                     }
                 });
             });
