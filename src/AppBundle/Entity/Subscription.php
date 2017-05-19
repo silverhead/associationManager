@@ -230,7 +230,7 @@ class Subscription
         return $this->memberSubscription;
     }
 
-    public function iCanDeleted()
+    public function canDeleted()
     {
         return $this->getMemberSubscription()->count()==0?true:false;
     }

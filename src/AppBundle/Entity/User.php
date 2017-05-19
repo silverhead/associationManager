@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolaspin
- * Date: 21/03/2017
- * Time: 22:32
- */
 
 namespace AppBundle\Entity;
 
@@ -15,10 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
  * Class User
  * @package AppBundle\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
  */
 class User implements UserInterface
 {
+    protected $discr = 'user';
+
     /**
      * @var int
      * @ORM\Id()

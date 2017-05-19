@@ -12,5 +12,5 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Member extends User
 {
-
+    protected $discr = 'member';
 }

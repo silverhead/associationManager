@@ -27,7 +27,7 @@
                                 <td>{{ periodicity.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
                                 <td>
                                     <a href="{{ path('subscription_periodicity_edit', {'id' : periodicity.getId()}) }}" class="btn btn-warning material-icons">edit</a>
-                                    {% if periodicity.iCanDeleted() %}
+                                    {% if periodicity.canDeleted() %}
                                     <a href="#" data-id="{{ periodicity.getId() }}" class="btn btn-danger material-icons delPeriodicity">delete</a>
                                     {% else %}
                                         <a href="#" data-id="#" class="btn btn-danger material-icons disabled">delete</a>

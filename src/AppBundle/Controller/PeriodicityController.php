@@ -95,7 +95,7 @@ class PeriodicityController extends Controller
         if(null === $periodicity){
             $array = [
                 'code' => 'error',
-                'message' => $translator->trans('app.subscription.periodicity.deleteErrorMissingText')
+                'message' => $translator->trans('app.subscription.periodicity.delete.deleteErrorMissingText')
             ];
 
             return new Response(

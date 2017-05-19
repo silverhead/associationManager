@@ -1,65 +1,71 @@
-<div class="row">
-    <div class="col-xs-12">
-        <a href="{{ path('subscription_add') }}" class="btn bg-green waves-effect">{{ 'app.subscription.subscription.addBtn'|trans }}</a>
+<div id="subscriptionsContainer" data-page-parameter-name="{{ constant('AppBundle\\Controller\\SubscriptionController::PAGE_PARAMETER_NAME') }}">
+    <div class="row">
+        <div class="col-xs-12">
+            <a href="{{ path('subscription_add') }}" class="btn bg-green waves-effect">{{ 'app.subscription.subscription.addBtn'|trans }}</a>
+        </div>
     </div>
-</div>
-{#<div class="row">#}
-    {#<div class="col-md-6">#}
-        {#<form action="#">#}
-            {#<div class="input-group">#}
-                {#<div class="form-line">#}
-                    {#<input type="text" class="form-control date" placeholder="Rechercher">#}
+    {#<div class="row">#}
+        {#<div class="col-md-6">#}
+            {#<form action="#">#}
+                {#<div class="input-group">#}
+                    {#<div class="form-line">#}
+                        {#<input type="text" class="form-control date" placeholder="Rechercher">#}
+                    {#</div>#}
+                    {#<span class="input-group-addon">#}
+                        {#<i class="material-icons">search</i>#}
+                    {#</span>#}
                 {#</div>#}
-                {#<span class="input-group-addon">#}
-                    {#<i class="material-icons">search</i>#}
-                {#</span>#}
-            {#</div>#}
-        {#</form>#}
+            {#</form>#}
+        {#</div>#}
+        {#<div class="col-md-6">#}
+            {#<a href="#" class="btn bg-grey waves-effect pull-right">#}
+                {#<i class="material-icons">archive</i>#}
+                {#Export C.S.V.#}
+            {#</a>#}
+        {#</div>#}
     {#</div>#}
-    {#<div class="col-md-6">#}
-        {#<a href="#" class="btn bg-grey waves-effect pull-right">#}
-            {#<i class="material-icons">archive</i>#}
-            {#Export C.S.V.#}
-        {#</a>#}
-    {#</div>#}
-{#</div>#}
-<div class="row">
-    <div class="col-xs-12">
-        <div class="body table-responsive">
-            <form action="#">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>{{ 'app.subscription.subscription.list.table.label'|trans }}</th>
-                        <th>{{ 'app.subscription.subscription.list.table.membersNumber'|trans }}</th>
-                        <th>{{ 'app.subscription.subscription.list.table.cost'|trans }}</th>
-                        <th>{{ 'app.subscription.subscription.list.table.duration'|trans }}</th>
-                        <th>{{ 'app.subscription.subscription.list.table.status'|trans }}</th>
-                        <th>{{ 'app.common.table.action'|trans }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for subscription in results %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="body table-responsive">
+                <form action="#">
+                    <table class="table table-striped">
+                        <thead>
                         <tr>
-                            <th scope="row">{{ subscription.getId() }}</th>
-                            <td>{{ subscription.getLabel() }}</td>
-                            <td class="text-center">NF</td>
-                            <td class="text-right">{{ subscription.getCost()|number_format(2,',',' ') }} €</td>
-                            <td class="text-right">{{ subscription.getDuration() }}</td>
-                            <td>{{ subscription.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
-                            <td>
-                                {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                <a href="{{ path('subscription_edit', {'id': subscription.getId()}) }}" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="{{ subscription.getId() }}" class="btn btn-danger disabled material-icons delSubscription">delete</a>
-                            </td>
+                            <th>#</th>
+                            <th>{{ 'app.subscription.subscription.list.table.label'|trans }}</th>
+                            <th>{{ 'app.subscription.subscription.list.table.membersNumber'|trans }}</th>
+                            <th>{{ 'app.subscription.subscription.list.table.cost'|trans }}</th>
+                            <th>{{ 'app.subscription.subscription.list.table.duration'|trans }}</th>
+                            <th>{{ 'app.subscription.subscription.list.table.status'|trans }}</th>
+                            <th>{{ 'app.common.table.action'|trans }}</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </form>
-            <div class="pull-right">
-                {{ knp_pagination_render(results) }}
+                        </thead>
+                        <tbody>
+                        {% for subscription in results %}
+                            <tr>
+                                <th scope="row">{{ subscription.getId() }}</th>
+                                <td>{{ subscription.getLabel() }}</td>
+                                <td class="text-center">NF</td>
+                                <td class="text-right">{{ subscription.getCost()|number_format(2,',',' ') }} €</td>
+                                <td class="text-right">{{ subscription.getDuration() }}</td>
+                                <td>{{ subscription.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
+                                <td>
+                                    {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
+                                    <a href="{{ path('subscription_subscription_edit', {'id': subscription.getId()}) }}" class="btn btn-warning material-icons">edit</a>
+                                    {% if subscription.canDeleted() %}
+                                        <a href="#" data-id="{{ subscription.getId() }}" class="btn btn-danger material-icons delSubscription">delete</a>
+                                    {% else %}
+                                        <a href="#" data-id="#" class="btn btn-danger material-icons disabled">delete</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+                <div class="pull-right">
+                    {{ knp_pagination_render(results) }}
+                </div>
             </div>
         </div>
     </div>

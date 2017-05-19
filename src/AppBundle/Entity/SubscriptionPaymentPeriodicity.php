@@ -173,7 +173,7 @@ class SubscriptionPaymentPeriodicity
         return $this->subscriptions;
     }
 
-    public function iCanDeleted()
+    public function canDeleted()
     {
         return $this->subscriptions->count()==0?true:false;
     }
