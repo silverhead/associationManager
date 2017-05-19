@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Class Subscription
  * @package AppBundle\Entity
@@ -40,14 +41,21 @@ class Subscription
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Periodicity")
+     * @ORM\ManyToMany(targetEntity="SubscriptionPaymentPeriodicity", inversedBy="subscriptions")
      */
     private $periodicities;
+
+    /**
+     * @var MemberSubscriptionHistorical
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MemberSubscriptionHistorical", mappedBy="subscription")
+     */
+    private $memberSubscription;
 
     /**
      * @var boolean
      */
     private $active;
+
 
     /**
      * Constructor
@@ -158,11 +166,11 @@ class Subscription
     /**
      * Add periodicity
      *
-     * @param \AppBundle\Entity\Periodicity $periodicity
+     * @param \AppBundle\Entity\SubscriptionPaymentPeriodicity $periodicity
      *
      * @return Subscription
      */
-    public function addPeriodicity(\AppBundle\Entity\Periodicity $periodicity)
+    public function addPeriodicity(\AppBundle\Entity\SubscriptionPaymentPeriodicity $periodicity)
     {
         $this->periodicities[] = $periodicity;
 
@@ -172,19 +180,58 @@ class Subscription
     /**
      * Remove periodicity
      *
-     * @param \AppBundle\Entity\Periodicity $periodicity
+     * @param \AppBundle\Entity\SubscriptionPaymentPeriodicity $periodicity
      */
-    public function removePeriodicity(\AppBundle\Entity\Periodicity $periodicity)
+    public function removePeriodicity(\AppBundle\Entity\SubscriptionPaymentPeriodicity $periodicity)
     {
         $this->periodicities->removeElement($periodicity);
     }
 
     /**
-     * @return Periodicity
+     * @return SubscriptionPaymentPeriodicity
      */
     public function getPeriodicities()
     {
         return $this->periodicities;
     }
 
+
+    /**
+     * Add memberSubscription
+     *
+     * @param \AppBundle\Entity\MemberSubscriptionHistorical $memberSubscription
+     *
+     * @return Subscription
+     */
+    public function addMemberSubscription(\AppBundle\Entity\MemberSubscriptionHistorical $memberSubscription)
+    {
+        $this->memberSubscription[] = $memberSubscription;
+
+        return $this;
+    }
+
+    /**
+     * Remove memberSubscription
+     *
+     * @param \AppBundle\Entity\MemberSubscriptionHistorical $memberSubscription
+     */
+    public function removeMemberSubscription(\AppBundle\Entity\MemberSubscriptionHistorical $memberSubscription)
+    {
+        $this->memberSubscription->removeElement($memberSubscription);
+    }
+
+    /**
+     * Get memberSubscription
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMemberSubscription()
+    {
+        return $this->memberSubscription;
+    }
+
+    public function iCanDeleted()
+    {
+        return $this->getMemberSubscription()->count()==0?true:false;
+    }
 }

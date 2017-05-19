@@ -50,8 +50,8 @@
                             <td>{{ subscription.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
                             <td>
                                 {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                <a href="{{ path('subscription_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="1" class="btn btn-danger disabled material-icons delSubscription">delete</a>
+                                <a href="{{ path('subscription_edit', {'id': subscription.getId()}) }}" class="btn btn-warning material-icons">edit</a>
+                                <a href="#" data-id="{{ subscription.getId() }}" class="btn btn-danger disabled material-icons delSubscription">delete</a>
                             </td>
                         </tr>
                     {% endfor %}

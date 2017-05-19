@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form\Handler;
 
-use AppBundle\Entity\Periodicity;
+use AppBundle\Entity\SubscriptionPaymentPeriodicity;
 use AppBundle\Form\Type\PeriodicityFormType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +23,7 @@ class PeriodicityFormHandler
         $this->formFactory = $formFactory;
     }
 
-    public function setForm(Periodicity $periodicity = null)
+    public function setForm(SubscriptionPaymentPeriodicity $periodicity = null)
     {
 
         $this->form = $this->formFactory->create(PeriodicityFormType::class, $periodicity);

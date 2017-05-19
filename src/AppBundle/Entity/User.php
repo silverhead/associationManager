@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class User
  * @package AppBundle\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
  */
 class User implements UserInterface
 {

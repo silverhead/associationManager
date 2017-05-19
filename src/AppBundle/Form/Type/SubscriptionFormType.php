@@ -22,7 +22,7 @@ class SubscriptionFormType extends AbstractType
             ->add('cost', NumberType::class)
             ->add('duration', IntegerType::class)
             ->add('periodicities', EntityType::class, [
-                'class' => 'AppBundle\Entity\Periodicity',
+                'class' => 'AppBundle\Entity\SubscriptionPaymentPeriodicity',
                 'choice_label' => 'label',
                 'multiple' => true
             ])

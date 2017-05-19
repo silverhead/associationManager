@@ -2,7 +2,7 @@
 
 namespace AppBundle\Manager;
 
-use AppBundle\Entity\Periodicity;
+use AppBundle\Entity\SubscriptionPaymentPeriodicity;
 use AppBundle\Handler\ErrorHandlerTrait;
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\ORM\EntityManager;
@@ -31,11 +31,11 @@ class PeriodicityManager implements PaginatorManagerInterface
 
     public function getNewEntity()
     {
-        return new Periodicity();
+        return new SubscriptionPaymentPeriodicity();
     }
 
     public function getRepository()
     {
-        return $this->entityManager->getRepository("AppBundle:Periodicity");
+        return $this->entityManager->getRepository("AppBundle:SubscriptionPaymentPeriodicity");
     }
 }
