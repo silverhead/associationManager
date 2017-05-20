@@ -10,6 +10,11 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - AppBundle\Entity\Setting
+    app.repository.subscription:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Subscription
     # Security
     form_authenticator:
         class: AppBundle\Security\FormAuthenticator
@@ -43,6 +48,11 @@ services:
         arguments: ['@app.repository.setting']
         tags:
             - {name: twig.extension}
+    app.twig_extension.subscription:
+        class: AppBundle\Twig\SubscriptionExtension
+        arguments: ['@app.repository.subscription']
+        tags:
+            - {name: twig.extension}
     # Manager
     app.manager.security:
         class: AppBundle\Manager\SecurityManager
@@ -55,6 +65,9 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     app.subscription.manager.subscription:
         class: AppBundle\Manager\SubscriptionManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    app.member.manager.status:
+        class: AppBundle\Manager\MemberStatusManager
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     # Handler
     app.handler.page_historical:

@@ -45,7 +45,7 @@
                             <tr>
                                 <th scope="row">{{ subscription.getId() }}</th>
                                 <td>{{ subscription.getLabel() }}</td>
-                                <td class="text-center">NF</td>
+                                <td class="text-center">{{ subscription|countSubscriberMembers }}</td>
                                 <td class="text-right">{{ subscription.getCost()|number_format(2,',',' ') }} €</td>
                                 <td class="text-right">{{ subscription.getDuration() }}</td>
                                 <td>{{ subscription.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>

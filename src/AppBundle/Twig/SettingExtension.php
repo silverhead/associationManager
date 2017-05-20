@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolaspin
- * Date: 28/04/2017
- * Time: 11:35
- */
 
 namespace AppBundle\Twig;
-
 
 use Doctrine\Common\Persistence\ObjectRepository;
 

@@ -21,8 +21,12 @@ class SubscriptionController extends Controller
      */
     public function managerAction()
     {
+        $subscriptionManager = $this->get('app.subscription.manager.subscription');
+        $totalSubscriberMembers = $subscriptionManager->getCountAllSubscriberMembers();
+
         return $this->render('subscription/subscriptionManager.html.twig', array(
-            'menuSelect' => 'subscription_manager'
+            'menuSelect' => 'subscription_manager',
+            'totalMember' => $totalSubscriberMembers
         ));
     }
 
@@ -32,7 +36,7 @@ class SubscriptionController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()//Request $request, $anchor = null
+    public function listAction(Request $request, $anchor = null)
     {
         $page =  1;//$request->get(self::PAGE_PARAMETER_NAME, 1);
         $currentRoute = 'subscription_manager';//$request->get('_route');

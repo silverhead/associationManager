@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class MemberSubscriptionHistorical
  * @package AppBundle\Entity
  *
- * @ORM\Entity(repositoryClass="MemberSubscriptionHistoricalRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MemberSubscriptionHistoricalRepository")
  */
 class MemberSubscriptionHistorical
 {
@@ -22,13 +22,13 @@ class MemberSubscriptionHistorical
 
     /**
      * @var Member
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Member")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Member", inversedBy="subscriptions")
      */
     private $member;
 
     /**
      * @var Subscription
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Subscription")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Subscription", inversedBy="memberSubscription")
      */
     private $subscription;
 

@@ -38,5 +38,9 @@ class SubscriptionManager implements PaginatorManagerInterface
         return new Subscription();
     }
 
+    public function getCountAllSubscriberMembers()
+    {
+       return $this->getRepository()->getCountAllSubscriberMembers();
+    }
 
 }

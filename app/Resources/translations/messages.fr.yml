@@ -10,6 +10,8 @@ app:
         deleteQuestionTitle: Êtes-vous sûr ?
         deleteQuestionYes: Oui, je veux le supprimer !
         deleteQuestionNo: Non, n'annule ma demande !
+        cancelBtn: Annuler
+        validBtn: Valider
         returnBtn: Retour
         form:
             submit:
@@ -100,6 +102,7 @@ app:
             list:
                 title: Gestion des abonnements
                 callback: Retour gestion des abonnements
+                totalActiveMember: Total membres actifs
                 table:
                     label: Libellé
                     membersNumber: Nombre d'adhérents
@@ -137,3 +140,10 @@ app:
                 deleteErrorMissingText: La période que vous voulez suprpimer n'a pas été trouvée !
                 deleteSuccessText: La période %label% à bien été supprimée !
                 deleteQuestionText: La suppression de la périodicité de paiement est définitf !
+    member:
+        member:
+            list:
+                title: Gestion des adhérents
+        status:
+            add:
+                title: Ajouter un statut

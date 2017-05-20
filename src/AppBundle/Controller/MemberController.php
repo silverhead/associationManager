@@ -11,7 +11,7 @@ class MemberController extends Controller
     /**
      * @Route("/members/manager", name="members_manager")
      */
-    public function indexAction($name)
+    public function indexAction()
     {
         return $this->render('member/membersManager.html.twig', array(
             'menuSelect' => 'members_manager'

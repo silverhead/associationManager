@@ -7,16 +7,33 @@
                 e.preventDefault();
 
                 swal({
-                    title: "Ajouter un statut",
+                    title: Translator.trans("app.member.status.add.title"),
                     text: "",
                     type: 'input',
                     showCancelButton: true,
                     closeOnConfirm: false,
                     animation: "slide-from-top",
-                    confirmButtonText: "Valider",
-                    cancelButtonText: "Annuler",
+                    confirmButtonText: Translator.trans("app.commom.validBtn"),
+                    cancelButtonText: Translator.trans("app.commom.cancelBtn"),
                 }, function(inputValue){
-                    console.log("You wrote", inputValue);
+                    $.ajax({
+                        'type': 'post',
+                        'dataType': 'json',
+                        'data': 'label='+inputValue,
+                        'success': function(data){
+                            var title = Translator.trans('app.common.errorTitle');
+                            if(data.code == 'success'){
+                                title = Translator.trans('app.common.deleteTitle');
+
+                                reloadMemberStatusList();
+                            }
+
+                            swal(title, data.message, data.code);
+                        },
+                        'error': function(){
+                            swal(Translator.trans("app.common.errorTitle"), Translator.trans("app.common.errorUnknow"), "error");
+                        }
+                    });
                 });
             });
 
@@ -146,12 +163,41 @@
                         }
                     });
             });
-
-//            $(document).ready(function(){
-//                $('table.table').DataTable();
-//            });
         });
 
+        function reloadMemberStatusList(){
+            var $memberStatusContainer = $('#memberStatusContainer');
+            var paginatorPageParam = $memberStatusContainer.data('page-parameter-name');
+            var nbRow = $memberStatusContainer.find('table tbody tr').length;
+            var url = window.location.href;
+
+            var regExp = new RegExp(".*"+paginatorPageParam+"=(\\d+).*","gi");
+
+            var pageTag = regExp.exec(url);
+
+            var pageCount = 1;
+            if(null !== pageTag){
+                var pageCount = parseInt(pageTag.length > 1? pageTag[1]: 1);
+            }
+
+            if(nbRow ==  1 && pageCount > 1){
+                pageCount = pageCount -1;
+            }
+
+            $.ajax({
+                'url': Routing.generate('member_status_list_part'),
+                'type': 'GET',
+                'data': paginatorPageParam+'='+pageCount,
+                'dataType': 'html',
+                'success': function(template){
+                    $('#memberStatusContainer').html(template);
+                },
+                'error': function(){
+                    swal(Translator.trans('app.common.errorTitle'),
+                        Translator.trans('app.common.errorUnknow'), "error");
+                }
+            });
+        }
 
     </script>
 
@@ -161,16 +207,17 @@
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
         {
-            'href': path('dashboard'),
-            'title': 'retour tableau de bord',
-            'label': 'Tableau de bord'
+        'href': path('dashboard'),
+        'title': 'app.dashboard.callback'|trans,
+        'label': 'app.dashboard.title'|trans
         },
         {
-        'label': 'Gestion adhérents'
+        'label': 'app.member.member.list.title'|trans
         }
         ] } %}
+
         <h2 class="col-xs-12">
-            Gestion adhérents
+            {{ 'app.member.member.list.title'|trans }}
             <span class="pull-right">40 membres</span>
         </h2>
     </div>
@@ -191,7 +238,8 @@
                             {% include 'member/manager/membersList.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="status">
-                            {% include 'member/manager/statusList.html.twig' %}
+                            {{ render(controller('AppBundle:MemberStatus:list')) }}
+                            {#{% include 'member/manager/statusList.html.twig' %}#}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="groups">
                             {% include 'member/manager/groupsList.html.twig' %}

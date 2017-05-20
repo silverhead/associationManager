@@ -26,9 +26,6 @@
                             'url': Routing.generate('subscription_subscription_delete', {'id': id}),
                             'dataType': 'json',
                             'success': function(data){
-                                console.log(data);
-//                                var data = $.parseJSON(data);
-
                                 var title = Translator.trans('app.common.errorTitle');
                                 if(data.code == 'success'){
                                     title = Translator.trans('app.common.deleteTitle');
@@ -183,16 +180,16 @@
     {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
     {
     'href': path('dashboard'),
-    'title': 'retour tableau de bord',
-    'label': 'Tableau de bord'
+    'title': 'app.dashboard.callback'|trans,
+    'label': 'app.dashboard.title'|trans
     },
     {
-    'label': 'Gestion abonnements'
+    'label': 'app.subscription.subscription.list.title'|trans
     }
     ] } %}
     <h2 class="col-xs-12">
-        Gestion abonnements
-        <span class="pull-right"><b>Total :</b> 2 000€</span>
+        {{ 'app.subscription.subscription.list.title'|trans }}
+        <span class="pull-right"><b>{{ 'app.subscription.subscription.list.totalActiveMember'|trans }} :</b> {{ totalMember }}</span>
     </h2>
 </div>
 {% include ':main/flashMessage:flashMessageBloc.html.twig' %}
