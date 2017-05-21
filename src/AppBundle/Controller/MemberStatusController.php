@@ -42,6 +42,11 @@ class MemberStatusController extends Controller
         ));
     }
 
+    /**
+     * @Route("/member/status/json/save", name="member_status_save_json", options={"expose" = true})
+     * @param Request $request
+     * @return Response
+     */
     public function saveAction(Request $request)
     {
         if(!$request->isXmlHttpRequest()){
@@ -58,7 +63,7 @@ class MemberStatusController extends Controller
             $statusManager->saveAjax($request);
 
             $array = [
-                'code' => 'succes',
+                'code' => 'success',
                 'message' => $translator->trans('app.member.status.edit.saveSuccessText')
             ];
 

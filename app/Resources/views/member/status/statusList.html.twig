@@ -17,79 +17,84 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% for status in results %}
                         <tr>
-                            <td scope="row">1</td>
-                            <td>Président</td>
-                            <td>1</td>
+                            <td scope="row">{{ status.getId() }}</td>
+                            <td>{{ status.getLabel() }}</td>
+                            <td>NF</td>
                             <td>
                                 {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                <a href="#" data-label="Président"  class="btn btn-warning material-icons editStatus">edit</a>
-                                <a href="#" data-id="1" class="btn btn-danger material-icons delStatus">delete</a>
+                                <a href="#" data-id="{{ status.getId() }}" data-label="{{ status.getLabel() }}" class="btn btn-warning material-icons editStatus">edit</a>
+                                <a href="#" data-id="{{ status.getId() }}" data-label="{{ status.getLabel() }}" class="btn btn-danger material-icons delStatus">delete</a>
                             </td>
                         </tr>
-                        <tr>
-                            <td scope="row">2</td>
-                            <td>Trésorier</td>
-                            <td>1</td>
-                            <td>
+                    {% endfor %}
+                        {#<tr>#}
+                            {#<td scope="row">2</td>#}
+                            {#<td>Trésorier</td>#}
+                            {#<td>1</td>#}
+                            {#<td>#}
                                 {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                <a href="#" data-label="Trésorier" class="btn btn-warning material-icons editStatus">edit</a>
-                                <a href="#" data-id="2" class="btn btn-danger material-icons delStatus">delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">3</td>
-                            <td>Vice président projet</td>
-                            <td>1</td>
-                            <td>
+                                {#<a href="#" data-label="Trésorier" class="btn btn-warning material-icons editStatus">edit</a>#}
+                                {#<a href="#" data-id="2" class="btn btn-danger material-icons delStatus">delete</a>#}
+                            {#</td>#}
+                        {#</tr>#}
+                        {#<tr>#}
+                            {#<td scope="row">3</td>#}
+                            {#<td>Vice président projet</td>#}
+                            {#<td>1</td>#}
+                            {#<td>#}
                                 {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                <a href="#" data-label="Vice président projet" class="btn btn-warning material-icons editStatus">edit</a>
-                                <a href="#" data-id="3" class="btn btn-danger material-icons delStatus">delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">4</td>
-                            <td>Responsable communication externe</td>
-                            <td>1</td>
-                            <td>
+                                {#<a href="#" data-label="Vice président projet" class="btn btn-warning material-icons editStatus">edit</a>#}
+                                {#<a href="#" data-id="3" class="btn btn-danger material-icons delStatus">delete</a>#}
+                            {#</td>#}
+                        {#</tr>#}
+                        {#<tr>#}
+                            {#<td scope="row">4</td>#}
+                            {#<td>Responsable communication externe</td>#}
+                            {#<td>1</td>#}
+                            {#<td>#}
                                 {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="4" class="btn btn-danger material-icons delStatus">delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">5</td>
-                            <td>Responsable communication interne</td>
-                            <td>1</td>
-                            <td>
+                                {#<a href="#" class="btn btn-warning material-icons">edit</a>#}
+                                {#<a href="#" data-id="4" class="btn btn-danger material-icons delStatus">delete</a>#}
+                            {#</td>#}
+                        {#</tr>#}
+                        {#<tr>#}
+                            {#<td scope="row">5</td>#}
+                            {#<td>Responsable communication interne</td>#}
+                            {#<td>1</td>#}
+                            {#<td>#}
                                 {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="5" class="btn btn-danger material-icons delStatus">delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">6</td>
-                            <td>Membre 1 an</td>
-                            <td>10</td>
-                            <td>
+                                {#<a href="#" class="btn btn-warning material-icons">edit</a>#}
+                                {#<a href="#" data-id="5" class="btn btn-danger material-icons delStatus">delete</a>#}
+                            {#</td>#}
+                        {#</tr>#}
+                        {#<tr>#}
+                            {#<td scope="row">6</td>#}
+                            {#<td>Membre 1 an</td>#}
+                            {#<td>10</td>#}
+                            {#<td>#}
                                 {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="6" class="btn btn-danger material-icons delStatus">delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">7</td>
-                            <td>Membre 1 mois</td>
-                            <td>5</td>
-                            <td>
+                                {#<a href="#" class="btn btn-warning material-icons">edit</a>#}
+                                {#<a href="#" data-id="6" class="btn btn-danger material-icons delStatus">delete</a>#}
+                            {#</td>#}
+                        {#</tr>#}
+                        {#<tr>#}
+                            {#<td scope="row">7</td>#}
+                            {#<td>Membre 1 mois</td>#}
+                            {#<td>5</td>#}
+                            {#<td>#}
                                 {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                <a href="#" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="7" class="btn btn-danger material-icons delStatus">delete</a>
-                            </td>
-                        </tr>
+                                {#<a href="#" class="btn btn-warning material-icons">edit</a>#}
+                                {#<a href="#" data-id="7" class="btn btn-danger material-icons delStatus">delete</a>#}
+                            {#</td>#}
+                        {#</tr>#}
                     </tbody>
                 </table>
             </form>
+            <div class="pull-right">
+                {{ knp_pagination_render(results) }}
+            </div>
         </div>
     </div>
 </div>

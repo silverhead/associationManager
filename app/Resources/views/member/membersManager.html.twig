@@ -13,17 +13,25 @@
                     showCancelButton: true,
                     closeOnConfirm: false,
                     animation: "slide-from-top",
-                    confirmButtonText: Translator.trans("app.commom.validBtn"),
-                    cancelButtonText: Translator.trans("app.commom.cancelBtn"),
+                    confirmButtonText: Translator.trans("app.common.validBtn"),
+                    cancelButtonText: Translator.trans("app.common.cancelBtn"),
                 }, function(inputValue){
+                    if (inputValue === false) return false;
+
+                    if (inputValue === "") {
+                        swal.showInputError(Translator.trans('app.common.form.validation.notBlank'));
+                        return false
+                    }
+
                     $.ajax({
+                        'url': Routing.generate('member_status_save_json'),
                         'type': 'post',
                         'dataType': 'json',
                         'data': 'label='+inputValue,
                         'success': function(data){
                             var title = Translator.trans('app.common.errorTitle');
                             if(data.code == 'success'){
-                                title = Translator.trans('app.common.deleteTitle');
+                                title = Translator.trans('app.common.successTitle');
 
                                 reloadMemberStatusList();
                             }
@@ -190,7 +198,8 @@
                 'data': paginatorPageParam+'='+pageCount,
                 'dataType': 'html',
                 'success': function(template){
-                    $('#memberStatusContainer').html(template);
+
+                    $memberStatusContainer.html(template);
                 },
                 'error': function(){
                     swal(Translator.trans('app.common.errorTitle'),

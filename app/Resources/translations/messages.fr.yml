@@ -19,6 +19,8 @@ app:
                 saveAndLeave: Enregistrer et revenir sur la liste
                 saveAndStay: Enregistrer et rester
             choice: Choisir
+            validation:
+                notBlank: Ce champ doit être renseigné !
         status:
             enabled: Actif
             disabled: Non actif
@@ -130,7 +132,7 @@ app:
                     label: Statut
                 placeholder:
                     duration: Durée (en jours)
-                saveSucessText: Période enregistrée avec succés !
+                saveSucessText: Période enregistrée avec succès !
             list:
                 table:
                     periodicity: Périodicité
@@ -147,3 +149,5 @@ app:
         status:
             add:
                 title: Ajouter un statut
+            edit:
+                saveSuccessText: Le statut a été enregistré avec succès !
