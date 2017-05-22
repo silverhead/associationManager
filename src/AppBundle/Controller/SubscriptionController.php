@@ -49,8 +49,8 @@ class SubscriptionController extends Controller
 
         $pageH->setCallbackUrl('subscription_subscription_edit',
             $this->generateUrl($currentRoute),
-            [self::PAGE_PARAMETER_NAME => $page]
-//            $anchor
+            [self::PAGE_PARAMETER_NAME => $page],
+            $anchor
         );
 
         return $this->render('/subscription/subscription/subscriptionList.html.twig', array(

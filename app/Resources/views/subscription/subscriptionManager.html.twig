@@ -1,178 +1,9 @@
 {% extends 'layoutLogin.html.twig' %}
 
 {% block javascript %}
-    <script type="text/javascript">
-        $(function(){
-            $('.delSubscription').on('click', function(e){
-                e.preventDefault();
-
-                var id = $(this).data('id');
-
-                swal({
-                    title: Translator.trans('app.common.deleteQuestionTitle'),
-                    text: Translator.trans('app.subscription.subscription.delete.deleteQuestionText'),
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: Translator.trans('app.common.deleteQuestionYes'),
-                    cancelButtonText: Translator.trans('app.common.deleteQuestionNo'),
-                    closeOnConfirm: false,
-                    closeOnCancel: true
-                },
-                function(isConfirm){
-                    if (isConfirm) {
-                        $.ajax({
-                            'type':'POST',
-                            'url': Routing.generate('subscription_subscription_delete', {'id': id}),
-                            'dataType': 'json',
-                            'success': function(data){
-                                var title = Translator.trans('app.common.errorTitle');
-                                if(data.code == 'success'){
-                                    title = Translator.trans('app.common.deleteTitle');
-
-                                    reloadSubscriptionsList();
-                                }
-
-                                swal(title, data.message, data.code);
-                            },
-                            'error': function(){
-                                swal(Translator.trans('app.common.errorTitle'),
-                                    Translator.trans('app.common.errorUnknow'), "error");
-                            }
-                        });
-                    }
-                });
-            });
-
-            $(document).on('click', '.delPeriodicity', function(e){
-                e.preventDefault();
-
-                var id = $(this).data('id');
-
-                swal({
-                        title: Translator.trans('app.common.deleteQuestionTitle'),
-                        text: Translator.trans('app.subscription.periodicity.delete.deleteQuestionText'),
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: Translator.trans('app.common.deleteQuestionYes'),
-                        cancelButtonText: Translator.trans('app.common.deleteQuestionNo'),
-                        closeOnConfirm: false,
-                        closeOnCancel: true
-                    },
-                    function(isConfirm){
-                        if(isConfirm){
-                            $.ajax({
-                                'type':'POST',
-                                'url': Routing.generate('subscription_periodicity_delete', {'id': id}),
-                                'dataType': 'json',
-                                'success': function(data){
-
-                                    var title = Translator.trans('app.common.errorTitle');
-                                    if(data.code == 'success'){
-                                        title = Translator.trans('app.common.deleteTitle');
-
-                                        reloadPeriodicitiesList();
-                                    }
-
-                                    swal(title, data.message, data.code);
-                                },
-                                'error': function(){
-                                    swal(Translator.trans('app.common.errorTitle'),
-                                        Translator.trans('app.common.errorUnknow'), "error");
-                                }
-                            });
-                        }
-                    });
-            });
-        });
-
-        function reloadPeriodicitiesList()
-        {
-            var $periodicitiesContainer = $('#periodicitiesContainer');
-            var paginatorPageParam = $periodicitiesContainer.data('page-parameter-name');
-            var nbRow = $periodicitiesContainer.find('table tbody tr').length;
-            var url = window.location.href;
-
-            var regExp = new RegExp(".*"+paginatorPageParam+"=(\\d+).*","gi");
-
-            console.log(regExp);
-
-            var pageTag = regExp.exec(url);
-
-            console.log(pageTag);
-
-            var pageCount = 1;
-            if(null !== pageTag){
-                var pageCount = parseInt(pageTag.length > 1? pageTag[1]: 1);
-            }
-
-            console.log(pageCount);
-
-            if(nbRow ==  1 && pageCount > 1){
-                pageCount = pageCount -1;
-            }
-
-            console.log(pageCount);
-
-            $.ajax({
-                'url': Routing.generate('subscription_periodicity_list_part'),
-                'type': 'GET',
-                'data': paginatorPageParam+'='+pageCount,
-                'dataType': 'html',
-                'success': function(template){
-                    $('#periodicitiesContainer').html(template);
-                },
-                'error': function(){
-                    swal(Translator.trans('app.common.errorTitle'),
-                        Translator.trans('app.common.errorUnknow'), "error");
-                }
-            });
-        }
-
-        function reloadSubscriptionsList()
-        {
-            var $periodicitiesContainer = $('#subscriptionsContainer');
-            var paginatorPageParam = $periodicitiesContainer.data('page-parameter-name');
-            var nbRow = $periodicitiesContainer.find('table tbody tr').length;
-            var url = window.location.href;
-
-            var regExp = new RegExp(".*"+paginatorPageParam+"=(\\d+).*","gi");
-
-            console.log(regExp);
-
-            var pageTag = regExp.exec(url);
-
-            console.log(pageTag);
-
-            var pageCount = 1;
-            if(null !== pageTag){
-                var pageCount = parseInt(pageTag.length > 1? pageTag[1]: 1);
-            }
-
-            console.log(pageCount);
-
-            if(nbRow ==  1 && pageCount > 1){
-                pageCount = pageCount -1;
-            }
-
-            console.log(pageCount);
-
-            $.ajax({
-                'url': Routing.generate('subscription_subscription_list_part'),
-                'type': 'GET',
-                'data': paginatorPageParam+'='+pageCount,
-                'dataType': 'html',
-                'success': function(template){
-                    $('#subscriptionsContainer').html(template);
-                },
-                'error': function(){
-                    swal(Translator.trans('app.common.errorTitle'),
-                        Translator.trans('app.common.errorUnknow'), "error");
-                }
-            });
-        }
-    </script>
+    {{ parent() }}
+    <script src="{{ asset("bundles/app/subscription/subscription/js/manage.js") }}"></script>
+    <script src="{{ asset("bundles/app/subscription/periodicity/js/manage.js") }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -199,17 +30,15 @@
             <div class="body">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                    <li role="presentation" class="active"><a href="#subscriptions" data-toggle="tab">Abonnements</a></li>
-                    <li role="presentation"><a href="#periodicities" data-toggle="tab">Periodicités</a></li>
+                    <li role="presentation" class="active"><a href="#subscriptions" data-toggle="tab">{{ 'app.subscription.manager.tabSubscriptions'|trans }}</a></li>
+                    <li role="presentation"><a href="#periodicities" data-toggle="tab">{{ 'app.subscription.manager.tabPeriodicities'|trans }}</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="subscriptions">
-                        {#{% include 'subscription/subscription/subscriptionList.html.twig' with {'results': subscriptionsList} only %}#}
-                        {{ render(controller('AppBundle:Subscription:list')) }}
+                        {{ render(controller('AppBundle:Subscription:list', {'request': app.request, 'anchor': '#subscriptions'})) }}
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="periodicities">
-                        {#{% include 'subscription/periodicity/:subscription/periodicity:periodicityList.html.twig' with {'results': periodicitiesList} only %}#}
                         {{ render(controller('AppBundle:Periodicity:list', {'request': app.request, 'anchor': '#periodicities'})) }}
                     </div>
                 </div>

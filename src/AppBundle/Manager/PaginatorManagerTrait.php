@@ -2,13 +2,12 @@
 
 namespace AppBundle\Manager;
 
-
 use AppBundle\Repository\PaginatorRepositoryInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 Trait PaginatorManagerTrait
 {
-    public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page')
+    public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page', $anchor = null)
     {
         if( !($this instanceof PaginatorManagerInterface)){
             throw new \Exception("You need to implement PaginatorManagerInterface for use this trait!");
@@ -30,7 +29,7 @@ Trait PaginatorManagerTrait
 
         return $this->paginator->paginate($qb, $page, $itemPerPage, [
             'pageParameterName' => $pageParameterName,
-            'anchor' => '#periodicities'
+            'anchor' => $anchor
         ]);
     }
 }

@@ -16,18 +16,22 @@ class MemberStatusController extends Controller
     const PAGE_PARAMETER_NAME = 'pageTab2';
 
     /**
-     * @Route("/member/status/list-part", name="member_status_list_part",  options = { "expose" = true })
+     * @Route("/member/status/list-part/{anchor}", name="member_status_list_part",  options = { "expose" = true })
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(Request $request, $anchor = null)
     {
-        $page =  1;
-        $currentRoute = 'subscription_manager';
+        $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
+        $currentRoute = 'members_manager';
 
         $memberStatusManager = $this->get('app.member.manager.status');
 
-        $results = $memberStatusManager->paginatedList($page, self::ITEMS_PER_PAGE, self::PAGE_PARAMETER_NAME);
+        $results = $memberStatusManager->paginatedList(
+            $page,
+            self::ITEMS_PER_PAGE,
+            self::PAGE_PARAMETER_NAME,
+            $anchor);
 
         $pageH = $this->get('app.handler.page_historical');
 

@@ -1,77 +1,16 @@
 {% extends 'layoutLogin.html.twig' %}
 
 {% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/member/status/js/manage.js') }}"></script>
     <script type="text/javascript">
         $(function(){
-            $('#addStatus').on('click', function(e){
-                e.preventDefault();
-
-                swal({
-                    title: Translator.trans("app.member.status.add.title"),
-                    text: "",
-                    type: 'input',
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    animation: "slide-from-top",
-                    confirmButtonText: Translator.trans("app.common.validBtn"),
-                    cancelButtonText: Translator.trans("app.common.cancelBtn"),
-                }, function(inputValue){
-                    if (inputValue === false) return false;
-
-                    if (inputValue === "") {
-                        swal.showInputError(Translator.trans('app.common.form.validation.notBlank'));
-                        return false
-                    }
-
-                    $.ajax({
-                        'url': Routing.generate('member_status_save_json'),
-                        'type': 'post',
-                        'dataType': 'json',
-                        'data': 'label='+inputValue,
-                        'success': function(data){
-                            var title = Translator.trans('app.common.errorTitle');
-                            if(data.code == 'success'){
-                                title = Translator.trans('app.common.successTitle');
-
-                                reloadMemberStatusList();
-                            }
-
-                            swal(title, data.message, data.code);
-                        },
-                        'error': function(){
-                            swal(Translator.trans("app.common.errorTitle"), Translator.trans("app.common.errorUnknow"), "error");
-                        }
-                    });
-                });
-            });
-
             $('#addGroup').on('click', function(e){
                 e.preventDefault();
-
                 swal({
                     title: "Ajouter un groupe",
                     text: "",
                     type: 'input',
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    animation: "slide-from-top",
-                    confirmButtonText: "Valider",
-                    cancelButtonText: "Annuler",
-                }, function(inputValue){
-                    console.log("You wrote", inputValue);
-                });
-            });
-
-            $('.editStatus').on('click', function(e){
-                e.preventDefault();
-
-                var label = $(this).data('label');
-
-                swal({
-                    title: "Modifier le statut",
-                    text: "",
-                    type: 'input',
-                    inputValue: label,
                     showCancelButton: true,
                     closeOnConfirm: false,
                     animation: "slide-from-top",
@@ -126,28 +65,7 @@
                 });
             });
 
-            $('.delStatus').on('click', function(e){
-                e.preventDefault();
 
-                var id = $(this).data('id');
-
-                swal({
-                        title: "Êtes-vous sûr ?",
-                        text: "La suppression du status est définitf !",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Oui, je veux le supprimer !",
-                        cancelButtonText: "Non, n'annule ma demande !",
-                        closeOnConfirm: false,
-                        closeOnCancel: true
-                    },
-                    function(isConfirm){
-                        if (isConfirm) {
-                            swal("Supprimé !", "Le status a été supprimé.", "success");
-                        }
-                    });
-            });
 
             $('.delGroup').on('click', function(e){
                 e.preventDefault();
@@ -173,40 +91,7 @@
             });
         });
 
-        function reloadMemberStatusList(){
-            var $memberStatusContainer = $('#memberStatusContainer');
-            var paginatorPageParam = $memberStatusContainer.data('page-parameter-name');
-            var nbRow = $memberStatusContainer.find('table tbody tr').length;
-            var url = window.location.href;
 
-            var regExp = new RegExp(".*"+paginatorPageParam+"=(\\d+).*","gi");
-
-            var pageTag = regExp.exec(url);
-
-            var pageCount = 1;
-            if(null !== pageTag){
-                var pageCount = parseInt(pageTag.length > 1? pageTag[1]: 1);
-            }
-
-            if(nbRow ==  1 && pageCount > 1){
-                pageCount = pageCount -1;
-            }
-
-            $.ajax({
-                'url': Routing.generate('member_status_list_part'),
-                'type': 'GET',
-                'data': paginatorPageParam+'='+pageCount,
-                'dataType': 'html',
-                'success': function(template){
-
-                    $memberStatusContainer.html(template);
-                },
-                'error': function(){
-                    swal(Translator.trans('app.common.errorTitle'),
-                        Translator.trans('app.common.errorUnknow'), "error");
-                }
-            });
-        }
 
     </script>
 
@@ -236,7 +121,7 @@
                 <div class="body">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                        <li role="presentation" class="active"><a href="#members" data-toggle="tab">Liste des adhérents</a></li>
+                        <li role="presentation" class="active"><a href="#members" data-toggle="tab">Adhérents</a></li>
                         <li role="presentation"><a href="#status" data-toggle="tab">Statuts</a></li>
                         <li role="presentation"><a href="#groups" data-toggle="tab">Groupes</a></li>
                     </ul>
@@ -247,8 +132,9 @@
                             {% include 'member/manager/membersList.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="status">
-                            {{ render(controller('AppBundle:MemberStatus:list')) }}
-                            {#{% include 'member/manager/statusList.html.twig' %}#}
+                            <div id="memberStatusContainer" data-anchor="#status" data-page-parameter-name="pageTab2">
+                                {{ render(controller('AppBundle:MemberStatus:list', {'request': app.request, 'anchor': '#status'})) }}
+                            </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="groups">
                             {% include 'member/manager/groupsList.html.twig' %}

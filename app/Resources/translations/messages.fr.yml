@@ -6,7 +6,8 @@ app:
         errorUnknow: Erreur inconnu, veuillez contacter l'administrateur de l'application !
         errorComming: Une erreur est intervenue ! %error%
         errorTitle: Une erreur est intervenue !
-        deleteTitle: Supprimé !
+        deleteTitle: Supprimer !
+        successTitle: Succès !
         deleteQuestionTitle: Êtes-vous sûr ?
         deleteQuestionYes: Oui, je veux le supprimer !
         deleteQuestionNo: Non, n'annule ma demande !
@@ -66,7 +67,7 @@ app:
             inputPassword: Mot de passe
             inputPasswordCheck: Vérification
             tokenNotFoundMessage: token non trouvé !
-            errorOnSaveNewPassword: Une erreur est intervenur lors de l'enregistrement du nouveau mot de passe :
+            errorOnSaveNewPassword: Une erreur est intervenue lors de l'enregistrement du nouveau mot de passe :
     dashboard:
         callback: retour tableau de bord
         title: tableau de bord
@@ -99,6 +100,9 @@ app:
                 description: Saisir le nom de votre association
             saveSuccessText: Paramètres de l'application enregistrés avec succès !
     subscription:
+        manager:
+            tabSubscriptions: Abonnements
+            tabPeriodicities: Périodicités de paiements
         subscription:
             addBtn: Ajouter un abonnement
             list:
@@ -143,6 +147,10 @@ app:
                 deleteSuccessText: La période %label% à bien été supprimée !
                 deleteQuestionText: La suppression de la périodicité de paiement est définitf !
     member:
+        manager:
+            tabMembers: Adhérents
+            tabStatus: Status
+            tabGroups: Groupes
         member:
             list:
                 title: Gestion des adhérents
@@ -151,3 +159,7 @@ app:
                 title: Ajouter un statut
             edit:
                 saveSuccessText: Le statut a été enregistré avec succès !
+            list:
+                table:
+                    label: Libellé
+                    memberNumber: Nombre de membres

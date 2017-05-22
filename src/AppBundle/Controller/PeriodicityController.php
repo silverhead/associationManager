@@ -139,7 +139,12 @@ class PeriodicityController extends Controller
 
         $periodicityManager = $this->get('app.subscription.manager.periodicity');
 
-        $results = $periodicityManager->paginatedList($page, self::ITEMS_PER_PAGE, self::PAGE_PARAMETER_NAME);
+        $results = $periodicityManager->paginatedList(
+            $page,
+            self::ITEMS_PER_PAGE,
+            self::PAGE_PARAMETER_NAME,
+            $anchor
+        );
 
         $pageH = $this->get('app.handler.page_historical');
 
