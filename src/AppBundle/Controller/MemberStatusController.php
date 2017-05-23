@@ -31,7 +31,9 @@ class MemberStatusController extends Controller
             $page,
             self::ITEMS_PER_PAGE,
             self::PAGE_PARAMETER_NAME,
-            $anchor);
+            $anchor,
+            $currentRoute
+        );
 
         $pageH = $this->get('app.handler.page_historical');
 

@@ -44,19 +44,45 @@ $(document).on('click', '.editStatus', function(e){
     e.preventDefault();
 
     var label = $(this).data('label');
+    var id = $(this).data('id');
 
     swal({
-        title: "Modifier le statut",
+        title: Translator.trans("app.member.status.edit.title"),
         text: "",
         type: 'input',
         inputValue: label,
         showCancelButton: true,
         closeOnConfirm: false,
         animation: "slide-from-top",
-        confirmButtonText: "Valider",
-        cancelButtonText: "Annuler",
+        confirmButtonText: Translator.trans("app.common.validBtn"),
+        cancelButtonText: Translator.trans("app.common.cancelBtn"),
     }, function(inputValue){
-        console.log("You wrote", inputValue);
+        if (inputValue === false) return false;
+
+        if (inputValue === "") {
+            swal.showInputError(Translator.trans('app.common.form.validation.notBlank'));
+            return false;
+        }
+
+        $.ajax({
+            'url': Routing.generate('member_status_save_json'),
+            'type': 'post',
+            'dataType': 'json',
+            'data': {'label': inputValue, 'id': id },
+            'success': function(data){
+                var title = Translator.trans('app.common.errorTitle');
+                if(data.code == 'success'){
+                    title = Translator.trans('app.common.successTitle');
+
+                    reloadMemberStatusList();
+                }
+
+                swal(title, data.message, data.code);
+            },
+            'error': function(){
+                swal(Translator.trans("app.common.errorTitle"), Translator.trans("app.common.errorUnknow"), "error");
+            }
+        });
     });
 });
 
@@ -105,7 +131,7 @@ function reloadMemberStatusList(){
 
     $.ajax({
         'url': Routing.generate('member_status_list_part', {'anchor': anchor}),
-        'type': 'GET',
+        'type': 'POST',
         'data': paginatorPageParam+'='+pageCount,
         'dataType': 'html',
         'success': function(template){

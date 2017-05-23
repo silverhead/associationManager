@@ -159,6 +159,7 @@ app:
                 title: Ajouter un statut
             edit:
                 saveSuccessText: Le statut a été enregistré avec succès !
+                title: Modifier un statut
             list:
                 table:
                     label: Libellé

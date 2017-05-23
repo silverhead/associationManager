@@ -132,8 +132,8 @@
                             {% include 'member/manager/membersList.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="status">
-                            <div id="memberStatusContainer" data-anchor="#status" data-page-parameter-name="pageTab2">
-                                {{ render(controller('AppBundle:MemberStatus:list', {'request': app.request, 'anchor': '#status'})) }}
+                            <div id="memberStatusContainer" data-anchor="status" data-page-parameter-name="pageTab2">
+                                {{ render(controller('AppBundle:MemberStatus:list', {'request': app.request, 'anchor': 'status'})) }}
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="groups">

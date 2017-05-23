@@ -7,7 +7,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 Trait PaginatorManagerTrait
 {
-    public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page', $anchor = null)
+    public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page', $anchor = null, $route = null)
     {
         if( !($this instanceof PaginatorManagerInterface)){
             throw new \Exception("You need to implement PaginatorManagerInterface for use this trait!");
@@ -27,9 +27,15 @@ Trait PaginatorManagerTrait
 
         $qb = $this->getRepository()->getQbPaginatedList();
 
-        return $this->paginator->paginate($qb, $page, $itemPerPage, [
+        $paginate = $this->paginator->paginate($qb, $page, $itemPerPage, [
             'pageParameterName' => $pageParameterName,
             'anchor' => $anchor
         ]);
+
+        if(null !== $route){
+            $paginate->setUsedRoute($route);
+        }
+
+        return $paginate;
     }
 }

@@ -40,7 +40,7 @@
 <nav>
     {% if previous is defined %}
 
-        <a class="text-center col-xs-offset-4 col-sm-4 col-xs-4 hidden-lg hidden-md waves-effect" rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}{% if anchor is defined %}{{ anchor }}{% endif %}"><i class="material-icons">chevron_left</i></a>
+        <a class="text-center col-xs-offset-4 col-sm-4 col-xs-4 hidden-lg hidden-md waves-effect" rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}{% if anchor is defined %}#{{ anchor }}{% endif %}"><i class="material-icons">chevron_left</i></a>
     {% else %}
         <a  href="#" class="hidden-lg hidden-md disabled"><i class="material-icons">chevron_left</i></a>
     {% endif %}
@@ -48,7 +48,7 @@
 
         {% if previous is defined %}
             <li>
-                <a rel="prev" class="waves-effect" href="{{ path(route, query|merge({(pageParameterName): previous})) }}{% if anchor is defined %}{{ anchor }}{% endif %}"><i class="material-icons">chevron_left</i></a>
+                <a rel="prev" class="waves-effect" href="{{ path(route, query|merge({(pageParameterName): previous})) }}{% if anchor is defined %}#{{ anchor }}{% endif %}"><i class="material-icons">chevron_left</i></a>
             </li>
         {% else %}
             <li class="disabled">
@@ -58,11 +58,11 @@
 
         {% if startPage > 1 %}
             <li>
-                <a href="{{ path(route, query|merge({(pageParameterName): 1})) }}{% if anchor is defined %}{{ anchor }}{% endif %}">1</a>
+                <a href="{{ path(route, query|merge({(pageParameterName): 1})) }}{% if anchor is defined %}#{{ anchor }}{% endif %}">1</a>
             </li>
             {% if startPage == 3 %}
                 <li>
-                    <a href="{{ path(route, query|merge({(pageParameterName): 2})) }}{% if anchor is defined %}{{ anchor }}{% endif %}">2</a>
+                    <a href="{{ path(route, query|merge({(pageParameterName): 2})) }}{% if anchor is defined %}#{{ anchor }}{% endif %}">2</a>
                 </li>
             {% elseif startPage != 2 %}
                 <li class="disabled">
@@ -74,7 +74,7 @@
         {% for page in pagesInRange %}
             {% if page != current %}
                 <li>
-                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}{% if anchor is defined %}{{ anchor }}{% endif %}">{{ page }}</a>
+                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}{% if anchor is defined %}#{{ anchor }}{% endif %}">{{ page }}</a>
                 </li>
             {% else %}
                 <li class="active">
@@ -92,18 +92,18 @@
                     </li>
                 {% else %}
                     <li>
-                        <a href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}{% if anchor is defined %}{{ anchor }}{% endif %}">{{ pageCount -1 }}</a>
+                        <a href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}{% if anchor is defined %}#{{ anchor }}{% endif %}">{{ pageCount -1 }}</a>
                     </li>
                 {% endif %}
             {% endif %}
             <li>
-                <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}{% if anchor is defined %}{{ anchor }}{% endif %}">{{ pageCount }}</a>
+                <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}{% if anchor is defined %}#{{ anchor }}{% endif %}">{{ pageCount }}</a>
             </li>
         {% endif %}
 
         {% if next is defined %}
             <li>
-                <a rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}{% if anchor is defined %}{{ anchor }}{% endif %}" class="waves-effect"><i class="material-icons">chevron_right</i></a>
+                <a rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}{% if anchor is defined %}#{{ anchor }}{% endif %}" class="waves-effect"><i class="material-icons">chevron_right</i></a>
             </li>
         {% else %}
             <li class="disabled">
@@ -112,7 +112,7 @@
         {% endif %}
     </ul>
     {% if next is defined %}
-        <a class="text-center col-xs-offset-4 col-sm-4 col-xs-4 hidden-lg hidden-md waves-effect" rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}{% if anchor is defined %}{{ anchor }}{% endif %}"><i class="material-icons">chevron_right</i></a>
+        <a class="text-center col-xs-offset-4 col-sm-4 col-xs-4 hidden-lg hidden-md waves-effect" rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}{% if anchor is defined %}#{{ anchor }}{% endif %}"><i class="material-icons">chevron_right</i></a>
     {% else %}
         <a class="hidden-lg hidden-md disabled"><i class="material-icons">chevron_right</i></a>
     {% endif %}
