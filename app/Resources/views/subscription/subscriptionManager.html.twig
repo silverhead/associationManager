@@ -23,7 +23,7 @@
         <span class="pull-right"><b>{{ 'app.subscription.subscription.list.totalActiveMember'|trans }} :</b> {{ totalMember }}</span>
     </h2>
 </div>
-{% include ':main/flashMessage:flashMessageBloc.html.twig' %}
+{% include ':main/flashMessage:flashMessageBlock.html.twig' %}
 <div class="row">
     <div class="col-xs-12">
         <div class="card">
@@ -36,10 +36,14 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="subscriptions">
-                        {{ render(controller('AppBundle:Subscription:list', {'request': app.request, 'anchor': '#subscriptions'})) }}
+                        <div id="subscriptionsContainer" data-anchor="subscriptions" data-page-parameter-name="{{ constant('AppBundle\\Controller\\SubscriptionController::PAGE_PARAMETER_NAME') }}">
+                         {{ render(controller('AppBundle:Subscription:list', {'request': app.request, 'anchor': 'subscriptions'})) }}
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="periodicities">
-                        {{ render(controller('AppBundle:Periodicity:list', {'request': app.request, 'anchor': '#periodicities'})) }}
+                        <div id="periodicitiesContainer" data-anchor="periodicities" data-page-parameter-name="{{ constant('AppBundle\\Controller\\PeriodicityController::PAGE_PARAMETER_NAME') }}">
+                            {{ render(controller('AppBundle:Periodicity:list', {'request': app.request, 'anchor': 'periodicities'})) }}
+                        </div>
                     </div>
                 </div>
             </div>

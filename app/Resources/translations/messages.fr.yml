@@ -164,3 +164,7 @@ app:
                 table:
                     label: Libellé
                     memberNumber: Nombre de membres
+            delete:
+                deleteQuestionText: La suppression du statut est définitf !
+                deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
+                deleteSuccessText: Le statut %label% à bien été supprimé !

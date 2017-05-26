@@ -118,7 +118,7 @@ class PeriodicityController extends Controller
 
         $array = [
             'code' => 'success',
-            'message' => $translator->trans('app.subscription.periodicity.edit.saveSucessText')
+            'message' => $translator->trans('app.subscription.periodicity.delete.deleteSuccessText')
         ];
 
         return new Response(
@@ -135,7 +135,7 @@ class PeriodicityController extends Controller
     public function listAction(Request $request, $anchor = null)
     {
         $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
-        $currentRoute = $request->get('_route');
+        $currentRoute = 'subscription_manager';
 
         $periodicityManager = $this->get('app.subscription.manager.periodicity');
 
@@ -143,7 +143,8 @@ class PeriodicityController extends Controller
             $page,
             self::ITEMS_PER_PAGE,
             self::PAGE_PARAMETER_NAME,
-            $anchor
+            $anchor,
+            $currentRoute
         );
 
         $pageH = $this->get('app.handler.page_historical');

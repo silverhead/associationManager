@@ -137,7 +137,9 @@
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="groups">
-                            {% include 'member/manager/groupsList.html.twig' %}
+                            <div id="memberStatusContainer" data-anchor="status" data-page-parameter-name="pageTab2">
+                                {{ render(controller('AppBundle:UserGroup:list', {'request': app.request, 'anchor': 'groups'})) }}
+                            </div>
                         </div>
                     </div>
                 </div>

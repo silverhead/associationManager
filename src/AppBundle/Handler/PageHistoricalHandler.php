@@ -77,7 +77,9 @@ class PageHistoricalHandler
         }
         $url .=  (!empty($callbackUrl->urlParams)?"?":"");
         $url .= implode("&", $params);
-        $url .= $callbackUrl->anchor;
+        if(null !== $callbackUrl->anchor){
+            $url .= "#".$callbackUrl->anchor;
+        }
 
         return $url;
     }

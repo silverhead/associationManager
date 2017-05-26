@@ -92,19 +92,37 @@ $(document).on('click', '.delStatus', function(e){
     var id = $(this).data('id');
 
     swal({
-            title: "Êtes-vous sûr ?",
-            text: "La suppression du status est définitf !",
+            title: Translator.trans("app.common.deleteQuestionTitle"),
+            text: Translator.trans("app.member.status.delete.deleteQuestionText"),
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Oui, je veux le supprimer !",
-            cancelButtonText: "Non, n'annule ma demande !",
+            confirmButtonText: Translator.trans("app.common.deleteQuestionYes"),
+            cancelButtonText: Translator.trans("app.common.deleteQuestionNo"),
             closeOnConfirm: false,
             closeOnCancel: true
         },
         function(isConfirm){
             if (isConfirm) {
-                swal("Supprimé !", "Le status a été supprimé.", "success");
+                $.ajax({
+                    'type':'POST',
+                    'url': Routing.generate('member_status_delete', {'id': id}),
+                    'dataType': 'json',
+                    'success': function(data){
+                        var title = Translator.trans('app.common.errorTitle');
+                        if(data.code == 'success'){
+                            title = Translator.trans('app.common.deleteTitle');
+
+                            reloadMemberStatusList();
+                        }
+
+                        swal(title, data.message, data.code);
+                    },
+                    'error': function(){
+                        swal(Translator.trans('app.common.errorTitle'),
+                            Translator.trans('app.common.errorUnknow'), "error");
+                    }
+                });
             }
         });
 });

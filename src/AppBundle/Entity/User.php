@@ -79,6 +79,12 @@ class User implements UserInterface
     private $askPasswordToken;
 
     /**
+     * @var UserGroup
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserGroup", inversedBy="users")
+     */
+    private $group;
+
+    /**
      * @param mixed $roles
      * @return User
      */

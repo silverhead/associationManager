@@ -2,13 +2,13 @@
 
 namespace AppBundle\Manager;
 
-use AppBundle\Entity\MemberStatus;
+use AppBundle\Entity\UserGroup;
 use AppBundle\Handler\ErrorHandlerTrait;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class MemberStatusManager implements PaginatorManagerInterface
+class UserGroupManager implements PaginatorManagerInterface
 {
     use EntityManagerTrait,
         PaginatorManagerTrait,
@@ -32,12 +32,12 @@ class MemberStatusManager implements PaginatorManagerInterface
 
     public function getNewEntity()
     {
-        return new MemberStatus();
+        return new UserGroup();
     }
 
     public function getRepository()
     {
-        return $this->entityManager->getRepository("AppBundle:MemberStatus");
+        return $this->entityManager->getRepository("AppBundle:UserGroup");
     }
 
     public function saveAjax(Request $request){

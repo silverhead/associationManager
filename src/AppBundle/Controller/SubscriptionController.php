@@ -39,7 +39,7 @@ class SubscriptionController extends Controller
     public function listAction(Request $request, $anchor = null)
     {
         $page =  1;//$request->get(self::PAGE_PARAMETER_NAME, 1);
-        $currentRoute = 'subscription_manager';//$request->get('_route');
+        $currentRoute = 'subscription_manager';
 
         $subscriptionManager = $this->get('app.subscription.manager.subscription');
 
@@ -50,7 +50,8 @@ class SubscriptionController extends Controller
         $pageH->setCallbackUrl('subscription_subscription_edit',
             $this->generateUrl($currentRoute),
             [self::PAGE_PARAMETER_NAME => $page],
-            $anchor
+            $anchor,
+            $currentRoute
         );
 
         return $this->render('/subscription/subscription/subscriptionList.html.twig', array(

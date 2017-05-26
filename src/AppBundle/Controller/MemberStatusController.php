@@ -23,7 +23,9 @@ class MemberStatusController extends Controller
     public function listAction(Request $request, $anchor = null)
     {
         $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
-        $currentRoute = 'members_manager';
+//        $currentRoute = 'members_manager';
+        $currentRoute = $request->get('_route');
+
 
         $memberStatusManager = $this->get('app.member.manager.status');
 
@@ -145,5 +147,53 @@ class MemberStatusController extends Controller
         return $this->render('subscription/subscription/subscriptionEdit.html.twig', array(
             'formSubscription' => $formHandler->getForm()->createView()
         ));
+    }
+
+    /**
+     * @Route("/member/status/delete/{id}", name="member_status_delete", options={"expose"=true})
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        if(!$request->isXmlHttpRequest()){
+            throw new \BadMethodCallException("Only AJAX request supported!");
+        }
+
+        $translator = $this->get('translator');
+        $statusManager = $this->get('app.member.manager.status');
+
+        $status = $statusManager->find($id);
+
+        if(null === $status){
+            $array = [
+                'code' => 'error',
+                'message' => $translator->trans('app.member.status.delete.deleteErrorMissingText')
+            ];
+
+            return new Response(
+                (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
+                ))->serialize($array, 'json'));
+        }
+
+        if(!$statusManager->delete($status)){
+            $array = [
+                'code' => 'error',
+                'message' => $translator->trans('app.common.errorComming', [
+                    '%error%' => '<br />' . implode('<br />', $statusManager->getErrors())
+                ])
+            ];
+
+            return new Response(
+                (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
+                ))->serialize($array, 'json'));
+        }
+
+        $array = [
+            'code' => 'success',
+            'message' => $translator->trans('app.member.status.delete.deleteSuccessText', ['%label%' => $status->getLabel()])
+        ];
+
+        return new Response(
+            (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
+            ))->serialize($array, 'json'));
     }
 }

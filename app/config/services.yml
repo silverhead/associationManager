@@ -69,6 +69,9 @@ services:
     app.member.manager.status:
         class: AppBundle\Manager\MemberStatusManager
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    app.user.manager.group:
+        class: AppBundle\Manager\UserGroupManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     # Handler
     app.handler.page_historical:
         class: AppBundle\Handler\PageHistoricalHandler

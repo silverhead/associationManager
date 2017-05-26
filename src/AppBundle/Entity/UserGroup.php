@@ -6,11 +6,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class MemberStatus
+ * Class MemberGroup
  * @package AppBundle\Entity
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MemberStatusRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserGroupRepository")
  */
-class MemberStatus
+class UserGroup
 {
     /**
      * @var integer
@@ -28,9 +28,9 @@ class MemberStatus
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MemberStatusHistorical", mappedBy="status")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="group")
      */
-    private $members;
+    private $users;
 
     /**
      * @return int
@@ -42,9 +42,9 @@ class MemberStatus
 
     /**
      * @param int $id
-     * @return MemberStatus
+     * @return UserGroup
      */
-    public function setId(int $id): MemberStatus
+    public function setId(int $id): UserGroup
     {
         $this->id = $id;
 
@@ -61,9 +61,9 @@ class MemberStatus
 
     /**
      * @param string $label
-     * @return MemberStatus
+     * @return UserGroup
      */
-    public function setLabel(string $label): MemberStatus
+    public function setLabel(string $label): UserGroup
     {
         $this->label = $label;
 
