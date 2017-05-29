@@ -2,8 +2,13 @@
 
 {% block javascript %}
     {{ parent() }}
+    <script src="{{ asset("bundles/app/common/js/jquery.reload.list.js") }}"></script>
     <script src="{{ asset("bundles/app/subscription/subscription/js/manage.js") }}"></script>
     <script src="{{ asset("bundles/app/subscription/periodicity/js/manage.js") }}"></script>
+
+    <script type="text/javascript">
+        var reloadlist = $('#periodicitiesContainer').reloadlist();
+    </script>
 {% endblock %}
 
 {% block content %}

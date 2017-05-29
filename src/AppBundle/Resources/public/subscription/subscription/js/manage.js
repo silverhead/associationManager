@@ -47,6 +47,8 @@ function reloadSubscriptionsList()
     var nbRow = $periodicitiesContainer.find('table tbody tr').length;
     var url = window.location.href;
 
+    var anchor = $periodicitiesContainer.data("anchor");
+
     var regExp = new RegExp(".*"+paginatorPageParam+"=(\\d+).*","gi");
 
     var pageTag = regExp.exec(url);
@@ -61,7 +63,7 @@ function reloadSubscriptionsList()
     }
 
     $.ajax({
-        'url': Routing.generate('subscription_subscription_list_part'),
+        'url': Routing.generate('subscription_subscription_list_part', {'anchor': anchor}),
         'type': 'GET',
         'data': paginatorPageParam+'='+pageCount,
         'dataType': 'html',

@@ -51,6 +51,8 @@ function reloadPeriodicitiesList()
     var regExp = new RegExp(".*"+paginatorPageParam+"=(\\d+).*","gi");
     var pageTag = regExp.exec(url);
 
+    var anchor = $periodicitiesContainer.data("anchor");
+
     var pageCount = 1;
     if(null !== pageTag){
         var pageCount = parseInt(pageTag.length > 1? pageTag[1]: 1);
@@ -61,7 +63,7 @@ function reloadPeriodicitiesList()
     }
 
     $.ajax({
-        'url': Routing.generate('subscription_periodicity_list_part'),
+        'url': Routing.generate('subscription_periodicity_list_part', {'anchor': anchor}),
         'type': 'GET',
         'data': paginatorPageParam+'='+pageCount,
         'dataType': 'html',
