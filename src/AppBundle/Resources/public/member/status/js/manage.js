@@ -73,7 +73,6 @@ $(document).on('click', '.editStatus', function(e){
                 var title = Translator.trans('app.common.errorTitle');
                 if(data.code == 'success'){
                     title = Translator.trans('app.common.successTitle');
-
                     reloadMemberStatusList();
                 }
 
@@ -128,37 +127,14 @@ $(document).on('click', '.delStatus', function(e){
 });
 
 function reloadMemberStatusList(){
-    var $memberStatusContainer = $('#memberStatusContainer');
-    var paginatorPageParam = $memberStatusContainer.data('page-parameter-name');
-    var anchor = $memberStatusContainer.data('anchor');
-    var nbRow = $memberStatusContainer.find('table tbody tr').length;
-    var url = window.location.href;
-
-    var regExp = new RegExp(".*"+paginatorPageParam+"=(\\d+).*","gi");
-
-    var pageTag = regExp.exec(url);
-
-    var pageCount = 1;
-    if(null !== pageTag){
-        var pageCount = parseInt(pageTag.length > 1? pageTag[1]: 1);
-    }
-
-    if(nbRow ==  1 && pageCount > 1){
-        pageCount = pageCount -1;
-    }
-
-    $.ajax({
-        'url': Routing.generate('member_status_list_part', {'anchor': anchor}),
-        'type': 'POST',
-        'data': paginatorPageParam+'='+pageCount,
-        'dataType': 'html',
-        'success': function(template){
-            console.log(template);
-            $memberStatusContainer.html(template);
-        },
-        'error': function(){
-            swal(Translator.trans('app.common.errorTitle'),
-                Translator.trans('app.common.errorUnknow'), "error");
-        }
+    var $container =  $('#memberStatusContainer');
+    $container.reloadlist({
+        masterRoute: 'members_manager',
+        remoteURL: Routing.generate('member_status_list_part', {'anchor': $container.data('anchor')}),
+        remoteErrorCallBack: swal(
+            Translator.trans('app.common.errorTitle'),
+            Translator.trans('app.common.errorUnknow'),
+            "error"
+        )
     });
 }

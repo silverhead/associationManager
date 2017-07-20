@@ -3,7 +3,9 @@
     $.fn.reloadlist = function(options) {
         //Set the default parameters
         var defauts = {
-            remoteURL: null
+            remoteURL: null,
+            remoteErrorCallBack: function(){},
+            masterRoute: null
         };
 
         var parameters = $.extend(defauts, options);
@@ -32,48 +34,29 @@
             return pageCount;
         };
 
+        var updateList = function()
+        {
+            $.ajax({
+                'url': parameters.remoteURL,
+                'type': 'GET',
+                'data': paginatorPageParamName+'='+getPageCount()+ (parameters.masterRoute == null?null:'&masterRoute='+parameters.masterRoute),
+                'dataType': 'html',
+                'success': function(template){
+                    $container.html(template);
+                },
+                'error': function(){
+                    parameters.remoteErrorCallBack();
+                }
+            });
+        };
+
         return this.each(function () {
             $container = $(this);
             paginatorPageParamName = $container.data('page-parameter-name');
-
             pageTagRegEx = new RegExp(".*"+paginatorPageParamName+"=(\\d+).*","gi");
 
+            updateList();
         });
-
-
-        // var $periodicitiesContainer = $('#subscriptionsContainer');
-        // var paginatorPageParam = $periodicitiesContainer.data('page-parameter-name');
-        // var nbRow = $periodicitiesContainer.find('table tbody tr').length;
-        // var url = window.location.href;
-        //
-        // var anchor = $periodicitiesContainer.data("anchor");
-        //
-        // var regExp = new RegExp(".*"+paginatorPageParam+"=(\\d+).*","gi");
-        //
-        // var pageTag = regExp.exec(url);
-        //
-        // var pageCount = 1;
-        // if(null !== pageTag){
-        //     var pageCount = parseInt(pageTag.length > 1? pageTag[1]: 1);
-        // }
-        //
-        // if(nbRow ==  1 && pageCount > 1){
-        //     pageCount = pageCount -1;
-        // }
-        //
-        // $.ajax({
-        //     'url': Routing.generate('subscription_subscription_list_part', {'anchor': anchor}),
-        //     'type': 'GET',
-        //     'data': paginatorPageParam+'='+pageCount,
-        //     'dataType': 'html',
-        //     'success': function(template){
-        //         $('#subscriptionsContainer').html(template);
-        //     },
-        //     'error': function(){
-        //         swal(Translator.trans('app.common.errorTitle'),
-        //             Translator.trans('app.common.errorUnknow'), "error");
-        //     }
-        // });
     };
 
 }( jQuery ));

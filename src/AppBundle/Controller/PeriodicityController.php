@@ -135,7 +135,7 @@ class PeriodicityController extends Controller
     public function listAction(Request $request, $anchor = null)
     {
         $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
-        $currentRoute = 'subscription_manager';
+        $currentRoute = $request->get('masterRoute', $request->get('_route'));
 
         $periodicityManager = $this->get('app.subscription.manager.periodicity');
 

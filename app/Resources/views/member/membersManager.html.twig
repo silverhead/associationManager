@@ -2,6 +2,7 @@
 
 {% block javascript %}
     {{ parent() }}
+    <script src="{{ asset('bundles/app/common/js/jquery.reload.list.js') }}"></script>
     <script src="{{ asset('bundles/app/member/status/js/manage.js') }}"></script>
     <script type="text/javascript">
         $(function(){

@@ -23,9 +23,7 @@ class MemberStatusController extends Controller
     public function listAction(Request $request, $anchor = null)
     {
         $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
-//        $currentRoute = 'members_manager';
-        $currentRoute = $request->get('_route');
-
+        $currentRoute = $request->get('masterRoute', $request->get('_route'));
 
         $memberStatusManager = $this->get('app.member.manager.status');
 
