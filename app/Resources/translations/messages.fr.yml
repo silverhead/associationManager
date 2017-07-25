@@ -168,3 +168,7 @@ app:
                 deleteQuestionText: La suppression du statut est définitf !
                 deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
                 deleteSuccessText: Le statut %label% à bien été supprimé !
+        group:
+            add:
+                title: Ajouter un groupe
+                edit: Modifier le groupe

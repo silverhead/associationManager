@@ -5,7 +5,9 @@
         var defauts = {
             remoteURL: null,
             remoteErrorCallBack: function(){},
-            masterRoute: null
+            masterRoute: null,
+            action: null,
+            nbRowPerPage: null
         };
 
         var parameters = $.extend(defauts, options);
@@ -27,7 +29,7 @@
                 var pageCount = parseInt(pageTag.length > 1? pageTag[1]: 1);
             }
 
-            if(nbRow ==  1 && pageCount > 1) {
+            if(parameters.action == 'delete' && nbRow ==  1 && pageCount > 1) {
                 pageCount = pageCount - 1;
             }
 

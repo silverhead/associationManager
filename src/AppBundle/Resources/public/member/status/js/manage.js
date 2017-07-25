@@ -26,7 +26,7 @@ $(document).on('click', '.editStatus', function(e){
         },
         inputDataName: 'label',
         successCallback: function(){
-            reloadMemberStatusList();
+            reloadMemberStatusList('edit');
         }
     });
 });
@@ -38,16 +38,17 @@ $(document).on('click', '.delStatus', function(e) {
         'text': Translator.trans("app.member.status.delete.deleteQuestionText"),
         'route': 'member_status_delete',
         'successCallback': function(){
-            reloadMemberStatusList();
+            reloadMemberStatusList('delete');
         }
     });
 });
 
-function reloadMemberStatusList(){
+function reloadMemberStatusList(action){
     var $container =  $('#memberStatusContainer');
     $container.reloadlist({
         masterRoute: 'members_manager',
         remoteURL: Routing.generate('member_status_list_part', {'anchor': $container.data('anchor')}),
+        action: action,
         remoteErrorCallBack: swal(
             Translator.trans('app.common.errorTitle'),
             Translator.trans('app.common.errorUnknow'),
