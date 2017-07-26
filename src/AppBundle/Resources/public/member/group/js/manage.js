@@ -70,7 +70,7 @@ function reloadMemberGroupList(action){
     var $container =  $('#memberGroupsContainer');
     $container.reloadlist({
         masterRoute: 'groups_manager',
-        remoteURL: Routing.generate('member_groups_list_part', {'anchor': $container.data('anchor')}),
+        remoteURL: Routing.generate('member_group_list_part', {'anchor': $container.data('anchor')}),
         action: action,
         remoteErrorCallBack: swal(
             Translator.trans('app.common.errorTitle'),
