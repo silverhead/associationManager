@@ -1,9 +1,9 @@
-$('#addGroup').on('click', function(e){
+$('#addUserGroup').on('click', function(e){
     e.preventDefault();
 
     $(this).savePrompt({
-        title: Translator('app.member.group.add.title'),
-        remoteURL: '',
+        title: Translator.trans('app.user.group.add.title'),
+        route: Routing.generate('user_group_save_json'),
         data: {'label': ''},
         inputDataName: 'label',
         successCallback: function(){
@@ -16,8 +16,8 @@ $('document').on('click','.editGroup', function(e){
     e.preventDefault();
 
     $(this).savePrompt({
-        title: Translator('app.member.group.edit.title'),
-        remoteURL: '',
+        title: Translator.trans('app.user.group.edit.title'),
+        route: Routing.generate('user_group_save_json'),
         data: {'label': $(this).data('label'), 'id': $(this).data('id')},
         inputDataName: 'label',
         successCallback: function(){
