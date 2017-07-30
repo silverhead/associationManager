@@ -7,12 +7,12 @@ $('#addUserGroup').on('click', function(e){
         data: {'label': ''},
         inputDataName: 'label',
         successCallback: function(){
-            reloadMemberGroupList('add');
+            reloadUserGroupList('add');
         }
     });
 });
 
-$('document').on('click','.editGroup', function(e){
+$(document).on('click','.editUserGroup', function(e){
     e.preventDefault();
 
     $(this).savePrompt({
@@ -21,56 +21,47 @@ $('document').on('click','.editGroup', function(e){
         data: {'label': $(this).data('label'), 'id': $(this).data('id')},
         inputDataName: 'label',
         successCallback: function(){
-            reloadMemberGroupList('add');
+            reloadUserGroupList('edit');
+        }
+    });
+});
+
+$(document).on('click','.delUserGroup', function(e){
+    e.preventDefault();
+
+    $(this).deleteConfirm({
+        'text': Translator.trans("app.user.groups.delete.deleteQuestionText"),
+        'route': 'user_group_delete',
+        'successCallback': function(){
+            reloadUserGroupList('delete');
         }
     });
 
-    //
-    // var label = $(this).data('label');
+    // var id = $(this).data('id');
     //
     // swal({
-    //     title: "Modifier le groupe",
-    //     text: "",
-    //     type: 'input',
-    //     inputValue: label,
-    //     showCancelButton: true,
-    //     closeOnConfirm: false,
-    //     animation: "slide-from-top",
-    //     confirmButtonText: "Valider",
-    //     cancelButtonText: "Annuler",
-    // }, function(inputValue){
-    //     console.log("You wrote", inputValue);
-    // });
+    //         title: "Êtes-vous sûr ?",
+    //         text: "La suppression du groupe est définitf !",
+    //         type: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#DD6B55",
+    //         confirmButtonText: "Oui, je veux le supprimer !",
+    //         cancelButtonText: "Non, n'annule ma demande !",
+    //         closeOnConfirm: false,
+    //         closeOnCancel: true
+    //     },
+    //     function(isConfirm){
+    //         if (isConfirm) {
+    //             swal("Supprimé !", "Le groupe a été supprimé.", "success");
+    //         }
+    //     });
 });
 
-$('document').on('click','.delGroup', function(e){
-    e.preventDefault();
-
-    var id = $(this).data('id');
-
-    swal({
-            title: "Êtes-vous sûr ?",
-            text: "La suppression du groupe est définitf !",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Oui, je veux le supprimer !",
-            cancelButtonText: "Non, n'annule ma demande !",
-            closeOnConfirm: false,
-            closeOnCancel: true
-        },
-        function(isConfirm){
-            if (isConfirm) {
-                swal("Supprimé !", "Le groupe a été supprimé.", "success");
-            }
-        });
-});
-
-function reloadMemberGroupList(action){
-    var $container =  $('#memberGroupsContainer');
+function reloadUserGroupList(action){
+    var $container =  $('#userGroupsContainer');
     $container.reloadlist({
-        masterRoute: 'groups_manager',
-        remoteURL: Routing.generate('member_group_list_part', {'anchor': $container.data('anchor')}),
+        masterRoute: 'members_manager',
+        remoteURL: Routing.generate('user_group_list_part', {'anchor': $container.data('anchor')}),
         action: action,
         remoteErrorCallBack: swal(
             Translator.trans('app.common.errorTitle'),

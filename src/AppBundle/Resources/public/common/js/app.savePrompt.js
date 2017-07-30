@@ -42,7 +42,7 @@
                         var title = Translator.trans('app.common.errorTitle');
                         if(data.code == 'success'){
                             title = Translator.trans('app.common.successTitle');
-                            reloadMemberStatusList();
+                            parameters.successCallback();
                         }
 
                         swal(title, data.message, data.code);

@@ -175,3 +175,7 @@ app:
             edit:
                 title: Modifier le groupe
                 saveSuccessText: Le groupe enregistré avec succès !
+            delete:
+                deleteQuestionText: La suppression du groupe est définitf !
+                deleteErrorMissingText: Le groupe que vous voulez suprpimer n'a pas été trouvé !
+                deleteSuccessText: Le groupe %label% à bien été supprimé !

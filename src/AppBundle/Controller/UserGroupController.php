@@ -16,7 +16,7 @@ class UserGroupController extends Controller
     const PAGE_PARAMETER_NAME = 'pageTab3';
 
     /**
-     * @Route("/member/group/list-part/{anchor}", name="member_group_list_part",  options = { "expose" = true })
+     * @Route("/user/group/list-part/{anchor}", name="user_group_list_part",  options = { "expose" = true })
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -79,6 +79,55 @@ class UserGroupController extends Controller
                 ])
             ];
         }
+
+        return new Response(
+            (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
+            ))->serialize($array, 'json'));
+    }
+
+    //
+    /**
+     * @Route("/user/group/delete/{id}", name="user_group_delete", options={"expose"=true})
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        if(!$request->isXmlHttpRequest()){
+            throw new \BadMethodCallException("Only AJAX request supported!");
+        }
+
+        $translator = $this->get('translator');
+        $userGroupManager = $this->get('app.user.manager.group');
+
+        $entity = $userGroupManager->find($id);
+
+        if(null === $entity){
+            $array = [
+                'code' => 'error',
+                'message' => $translator->trans('app.user.group.delete.deleteErrorMissingText')
+            ];
+
+            return new Response(
+                (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
+                ))->serialize($array, 'json'));
+        }
+
+        if(!$userGroupManager->delete($entity)){
+            $array = [
+                'code' => 'error',
+                'message' => $translator->trans('app.common.errorComming', [
+                    '%error%' => '<br />' . implode('<br />', $userGroupManager->getErrors())
+                ])
+            ];
+
+            return new Response(
+                (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
+                ))->serialize($array, 'json'));
+        }
+
+        $array = [
+            'code' => 'success',
+            'message' => $translator->trans('app.user.group.delete.deleteSuccessText', ['%label%' => $entity->getLabel()])
+        ];
 
         return new Response(
             (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
