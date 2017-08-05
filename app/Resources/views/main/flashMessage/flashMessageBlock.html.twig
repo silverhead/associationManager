@@ -1,9 +1,13 @@
+{% if colClass is not defined %}
+    {% set colClass = 'col-lg-6 col-lg-offset-3' %}
+{% endif %}
+
 {% for message in app.session.flashBag.get("notice") %}
-    {% include ':main/flashMessage:flashMessageContent.html.twig' with {'type':'info', 'message': message} %}
+    {% include ':main/flashMessage:flashMessageContent.html.twig' with {'type':'info', 'message': message, 'colClass': colClass} %}
 {% endfor %}
 {% for message in app.session.flashBag.get("success") %}
-    {% include ':main/flashMessage:flashMessageContent.html.twig' with {'type':'success', 'message': message} %}
+    {% include ':main/flashMessage:flashMessageContent.html.twig' with {'type':'success', 'message': message, 'colClass': colClass} %}
 {% endfor %}
 {% for message in app.session.flashBag.get("error") %}
-    {% include ':main/flashMessage:flashMessageContent.html.twig' with {'type':'danger', 'message': message} %}
+    {% include ':main/flashMessage:flashMessageContent.html.twig' with {'type':'danger', 'message': message, 'colClass': colClass} %}
 {% endfor %}

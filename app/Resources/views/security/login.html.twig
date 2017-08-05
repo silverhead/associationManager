@@ -8,9 +8,10 @@
         </div>
         <div class="card">
             <div class="body">
-                {% if error is not null %}
-                    {{ error.message }}
-                {% endif %}
+                {#{% if error is not null %}#}
+                    {#{{ error.message }}#}
+                {#{% endif %}#}
+                {% include ':main/flashMessage:flashMessageBlock.html.twig' with {'colClass':'col-lg-12'} %}
                 <form action="{{ path('login') }}" id="sign_in" method="POST">
                     <div class="msg">{{ 'app.security.login.formTitle'|trans }}</div>
                     <div class="input-group">
@@ -31,7 +32,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-7 p-t-5">
-                            <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
+                            <input type="checkbox" name="_remember_me" id="rememberme" class="filled-in chk-col-pink">
                             <label for="rememberme">{{ 'app.security.login.inputRememberMe'|trans }}</label>
                         </div>
                         <div class="col-xs-5">

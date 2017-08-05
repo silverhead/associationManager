@@ -37,6 +37,8 @@ app:
             submitBtn: Se connecter
             becomeMemberLink: Devenir membre maintenant !
             forgottenPassword: Mot de passe oublié ?
+            error:
+                authenticateFail: Erreur d'authentification, veuillez vérifier vos identifiants !
         forgotPassword:
             title: Mot de passe oublié ?
             text: >
@@ -175,6 +177,8 @@ app:
             edit:
                 title: Modifier le groupe
                 saveSuccessText: Le groupe enregistré avec succès !
+                label: Libellé
+                role: Role
             delete:
                 deleteQuestionText: La suppression du groupe est définitf !
                 deleteErrorMissingText: Le groupe que vous voulez suprpimer n'a pas été trouvé !

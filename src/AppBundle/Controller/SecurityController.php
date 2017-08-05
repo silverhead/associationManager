@@ -25,10 +25,16 @@ class SecurityController extends Controller
         $error = $this->get('security.authentication_utils')
             ->getLastAuthenticationError();
 
+        if(null !== $error){
+            $translator = $this->get('translator');
+            if(false === $error->getToken()->isAuthenticated()){
+                $this->addFlash('error', $translator->trans('app.security.login.error.authenticateFail'));
+            }
+        }
+
+
         return $this->render(
-            'security/login.html.twig', [
-                'error' => $error
-            ]);
+            'security/login.html.twig');
     }
 
     /**

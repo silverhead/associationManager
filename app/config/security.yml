@@ -31,6 +31,12 @@ security:
                 path: /logout
                 target: /
                 invalidate_session: true
+            remember_me:
+                secret: %secret%
+                lifetime: 604800
+                path: /
+#                name:      REMEMBERME
+#                always_remember_me: true
 #                delete_cookies:
 #                    a: { path: null, domain: null }
 #                    b: { path: null, domain: null }
@@ -46,4 +52,4 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/forgot-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/change-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: [ROLE_USER, ROLE_ADMIN] }
+        - { path: ^/, roles: [IS_AUTHENTICATED_REMEMBERED, ROLE_USER, ROLE_ADMIN] }

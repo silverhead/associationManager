@@ -1,0 +1,52 @@
+{% extends 'layoutLogin.html.twig' %}
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+        {
+        'href': path('dashboard'),
+        'title': 'app.dashboard.callback'|trans,
+        'label': 'app.dashboard.title'|trans
+        },
+        {
+        'label': 'app.user.group.edit.title'|trans
+        }
+        ] } %}
+        <h2 class="col-xs-12">
+            {{ 'app.user.group.edit.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(formUserGroup) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(formUserGroup.label, {
+                                'label': 'app.user.group.edit.label'|trans,
+                                'attr': {
+                                    'placeholder': 'app.user.group.edit.label'|trans
+                                }
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(formUserGroup.role, {
+                                'label': 'app.user.group.edit.role'|trans,
+                                'attr': {
+                                    'placeholder': 'app.user.group.edit.role'|trans
+                                }
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            {% include ':form:bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
+                        </div>
+                    </div>
+                    {{ form_end(formUserGroup) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

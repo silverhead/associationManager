@@ -49,6 +49,29 @@ class UserGroupController extends Controller
     }
 
     /**
+     * @Route("/user/group/add", name="user_group_add")
+     * @Route("/user/group/edit/{id}", name="user_group_edit")
+     * @param Request $request
+     */
+    public function editAction(Request $request, $id = null)
+    {
+        $manager = $this->get('app.user.manager.group');
+        $formHandler = $this->get('app.user.form.handler.group');
+
+        $entity = $manager->find($id);
+        if(null === $entity){
+            $entity = $manager->getNewEntity();
+        }
+
+        $formHandler->setForm($entity);
+
+        return $this->render('/user/group/edit.html.twig', array(
+            'formUserGroup' =>  $formHandler->getForm()->createView()
+        ));
+    }
+
+
+    /**
      * @Route("/user/group/json/save", name="user_group_save_json", options={"expose" = true})
      * @param Request $request
      * @return Response

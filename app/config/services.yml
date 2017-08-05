@@ -42,6 +42,9 @@ services:
     app.subscription.form.handler.subscription:
         class: AppBundle\Form\Handler\SubscriptionFormHandler
         arguments: ['@form.factory']
+    app.user.form.handler.group:
+        class: AppBundle\Form\Handler\UserGroupFormHandler
+        arguments: ['@form.factory']
     # Twig extension
     app.twig_extension.setting:
         class: AppBundle\Twig\SettingExtension
