@@ -43,16 +43,16 @@
                         <div class="row">
                             <div class="col-md-6">
                                 {{ form_row(formSubscription.label, {
-                                    'label': 'app.subscription.subscription.edit.label'|trans,
+                                    'label': 'subscription.subscription.edit.label'|trans,
                                     'attr': {
-                                        'placeholder': 'app.subscription.subscription.edit.label'|trans,
-                                        'title': 'app.subscription.subscription.edit.label'|trans
+                                        'placeholder': 'subscription.subscription.edit.label'|trans,
+                                        'title': 'subscription.subscription.edit.label'|trans
                                     }
                                 }) }}
                             </div>
                             <div class="col-md-6">
                                 {{ form_row(formSubscription.periodicities, {
-                                    'label': 'app.subscription.subscription.edit.periodicities'|trans,
+                                    'label': 'subscription.subscription.edit.periodicities'|trans,
                                     'attr': {
                                         'title': 'app.common.form.choice'|trans,
                                         'placeholder': 'app.common.form.choice'|trans
@@ -64,13 +64,13 @@
                         <div class="row">
                             <div class="col-md-4">
                                 {{ form_row(formSubscription.cost, {
-                                    'label': 'app.subscription.subscription.edit.cost'|trans,
+                                    'label': 'subscription.subscription.edit.cost'|trans,
                                     'attr': {
                                         'inputGroup': true,
                                         'inputGroupIcon': 'euro_symbol',
                                         'class':  'text-right',
-                                        'title': 'app.subscription.subscription.edit.cost'|trans,
-                                        'placeholder': 'app.subscription.subscription.edit.cost'|trans
+                                        'title': 'subscription.subscription.edit.cost'|trans,
+                                        'placeholder': 'subscription.subscription.edit.cost'|trans
                                     }
                                 }) }}
                                 {#<div class="form-group">#}
@@ -87,13 +87,13 @@
                             </div>
                             <div class="col-md-4">
                                 {{ form_row(formSubscription.duration, {
-                                    'label': 'app.subscription.subscription.edit.duration'|trans,
+                                    'label': 'subscription.subscription.edit.duration'|trans,
                                     'attr': {
                                         'inputGroup': true,
                                         'inputGroupIcon': 'date_range',
                                         'class':  'text-right',
-                                        'title': 'app.subscription.subscription.edit.duration'|trans,
-                                        'placeholder': 'app.subscription.subscription.edit.duration'|trans
+                                        'title': 'subscription.subscription.edit.duration'|trans,
+                                        'placeholder': 'subscription.subscription.edit.duration'|trans
                                     }
                                 }) }}
                                 {#<div class="form-group">#}
@@ -109,7 +109,7 @@
                                 {#</div>#}
                             </div>
                             <div class="col-md-4">
-                                {{ form_row(formSubscription.active, {'label': 'app.subscription.subscription.edit.status'|trans}) }}
+                                {{ form_row(formSubscription.active, {'label': 'subscription.subscription.edit.status'|trans}) }}
                                 {#<div class="form-group">#}
                                     {#<label class="col-sm-12">Statut</label>#}
                                     {#<div class="col-sm-12" style="padding: 0;">#}

@@ -48,12 +48,12 @@
         'label': 'app.dashboard.title'|trans
         },
         {
-        'label': 'app.member.member.list.title'|trans
+        'label': 'member.member.list.title'|trans
         }
         ] } %}
 
         <h2 class="col-xs-12">
-            {{ 'app.member.member.list.title'|trans }}
+            {{ 'member.member.list.title'|trans }}
             <span class="pull-right">40 membres</span>
         </h2>
     </div>
@@ -75,12 +75,12 @@
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="status">
                             <div id="memberStatusContainer" data-anchor="status" data-page-parameter-name="pageTab2">
-                                {{ render(controller('AppBundle:MemberStatus:list', {'request': app.request, 'anchor': 'status'})) }}
+                                {{ render(controller('MemberBundle:MemberStatus:list', {'request': app.request, 'anchor': 'status'})) }}
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="groups">
                             <div id="userGroupsContainer" data-anchor="groups" data-page-parameter-name="pageTab3">
-                                {{ render(controller('AppBundle:UserGroup:list', {'request': app.request, 'anchor': 'groups'})) }}
+                                {{ render(controller('UserBundle:UserGroup:list', {'request': app.request, 'anchor': 'groups'})) }}
                             </div>
                         </div>
                     </div>

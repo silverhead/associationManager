@@ -8,7 +8,7 @@
 
 namespace AppBundle\Form\Handler;
 
-use AppBundle\Entity\User;
+use UserBundle\Entity\User;
 use AppBundle\Form\Type\ChangePasswordFormType;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\FormFactory;

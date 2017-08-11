@@ -9,7 +9,7 @@
 namespace AppBundle\Manager;
 
 
-use AppBundle\Entity\User;
+use UserBundle\Entity\User;
 use AppBundle\Service\MailerTemplating;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;

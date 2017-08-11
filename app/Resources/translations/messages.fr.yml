@@ -101,85 +101,85 @@ app:
                 address: Saisir le nom de votre association
                 description: Saisir le nom de votre association
             saveSuccessText: Paramètres de l'application enregistrés avec succès !
+subscription:
+    manager:
+        tabSubscriptions: Abonnements
+        tabPeriodicities: Périodicités de paiements
     subscription:
-        manager:
-            tabSubscriptions: Abonnements
-            tabPeriodicities: Périodicités de paiements
-        subscription:
-            addBtn: Ajouter un abonnement
-            list:
-                title: Gestion des abonnements
-                callback: Retour gestion des abonnements
-                totalActiveMember: Total membres actifs
-                table:
-                    label: Libellé
-                    membersNumber: Nombre d'adhérents
-                    cost: Coût
-                    duration: Durée (jour)
-                    status: Statut
-            edit:
+        addBtn: Ajouter un abonnement
+        list:
+            title: Gestion des abonnements
+            callback: Retour gestion des abonnements
+            totalActiveMember: Total membres actifs
+            table:
                 label: Libellé
+                membersNumber: Nombre d'adhérents
                 cost: Coût
-                duration: Durée
-                periodicities: Rythme de paiement possible
+                duration: Durée (jour)
                 status: Statut
-                saveSucessText: Abonnement enregistré avec succès !
-            delete:
-                deleteErrorMissingText: L'abonnement que vous voulez suprpimer n'a pas été trouvé !
-                deleteSuccessText: L'abonnement %label% à bien été supprimé !
-                deleteQuestionText: La suppression de l'abonnement de paiement est définitf !
-        periodicity:
-            add: Ajouter une périodicité de paiement
-            edit:
-                title: Edition d'une périodicité
-                label: Libellé
-                duration: Durée
-                status:
-                    label: Statut
-                placeholder:
-                    duration: Durée (en jours)
-                saveSucessText: Période enregistrée avec succès !
-            list:
-                table:
-                    periodicity: Périodicité
-                    duration: Durée (jours)
-                    status: Statut
-            delete:
-                deleteErrorMissingText: La période que vous voulez suprpimer n'a pas été trouvée !
-                deleteSuccessText: La période %label% à bien été supprimée !
-                deleteQuestionText: La suppression de la périodicité de paiement est définitf !
+        edit:
+            label: Libellé
+            cost: Coût
+            duration: Durée
+            periodicities: Rythme de paiement possible
+            status: Statut
+            saveSucessText: Abonnement enregistré avec succès !
+        delete:
+            deleteErrorMissingText: L'abonnement que vous voulez suprpimer n'a pas été trouvé !
+            deleteSuccessText: L'abonnement %label% à bien été supprimé !
+            deleteQuestionText: La suppression de l'abonnement de paiement est définitf !
+    periodicity:
+        add: Ajouter une périodicité de paiement
+        edit:
+            title: Edition d'une périodicité
+            label: Libellé
+            duration: Durée
+            status:
+                label: Statut
+            placeholder:
+                duration: Durée (en jours)
+            saveSucessText: Période enregistrée avec succès !
+        list:
+            table:
+                periodicity: Périodicité
+                duration: Durée (jours)
+                status: Statut
+        delete:
+            deleteErrorMissingText: La période que vous voulez suprpimer n'a pas été trouvée !
+            deleteSuccessText: La période %label% à bien été supprimée !
+            deleteQuestionText: La suppression de la périodicité de paiement est définitf !
+member:
+    manager:
+        tabMembers: Adhérents
+        tabStatus: Status
+        tabGroups: Groupes
     member:
-        manager:
-            tabMembers: Adhérents
-            tabStatus: Status
-            tabGroups: Groupes
-        member:
-            list:
-                title: Gestion des adhérents
-        status:
-            add:
-                title: Ajouter un statut
-            edit:
-                saveSuccessText: Le statut a été enregistré avec succès !
-                title: Modifier un statut
-            list:
-                table:
-                    label: Libellé
-                    memberNumber: Nombre de membres
-            delete:
-                deleteQuestionText: La suppression du statut est définitf !
-                deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
-                deleteSuccessText: Le statut %label% à bien été supprimé !
-    user:
-        group:
-            add:
-                title: Ajouter un groupe
-            edit:
-                title: Modifier le groupe
-                saveSuccessText: Le groupe enregistré avec succès !
+        list:
+            title: Gestion des adhérents
+    status:
+        add:
+            title: Ajouter un statut
+        edit:
+            saveSuccessText: Le statut a été enregistré avec succès !
+            title: Modifier un statut
+        list:
+            table:
                 label: Libellé
-                role: Role
-            delete:
-                deleteQuestionText: La suppression du groupe est définitf !
-                deleteErrorMissingText: Le groupe que vous voulez suprpimer n'a pas été trouvé !
-                deleteSuccessText: Le groupe %label% à bien été supprimé !
+                memberNumber: Nombre de membres
+        delete:
+            deleteQuestionText: La suppression du statut est définitf !
+            deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
+            deleteSuccessText: Le statut %label% à bien été supprimé !
+user:
+    group:
+        add:
+            title: Ajouter un groupe
+        edit:
+            title: Modifier le groupe
+            saveSuccessText: Le groupe enregistré avec succès !
+            label: Libellé
+            role: Role
+        delete:
+            deleteQuestionText: La suppression du groupe est définitf !
+            deleteErrorMissingText: Le groupe que vous voulez suprpimer n'a pas été trouvé !
+            deleteSuccessText: Le groupe %label% à bien été supprimé !

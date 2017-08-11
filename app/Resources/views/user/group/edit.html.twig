@@ -8,11 +8,11 @@
         'label': 'app.dashboard.title'|trans
         },
         {
-        'label': 'app.user.group.edit.title'|trans
+        'label': 'user.group.edit.title'|trans
         }
         ] } %}
         <h2 class="col-xs-12">
-            {{ 'app.user.group.edit.title'|trans }}
+            {{ 'user.group.edit.title'|trans }}
         </h2>
     </div>
     {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
@@ -24,17 +24,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             {{ form_row(formUserGroup.label, {
-                                'label': 'app.user.group.edit.label'|trans,
+                                'label': 'user.group.edit.label'|trans,
                                 'attr': {
-                                    'placeholder': 'app.user.group.edit.label'|trans
+                                    'placeholder': 'user.group.edit.label'|trans
                                 }
                             }) }}
                         </div>
                         <div class="col-md-6">
                             {{ form_row(formUserGroup.role, {
-                                'label': 'app.user.group.edit.role'|trans,
+                                'label': 'user.group.edit.role'|trans,
                                 'attr': {
-                                    'placeholder': 'app.user.group.edit.role'|trans
+                                    'placeholder': 'user.group.edit.role'|trans
                                 }
                             }) }}
                         </div>

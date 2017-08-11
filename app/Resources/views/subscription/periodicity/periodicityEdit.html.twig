@@ -50,17 +50,17 @@
         'label': 'app.dashboard.title'|trans
         },
         {
-        'label': 'app.subscription.subscription.list.title'|trans,
+        'label': 'subscription.subscription.list.title'|trans,
         'href': path('subscription_manager'),
-        'title': 'app.subscription.subscription.list.callback'|trans
+        'title': 'subscription.subscription.list.callback'|trans
         },
         {
-        'label': 'app.subscription.periodicity.edit.title'|trans
+        'label': 'subscription.periodicity.edit.title'|trans
         }
         ] } %}
         <h2 class="col-xs-12">
             <a href="{{ path('subscription_manager') }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
-            {{ 'app.subscription.periodicity.edit.title'|trans }}
+            {{ 'subscription.periodicity.edit.title'|trans }}
         </h2>
     </div>
     {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
@@ -72,27 +72,27 @@
                         <div class="row">
                             <div class="col-md-4">
                                 {{ form_row(formPeriodicity.label, {
-                                    'label': 'app.subscription.periodicity.edit.label'|trans,
+                                    'label': 'subscription.periodicity.edit.label'|trans,
                                     'attr': {
-                                        'placeholder': 'app.subscription.periodicity.edit.label'|trans
+                                        'placeholder': 'subscription.periodicity.edit.label'|trans
                                     }
                                 }) }}
                             </div>
                             <div class="col-md-4">
                                 {{ form_row(formPeriodicity.duration, {
-                                    'label': 'app.subscription.periodicity.edit.duration'|trans,
+                                    'label': 'subscription.periodicity.edit.duration'|trans,
                                     'attr': {
                                         'inputGroup': true,
                                         'inputGroupIcon': 'date_range',
                                         'class':  'text-right',
-                                        'title': 'app.subscription.periodicity.edit.duration'|trans,
-                                        'placeholder': 'app.subscription.periodicity.edit.placeholder.duration'|trans
+                                        'title': 'subscription.periodicity.edit.duration'|trans,
+                                        'placeholder': 'subscription.periodicity.edit.placeholder.duration'|trans
                                     }
                                 }) }}
                                 {# day-duration #}
                             </div>
                             <div class="col-md-4">
-                                {{ form_row(formPeriodicity.active, {'label': 'app.subscription.periodicity.edit.status.label'|trans}) }}
+                                {{ form_row(formPeriodicity.active, {'label': 'subscription.periodicity.edit.status.label'|trans}) }}
                             </div>
                         </div>
                         <div class="row">

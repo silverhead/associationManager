@@ -55,7 +55,7 @@ class FormAuthenticator extends AbstractGuardAuthenticator
     {
         $username = $credentials['username'];
 
-        return $this->em->getRepository('AppBundle:User')
+        return $this->em->getRepository('UserBundle:User')
             ->findByUsernameOrEmail($username);
     }
 
