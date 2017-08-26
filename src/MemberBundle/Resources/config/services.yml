@@ -1,0 +1,6 @@
+services:
+    member_member_voter:
+        class: MemberBundle\Security\MemberVoter
+        autowire: true
+        tags:
+            - {name: security.voter}

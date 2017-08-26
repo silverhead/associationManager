@@ -2,6 +2,7 @@
 
 namespace MemberBundle\Controller;
 
+use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class MemberStatusController extends Controller
      */
     public function listAction(Request $request, $anchor = null)
     {
-        $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
+        $page = $request->get(self::PAGE_PARAMETER_NAME, 1);
         $currentRoute = $request->get('masterRoute', $request->get('_route'));
 
         $memberStatusManager = $this->get('member.manager.status');
@@ -37,15 +38,19 @@ class MemberStatusController extends Controller
 
         $pageH = $this->get('app.handler.page_historical');
 
-        $pageH->setCallbackUrl('member_status_edit',
+        $pageH->setCallbackUrl(
+            'member_status_edit',
             $this->generateUrl($currentRoute),
             [self::PAGE_PARAMETER_NAME => $page],
             $anchor
         );
 
-        return $this->render('/member/status/statusList.html.twig', array(
-            'results' => $results
-        ));
+        return $this->render(
+            '/member/status/statusList.html.twig',
+            array(
+                'results' => $results,
+            )
+        );
     }
 
     /**
@@ -55,37 +60,56 @@ class MemberStatusController extends Controller
      */
     public function saveAction(Request $request)
     {
-        if(!$request->isXmlHttpRequest()){
+        if (!$request->isXmlHttpRequest()) {
             throw new \BadMethodCallException("Only AJAX request supported!");
         }
 
         $id = $request->get('id', null);
         $label = $request->get('label', null);
 
+        if (null === $id || null === $label) {
+            throw new \HttpRequestException(
+                "Arguments of the request are missing, you must send the \"id\" and \"label\" arguments for the call of this method!"
+            );
+        }
+
         $translator = $this->get('translator');
         $statusManager = $this->get('member.manager.status');
 
-        try{
+        $status = $statusManager->find($id);
+
+        if(null === $status){
+            throw new EntityNotFoundException("Status not found in database!");
+        }
+
+
+        try {
+
+
             $statusManager->saveAjax($request);
 
             $array = [
                 'code' => 'success',
-                'message' => $translator->trans('member.status.edit.saveSuccessText')
+                'message' => $translator->trans('member.status.edit.saveSuccessText'),
             ];
 
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             $array = [
                 'code' => 'error',
-                'message' => $translator->trans('app.common.errorComming', [
-                    '%error%' => $e->getCode() . " : ".$e->getMessage()
-                ])
+                'message' => $translator->trans(
+                    'app.common.errorComming',
+                    [
+                        '%error%' => $e->getCode()." : ".$e->getMessage(),
+                    ]
+                ),
             ];
         }
 
         return new Response(
-            (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
-            ))->serialize($array, 'json'));
+            (new Serializer(
+                [new ObjectNormalizer()], [new JsonEncoder()]
+            ))->serialize($array, 'json')
+        );
     }
 
     /**
@@ -98,7 +122,7 @@ class MemberStatusController extends Controller
         $memberStatusManager = $this->get('member.manager.status');
 
         $status = $memberStatusManager->find($id);
-        if(null === $status){
+        if (null === $status) {
             $status = $memberStatusManager->getNewEntity();
         }
 
@@ -106,19 +130,19 @@ class MemberStatusController extends Controller
 
         $formHandler->setForm($status);
 
-        if($formHandler->process($request)){
+        if ($formHandler->process($request)) {
             $translator = $this->get('translator');
 
             $status = $formHandler->getData();
 
-            if($memberStatusManager->save($status)){
+            if ($memberStatusManager->save($status)) {
                 $this->addFlash('success', $translator->trans('member.status.edit.saveSucessText'));
 
-                if(null !== $request->get('save_and_leave', null)){
+                if (null !== $request->get('save_and_leave', null)) {
                     $pageH = $this->get('app.handler.page_historical');
                     $callBackUrl = $pageH->getCallbackUrl('member_status_edit');
 
-                    if(null!== $callBackUrl){
+                    if (null !== $callBackUrl) {
                         return $this->redirect($callBackUrl);
                     }
 
@@ -127,24 +151,34 @@ class MemberStatusController extends Controller
                     );
                 }
 
-                if(null !== $request->get('save_and_stay', null)){
-                    return $this->redirectToRoute('member_status_edit', [
-                        'id' => $status->getId()
-                    ]);
+                if (null !== $request->get('save_and_stay', null)) {
+                    return $this->redirectToRoute(
+                        'member_status_edit',
+                        [
+                            'id' => $status->getId(),
+                        ]
+                    );
                 }
             }
 
             $this->addFlash(
                 'error',
-                $translator->trans('app.common.errorComming', [
-                    '%error%' => '<br />' . implode('<br />', $memberStatusManager->getErrors())
-                ]));
+                $translator->trans(
+                    'app.common.errorComming',
+                    [
+                        '%error%' => '<br />'.implode('<br />', $memberStatusManager->getErrors()),
+                    ]
+                )
+            );
         }
 
 
-        return $this->render('subscription/subscription/subscriptionEdit.html.twig', array(
-            'formSubscription' => $formHandler->getForm()->createView()
-        ));
+        return $this->render(
+            'subscription/subscription/subscriptionEdit.html.twig',
+            array(
+                'formSubscription' => $formHandler->getForm()->createView(),
+            )
+        );
     }
 
     /**
@@ -152,7 +186,7 @@ class MemberStatusController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        if(!$request->isXmlHttpRequest()){
+        if (!$request->isXmlHttpRequest()) {
             throw new \BadMethodCallException("Only AJAX request supported!");
         }
 
@@ -161,37 +195,49 @@ class MemberStatusController extends Controller
 
         $status = $statusManager->find($id);
 
-        if(null === $status){
+        if (null === $status) {
             $array = [
                 'code' => 'error',
-                'message' => $translator->trans('member.status.delete.deleteErrorMissingText')
+                'message' => $translator->trans('member.status.delete.deleteErrorMissingText'),
             ];
 
             return new Response(
-                (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
-                ))->serialize($array, 'json'));
+                (new Serializer(
+                    [new ObjectNormalizer()], [new JsonEncoder()]
+                ))->serialize($array, 'json')
+            );
         }
 
-        if(!$statusManager->delete($status)){
+        if (!$statusManager->delete($status)) {
             $array = [
                 'code' => 'error',
-                'message' => $translator->trans('app.common.errorComming', [
-                    '%error%' => '<br />' . implode('<br />', $statusManager->getErrors())
-                ])
+                'message' => $translator->trans(
+                    'app.common.errorComming',
+                    [
+                        '%error%' => '<br />'.implode('<br />', $statusManager->getErrors()),
+                    ]
+                ),
             ];
 
             return new Response(
-                (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
-                ))->serialize($array, 'json'));
+                (new Serializer(
+                    [new ObjectNormalizer()], [new JsonEncoder()]
+                ))->serialize($array, 'json')
+            );
         }
 
         $array = [
             'code' => 'success',
-            'message' => $translator->trans('member.status.delete.deleteSuccessText', ['%label%' => $status->getLabel()])
+            'message' => $translator->trans(
+                'member.status.delete.deleteSuccessText',
+                ['%label%' => $status->getLabel()]
+            ),
         ];
 
         return new Response(
-            (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
-            ))->serialize($array, 'json'));
+            (new Serializer(
+                [new ObjectNormalizer()], [new JsonEncoder()]
+            ))->serialize($array, 'json')
+        );
     }
 }
