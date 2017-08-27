@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -64,6 +65,12 @@ class MemberStatusController extends Controller
             throw new \BadMethodCallException("Only AJAX request supported!");
         }
 
+        dump($this->isGranted('MEMBER_STATUS_EDIT'));
+
+        if(!$this->isGranted('MEMBER_STATUS_EDIT')){
+            throw new BadCredentialsException("Vous n'êtes pas autorisé à modifier ce statut !");
+        }
+
         $id = $request->get('id', null);
         $label = $request->get('label', null);
 
@@ -82,11 +89,9 @@ class MemberStatusController extends Controller
             throw new EntityNotFoundException("Status not found in database!");
         }
 
-
         try {
-
-
-            $statusManager->saveAjax($request);
+            $status->setLabel($label);
+            $statusManager->save($status);
 
             $array = [
                 'code' => 'success',

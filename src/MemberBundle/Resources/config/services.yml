@@ -1,6 +1,11 @@
-services:
-    member_member_voter:
-        class: MemberBundle\Security\MemberVoter
-        autowire: true
-        tags:
-            - {name: security.voter}
+#services:
+#    member_member_voter:
+#        class: MemberBundle\Security\MemberVoter
+#        autowire: true
+#        tags:
+#            - {name: security.voter}
+#    member_status_voter:
+#        class: MemberBundle\Security\MemberStatusVoter
+#        autowire: true
+#        tags:
+#            - {name: security.voter}

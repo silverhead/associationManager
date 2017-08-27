@@ -33,7 +33,7 @@ $(document).on('click', '.editStatus', function(e){
 
 $(document).on('click', '.delStatus', function(e) {
     e.preventDefault();
-
+    alert('test');
     $(this).deleteConfirm({
         'text': Translator.trans("member.status.delete.deleteQuestionText"),
         'route': 'member_status_delete',

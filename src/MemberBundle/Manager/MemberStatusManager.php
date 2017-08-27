@@ -42,21 +42,4 @@ class MemberStatusManager implements PaginatorManagerInterface
     {
         return $this->entityManager->getRepository("MemberBundle:MemberStatus");
     }
-
-    public function saveAjax(Request $request){
-        $id = $request->get('id', null);
-        $label = $request->get('label', null);
-
-        if(null !== $id){
-            $status = $this->find($id);
-        }
-        else{
-            $status = $this->getNewEntity();
-        }
-
-        $status->setLabel($label);
-
-        $this->entityManager->persist($status);
-        $this->entityManager->flush();
-    }
 }
