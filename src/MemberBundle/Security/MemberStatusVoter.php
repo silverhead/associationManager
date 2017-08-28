@@ -22,7 +22,16 @@ class MemberStatusVoter extends Voter
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         switch ($attribute){
+            case self::MEMBER_STATUS_VIEW:
+                return false;
+                break;
+            case self::MEMBER_STATUS_CREATE:
+                return true;
+                break;
             case self::MEMBER_STATUS_EDIT:
+                return false;
+                break;
+            case self::MEMBER_STATUS_DELETE:
                 return false;
                 break;
             default:

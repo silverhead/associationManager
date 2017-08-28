@@ -1,6 +1,8 @@
 <div class="row">
     <div class="col-xs-12">
-        <a href="#" id="addStatus" class="btn bg-green waves-effect">{{ 'member.status.add.title'|trans }}</a>
+        {% if is_granted('MEMBER_STATUS_CREATE') %}
+            <a href="#" id="addStatus" class="btn bg-green waves-effect">{{ 'member.status.add.title'|trans }}</a>
+        {% endif %}
     </div>
 </div>
 <div class="row">
@@ -13,7 +15,9 @@
                         <th>#</th>
                         <th>{{ 'member.status.list.table.label'|trans }}</th>
                         <th>{{ 'member.status.list.table.memberNumber'|trans }}</th>
-                        <th>{{ 'app.common.table.action'|trans }}</th>
+                        {% if is_granted('MEMBER_STATUS_EDIT') or is_granted('MEMBER_STATUS_DELETE') %}
+                            <th>{{ 'app.common.table.action'|trans }}</th>
+                        {% endif %}
                     </tr>
                     </thead>
                     <tbody>
@@ -22,10 +26,16 @@
                             <td scope="row">{{ status.getId() }}</td>
                             <td>{{ status.getLabel() }}</td>
                             <td>NF</td>
+                            {% if is_granted('MEMBER_STATUS_EDIT') or is_granted('MEMBER_STATUS_DELETE') %}
                             <td>
-                                <a href="#" data-id="{{ status.getId() }}" data-label="{{ status.getLabel() }}" class="btn btn-warning material-icons editStatus">edit</a>
-                                <a href="#" data-id="{{ status.getId() }}" data-label="{{ status.getLabel() }}" class="btn btn-danger material-icons delStatus">delete</a>
+                                {% if is_granted('MEMBER_STATUS_EDIT') %}
+                                    <a href="#" data-id="{{ status.getId() }}" data-label="{{ status.getLabel() }}" class="btn btn-warning material-icons editStatus">edit</a>
+                                {% endif %}
+                                {% if is_granted('MEMBER_STATUS_DELETE') %}
+                                    <a href="#" data-id="{{ status.getId() }}" data-label="{{ status.getLabel() }}" class="btn btn-danger material-icons delStatus">delete</a>
+                                {% endif %}
                             </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>

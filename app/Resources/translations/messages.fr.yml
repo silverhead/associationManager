@@ -3,6 +3,7 @@ app:
         appName: Association manager
         appSlogan: Gérer votre association
     common:
+        accessDenied: Accès refusé !
         errorUnknow: Erreur inconnu, veuillez contacter l'administrateur de l'application !
         errorComming: Une erreur est intervenue ! %error%
         errorTitle: Une erreur est intervenue !

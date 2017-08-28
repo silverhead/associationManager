@@ -3,6 +3,7 @@
 namespace MemberBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
+use MemberBundle\Security\MemberStatusVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,11 +66,9 @@ class MemberStatusController extends Controller
             throw new \BadMethodCallException("Only AJAX request supported!");
         }
 
-        dump($this->isGranted('MEMBER_STATUS_EDIT'));
+        $translator = $this->get('translator');
 
-        if(!$this->isGranted('MEMBER_STATUS_EDIT')){
-            throw new BadCredentialsException("Vous n'êtes pas autorisé à modifier ce statut !");
-        }
+        $this->denyAccessUnlessGranted(MemberStatusVoter::MEMBER_STATUS_EDIT, null, $translator->trans('app.common.access_denied'));
 
         $id = $request->get('id', null);
         $label = $request->get('label', null);
@@ -80,7 +79,7 @@ class MemberStatusController extends Controller
             );
         }
 
-        $translator = $this->get('translator');
+
         $statusManager = $this->get('member.manager.status');
 
         $status = $statusManager->find($id);
