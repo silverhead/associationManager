@@ -3,7 +3,6 @@ app:
         appName: Association manager
         appSlogan: Gérer votre association
     common:
-        accessDenied: Accès refusé !
         errorUnknow: Erreur inconnu, veuillez contacter l'administrateur de l'application !
         errorComming: Une erreur est intervenue ! %error%
         errorTitle: Une erreur est intervenue !
@@ -71,6 +70,12 @@ app:
             inputPasswordCheck: Vérification
             tokenNotFoundMessage: token non trouvé !
             errorOnSaveNewPassword: Une erreur est intervenue lors de l'enregistrement du nouveau mot de passe :
+        credential:
+            accessDenied: Accès refusé !
+            view: Voir
+            create: Créer
+            edit: Éditer
+            delete: Supprimer
     dashboard:
         callback: retour tableau de bord
         title: tableau de bord
@@ -155,9 +160,11 @@ member:
         tabStatus: Status
         tabGroups: Groupes
     member:
+        title: Adhérents (membres)
         list:
             title: Gestion des adhérents
     status:
+        title: Adhérents (statuts)
         add:
             title: Ajouter un statut
         edit:

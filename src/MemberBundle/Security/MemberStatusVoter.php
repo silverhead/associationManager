@@ -8,37 +8,27 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class MemberStatusVoter extends Voter
 {
-    const MEMBER_STATUS_VIEW    = 'MEMBER_STATUS_VIEW';
-    const MEMBER_STATUS_CREATE  = 'MEMBER_STATUS_CREATE';
-    const MEMBER_STATUS_EDIT    = 'MEMBER_STATUS_EDIT';
-    const MEMBER_STATUS_DELETE  = 'MEMBER_STATUS_DELETE';
+    private $credentials = array();
+
+    public function __construct($credentials){
+        $this->credentials = array_keys($credentials);
+    }
 
 
     protected function supports($attribute, $subject = null)
     {
-        return in_array($attribute, array(self::MEMBER_STATUS_VIEW, self::MEMBER_STATUS_CREATE, self::MEMBER_STATUS_EDIT, self::MEMBER_STATUS_DELETE));
+        dump($this->credentials);
+
+        return in_array($attribute, $this->credentials);
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        switch ($attribute){
-            case self::MEMBER_STATUS_VIEW:
-                return false;
-                break;
-            case self::MEMBER_STATUS_CREATE:
-                return true;
-                break;
-            case self::MEMBER_STATUS_EDIT:
-                return false;
-                break;
-            case self::MEMBER_STATUS_DELETE:
-                return false;
-                break;
-            default:
-                return false;
-                break;
+        if(in_array($attribute, $this->credentials)){
+            return true;//for test only todo to remove when the credential system setup will be finished
         }
 
+        return false;
     }
 
 }
