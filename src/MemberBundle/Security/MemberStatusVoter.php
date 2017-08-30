@@ -17,8 +17,6 @@ class MemberStatusVoter extends Voter
 
     protected function supports($attribute, $subject = null)
     {
-        dump($this->credentials);
-
         return in_array($attribute, $this->credentials);
     }
 
