@@ -2,6 +2,7 @@
 
 namespace UserBundle\Controller;
 
+use AppBundle\Event\CredentialEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,6 +56,13 @@ class UserGroupController extends Controller
      */
     public function editAction(Request $request, $id = null)
     {
+
+        $credentialEvent = new CredentialEvent();
+        $this->container->get('event_dispatcher')->dispatch(
+            CredentialEvent::EVENT_NAME,
+            $credentialEvent
+        );
+
         $manager = $this->get('user.manager.group');
         $formHandler = $this->get('user.form.handler.group');
 
@@ -66,7 +74,8 @@ class UserGroupController extends Controller
         $formHandler->setForm($entity);
 
         return $this->render('/user/group/edit.html.twig', array(
-            'formUserGroup' =>  $formHandler->getForm()->createView()
+            'formUserGroup' =>  $formHandler->getForm()->createView(),
+            'credentials' => $credentialEvent->getCredentialsList()
         ));
     }
 

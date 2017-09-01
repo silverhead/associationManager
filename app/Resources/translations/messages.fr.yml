@@ -22,6 +22,9 @@ app:
             choice: Choisir
             validation:
                 notBlank: Ce champ doit être renseigné !
+            boolean:
+                yes: Oui
+                no: Non
         status:
             enabled: Actif
             disabled: Non actif
@@ -164,7 +167,8 @@ member:
         list:
             title: Gestion des adhérents
     status:
-        title: Adhérents (statuts)
+        credential:
+            title: Adhérents (statuts)
         add:
             title: Ajouter un statut
         edit:
@@ -186,7 +190,9 @@ user:
             title: Modifier le groupe
             saveSuccessText: Le groupe enregistré avec succès !
             label: Libellé
-            role: Role
+            active: Actif
+            generalTitle: Général
+            credentialTitle: Autorisations
         delete:
             deleteQuestionText: La suppression du groupe est définitf !
             deleteErrorMissingText: Le groupe que vous voulez suprpimer n'a pas été trouvé !

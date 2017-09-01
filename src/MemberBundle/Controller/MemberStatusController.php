@@ -2,6 +2,7 @@
 
 namespace MemberBundle\Controller;
 
+use AppBundle\Event\CredentialEvent;
 use Doctrine\ORM\EntityNotFoundException;
 use MemberBundle\Security\MemberStatusVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

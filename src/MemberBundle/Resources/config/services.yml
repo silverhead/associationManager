@@ -1,4 +1,11 @@
 services:
+    # EVENT LISTENER
+    member_status_credential_event:
+        class: MemberBundle\EventListener\StatusCredentialEventListener
+        arguments: ['%credentialVoterMemberStatus%', 'member.status.credential']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    # VOTER
     member_member_voter:
         class: MemberBundle\Security\MemberVoter
         autowire: true

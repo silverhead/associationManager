@@ -22,6 +22,7 @@
                 <div class="body">
                     {{ form_start(formUserGroup) }}
                     <div class="row">
+                        <h3>{{ 'user.group.edit.generalTitle'|trans }}</h3>
                         <div class="col-md-6">
                             {{ form_row(formUserGroup.label, {
                                 'label': 'user.group.edit.label'|trans,
@@ -31,12 +32,33 @@
                             }) }}
                         </div>
                         <div class="col-md-6">
-                            {{ form_row(formUserGroup.role, {
-                                'label': 'user.group.edit.role'|trans,
+                            {{ form_row(formUserGroup.active, {
+                                'label': 'user.group.edit.active'|trans,
                                 'attr': {
-                                    'placeholder': 'user.group.edit.role'|trans
+                                    'placeholder': 'user.group.edit.active'|trans
                                 }
                             }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>{{ 'user.group.edit.credentialTitle'|trans }}</h3>
+                        </div>
+                        <div class="col-md-12">
+                            <ul>
+                            {% for name, credential in credentials  %}
+                                <li>
+                                {{ (name ~ '.title')|trans }}
+                                    <ul>
+                                    {% for levelName, labelCode in credential  %}
+                                        <li>
+                                            {{ levelName }} : {{ labelCode|trans }}
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                            </ul>
                         </div>
                     </div>
                     <div class="row">

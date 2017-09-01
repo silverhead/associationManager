@@ -27,6 +27,12 @@ class UserGroup
     private $label;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $active = false;
+
+    /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="group")
      */
@@ -74,6 +80,26 @@ class UserGroup
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     * @return UserGroup
+     */
+    public function setActive(bool $active): UserGroup
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
 
     /**
      * Add user

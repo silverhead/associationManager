@@ -3,6 +3,7 @@
 namespace UserBundle\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,18 +14,13 @@ class UserGroupFormType extends AbstractType
     {
         $builder
             ->add('label', TextType::class)
-            ->add('role', TextType::class)
+            ->add('active', ChoiceType::class, array(
+                'choices'  => array(
+                    'app.common.form.boolean.yes' => true,
+                    'app.common.form.boolean.no' => false
+                ))
+            )
         ;
-//            ->add('userToken', HiddenType::class)
-//            ->add('password', RepeatedType::class, array(
-//            'type' => PasswordType::class,
-//            'invalid_message' => 'The password fields must match.',
-//            'options' => array('attr' => array('class' => 'password-field')),
-//            'required' => true,
-//            'first_options'  => array('label' => 'Password'),
-//            'second_options' => array('label' => 'Repeat Password'),
-//        ));
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
