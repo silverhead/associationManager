@@ -38,10 +38,11 @@ class UserGroup
      */
     private $users;
 
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
+    /**
+     * @var string[]
+     * @ORM\Column(type="simple_array", nullable=true)
+     */
+    private $credentials;
 
     /**
      * @return int
@@ -134,4 +135,72 @@ class UserGroup
     {
         return $this->users;
     }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Add credential
+     *
+     * @param string
+     *
+     * @return UserGroup
+     */
+    public function addCredential(string $credential)
+    {
+        $this->credentials[$credential] = $credential;
+
+        return $this;
+    }
+
+    /**
+     * Remove credential
+     *
+     * @param string $credential
+     */
+    public function removeCredential(string $credential)
+    {
+        if(isset($this->credentials[$credential])){
+            unset($this->credentials[$credential]);            
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Set credentials
+     *
+     * @return UserGroup
+     */
+    public function setCredentials(array $credentials)
+    {
+        $this->credentials = $credentials;
+        
+        return $this;
+    }    
+    
+    /**
+     * Get credentials
+     *
+     * @return array
+     */
+    public function getCredentials()
+    {
+        return $this->credentials;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }

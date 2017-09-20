@@ -2,6 +2,7 @@
 
 namespace UserBundle\Form\Type;
 
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -20,12 +21,21 @@ class UserGroupFormType extends AbstractType
                     'app.common.form.boolean.no' => false
                 ))
             )
+            ->add('credentials', ChoiceType::class, [
+                'choices' => $options['credentials']->getCredentialsList(),
+                "multiple" => true,
+                "expanded" => true
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-
+        $resolver->setRequired(array('credentials'))
+            ->setDefaults(array(
+                'credentials'
+            ))
+        ;
     }
 
     public function getBlockPrefix()

@@ -8066,3 +8066,25 @@ html.ie11 .dropdown-menu ul.menu li a {
 html.ie11 .bs-searchbox .form-control {
   width: 90%; }
 
+/*************************************************************/
+
+.groupedCheckboxList ul{
+    list-style: none;
+    display: flex;
+    justify-content: left;
+    margin:0;
+    padding: 0;
+}
+
+.groupedCheckboxList > ul > li:not(:first-child){
+    margin-left: 20px;
+}
+
+.groupedCheckboxList ul ul{
+    margin:0;
+}
+
+.groupedCheckboxList ul li{
+    margin: 0;
+    padding: 0;
+}

@@ -44,7 +44,7 @@ services:
         arguments: ['@form.factory']
     user.form.handler.group:
         class: UserBundle\Form\Handler\UserGroupFormHandler
-        arguments: ['@form.factory']
+        arguments: ['@form.factory', '@service_container']
     # Twig extension
     app.twig_extension.setting:
         class: AppBundle\Twig\SettingExtension

@@ -2,7 +2,12 @@ services:
     # EVENT LISTENER
     member_status_credential_event:
         class: MemberBundle\EventListener\StatusCredentialEventListener
-        arguments: ['%credentialVoterMemberStatus%', 'member.status.credential']
+        arguments: ['%credentialVoterMemberStatus%', 'member.status.credential.title']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    member_member_credential_event:
+        class: MemberBundle\EventListener\MemberCredentialEventListener
+        arguments: ['%credentialVoterMemberMembers%', 'member.member.title']
         tags:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     # VOTER

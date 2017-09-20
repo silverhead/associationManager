@@ -22,7 +22,7 @@
                 <div class="body">
                     {{ form_start(formUserGroup) }}
                     <div class="row">
-                        <h3>{{ 'user.group.edit.generalTitle'|trans }}</h3>
+                        <h3 class="col-md-12">{{ 'user.group.edit.generalTitle'|trans }}</h3>
                         <div class="col-md-6">
                             {{ form_row(formUserGroup.label, {
                                 'label': 'user.group.edit.label'|trans,
@@ -41,24 +41,45 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <h3>{{ 'user.group.edit.credentialTitle'|trans }}</h3>
-                        </div>
-                        <div class="col-md-12">
-                            <ul>
-                            {% for name, credential in credentials  %}
-                                <li>
-                                {{ (name ~ '.title')|trans }}
-                                    <ul>
-                                    {% for levelName, labelCode in credential  %}
-                                        <li>
-                                            {{ levelName }} : {{ labelCode|trans }}
-                                        </li>
-                                    {% endfor %}
-                                    </ul>
-                                </li>
-                            {% endfor %}
-                            </ul>
+                        <h3 class="col-md-12">{{ 'user.group.edit.credentialTitle'|trans }}</h3>
+                        <div class="col-md-12 groupedCheckboxList">
+                            {{ form(formUserGroup.credentials) }}
+                            {#<ul style="list-style: none">#}
+                            {#{% set i = 0 %}#}
+                            {#{% for name, credential in credentials  %}#}
+                                {#<li>#}
+                                    {#<h4>{{ (name ~ '.title')|trans }}</h4>#}
+                                    {#{{ form_widget(formUserGroup.credentials) }}#}
+                                    {#<ul>#}
+                                        {#{% for credential in formUserGroup.credentials %}#}
+                                            {#<li>#}
+                                                {#<label>{{ credential.code.vars.value|trans }}</label>#}
+
+                                                {#{{ form_widget(credential.code) }}#}
+                                            {#</li>#}
+                                        {#{% endfor %}#}
+                                    {#</ul>#}
+                                    {#<ul style="list-style: none">#}
+                                    {#{% for levelName, labelCode in credential  %}#}
+                                    {#{% for credential in formUserGroup.credentials  %}#}
+                                        {#<li class="col-md-4">#}
+                                            {#{% if formCredentials[levelName] is defined %}#}
+                                                {#{% set credentialActive =  formCredentials[levelName] %}#}
+                                            {#{% else %}#}
+                                                {#{% set credentialActive =  0 %}#}
+                                            {#{% endif %}#}
+                                            {#{% include 'user/group/EditGroupCredential.html.twig' with {'label': labelCode, 'code': levelName, 'index': i, 'active': credentialActive} %}#}
+                                            {# formCreadentials #}
+                                            {#{% include 'user/group/EditGroupCredential.html.twig' with {'label': labelCode, 'code': levelName, 'index': loop.index0} %}#}
+                                            {#{{ form_row(formUserGroup.credentials) }}#}
+                                            {#{{ levelName }} : {{ labelCode|trans }}#}
+                                        {#</li>#}
+                                        {#{% set i = i+1 %}#}
+                                    {#{% endfor %}#}
+                                    {#</ul>#}
+                                {#</li>#}
+                            {#{% endfor %}#}
+                            {#</ul>#}
                         </div>
                     </div>
                     <div class="row">
@@ -66,6 +87,7 @@
                             {% include ':form:bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
                         </div>
                     </div>
+
                     {{ form_end(formUserGroup) }}
                 </div>
             </div>

@@ -10,6 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use UserBundle\Entity\GroupCredential;
+use UserBundle\Form\Type\GroupCredentialType;
 
 class UserGroupController extends Controller
 {
@@ -71,11 +73,56 @@ class UserGroupController extends Controller
             $entity = $manager->getNewEntity();
         }
 
+        $credentialsGroup = $entity->getCredentials();
+
+        foreach($credentialEvent->getCredentialsList() as $credential){
+            foreach($credential as $code => $labelCode){
+                $entity->addCredential($code);
+//                $curentCredential = $entity->getCredential($code);
+//                //dump($curentCredential);
+//                if(null === $curentCredential){
+//                    $oCredential = new GroupCredential();
+//                    $oCredential
+//                        ->setUserGroup($entity)
+//                        ->setCode($code);
+//
+//                    $entity->addCredential($oCredential);
+//                }
+            }
+        }
+
+
         $formHandler->setForm($entity);
+
+        if($formHandler->process($request)){
+
+        }
+
+//        $form = $formHandler->getForm();
+//        $formCredentials = array();
+////        foreach($entity->getCredentials() as $credential){
+//        foreach($credentialEvent->getCredentialsList() as $credential){
+//            foreach($credential as $code => $labelCode){
+//                $oCredential = new GroupCredential($entity, $code);
+//                $oCredential
+////                    ->setUserGroup($entity)
+////                    ->setCode($code)
+//                    ->setActive(false);
+//
+//
+//
+//                $form->get('credentials')->add($oCredential);
+//                $formCredentials[$credential->getCode()] = $credential->getActive();
+//            }
+//        }
+
+
+//        $form->remove('credentials');
 
         return $this->render('/user/group/edit.html.twig', array(
             'formUserGroup' =>  $formHandler->getForm()->createView(),
-            'credentials' => $credentialEvent->getCredentialsList()
+            'credentials' => $credentialEvent->getCredentialsList(),
+//            'formCredentials' => $formCredentials
         ));
     }
 

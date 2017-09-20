@@ -145,34 +145,49 @@
     {{- parent() -}}
 {%- endblock %}
 
-{% block choice_widget_expanded -%}
-    {% if '-inline' in label_attr.class|default('') -%}
-        {%- for child in form %}
-            {{- form_widget(child, {
-                parent_label_class: label_attr.class|default(''),
-                translation_domain: choice_translation_domain,
-            }) -}}
-        {% endfor -%}
-    {%- else -%}
-        <div {{ block('widget_container_attributes') }}>
-            {%- for child in form %}
-                {{- form_widget(child, {
-                    parent_label_class: label_attr.class|default(''),
-                    translation_domain: choice_translation_domain,
-                }) -}}
-            {% endfor -%}
-        </div>
-    {%- endif %}
-{%- endblock choice_widget_expanded %}
+{%- block choice_widget_expanded -%}
+<ul {{ block('widget_container_attributes') }}>
+    {% for name, choices in form.vars.choices %}
+        <li>
+        {% if choices is iterable  %}
+
+            <label class="choice_category">
+                <strong>
+                    {{ choice_translation_domain is same as(false) ? name : name|trans({}, choice_translation_domain) }}
+                </strong>
+            </label>
+            <ul>
+                {% for key,choice in choices %}
+                    <li class="">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">
+                                {{ form_widget(form[key], {'attr': {'class': 'filled-in'}}) }}
+                                {{ form_label(form[key]) }}
+                            </span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+
+            {{- form_widget(form[name]) -}}
+            {{- form_label(form[name], null, {translation_domain: choice_translation_domain}) -}}
+
+        {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{%- endblock choice_widget_expanded -%}
 
 {% block checkbox_widget -%}
     {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
     {% if 'checkbox-inline' in parent_label_class %}
         {{- form_label(form, null, { widget: parent() }) -}}
     {% else -%}
-        <div class="checkbox">
+        {#<div class="checkbox">#}
             {{- form_label(form, null, { widget: parent() }) -}}
-        </div>
+        {#</div>#}
     {%- endif %}
 {%- endblock checkbox_widget %}
 
@@ -245,8 +260,9 @@
                 {% set label = name|humanize %}
             {%- endif -%}
         {% endif %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-        {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)) -}}
+        {{- widget|raw }}
+        <label for="{{ id }}" {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+         {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)) -}}
         </label>
     {% endif %}
 {% endblock checkbox_radio_label %}
@@ -311,6 +327,6 @@
             <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message }}</li>
         {%- endfor -%}
     </ul>
-        {% if form.parent %}</span>{% else %}</div>{% endif %}
+        {% if form.parent %}</span>{% else %}</ul>{% endif %}
     {%- endif %}
 {%- endblock form_errors %}

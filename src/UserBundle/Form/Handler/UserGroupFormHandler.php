@@ -2,6 +2,8 @@
 
 namespace UserBundle\Form\Handler;
 
+use AppBundle\Event\CredentialEvent;
+use Symfony\Component\DependencyInjection\Container;
 use UserBundle\Entity\UserGroup;
 use UserBundle\Form\Type\UserGroupFormType;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -16,17 +18,37 @@ class UserGroupFormHandler
     private $formFactory;
 
     /**
+     * @var CredentialEvent
+     */
+    private $credentials;
+
+    /**
      * @var \Symfony\Component\Form\FormInterface
      */
     private $form;
 
-    public function __construct(FormFactory $formFactory){
+    /**
+     * UserGroupFormHandler constructor.
+     * @param FormFactory $formFactory
+     * @param $container
+     */
+    public function __construct(FormFactory $formFactory, Container $container){
         $this->formFactory = $formFactory;
+
+        $credentialEvent = new CredentialEvent();
+        $container->get('event_dispatcher')->dispatch(
+            CredentialEvent::EVENT_NAME,
+            $credentialEvent
+        );
+
+        $this->credentials = $credentialEvent;
     }
 
     public function setForm(UserGroup $userGroup)
     {
-        $this->form = $this->formFactory->create(UserGroupFormType::class, $userGroup);
+        $this->form = $this->formFactory->create(UserGroupFormType::class, $userGroup, array(
+            'credentials' => $this->credentials
+        ));
     }
 
     public function getForm()
