@@ -23,32 +23,11 @@
                         <td>{{ group.label }}</td>
                         <td>NF</td>
                         <td>
-                            {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                            <a href="#" data-label="{{ group.label }}" data-id="{{ group.id }}" class="btn btn-warning material-icons editUserGroup">edit</a>
+                            <a href="{{ path('user_group_edit', {'id': group.id}) }}" class="btn btn-warning material-icons">edit</a>
                             <a href="#" data-id="{{ group.id }}" class="btn btn-danger material-icons delUserGroup">delete</a>
                         </td>
                     </tr>
                     {% endfor %}
-                    {#<tr>#}
-                        {#<td scope="row">2</td>#}
-                        {#<td>Membre</td>#}
-                        {#<td>40</td>#}
-                        {#<td>#}
-                            {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                            {#<a href="#" data-label="Membre" class="btn btn-warning material-icons editGroup">edit</a>#}
-                            {#<a href="#" data-id="2" class="btn btn-danger material-icons delGroup">delete</a>#}
-                        {#</td>#}
-                    {#</tr>#}
-                    {#<tr>#}
-                        {#<td scope="row">3</td>#}
-                        {#<td>Modérateur</td>#}
-                        {#<td>0</td>#}
-                        {#<td>#}
-                            {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                            {#<a href="#" data-label="Modérateur" class="btn btn-warning material-icons editGroup">edit</a>#}
-                            {#<a href="#" data-id="3" class="btn btn-danger material-icons delGroup">delete</a>#}
-                        {#</td>#}
-                    {#</tr>#}
                     </tbody>
                 </table>
             </form>

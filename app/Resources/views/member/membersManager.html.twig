@@ -32,11 +32,7 @@
                 });
             });
         });
-
-
-
     </script>
-
 {% endblock %}
 
 {% block content %}
@@ -57,6 +53,7 @@
             <span class="pull-right">40 membres</span>
         </h2>
     </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
     <div class="row">
         <div class="col-xs-12">
             <div class="card">
@@ -65,7 +62,7 @@
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
                         <li role="presentation" class="active"><a href="#members" data-toggle="tab">Adhérents</a></li>
                         <li role="presentation"><a href="#status" data-toggle="tab">Statuts</a></li>
-                        <li role="presentation"><a href="#groups" data-toggle="tab">Groupes</a></li>
+                        <li role="presentation"><a href="#groups" data-toggle="tab">{{ 'user.group.title'|trans }}</a></li>
                     </ul>
 
                     <!-- Tab panes -->

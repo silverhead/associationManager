@@ -23,13 +23,6 @@ class MemberController extends Controller
      */
     public function editMemberAction(Request $request, $id = 0)
     {
-        // in stand by for entity member
-        //        $voter = $this->get('member_member_voter');
-        //
-        //        $token = $this->get('security.token_storage')->getToken();
-        //
-        //        if($voter->vote($token))
-
         return $this->render('member/memberEdit.html.twig', [
             'menuSelect' => 'members_manager'
         ]);

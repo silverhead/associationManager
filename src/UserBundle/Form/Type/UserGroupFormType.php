@@ -2,7 +2,6 @@
 
 namespace UserBundle\Form\Type;
 
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -22,7 +21,7 @@ class UserGroupFormType extends AbstractType
                 ))
             )
             ->add('credentials', ChoiceType::class, [
-                'choices' => $options['credentials']->getCredentialsList(),
+                'choices' => $options['credentialsList']->getCredentialsList(),
                 "multiple" => true,
                 "expanded" => true
             ])
@@ -31,9 +30,9 @@ class UserGroupFormType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(array('credentials'))
+        $resolver->setRequired(array('credentialsList'))
             ->setDefaults(array(
-                'credentials'
+                'credentialsList'
             ))
         ;
     }

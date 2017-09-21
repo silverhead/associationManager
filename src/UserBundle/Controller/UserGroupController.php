@@ -58,13 +58,6 @@ class UserGroupController extends Controller
      */
     public function editAction(Request $request, $id = null)
     {
-
-        $credentialEvent = new CredentialEvent();
-        $this->container->get('event_dispatcher')->dispatch(
-            CredentialEvent::EVENT_NAME,
-            $credentialEvent
-        );
-
         $manager = $this->get('user.manager.group');
         $formHandler = $this->get('user.form.handler.group');
 
@@ -73,56 +66,65 @@ class UserGroupController extends Controller
             $entity = $manager->getNewEntity();
         }
 
-        $credentialsGroup = $entity->getCredentials();
+        $pageH = $this->get('app.handler.page_historical');
+        $callBackUrl = $pageH->getCallbackUrl('user_group_edit');
 
-        foreach($credentialEvent->getCredentialsList() as $credential){
-            foreach($credential as $code => $labelCode){
-                $entity->addCredential($code);
-//                $curentCredential = $entity->getCredential($code);
-//                //dump($curentCredential);
-//                if(null === $curentCredential){
-//                    $oCredential = new GroupCredential();
-//                    $oCredential
-//                        ->setUserGroup($entity)
-//                        ->setCode($code);
-//
-//                    $entity->addCredential($oCredential);
-//                }
-            }
-        }
-
+        $translator = $this->get('translator');
 
         $formHandler->setForm($entity);
 
-        if($formHandler->process($request)){
+        dump($request);
 
+        if($formHandler->process($request)){
+            $entity = $formHandler->getData();
+
+
+
+            if($manager->save($entity)){
+                $this->addFlash('success', $translator->trans('user.group.edit.saveSuccessText'));
+
+                if(null !== $request->get('save_and_leave', null)){
+                    if(null!== $callBackUrl){
+                        return $this->redirect($callBackUrl);
+                    }
+
+                    return $this->redirect(
+                        $this->generateUrl('members_manager').'#groups'
+                    );
+                }
+
+                if(null !== $request->get('save_and_stay', null)){
+                    return $this->redirectToRoute('user_group_edit', [
+                        'id' => $entity->getId()
+                    ]);
+                }
+            }
         }
 
-//        $form = $formHandler->getForm();
-//        $formCredentials = array();
-////        foreach($entity->getCredentials() as $credential){
-//        foreach($credentialEvent->getCredentialsList() as $credential){
-//            foreach($credential as $code => $labelCode){
-//                $oCredential = new GroupCredential($entity, $code);
-//                $oCredential
-////                    ->setUserGroup($entity)
-////                    ->setCode($code)
-//                    ->setActive(false);
-//
-//
-//
-//                $form->get('credentials')->add($oCredential);
-//                $formCredentials[$credential->getCode()] = $credential->getActive();
-//            }
-//        }
+        $breadcrumbs = [
+            [
+                'href' => $this->redirectToRoute('dashboard'),
+                'title' => $translator->trans('app.dashboard.callback'),
+                'label' => $translator->trans('app.dashboard.title')
+            ]
+        ];
 
+        if(null !== $callBackUrl){
+            $breadcrumbs[] = [
+                'href' => $callBackUrl,
+                'title' => $translator->trans('member.manager.tabGroups'),
+                'label' => $translator->trans('member.manager.tabGroups')
+            ];
+        }
 
-//        $form->remove('credentials');
+        $breadcrumbs[] = [
+            'label' => $translator->trans('user.group.edit.title')
+        ];
+
 
         return $this->render('/user/group/edit.html.twig', array(
             'formUserGroup' =>  $formHandler->getForm()->createView(),
-            'credentials' => $credentialEvent->getCredentialsList(),
-//            'formCredentials' => $formCredentials
+            'breadcrumbs' => $breadcrumbs
         ));
     }
 

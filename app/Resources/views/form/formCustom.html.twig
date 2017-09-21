@@ -150,15 +150,10 @@
     {% for name, choices in form.vars.choices %}
         <li>
         {% if choices is iterable  %}
-
-            <label class="choice_category">
-                <strong>
-                    {{ choice_translation_domain is same as(false) ? name : name|trans({}, choice_translation_domain) }}
-                </strong>
-            </label>
+            <h4>{{ choice_translation_domain is same as(false) ? name : name|trans({}, choice_translation_domain) }}</h4>
             <ul>
                 {% for key,choice in choices %}
-                    <li class="">
+                    <li>
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">
                                 {{ form_widget(form[key], {'attr': {'class': 'filled-in'}}) }}

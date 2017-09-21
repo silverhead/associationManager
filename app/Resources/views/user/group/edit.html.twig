@@ -1,16 +1,8 @@
 {% extends 'layoutLogin.html.twig' %}
+
 {% block content %}
     <div class="row block-header">
-        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
-        {
-        'href': path('dashboard'),
-        'title': 'app.dashboard.callback'|trans,
-        'label': 'app.dashboard.title'|trans
-        },
-        {
-        'label': 'user.group.edit.title'|trans
-        }
-        ] } %}
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
         <h2 class="col-xs-12">
             {{ 'user.group.edit.title'|trans }}
         </h2>
@@ -43,43 +35,7 @@
                     <div class="row">
                         <h3 class="col-md-12">{{ 'user.group.edit.credentialTitle'|trans }}</h3>
                         <div class="col-md-12 groupedCheckboxList">
-                            {{ form(formUserGroup.credentials) }}
-                            {#<ul style="list-style: none">#}
-                            {#{% set i = 0 %}#}
-                            {#{% for name, credential in credentials  %}#}
-                                {#<li>#}
-                                    {#<h4>{{ (name ~ '.title')|trans }}</h4>#}
-                                    {#{{ form_widget(formUserGroup.credentials) }}#}
-                                    {#<ul>#}
-                                        {#{% for credential in formUserGroup.credentials %}#}
-                                            {#<li>#}
-                                                {#<label>{{ credential.code.vars.value|trans }}</label>#}
-
-                                                {#{{ form_widget(credential.code) }}#}
-                                            {#</li>#}
-                                        {#{% endfor %}#}
-                                    {#</ul>#}
-                                    {#<ul style="list-style: none">#}
-                                    {#{% for levelName, labelCode in credential  %}#}
-                                    {#{% for credential in formUserGroup.credentials  %}#}
-                                        {#<li class="col-md-4">#}
-                                            {#{% if formCredentials[levelName] is defined %}#}
-                                                {#{% set credentialActive =  formCredentials[levelName] %}#}
-                                            {#{% else %}#}
-                                                {#{% set credentialActive =  0 %}#}
-                                            {#{% endif %}#}
-                                            {#{% include 'user/group/EditGroupCredential.html.twig' with {'label': labelCode, 'code': levelName, 'index': i, 'active': credentialActive} %}#}
-                                            {# formCreadentials #}
-                                            {#{% include 'user/group/EditGroupCredential.html.twig' with {'label': labelCode, 'code': levelName, 'index': loop.index0} %}#}
-                                            {#{{ form_row(formUserGroup.credentials) }}#}
-                                            {#{{ levelName }} : {{ labelCode|trans }}#}
-                                        {#</li>#}
-                                        {#{% set i = i+1 %}#}
-                                    {#{% endfor %}#}
-                                    {#</ul>#}
-                                {#</li>#}
-                            {#{% endfor %}#}
-                            {#</ul>#}
+                            {{ form_widget(formUserGroup.credentials) }}
                         </div>
                     </div>
                     <div class="row">

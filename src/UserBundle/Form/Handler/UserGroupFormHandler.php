@@ -47,7 +47,7 @@ class UserGroupFormHandler
     public function setForm(UserGroup $userGroup)
     {
         $this->form = $this->formFactory->create(UserGroupFormType::class, $userGroup, array(
-            'credentials' => $this->credentials
+            'credentialsList' => $this->credentials
         ));
     }
 
@@ -62,6 +62,8 @@ class UserGroupFormHandler
 
     public function process(Request $request)
     {
+        dump($request);
+
         $this->form->handleRequest($request);
 
         if($this->form->isSubmitted() && $this->form->isValid()){
@@ -69,5 +71,10 @@ class UserGroupFormHandler
         }
 
         return false;
+    }
+
+    public function getData()
+    {
+        return  $this->form->getData();
     }
 }

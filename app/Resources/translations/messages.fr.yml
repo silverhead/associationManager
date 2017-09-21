@@ -184,6 +184,7 @@ member:
             deleteSuccessText: Le statut %label% à bien été supprimé !
 user:
     group:
+        title: Groupes
         add:
             title: Ajouter un groupe
         edit:
