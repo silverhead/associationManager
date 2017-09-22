@@ -1,0 +1,14 @@
+services:
+    # EVENT LISTENER
+    user_group_credential_event:
+        class: UserBundle\EventListener\UserGroupCredentialEventListener
+        arguments: ['%credentialVoterUserGroup%', 'user.group.credential.title']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    # VOTER
+    user_group_voter:
+        class: UserBundle\Security\UserGroupVoter
+        autowire: true
+        arguments: ['%credentialVoterUserGroup%']
+        tags:
+            - {name: security.voter}

@@ -155,7 +155,7 @@ class UserGroup
      */
     public function addCredential(string $credential)
     {
-        $this->credentials[$credential] = $credential;
+        $this->credentials[] = $credential;
 
         return $this;
     }

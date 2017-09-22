@@ -3,8 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: ../../src/MemberBundle/Resources/config/config.yml }
-#    - { resource: ../../src/MemberBundle/Resources/config/credentials.yml }
-#    - { resource: ../../src/MemberBundle/Resources/config/services.yml }
+    - { resource: ../../src/UserBundle/Resources/config/config.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration

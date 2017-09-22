@@ -273,4 +273,22 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return UserGroup
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param UserGroup $group
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+    }
+
+
 }

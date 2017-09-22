@@ -73,12 +73,14 @@ class UserGroupController extends Controller
 
         $formHandler->setForm($entity);
 
-        dump($request);
-
         if($formHandler->process($request)){
-            $entity = $formHandler->getData();
+            $form = $formHandler->getForm();
+            $entity->setLabel($form['label']->getData());
+            $entity->setActive($form['active']->getData());
 
-
+            $entity->setCredentials(
+                $form['credentials']->getData()
+            );
 
             if($manager->save($entity)){
                 $this->addFlash('success', $translator->trans('user.group.edit.saveSuccessText'));
@@ -99,6 +101,12 @@ class UserGroupController extends Controller
                     ]);
                 }
             }
+
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.errorComming', [
+                    '%error%' => '<br />' . implode('<br />', $manager->getErrors())
+                ]));
         }
 
         $breadcrumbs = [
@@ -124,49 +132,11 @@ class UserGroupController extends Controller
 
         return $this->render('/user/group/edit.html.twig', array(
             'formUserGroup' =>  $formHandler->getForm()->createView(),
-            'breadcrumbs' => $breadcrumbs
+            'breadcrumbs' => $breadcrumbs,
+            'callBackUrl' => $callBackUrl
         ));
     }
 
-
-    /**
-     * @Route("/user/group/json/save", name="user_group_save_json", options={"expose" = true})
-     * @param Request $request
-     * @return Response
-     */
-    public function saveAction(Request $request)
-    {
-        if(!$request->isXmlHttpRequest()){
-            throw new \BadMethodCallException("Only AJAX request supported!");
-        }
-
-        $translator = $this->get('translator');
-        $statusManager = $this->get('user.manager.group');
-
-        try{
-            $statusManager->saveAjax($request);
-
-            $array = [
-                'code' => 'success',
-                'message' => $translator->trans('user.group.edit.saveSuccessText')
-            ];
-
-        }
-        catch(\Exception $e){
-            $array = [
-                'code' => 'error',
-                'message' => $translator->trans('app.common.errorComming', [
-                    '%error%' => $e->getCode() . " : ".$e->getMessage()
-                ])
-            ];
-        }
-
-        return new Response(
-            (new Serializer([new ObjectNormalizer()], [new JsonEncoder()]
-            ))->serialize($array, 'json'));
-    }
-
-    //
     /**
      * @Route("/user/group/delete/{id}", name="user_group_delete", options={"expose"=true})
      */

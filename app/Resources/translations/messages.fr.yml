@@ -185,6 +185,10 @@ member:
 user:
     group:
         title: Groupes
+        list:
+            table:
+                labelCol: Libellé
+                nbMembersCol: Nb d'utilisateurs
         add:
             title: Ajouter un groupe
         edit:

@@ -62,8 +62,6 @@ class UserGroupFormHandler
 
     public function process(Request $request)
     {
-        dump($request);
-
         $this->form->handleRequest($request);
 
         if($this->form->isSubmitted() && $this->form->isValid()){

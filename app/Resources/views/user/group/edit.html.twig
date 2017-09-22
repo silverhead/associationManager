@@ -4,6 +4,7 @@
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
         <h2 class="col-xs-12">
+            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
             {{ 'user.group.edit.title'|trans }}
         </h2>
     </div>

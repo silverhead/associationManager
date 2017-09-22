@@ -1,6 +1,8 @@
 <div class="row">
     <div class="col-xs-12">
-        <a href="{{ path('user_group_add') }}" class="btn bg-green waves-effect">{{ 'user.group.add.title'|trans }}</a>
+        {% if is_granted('USER_GROUP_CREATE') %}
+            <a href="{{ path('user_group_add') }}" class="btn bg-green waves-effect">{{ 'user.group.add.title'|trans }}</a>
+        {% endif %}
     </div>
 </div>
 <div class="row">
@@ -11,9 +13,11 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Libellé</th>
-                        <th>Nb d'utilisateurs</th>
-                        <th>{{ 'app.common.table.action'|trans }}</th>
+                        <th>{{ 'user.group.list.table.labelCol'|trans }}</th>
+                        <th>{{ 'user.group.list.table.nbMembersCol'|trans }}</th>
+                        {% if is_granted('USER_GROUP_EDIT') or is_granted('USER_GROUP_DELETE') %}
+                            <th>{{ 'app.common.table.action'|trans }}</th>
+                        {% endif %}
                     </tr>
                     </thead>
                     <tbody>
@@ -22,10 +26,16 @@
                         <td scope="row">{{ group.id }}</td>
                         <td>{{ group.label }}</td>
                         <td>NF</td>
+                        {% if is_granted('USER_GROUP_EDIT') or is_granted('USER_GROUP_DELETE') %}
                         <td>
+                            {% if is_granted('USER_GROUP_EDIT') %}
                             <a href="{{ path('user_group_edit', {'id': group.id}) }}" class="btn btn-warning material-icons">edit</a>
+                            {% endif %}
+                            {% if is_granted('USER_GROUP_DELETE') %}
                             <a href="#" data-id="{{ group.id }}" class="btn btn-danger material-icons delUserGroup">delete</a>
+                            {% endif %}
                         </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                     </tbody>

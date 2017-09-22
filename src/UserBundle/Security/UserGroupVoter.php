@@ -1,11 +1,11 @@
 <?php
 
-namespace MemberBundle\Security;
+namespace UserBundle\Security;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class MemberStatusVoter extends Voter
+class UserGroupVoter extends Voter
 {
     private $credentials = array();
 
@@ -23,7 +23,11 @@ class MemberStatusVoter extends Voter
     {
         $credentials = $token->getUser()->getGroup()->getCredentials();
 
-        if(in_array($attribute, $credentials)){
+        if(
+            in_array($attribute, $credentials)
+            ||
+            in_array('ROLE_ADMIN', $token->getUser()->getRoles())
+        ){
             return true;
         }
 

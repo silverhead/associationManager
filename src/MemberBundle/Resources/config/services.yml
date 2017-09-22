@@ -14,6 +14,7 @@ services:
     member_member_voter:
         class: MemberBundle\Security\MemberVoter
         autowire: true
+        arguments: ['%credentialVoterMemberMembers%']
         tags:
             - {name: security.voter}
     member_status_voter:
