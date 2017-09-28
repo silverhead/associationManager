@@ -71,9 +71,11 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content">
+                        {% if is_granted('MEMBER_MEMBER_VIEW') %}
                         <div role="tabpanel" class="tab-pane fade in active" id="members">
                             {% include 'member/manager/membersList.html.twig' %}
                         </div>
+                        {% endif %}
                         {% if is_granted('MEMBER_STATUS_VIEW') %}
                         <div role="tabpanel" class="tab-pane fade" id="status">
                             <div id="memberStatusContainer" data-anchor="status" data-page-parameter-name="pageTab2">
