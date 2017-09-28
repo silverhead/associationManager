@@ -166,11 +166,11 @@ class Subscription
     /**
      * Add periodicity
      *
-     * @param \AppBundle\Entity\SubscriptionPaymentPeriodicity $periodicity
+     * @param SubscriptionPaymentPeriodicity $periodicity
      *
      * @return Subscription
      */
-    public function addPeriodicity(\AppBundle\Entity\SubscriptionPaymentPeriodicity $periodicity)
+    public function addPeriodicity(SubscriptionPaymentPeriodicity $periodicity)
     {
         $this->periodicities[] = $periodicity;
 
@@ -180,9 +180,9 @@ class Subscription
     /**
      * Remove periodicity
      *
-     * @param \AppBundle\Entity\SubscriptionPaymentPeriodicity $periodicity
+     * @param SubscriptionPaymentPeriodicity $periodicity
      */
-    public function removePeriodicity(\AppBundle\Entity\SubscriptionPaymentPeriodicity $periodicity)
+    public function removePeriodicity(SubscriptionPaymentPeriodicity $periodicity)
     {
         $this->periodicities->removeElement($periodicity);
     }
@@ -199,11 +199,11 @@ class Subscription
     /**
      * Add memberSubscription
      *
-     * @param \AppBundle\Entity\MemberSubscriptionHistorical $memberSubscription
+     * @param \MemberBundle\Entity\MemberSubscriptionHistorical $memberSubscription
      *
      * @return Subscription
      */
-    public function addMemberSubscription(\AppBundle\Entity\MemberSubscriptionHistorical $memberSubscription)
+    public function addMemberSubscription(\MemberBundle\Entity\MemberSubscriptionHistorical $memberSubscription)
     {
         $this->memberSubscription[] = $memberSubscription;
 
@@ -213,9 +213,9 @@ class Subscription
     /**
      * Remove memberSubscription
      *
-     * @param \AppBundle\Entity\MemberSubscriptionHistorical $memberSubscription
+     * @param \MemberBundle\Entity\MemberSubscriptionHistorical $memberSubscription
      */
-    public function removeMemberSubscription(\AppBundle\Entity\MemberSubscriptionHistorical $memberSubscription)
+    public function removeMemberSubscription(\MemberBundle\Entity\MemberSubscriptionHistorical $memberSubscription)
     {
         $this->memberSubscription->removeElement($memberSubscription);
     }

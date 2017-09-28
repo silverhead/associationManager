@@ -141,11 +141,11 @@ class MemberSubscriptionHistorical
     /**
      * Set member
      *
-     * @param \AppBundle\Entity\Member $member
+     * @param \MemberBundle\Entity\Member $member
      *
      * @return MemberSubscriptionHistorical
      */
-    public function setMember(\AppBundle\Entity\Member $member = null)
+    public function setMember(\MemberBundle\Entity\Member $member = null)
     {
         $this->member = $member;
 
@@ -155,7 +155,7 @@ class MemberSubscriptionHistorical
     /**
      * Get member
      *
-     * @return \AppBundle\Entity\Member
+     * @return \MemberBundle\Entity\Member
      */
     public function getMember()
     {
@@ -169,7 +169,7 @@ class MemberSubscriptionHistorical
      *
      * @return MemberSubscriptionHistorical
      */
-    public function setSubscription(\AppBundle\Entity\Subscription $subscription = null)
+    public function setSubscription(\SubscriptionBundle\Entity\Subscription $subscription = null)
     {
         $this->subscription = $subscription;
 
@@ -179,7 +179,7 @@ class MemberSubscriptionHistorical
     /**
      * Get subscription
      *
-     * @return \AppBundle\Entity\Subscription
+     * @return \SubscriptionBundle\Entity\Subscription
      */
     public function getSubscription()
     {
@@ -189,11 +189,11 @@ class MemberSubscriptionHistorical
     /**
      * Set subscriptionPaymentPeriodicity
      *
-     * @param \AppBundle\Entity\SubscriptionPaymentPeriodicity $subscriptionPaymentPeriodicity
+     * @param \SubscriptionBundle\Entity\SubscriptionPaymentPeriodicity $subscriptionPaymentPeriodicity
      *
      * @return MemberSubscriptionHistorical
      */
-    public function setSubscriptionPaymentPeriodicity(\AppBundle\Entity\SubscriptionPaymentPeriodicity $subscriptionPaymentPeriodicity = null)
+    public function setSubscriptionPaymentPeriodicity(\SubscriptionBundle\Entity\SubscriptionPaymentPeriodicity $subscriptionPaymentPeriodicity = null)
     {
         $this->subscriptionPaymentPeriodicity = $subscriptionPaymentPeriodicity;
 
@@ -203,7 +203,7 @@ class MemberSubscriptionHistorical
     /**
      * Get subscriptionPaymentPeriodicity
      *
-     * @return \AppBundle\Entity\SubscriptionPaymentPeriodicity
+     * @return \SubscriptionBundle\Entity\SubscriptionPaymentPeriodicity
      */
     public function getSubscriptionPaymentPeriodicity()
     {
