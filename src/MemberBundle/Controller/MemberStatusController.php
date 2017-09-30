@@ -8,6 +8,7 @@ use MemberBundle\Security\MemberStatusVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -69,13 +70,13 @@ class MemberStatusController extends Controller
 
         $translator = $this->get('translator');
 
-        $this->denyAccessUnlessGranted(MemberStatusVoter::MEMBER_STATUS_EDIT, null, $translator->trans('app.common.access_denied'));
+        $this->denyAccessUnlessGranted('MEMBER_STATUS_EDIT', null, $translator->trans('app.common.access_denied'));
 
         $id = $request->get('id', null);
         $label = $request->get('label', null);
 
-        if (null === $id || null === $label) {
-            throw new \HttpRequestException(
+        if (null === $id && null === $label) {
+            throw new HttpException(
                 "Arguments of the request are missing, you must send the \"id\" and \"label\" arguments for the call of this method!"
             );
         }
@@ -86,7 +87,7 @@ class MemberStatusController extends Controller
         $status = $statusManager->find($id);
 
         if(null === $status){
-            throw new EntityNotFoundException("Status not found in database!");
+            $status = $statusManager->getNewEntity();
         }
 
         try {
