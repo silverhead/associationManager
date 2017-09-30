@@ -7,32 +7,7 @@
     <script src="{{ asset('bundles/app/common/js/app.savePrompt.js') }}"></script>
     <script src="{{ asset('bundles/member/status/js/manage.js') }}"></script>
     <script src="{{ asset('bundles/user/group/js/manage.js') }}"></script>
-    <script type="text/javascript">
-        $(function(){
-            $('.delMember').on('click', function(e){
-                e.preventDefault();
-
-                var id = $(this).data('id');
-
-                swal({
-                    title: "Êtes-vous sûr ?",
-                    text: "La suppression du membre est définitf !",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Oui, je veux le supprimer !",
-                    cancelButtonText: "Non, n'annule ma demande !",
-                    closeOnConfirm: false,
-                    closeOnCancel: true
-                },
-                function(isConfirm){
-                    if (isConfirm) {
-                        swal("Supprimé !", "Le membre a été supprimé.", "success");
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('bundles/member/member/js/manage.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -50,7 +25,7 @@
 
         <h2 class="col-xs-12">
             {{ 'member.member.list.title'|trans }}
-            <span class="pull-right">40 membres</span>
+            <span class="pull-right">{{ 'member.manager.nbMembers'|transchoice(40) }}</span>
         </h2>
     </div>
     {% include ':main/flashMessage:flashMessageBlock.html.twig' %}

@@ -5,37 +5,7 @@
     <script src="{{ asset('plugins/fileinput/fileinput.min.js') }}"></script>
     <script src="{{ asset('plugins/fileinput/locales/fr.js') }}"></script>
     <script src="{{ asset('plugins/jquery-inputmask/jquery.inputmask.bundle.js') }}"></script>
-    <script type="text/javascript">
-        $(function(){
-            $('.money-euro').inputmask('999,99 €', { placeholder: '___,__ €' });
-            $('.day-duration').inputmask('999 J', { placeholder: '___ J' });
-
-            autosize($('textarea.auto-growth'));
-        });
-
-        var $logoInput = $("#app_bundle_setting_app_form_type_logo");
-        var logo = $logoInput.data('current');
-
-        $logoInput.fileinput({
-            overwriteInitial: true,
-            maxFileSize: 1500,
-            showZoom: false,
-            showRemove: true,
-            showClose: false,
-            showCaption: false,
-            browseOnZoneClick: true,
-            browseLabel: '',
-            removeLabel: '',
-            browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
-            removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
-            removeTitle: Translator.trans('app.setting.form.logo.cancel'),//'Cancel or reset changes',
-            elErrorContainer: '#kv-avatar-errors-2',
-            msgErrorClass: 'alert alert-block alert-danger',
-            defaultPreviewContent: '<img src="'+logo+'" alt="'+Translator.trans('app.setting.form.logo.alt')+'" style="width:50%" class="img-responsive"><h6 class="text-muted">'+Translator.trans('app.setting.form.logo.clickToChange')+'</h6>',
-            layoutTemplates: {main2: '{preview} {remove} {browse}'},
-            allowedFileExtensions: ["jpg", "png", "gif"]
-        });
-    </script>
+    <script src="{{ asset('bundles/app/setting/js/manage.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -85,14 +55,14 @@
                                 <div class="form-group {% if not formSetting.robotEmail.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.contactEmail, 'app.setting.form.label.robotEmail'|trans) }}
                                     {{ form_widget(formSetting.robotEmail, {'attr': {
-                                        'class': 'form-control', 'placeholder': "E-mail robot", 'title': "E-mail robot"}}
+                                        'class': 'form-control', 'placeholder': 'app.setting.form.label.robotEmail'|trans}}
                                     ) }}
                                     {{ form_errors(formSetting.robotEmail) }}
                                 </div>
                                 <div class="form-group {% if not formSetting.phone.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.phone, 'app.setting.form.label.phone'|trans) }}
                                     {{ form_widget(formSetting.phone, {'attr': {
-                                        'class': 'form-control', 'placeholder': "Téléphone", 'title': "Téléphone"}}
+                                        'class': 'form-control', 'placeholder': 'app.setting.form.label.phone'|trans}}
                                     ) }}
                                     {{ form_errors(formSetting.phone) }}
                                 </div>
@@ -102,28 +72,28 @@
                                 <div class="form-group {% if not formSetting.country.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.country, 'app.setting.form.label.country'|trans) }}
                                     {{ form_widget(formSetting.country, {'attr': {
-                                        'class': 'form-control selectpicker', 'title': "Pays"}}
+                                        'class': 'form-control selectpicker', 'title': 'app.setting.form.label.country'|trans}}
                                     ) }}
                                     {{ form_errors(formSetting.country) }}
                                 </div>
                                 <div class="form-group {% if not formSetting.city.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.city, 'app.setting.form.label.city'|trans) }}
                                     {{ form_widget(formSetting.city, {'attr': {
-                                        'class': 'form-control', 'placeholder': "Ville", 'title': "Ville"}}
+                                        'class': 'form-control', 'placeholder': 'app.setting.form.label.city'|trans}}
                                     ) }}
                                     {{ form_errors(formSetting.city) }}
                                 </div>
                                 <div class="form-group {% if not formSetting.zipcode.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.zipcode, 'app.setting.form.label.zipcode'|trans) }}
                                     {{ form_widget(formSetting.zipcode, {'attr': {
-                                        'class': 'form-control', 'placeholder': "Code postal", 'title': "Code postal"}}
+                                        'class': 'form-control', 'placeholder': 'app.setting.form.label.zipcode'|trans}}
                                     ) }}
                                     {{ form_errors(formSetting.zipcode) }}
                                 </div>
                                 <div class="form-group {% if not formSetting.address.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.address, 'app.setting.form.label.address'|trans) }}
                                     {{ form_widget(formSetting.address, {'attr': {
-                                        'class': 'form-control', 'placeholder': "Adresse", 'title': "Adresse"}}
+                                        'class': 'form-control', 'placeholder': 'app.setting.form.label.address'|trans}}
                                     ) }}
                                     {{ form_errors(formSetting.address) }}
                                 </div>
@@ -134,14 +104,14 @@
                                 {{ form_label(formSetting.description, 'app.setting.form.label.description'|trans) }}
                                 {{ form_widget(formSetting.description, {'attr': {
                                     'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
-                                    'class': 'form-control no-resize auto-growth', 'placeholder': "Description de votre association", 'title': "Description"}}
+                                    'class': 'form-control no-resize auto-growth', 'placeholder': 'app.setting.form.label.description'|trans}}
                                 ) }}
                                 {{ form_errors(formSetting.description) }}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <input class="btn btn-success" name="save"  type="submit" value="Enregistrer">
+                                <input class="btn btn-success" name="save"  type="submit" value="{{ 'app.common.form.submit.save'|trans }}">
                             </div>
                         </div>
                     {{ form_end(formSetting) }}
