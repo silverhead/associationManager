@@ -14,6 +14,7 @@ class PeriodicityController extends Controller
 {
     const ITEMS_PER_PAGE = 4;
     const PAGE_PARAMETER_NAME = 'pageTab2';
+
     /**
      * @Route("/subscription/periodicity_edit/{id}", name="subscription_periodicity_edit")
      * @Route("/periodicity_add", name="periodicity_add")
@@ -128,7 +129,7 @@ class PeriodicityController extends Controller
     }
 
     /**
-     * @Route("/subscription/periodicities/list-part", name="subscription_periodicity_list_part",  options = { "expose" = true })
+     * @Route("/subscription/periodicity/list-part", name="subscription_periodicity_list_part",  options = { "expose" = true })
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -155,7 +156,7 @@ class PeriodicityController extends Controller
             $anchor
         );
 
-        return $this->render('/subscription/periodicity/periodicityList.html.twig', array(
+        return $this->render('subscription/periodicity/periodicityList.html.twig', array(
             'results' => $results
         ));
     }

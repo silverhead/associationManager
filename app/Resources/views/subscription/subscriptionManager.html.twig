@@ -4,12 +4,8 @@
     {{ parent() }}
     <script src="{{ asset("bundles/app/common/js/app.deleteConfirm.js") }}"></script>
     <script src="{{ asset("bundles/app/common/js/jquery.reload.list.js") }}"></script>
-    <script src="{{ asset("bundles/app/subscription/subscription/js/manage.js") }}"></script>
-    <script src="{{ asset("bundles/app/subscription/periodicity/js/manage.js") }}"></script>
-
-    <script type="text/javascript">
-        var reloadlist = $('#periodicitiesContainer').reloadlist();
-    </script>
+    <script src="{{ asset("bundles/subscription/subscription/js/manage.js") }}"></script>
+    <script src="{{ asset("bundles/subscription/periodicity/js/manage.js") }}"></script>
 {% endblock %}
 
 {% block content %}
