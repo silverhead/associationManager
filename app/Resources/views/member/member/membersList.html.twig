@@ -84,21 +84,21 @@
                     {#</tr>#}
                     {#</thead>#}
                     <tbody>
-                    {% for i in 0..20 %}
-                        <tr {% if i % 4 == 0 %}class="bg-danger"{% endif %} >
-                            <td scope="row">{{ i }}</td>
+                    {% for member in members %}
+                        <tr {% if loop.index % 4 == 0 %}class="bg-danger"{% endif %} >
+                            <td scope="row">{{ member.id }}</td>
                             <td>
                                 <img src="{{ asset('images/avatars/user.png') }}" class="img-circle">
                             </td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>Adhérent</td>
-                            <td>Standard 1 an</td>
-                            <td>10/12/2016</td>
+                            <td>{{ member.lastName }}</td>
+                            <td>{{ member.firstName }}</td>
+                            <td>{% if member.status is defined %}{{ member.status[0].status.label }}{% endif %}</td>
+                            <td>{% if member.subscriptions is defined %}{{ member.subscriptions[0].subscription.label }}<br />({{ 'member.subscription.endDate'|trans }} {{ member.subscriptions[0].endDate|date('d/m/Y') }}){% endif %}</td>
+                            <td>{{ member.birthday|date('d/m/Y') }}</td>
                             <td>
-                                <a href="{{ path('member_view', {'id': 1}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
-                                <a href="{{ path('member_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="{{ i }}" class="btn btn-danger material-icons delMember">delete</a>
+                                <a href="{{ path('member_view', {'id': member.id}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
+                                <a href="{{ path('member_edit', {'id': member.id}) }}" class="btn btn-warning material-icons">edit</a>
+                                <a href="#" data-id="{{ member.id }}" class="btn btn-danger material-icons delMember">delete</a>
                             </td>
                         </tr>
                     {% endfor %}

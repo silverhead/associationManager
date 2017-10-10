@@ -40,7 +40,7 @@ class MemberStatusHistorical
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="date", nullable=false)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $endDate;
 

@@ -19,6 +19,23 @@ class MemberController extends Controller
     }
 
     /**
+     * @Route("/member/member/list-part/{anchor}", name="member_member_list_part",  options = { "expose" = true })
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+
+    public function listAction()
+    {
+        $memberManager = $this->get('member.manager.member');
+        $members = $memberManager->paginatedList();
+
+        return $this->render('member/member/membersList.html.twig', array(
+            'members' => $members
+        ));
+
+    }
+
+    /**
      * @Route("/members/edit/{id}", name="member_edit", requirements={"id": "\d+"}, defaults={"id": 0});
      */
     public function editMemberAction(Request $request, $id = 0)

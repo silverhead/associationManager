@@ -48,7 +48,8 @@
                     <div class="tab-content">
                         {% if is_granted('MEMBER_MEMBER_VIEW') %}
                         <div role="tabpanel" class="tab-pane fade in active" id="members">
-                            {% include 'member/manager/membersList.html.twig' %}
+                            {{ render(controller('MemberBundle:Member:list', {'request': app.request, 'anchor': 'status'})) }}
+                            {#{% include 'member/manager/membersList.html.twig' %}#}
                         </div>
                         {% endif %}
                         {% if is_granted('MEMBER_STATUS_VIEW') %}

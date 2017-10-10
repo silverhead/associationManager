@@ -186,6 +186,8 @@ member:
             deleteQuestionText: La suppression du statut est définitf !
             deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
             deleteSuccessText: Le statut %label% à bien été supprimé !
+    subscription:
+        endDate: Date de fin :
 user:
     group:
         credential:
