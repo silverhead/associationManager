@@ -167,6 +167,18 @@ member:
         title: Adhérents (membres)
         list:
             title: Gestion des adhérents
+            table:
+                picture: Photo
+                lastName: Nom
+                firstName: Prénom
+                status: Statut
+                subscription: Abonnement
+                SubscriptionDateEnd: Anniversaire
+        edit:
+            gender:
+                label: Genre
+                female: Femme
+                male: Homme
         delete:
             deleteQuestionText: La suppression du membre est définitf !
             deleteSuccessText: Le membre a été supprimé.
@@ -189,6 +201,12 @@ member:
     subscription:
         endDate: Date de fin :
 user:
+    manager:
+        tabUsers: Utilisateurs
+        tabUserGroups: Groupes
+    user:
+        list:
+            title: Utilisateurs
     group:
         credential:
             title: Utilisateurs (Groupes)
@@ -210,3 +228,10 @@ user:
             deleteQuestionText: La suppression du groupe est définitf !
             deleteErrorMissingText: Le groupe que vous voulez suprpimer n'a pas été trouvé !
             deleteSuccessText: Le groupe %label% à bien été supprimé !
+menu:
+    dashboard: Tableau de bord
+    member: Adhérents
+    subscription: Abonnement
+    application: Application
+    setting: Paramètre
+    user: Utilisateurs

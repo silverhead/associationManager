@@ -33,13 +33,13 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Photo</th>
-                        <th class="sorting">Nom</th>
-                        <th class="sorting">Prénom</th>
-                        <th class="sorting">Statut</th>
-                        <th class="sorting">Abonnements</th>
-                        <th class="sorting">Anniversaire</th>
-                        <th>Action</th>
+                        <th>{{ 'member.member.list.table.picture'|trans }}</th>
+                        <th class="sorting">{{ 'member.member.list.table.lastName'|trans }}</th>
+                        <th class="sorting">{{ 'member.member.list.table.firstName'|trans }}</th>
+                        <th class="sorting">{{ 'member.member.list.table.status'|trans }}</th>
+                        <th class="sorting">{{ 'member.member.list.table.subscription'|trans }}</th>
+                        <th class="sorting">{{ 'member.member.list.table.SubscriptionDateEnd'|trans }}</th>
+                        <th>{{ 'app.common.table.action'|trans }}</th>
                     </tr>
                     </thead>
                     {#<thead>#}
@@ -93,8 +93,8 @@
                             <td>{{ member.lastName }}</td>
                             <td>{{ member.firstName }}</td>
                             <td>{% if member.status is defined %}{{ member.status[0].status.label }}{% endif %}</td>
-                            <td>{% if member.subscriptions is defined %}{{ member.subscriptions[0].subscription.label }}<br />({{ 'member.subscription.endDate'|trans }} {{ member.subscriptions[0].endDate|date('d/m/Y') }}){% endif %}</td>
-                            <td>{{ member.birthday|date('d/m/Y') }}</td>
+                            <td>{% if member.subscriptions is defined %}{{ member.subscriptions[0].subscription.label }} {% endif %}</td>
+                            <td>{{ member.subscriptions[0].endDate|date('d/m/Y') }}</td>
                             <td>
                                 <a href="{{ path('member_view', {'id': member.id}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
                                 <a href="{{ path('member_edit', {'id': member.id}) }}" class="btn btn-warning material-icons">edit</a>

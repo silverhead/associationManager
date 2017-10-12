@@ -1,0 +1,51 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+        {
+        'href': path('dashboard'),
+        'title': 'app.dashboard.callback'|trans,
+        'label': 'app.dashboard.title'|trans
+        },
+        {
+        'label': 'user.user.list.title'|trans
+        }
+        ] } %}
+
+        <h2 class="col-xs-12">
+            {{ 'user.user.list.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        {% if is_granted('USER_USER_VIEW') %}
+                            <li role="presentation" class="active"><a href="#members" data-toggle="tab">{{ 'user.manager.tabUsers'|trans }}</a></li>
+                        {% endif %}
+                        {% if is_granted('USER_GROUP_VIEW') %}
+                            <li role="presentation"><a href="#groups" data-toggle="tab">{{ 'user.manager.tabUserGroups'|trans }}</a></li>
+                        {% endif %}
+                    </ul>
+                    <div class="tab-content">
+                        {% if is_granted('USER_USER_VIEW') %}
+                            <div role="tabpanel" class="tab-pane fade in active" id="users">
+                                {#{{ render(controller('MemberBundle:Member:list', {'request': app.request, 'anchor': 'status'})) }}#}
+                                {#{% include 'member/manager/membersList.html.twig' %}#}
+                            </div>
+                        {% endif %}
+                        {% if is_granted('USER_GROUP_VIEW') %}
+                            <div role="tabpanel" class="tab-pane fade in active" id="userGroups">
+                                {#{{ render(controller('MemberBundle:Member:list', {'request': app.request, 'anchor': 'status'})) }}#}
+                                {#{% include 'member/manager/membersList.html.twig' %}#}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
