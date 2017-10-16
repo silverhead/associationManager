@@ -36,6 +36,18 @@ class Member extends User
     protected $birthday;
 
     /**
+     * @var string
+     * @ORM\Column(length=10, nullable=true)
+     */
+    protected $phone;
+
+    /**
+     * @var string
+     * @ORM\Column(length=10, nullable=true)
+     */
+    protected $cellular;
+
+    /**
      * @return ArrayCollection
      */
     public function getSubscriptions()
@@ -139,5 +151,45 @@ class Member extends User
     public function removeStatus(\MemberBundle\Entity\MemberStatusHistorical $status)
     {
         $this->status->removeElement($status);
+    }
+
+
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     * @return Member
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCellular()
+    {
+        return $this->cellular;
+    }
+
+    /**
+     * @param string $cellular
+     * @return Member
+     */
+    public function setCellular($cellular)
+    {
+        $this->cellular = $cellular;
+
+        return $this;
     }
 }

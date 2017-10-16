@@ -2,6 +2,7 @@
 
 namespace UserBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,6 +34,9 @@ class User implements UserInterface
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\Regex(pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/", match=true)
+     *
+     * , groups={"Registration", "Profile", "Resetting"}
      */
     private $password;
 

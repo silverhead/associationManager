@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-xs-12">
+        {% if is_granted('USER_USER_CREATE') %}
+            <a href="{{ path('user_edit') }}" class="btn bg-green waves-effect">{{ 'user.user.add.title'|trans }}</a>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="body table-responsive">
+            <form action="#">
+                <table class="table table-striped dataTable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th class="sorting">{{ 'user.user.list.table.userName'|trans }}</th>
+                        <th class="sorting">{{ 'user.user.list.table.email'|trans }}</th>
+                        <th class="sorting">{{ 'user.user.list.table.group'|trans }}</th>
+                        <th>{{ 'app.common.table.action'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in results %}
+                        <tr {% if loop.index % 4 == 0 %}class="bg-danger"{% endif %} >
+                            <td scope="row">{{ user.id }}</td>
+                            <td>{{ user.userName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.group.label }}</td>
+                            <td>
+                                <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning material-icons">edit</a>
+                                <a href="#" data-id="{{ user.id }}" class="btn btn-danger material-icons delUser">delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+            <div class="pull-right">
+                {% include 'main/pagination.html.twig' %}
+            </div>
+        </div>
+    </div>
+</div>

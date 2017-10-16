@@ -23,3 +23,17 @@ services:
         arguments: ['%credentialVoterUserUser%']
         tags:
             - {name: security.voter}
+    # Form Handler
+    user.form.handler.group:
+        class: UserBundle\Form\Handler\UserGroupFormHandler
+        arguments: ['@form.factory', '@service_container']
+    user.form.handler.user:
+        class: UserBundle\Form\Handler\UserFormHandler
+        arguments: ['@form.factory', '@service_container']
+    # Manager
+    user.manager.group:
+        class: UserBundle\Manager\UserGroupManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    user.manager.user:
+        class: UserBundle\Manager\UserManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']

@@ -1,0 +1,74 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
+        <h2 class="col-xs-12">
+            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
+            {{ 'user.user.edit.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(formUser) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(formUser.firstName, {
+                                'label': 'user.user.edit.form.firstName'|trans,
+                                'attr': {
+                                    'placeholder': 'user.user.edit.form.firstName'|trans
+                                }
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(formUser.lastName, {
+                                'label': 'user.user.edit.form.lastName'|trans,
+                                'attr': {
+                                    'placeholder': 'user.user.edit.form.lastName'|trans
+                                }
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(formUser.username, {
+                                'label': 'user.user.edit.form.username'|trans,
+                                'attr': {
+                                    'placeholder': 'user.user.edit.form.username'|trans
+                                }
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(formUser.email, {
+                                'label': 'user.user.edit.form.email'|trans,
+                                'attr': {
+                                    'placeholder': 'user.user.edit.form.email'|trans
+                                }
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(formUser.password.first, {
+                                'label': 'user.user.edit.form.password'|trans ~ '<br><small>'~ 'user.user.edit.form.passwordHelp'|trans ~'</small>'
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(formUser.password.second) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
+                        </div>
+                    </div>
+
+                    {{ form_end(formUser) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

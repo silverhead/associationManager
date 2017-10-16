@@ -41,7 +41,7 @@
                             {% if is_granted('MEMBER_STATUS_VIEW') %}
                         <li role="presentation"><a href="#status" data-toggle="tab">{{ 'member.manager.tabStatus'|trans }}</a></li>
                         {% endif %}
-                        <li role="presentation"><a href="#groups" data-toggle="tab">{{ 'member.manager.tabGroups'|trans }}</a></li>
+                        {#<li role="presentation"><a href="#groups" data-toggle="tab">{{ 'member.manager.tabGroups'|trans }}</a></li>#}
                     </ul>
 
                     <!-- Tab panes -->
@@ -59,11 +59,11 @@
                             </div>
                         </div>
                         {% endif %}
-                        <div role="tabpanel" class="tab-pane fade" id="groups">
-                            <div id="userGroupsContainer" data-anchor="groups" data-page-parameter-name="pageTab3">
-                                {{ render(controller('UserBundle:UserGroup:list', {'request': app.request, 'anchor': 'groups'})) }}
-                            </div>
-                        </div>
+                        {#<div role="tabpanel" class="tab-pane fade" id="groups">#}
+                            {#<div id="userGroupsContainer" data-anchor="groups" data-page-parameter-name="pageTab3">#}
+                                {#{{ render(controller('UserBundle:UserGroup:list', {'request': app.request, 'anchor': 'groups'})) }}#}
+                            {#</div>#}
+                        {#</div>#}
                     </div>
                 </div>
             </div>

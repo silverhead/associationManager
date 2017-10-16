@@ -42,9 +42,7 @@ services:
     subscription.form.handler.subscription:
         class: SubscriptionBundle\Form\Handler\SubscriptionFormHandler
         arguments: ['@form.factory']
-    user.form.handler.group:
-        class: UserBundle\Form\Handler\UserGroupFormHandler
-        arguments: ['@form.factory', '@service_container']
+
     # Twig extension
     app.twig_extension.setting:
         class: AppBundle\Twig\SettingExtension
@@ -74,9 +72,6 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     member.manager.status:
         class: MemberBundle\Manager\MemberStatusManager
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
-    user.manager.group:
-        class: UserBundle\Manager\UserGroupManager
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     # Handler
     app.handler.page_historical:

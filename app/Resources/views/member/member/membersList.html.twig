@@ -33,10 +33,11 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>{{ 'member.member.list.table.picture'|trans }}</th>
+                        {#<th>{{ 'member.member.list.table.picture'|trans }}</th>#}
                         <th class="sorting">{{ 'member.member.list.table.lastName'|trans }}</th>
                         <th class="sorting">{{ 'member.member.list.table.firstName'|trans }}</th>
                         <th class="sorting">{{ 'member.member.list.table.status'|trans }}</th>
+                        <th class="sorting">{{ 'member.member.list.table.phone'|trans }}</th>
                         <th class="sorting">{{ 'member.member.list.table.subscription'|trans }}</th>
                         <th class="sorting">{{ 'member.member.list.table.SubscriptionDateEnd'|trans }}</th>
                         <th>{{ 'app.common.table.action'|trans }}</th>
@@ -85,14 +86,19 @@
                     {#</thead>#}
                     <tbody>
                     {% for member in members %}
-                        <tr {% if loop.index % 4 == 0 %}class="bg-danger"{% endif %} >
+                        <tr {#{% if loop.index % 4 == 0 %}class="bg-danger"{% endif %}#}>
                             <td scope="row">{{ member.id }}</td>
-                            <td>
-                                <img src="{{ asset('images/avatars/user.png') }}" class="img-circle">
-                            </td>
+                            {#<td>#}
+                                {#<img src="{{ asset('images/avatars/user.png') }}" class="img-circle">#}
+                            {#</td>#}
                             <td>{{ member.lastName }}</td>
                             <td>{{ member.firstName }}</td>
                             <td>{% if member.status is defined %}{{ member.status[0].status.label }}{% endif %}</td>
+                            <td>
+                                {% if member.phone != "" %}{{ 'member.edit.phone'|trans }} {{ member.phone }}{% endif %}
+                                {% if member.phone != "" and member.cellular != "" %}<br />{% endif %}
+                                {% if member.cellular != "" %}{{ 'member.edit.cellular'|trans }} {{ member.cellular }}{% endif %}
+                            </td>
                             <td>{% if member.subscriptions is defined %}{{ member.subscriptions[0].subscription.label }} {% endif %}</td>
                             <td>{{ member.subscriptions[0].endDate|date('d/m/Y') }}</td>
                             <td>

@@ -168,10 +168,10 @@ member:
         list:
             title: Gestion des adhérents
             table:
-                picture: Photo
                 lastName: Nom
                 firstName: Prénom
                 status: Statut
+                phone: Téléphone
                 subscription: Abonnement
                 SubscriptionDateEnd: Anniversaire
         edit:
@@ -179,6 +179,8 @@ member:
                 label: Genre
                 female: Femme
                 male: Homme
+            phone: Fixe
+            cellular: Mobile
         delete:
             deleteQuestionText: La suppression du membre est définitf !
             deleteSuccessText: Le membre a été supprimé.
@@ -206,7 +208,23 @@ user:
         tabUserGroups: Groupes
     user:
         list:
-            title: Utilisateurs
+            title: Gestion utilisateurs
+            table:
+                userName: Identifiant
+                email: E-mail
+                group: Groupe
+        add:
+            title: Ajouter un utilisateur
+        edit:
+            title: Modifier un utilisateur
+            form:
+                firstName: Prénom
+                lastName: Nom
+                username: Identifiant
+                email: E-mail
+                password: Mot de passe
+                password_confirmation: Vérification
+                passwordHelp: Le mot de passe doit contenir une majuscule, des chiffres et des caractères spéciaux (!@$%^&*-)
     group:
         credential:
             title: Utilisateurs (Groupes)
