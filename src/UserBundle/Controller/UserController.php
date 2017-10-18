@@ -79,7 +79,23 @@ class UserController extends Controller
         $formHandler->setForm($entity);
 
         if($formHandler->process($request)){
-            $entity = $formHandler->getData();
+
+            $form = $formHandler->getForm();
+
+            $entity->setFirstName($form['firstName']->getData());
+            $entity->setLastName($form['lastName']->getData());
+            $entity->setUsername($form['username']->getData());
+            $entity->setEmail($form['email']->getData());
+
+            if(!empty($form['password']->getData())){
+                $encoder = $this->get('security.password_encoder');
+
+                $entity->setSalt(uniqid());
+
+                $entity->setPassword(
+                    $encoder->encodePassword($entity, $form['password']->getData())
+                );
+            }
 
             if($manager->save($entity)){
                 $this->addFlash('success', $translator->trans('user.user.edit.saveSuccessText'));

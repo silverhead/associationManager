@@ -223,7 +223,7 @@ user:
                 username: Identifiant
                 email: E-mail
                 password: Mot de passe
-                password_confirmation: Vérification
+                password_confirmation: Mot de passe (Vérification)
                 passwordHelp: Le mot de passe doit contenir une majuscule, des chiffres et des caractères spéciaux (!@$%^&*-)
     group:
         credential:

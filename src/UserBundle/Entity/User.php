@@ -32,11 +32,16 @@ class User implements UserInterface
     private $roles;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=255, nullable=false)
-     * @Assert\Regex(pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/", match=true)
+     * Assert\Regex(pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/", match=true)
      *
      * , groups={"Registration", "Profile", "Resetting"}
+
+     */
+
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $password;
 

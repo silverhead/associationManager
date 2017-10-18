@@ -52,8 +52,9 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
+                            {#  '<small>'~ 'user.user.edit.form.passwordHelp'|trans ~'</small>' #}
                             {{ form_row(formUser.password.first, {
-                                'label': 'user.user.edit.form.password'|trans ~ '<br><small>'~ 'user.user.edit.form.passwordHelp'|trans ~'</small>'
+                                'label': 'user.user.edit.form.password'|trans
                             }) }}
                         </div>
                         <div class="col-md-6">
