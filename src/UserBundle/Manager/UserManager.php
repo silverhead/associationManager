@@ -3,17 +3,18 @@
 namespace UserBundle\Manager;
 
 use AppBundle\Manager\EntityManagerTrait;
-use AppBundle\Manager\PaginatorManagerInterface;
-use AppBundle\Manager\PaginatorManagerTrait;
+use AppBundle\Manager\PaginatorOrderedManagerInterface;
+use AppBundle\Manager\PaginatorOrderedManagerTrait;
 use AppBundle\Handler\ErrorHandlerTrait;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use UserBundle\Entity\User;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class UserManager implements PaginatorManagerInterface
+class UserManager implements PaginatorOrderedManagerInterface
 {
     use EntityManagerTrait,
-        PaginatorManagerTrait,
+        PaginatorOrderedManagerTrait,
         ErrorHandlerTrait;
 
     /**
@@ -26,10 +27,14 @@ class UserManager implements PaginatorManagerInterface
      */
     private $paginator;
 
-    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator )
+    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator, SessionInterface $session, string $paginatorNamespace, array $orderedTableCorrespondance )
     {
         $this->entityManager = $entityManager;
         $this->paginator = $paginator;
+        $this->session = $session;
+        
+        $this->setPaginatorOrederedNamespace($paginatorNamespace);
+        $this->setOrderedTableCorrespondence($orderedTableCorrespondance);
     }
 
     public function getNewEntity()
@@ -41,4 +46,5 @@ class UserManager implements PaginatorManagerInterface
     {
         return $this->entityManager->getRepository("UserBundle:User");
     }
+
 }

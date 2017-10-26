@@ -7,7 +7,8 @@
             remoteErrorCallBack: function(){},
             masterRoute: null,
             action: null,
-            nbRowPerPage: null
+            nbRowPerPage: null,
+            otherData: ""
         };
 
         var parameters = $.extend(defauts, options);
@@ -38,15 +39,17 @@
 
         var updateList = function()
         {
+        		var otherData = parameters.otherData;
+        	
             $.ajax({
                 'url': parameters.remoteURL,
                 'type': 'GET',
-                'data': paginatorPageParamName+'='+getPageCount()+ (parameters.masterRoute == null?null:'&masterRoute='+parameters.masterRoute),
+                'data': paginatorPageParamName+'='+getPageCount()+ (parameters.masterRoute == null?null:'&masterRoute='+parameters.masterRoute) + otherData,
                 'dataType': 'html',
                 'success': function(template){
                     $container.html(template);
                 },
-                'error': function(){
+                'error': function(jqXHR, textStatus, errorThrown){
                     parameters.remoteErrorCallBack();
                 }
             });

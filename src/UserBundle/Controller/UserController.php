@@ -32,8 +32,20 @@ class UserController extends Controller
         $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
         $currentRoute = 'user_manager';
 
+        //dump($request);exit();
+        
         $userManager = $this->get('user.manager.user');
+        
+        $orders = $request->get('paginatorOrders', array(
+            'username' => 'asc',
+            'email' => '',
+            'group' => ''
+        ));
 
+        
+        
+        $userManager->setPaginatorOrders($orders);
+        
         $results = $userManager->paginatedList(
             $page,
             self::ITEMS_PER_PAGE,
@@ -51,7 +63,8 @@ class UserController extends Controller
         );
 
         return $this->render('/user/user/list.html.twig', array(
-            'results' => $results
+            'results' => $results,
+            'order' => $orders
         ));
     }
 

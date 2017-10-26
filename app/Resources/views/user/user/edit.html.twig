@@ -16,6 +16,14 @@
                     {{ form_start(formUser) }}
                     <div class="row">
                         <div class="col-md-6">
+                            {#  '<small>'~ 'user.user.edit.form.passwordHelp'|trans ~'</small>' #}
+                            {{ form_row(formUser.group, {
+                                'label': 'user.user.edit.form.group'|trans
+                            }) }}
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-6">
                             {{ form_row(formUser.firstName, {
                                 'label': 'user.user.edit.form.firstName'|trans,
                                 'attr': {

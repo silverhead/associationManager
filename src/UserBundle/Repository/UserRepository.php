@@ -12,7 +12,7 @@ class UserRepository extends EntityRepository implements PaginatorRepositoryInte
 {
     public function getQbPaginatedList()
     {
-        return $this->createQueryBuilder("u");
+        return $this->createQueryBuilder("u")->join("u.group", "g")->select("u, g");
     }
 
     public function findByUsernameOrEmail($username)

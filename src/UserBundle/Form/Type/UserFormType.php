@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class UserFormType extends AbstractType
 {
@@ -25,6 +26,10 @@ class UserFormType extends AbstractType
                 'required' => false,
                 'first_options' => array('label' => 'user.user.edit.form.password'),
                 'second_options' => array('label' => 'user.user.edit.form.password_confirmation'),
+            ])
+            ->add('group', EntityType::class, [
+                'class' => 'UserBundle:UserGroup',
+                'choice_label' => 'label'
             ])
         ;
     }

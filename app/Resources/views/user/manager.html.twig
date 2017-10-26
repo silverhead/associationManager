@@ -1,5 +1,12 @@
 {% extends 'layoutLogin.html.twig' %}
 
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/common/js/jquery.reload.list.js') }}"></script>
+    <script src="{{ asset('bundles/app/common/js/app.deleteConfirm.js') }}"></script>
+    <script src="{{ asset('bundles/user/user/js/manage.js') }}"></script>    
+{% endblock  %}
+
 {% block content %}
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
@@ -24,7 +31,7 @@
                 <div class="body">
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
                         {% if is_granted('USER_USER_VIEW') %}
-                            <li role="presentation" class="active"><a href="#users" data-toggle="tab">{{ 'user.manager.tabUsers'|trans }}</a></li>
+                            <li role="presentation" class="active"><a href="#usersTab" data-toggle="tab">{{ 'user.manager.tabUsers'|trans }}</a></li>
                         {% endif %}
                         {% if is_granted('USER_GROUP_VIEW') %}
                             <li role="presentation"><a href="#userGroups" data-toggle="tab">{{ 'user.manager.tabUserGroups'|trans }}</a></li>
@@ -32,8 +39,10 @@
                     </ul>
                     <div class="tab-content">
                         {% if is_granted('USER_USER_VIEW') %}
-                            <div role="tabpanel" class="tab-pane fade in active" id="users">
+                            <div role="tabpanel" class="tab-pane fade in active" id="usersTab">
+		                        <div data-anchor="users" data-page-parameter-name="pageTab1" id="users">
                                 {{ render(controller('UserBundle:User:list', {'request': app.request, 'anchor': 'users'})) }}
+                                </div>
                             </div>
                         {% endif %}
                         {% if is_granted('USER_GROUP_VIEW') %}

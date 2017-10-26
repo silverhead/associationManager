@@ -5,8 +5,10 @@ namespace AppBundle\Manager;
 interface PaginatorManagerInterface extends EntityManagerInterface
 {
     /**
-     * @param array $options
-     * @return mixed
+     * 
+     * @param number $page
+     * @param number $itemPerPage
+     * @param string $pageParameterName
      */
     public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page');
 }

@@ -218,6 +218,7 @@ user:
         edit:
             title: Modifier un utilisateur
             form:
+                group: Groupe
                 firstName: Prénom
                 lastName: Nom
                 username: Identifiant
