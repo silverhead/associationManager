@@ -299,5 +299,8 @@ class User implements UserInterface
         $this->group = $group;
     }
 
-
+    public function isDeletable()
+    {
+        return false;
+    }
 }

@@ -42,6 +42,13 @@ class Member extends User
     protected $phone;
 
     /**
+     * 
+     * @var string
+     * @ORM\Column(length=2, nullable=false)
+     */
+    protected $gender;
+    
+    /**
      * @var string
      * @ORM\Column(length=10, nullable=true)
      */
@@ -191,5 +198,23 @@ class Member extends User
         $this->cellular = $cellular;
 
         return $this;
+    }
+    
+    /**
+     * @param string $gender
+     * @return Member
+     */
+    public function setGender(string $gender)
+    {
+        $this->gender = $gender;
+        return this;
+    }
+    
+    /**
+     * @return string $gender
+     */
+    public function getGender()
+    {
+        return $this->gender;
     }
 }

@@ -3,6 +3,7 @@
 {% block javascript %}
     {{ parent() }}
     <script src="{{ asset('bundles/app/common/js/jquery.reload.list.js') }}"></script>
+    <script src="{{ asset('bundles/app/common/js/jquery.orderableList.js') }}"></script>
     <script src="{{ asset('bundles/app/common/js/app.deleteConfirm.js') }}"></script>
     <script src="{{ asset('bundles/app/common/js/app.savePrompt.js') }}"></script>
     <script src="{{ asset('bundles/member/status/js/manage.js') }}"></script>
@@ -47,8 +48,8 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         {% if is_granted('MEMBER_MEMBER_VIEW') %}
-                        <div role="tabpanel" class="tab-pane fade in active" id="members">
-                            {{ render(controller('MemberBundle:Member:list', {'request': app.request, 'anchor': 'status'})) }}
+                        <div role="tabpanel" class="tab-pane fade in active" data-anchor="members" id="members">
+                            {{ render(controller('MemberBundle:Member:list', {'request': app.request, 'anchor': 'members'})) }}
                             {#{% include 'member/manager/membersList.html.twig' %}#}
                         </div>
                         {% endif %}

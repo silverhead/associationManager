@@ -9,13 +9,13 @@
     <div class="col-xs-12">
         <div class="body table-responsive">
             <form action="#">
-                <table class="table table-striped dataTable">
+                <table class="table table-striped orderable dataTable">
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th data-paginator-sortname="username" data-paginator-sort="{{ order.username }}" class="sorting{% if order.username != '' %}_{{ order.username }}{% endif %}">{{ 'user.user.list.table.userName'|trans }}</th>
-                        <th data-paginator-sortname="email" data-paginator-sort="{{ order.email }}" class="sorting{% if order.email != '' %}_{{ order.email }}{% endif %}">{{ 'user.user.list.table.email'|trans }}</th>
-                        <th data-paginator-sortname="group" data-paginator-sort="{{ order.group }}" class="sorting{% if order.group != '' %}_{{ order.group }}{% endif %}">{{ 'user.user.list.table.group'|trans }}</th>
+                        <th data-order-sortname="username" data-order-sort="{{ order.username }}" class="sortable">{{ 'user.user.list.table.userName'|trans }}</th>
+                        <th data-order-sortname="email" data-order-sort="{{ order.email }}" class="sortable">{{ 'user.user.list.table.email'|trans }}</th>
+                        <th data-order-sortname="group" data-order-sort="{{ order.group }}" class="sortable">{{ 'user.user.list.table.group'|trans }}</th>
                         <th>{{ 'app.common.table.action'|trans }}</th>
                     </tr>
                     </thead>
@@ -27,8 +27,12 @@
                             <td>{{ user.email }}</td>
                             <td>{{ user.group.label }}</td>
                             <td>
-                                <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="{{ user.id }}" class="btn btn-danger material-icons delUser">delete</a>
+                                {% if is_granted('USER_USER_EDIT') %}
+                                    <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning material-icons">edit</a>
+                                {% endif %}
+                                {% if is_granted('USER_USER_DELETE') %}                                
+                                    <a href="#" data-id="{{ user.id }}" class="btn btn-danger material-icons {% if user.isDeletable()%}delUser{% endif %}" {% if user.isDeletable() != true %}disabled="disabled"{% endif %}>delete</a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

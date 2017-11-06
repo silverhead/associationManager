@@ -5,6 +5,7 @@
         var defauts = {
             remoteURL: null,
             remoteErrorCallBack: function(){},
+            remoteSucessCallBack: function(){},
             masterRoute: null,
             action: null,
             nbRowPerPage: null,
@@ -48,6 +49,8 @@
                 'dataType': 'html',
                 'success': function(template){
                     $container.html(template);
+                    
+                    parameters.remoteSucessCallBack();
                 },
                 'error': function(jqXHR, textStatus, errorThrown){
                     parameters.remoteErrorCallBack();

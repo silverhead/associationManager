@@ -67,12 +67,7 @@ services:
     subscription.manager.subscription:
         class: SubscriptionBundle\Manager\SubscriptionManager
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
-    member.manager.member:
-        class: MemberBundle\Manager\MemberMemberManager
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
-    member.manager.status:
-        class: MemberBundle\Manager\MemberStatusManager
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+
     # Handler
     app.handler.page_historical:
         class: AppBundle\Handler\PageHistoricalHandler

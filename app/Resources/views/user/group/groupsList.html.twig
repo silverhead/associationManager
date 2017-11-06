@@ -12,11 +12,11 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>#</th>
+                        <th width="10%">#</th>
                         <th>{{ 'user.group.list.table.labelCol'|trans }}</th>
-                        <th>{{ 'user.group.list.table.nbMembersCol'|trans }}</th>
+                        <th width="15%">{{ 'user.group.list.table.nbMembersCol'|trans }}</th>
                         {% if is_granted('USER_GROUP_EDIT') or is_granted('USER_GROUP_DELETE') %}
-                            <th>{{ 'app.common.table.action'|trans }}</th>
+                            <th width="15%">{{ 'app.common.table.action'|trans }}</th>
                         {% endif %}
                     </tr>
                     </thead>
@@ -25,7 +25,7 @@
                     <tr>
                         <td scope="row">{{ group.id }}</td>
                         <td>{{ group.label }}</td>
-                        <td>NF</td>
+                        <td class="text-center">{{ group.getNbUsers() }}</td>
                         {% if is_granted('USER_GROUP_EDIT') or is_granted('USER_GROUP_DELETE') %}
                         <td>
                             {% if is_granted('USER_GROUP_EDIT') %}

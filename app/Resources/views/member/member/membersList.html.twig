@@ -34,12 +34,13 @@
                     <tr>
                         <th>#</th>
                         {#<th>{{ 'member.member.list.table.picture'|trans }}</th>#}
-                        <th class="sorting">{{ 'member.member.list.table.lastName'|trans }}</th>
-                        <th class="sorting">{{ 'member.member.list.table.firstName'|trans }}</th>
-                        <th class="sorting">{{ 'member.member.list.table.status'|trans }}</th>
-                        <th class="sorting">{{ 'member.member.list.table.phone'|trans }}</th>
-                        <th class="sorting">{{ 'member.member.list.table.subscription'|trans }}</th>
-                        <th class="sorting">{{ 'member.member.list.table.SubscriptionDateEnd'|trans }}</th>
+                        <th data-order-sortname="lastName" data-order-sort="{{ order.lastName }}" class="sortable">{{ 'member.member.list.table.lastName'|trans }}</th>
+                        <th data-order-sortname="firstName" data-order-sort="{{ order.firstName }}" class="sortable">{{ 'member.member.list.table.firstName'|trans }}</th>
+                        <th data-order-sortname="status" data-order-sort="{{ order.status }}" class="sortable">{{ 'member.member.list.table.status'|trans }}</th>
+                        <th>{{ 'member.member.list.table.phone'|trans }}</th>
+                        <th data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.member.list.table.subscription'|trans }}</th>
+                        <th>{{ 'member.member.list.table.SubscriptionDateEnd'|trans }}</th>
+{#  data-order-sortname="subscriptionDateEnd" data-order-sort="{{ order.subscriptionDateEnd }}" class="sortable"#}
                         <th>{{ 'app.common.table.action'|trans }}</th>
                     </tr>
                     </thead>
@@ -86,7 +87,7 @@
                     {#</thead>#}
                     <tbody>
                     {% for member in members %}
-                        <tr {#{% if loop.index % 4 == 0 %}class="bg-danger"{% endif %}#}>
+                        <tr {% if loop.index % 4 == 0 %}class="bg-danger"{% endif %}>
                             <td scope="row">{{ member.id }}</td>
                             {#<td>#}
                                 {#<img src="{{ asset('images/avatars/user.png') }}" class="img-circle">#}

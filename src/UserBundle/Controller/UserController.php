@@ -36,13 +36,11 @@ class UserController extends Controller
         
         $userManager = $this->get('user.manager.user');
         
-        $orders = $request->get('paginatorOrders', array(
+        $orders = $request->get('orders', array(
             'username' => 'asc',
             'email' => '',
             'group' => ''
         ));
-
-        
         
         $userManager->setPaginatorOrders($orders);
         

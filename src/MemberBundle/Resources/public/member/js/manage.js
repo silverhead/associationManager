@@ -1,4 +1,10 @@
 $(function(){
+	$('#members .sortable').orderableList({
+		listToOrder: function(orders){
+			reloadMemberList('order', orders);			
+		}		
+	});	
+	
     $('.delMember').on('click', function(e){
         e.preventDefault();
 
@@ -22,3 +28,28 @@ $(function(){
             });
     });
 });
+
+function reloadMemberList(action, paginatorOrders){
+    var $container =  $('#members');
+    
+    $container.reloadlist({
+        masterRoute: 'member_manager',
+        remoteURL: Routing.generate('member_member_list_part', {'anchor': $container.data('anchor')}),
+        action: action,
+        otherData: paginatorOrders,
+        remoteSucessCallBack: function(){
+	        	$('.sortable').orderableList({
+	        		listToOrder: function(orders){
+	        			reloadMemberList('order', orders);			
+	        		}		
+	        	});        	
+        },
+        remoteErrorCallBack: function(){
+        		swal(
+	            Translator.trans('app.common.errorTitle'),
+	            Translator.trans('app.common.errorUnknow'),
+	            "error"
+            );
+        }
+    });
+}

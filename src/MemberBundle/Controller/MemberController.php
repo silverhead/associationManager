@@ -23,16 +23,26 @@ class MemberController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-
-    public function listAction()
+    public function listAction(Request $request, $anchor = null)
     {
         $memberManager = $this->get('member.manager.member');
-        $members = $memberManager->paginatedList();
 
-        return $this->render('member/member/membersList.html.twig', array(
-            'members' => $members
+        $orders = $request->get('orders', array(
+            'lastName' => 'asc',
+            'firstName' => 'asc',
+            'status' => '',
+            'subscription' => '',
+//             'subscriptionDateEnd' => 'asc',
         ));
-
+        
+        $memberManager->setPaginatorOrders($orders);
+        
+        $members = $memberManager->paginatedList();
+        
+        return $this->render('member/member/membersList.html.twig', array(
+            'members' => $members,
+            'order' => $orders
+        ));
     }
 
     /**
@@ -40,8 +50,21 @@ class MemberController extends Controller
      */
     public function editMemberAction(Request $request, $id = 0)
     {
+        $manager = $this->get('member.manager.member');       
+        
+        if($id > 0){
+            $entity = $manager->find($id);
+        } 
+        else{
+            $entity = $manager->getNewEntity();
+        }
+        
+        $formHandler = $this->get('member.form.handler.member');
+        $formHandler->setForm($entity);
+        
         return $this->render('member/memberEdit.html.twig', [
-            'menuSelect' => 'members_manager'
+            'menuSelect' => 'members_manager',
+            'form' => $formHandler->getForm()->createView()
         ]);
     }
 

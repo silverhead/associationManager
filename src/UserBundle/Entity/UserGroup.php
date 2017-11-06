@@ -45,6 +45,14 @@ class UserGroup
     private $credentials;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
      * @return int
      */
     public function getId()
@@ -195,12 +203,9 @@ class UserGroup
     {
         return $this->credentials;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
+    
+    public function getNbUsers()
     {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->users->count();
     }
-
 }

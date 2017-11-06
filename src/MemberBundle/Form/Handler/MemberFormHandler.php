@@ -2,12 +2,12 @@
 
 namespace MemberBundle\Form\Handler;
 
-use MemberBundle\Entity\MemberStatus;
-use MemberBundle\Form\Type\MemberStatusFormType;
+use MemberBundle\Entity\Member;
+use MemberBundle\Form\Type\MemberFormType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-class MemberStatusFormHandler
+class MemberFormHandler
 {
     /**
      * @var FormFactory
@@ -23,10 +23,10 @@ class MemberStatusFormHandler
         $this->formFactory = $formFactory;
     }
 
-    public function setForm(MemberStatus $memberStatus = null)
+    public function setForm(Member $member = null)
     {
 
-        $this->form = $this->formFactory->create(MemberStatusFormType::class, $memberStatus);
+        $this->form = $this->formFactory->create(MemberFormType::class, $member);
     }
 
     public function getForm()

@@ -1,25 +1,37 @@
 services:
     # EVENT LISTENER
-    member_status_credential_event:
+    member.status.credential.event:
         class: MemberBundle\EventListener\StatusCredentialEventListener
         arguments: ['%credentialVoterMemberStatus%', 'member.status.credential.title']
         tags:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
-    member_member_credential_event:
+    member.member.credential.event:
         class: MemberBundle\EventListener\MemberCredentialEventListener
         arguments: ['%credentialVoterMemberMembers%', 'member.member.title']
         tags:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     # VOTER
-    member_member_voter:
+    member.member.voter:
         class: MemberBundle\Security\MemberVoter
         autowire: true
         arguments: ['%credentialVoterMemberMembers%']
         tags:
             - {name: security.voter}
-    member_status_voter:
+    member.status.voter:
         class: MemberBundle\Security\MemberStatusVoter
         autowire: true
         arguments: ['%credentialVoterMemberStatus%']
         tags:
             - {name: security.voter}
+    # MANAGER
+    member.manager.member:
+        class: MemberBundle\Manager\MemberMemberManager
+        #, subscriptionDateEnd: 'subscriptions.endDate'
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session', 'paginator_order_member_list', {lastName: 'm.lastName', firstName: 'm.firstName', status: 'mshStatus.label', subscription: 'subscription.label'}]
+    member.manager.status:
+        class: MemberBundle\Manager\MemberStatusManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    # FORM
+    member.form.handler.member:
+        class: MemberBundle\Form\Handler\MemberFormHandler
+        arguments: ['@form.factory', '@service_container']  
