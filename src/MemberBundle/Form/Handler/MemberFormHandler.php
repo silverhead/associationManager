@@ -25,8 +25,11 @@ class MemberFormHandler
 
     public function setForm(Member $member = null)
     {
-
-        $this->form = $this->formFactory->create(MemberFormType::class, $member);
+        $currentAvatar = '/images/avatars/user.png';
+        
+        $this->form = $this->formFactory->create(MemberFormType::class, $member, [
+            'currentAvatar' => $currentAvatar
+        ]);
     }
 
     public function getForm()

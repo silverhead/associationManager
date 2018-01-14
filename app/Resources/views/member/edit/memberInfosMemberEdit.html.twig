@@ -1,46 +1,20 @@
 <div class="row">
     <div class="col-lg-4 col-md-6">
-        <div class="form-group">
-            <label class="control-label col-sm-10">Statut</label>
-            <div class="col-sm-10 form-line">
-                <select class="form-control selectpicker" id="" title="Selectionner">
-                    <option value="fr">Membre</option>
-                    <option value="es">Membre premium</option>
-                    <option value="es">Secrétaire</option>
-                    <option value="es">Président</option>
-                    <option value="es">Trésorier</option>
-                </select>
-            </div>
-        </div>
+        {{ form_row(form.status) }}
     </div>
     <div class="col-lg-4 col-md-6">
-        <div class="form-group">
-            <label class="control-label col-sm-10">Abonnement</label>
-            <div class="col-sm-10 form-line">
-                <select class="form-control selectpicker" id="" title="Selectionner">
-                    <option value="fr">Standard 1 an</option>
-                    <option value="es">Premium 1 an</option>
-                    <option value="es">Standard 3 mois</option>
-                    <option value="es">Standard 1 mois</option>
-                </select>
-            </div>
-        </div>
+         <div class="form-group">
+             <label class="control-label col-sm-10">Spécialités</label>
+             <div class="col-sm-10 form-line">
+                 <select class="form-control selectpicker" multiple id="" title="Selectionner">
+                     <option value="1">Biologie</option>
+                     <option value="2">Electronique</option>
+                     <option value="3">Informatique</option>
+                     <option value="4">Travail du bois</option>
+                 </select>
+             </div>
+         </div>
     </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="form-group">
-            <label class="control-label col-sm-10">Spécialités</label>
-            <div class="col-sm-10 form-line">
-                <select class="form-control selectpicker" multiple id="" title="Selectionner">
-                    <option value="1">Biologie</option>
-                    <option value="2">Electronique</option>
-                    <option value="3">Informatique</option>
-                    <option value="4">Travail du bois</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
     <div class="col-lg-4 col-md-6">
         <div class="form-group">
             <label class="control-label col-sm-10">Profession</label>
@@ -49,29 +23,4 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="col-sm-12" style="padding: 0;">
-            <div class="form-group">
-                <label class="control-label col-sm-10">Périodicité de paiemet</label>
-                <div class="col-sm-10 form-line">
-                    <select class="form-control selectpicker" id="" title="Selectionner">
-                        <option value="fr">1 an (60€)</option>
-                        <option value="es">6 mois (30€)</option>
-                        <option value="es">3 mois (15€)</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6">
-
-
-            {#<div class="col-sm-10 form-line">#}
-                {#<input type="text" title="Date de naissance" class="form-control" id="" placeholder="Date de naissance">#}
-            {#</div>#}
-
-    </div>
-
 </div>
-
-

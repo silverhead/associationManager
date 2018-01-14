@@ -44,6 +44,11 @@ class MemberStatusHistorical
      */
     private $endDate;
 
+    public function __construct()
+    {
+        $this->startDate = new \DateTime();
+    }
+    
     /**
      * @return int
      */
@@ -97,7 +102,6 @@ class MemberStatusHistorical
     public function setStatus(MemberStatus $status): MemberStatusHistorical
     {
         $this->status = $status;
-
         return $this;
     }
 

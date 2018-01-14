@@ -5,6 +5,9 @@ namespace MemberBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use MemberBundle\Entity\MemberStatusHistorical;
+use MemberBundle\Entity\MemberStatus;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class MemberController extends Controller
 {
@@ -50,22 +53,125 @@ class MemberController extends Controller
      */
     public function editMemberAction(Request $request, $id = 0)
     {
-        $manager = $this->get('member.manager.member');       
+        $manager = $this->get('member.manager.member');
+        
+        $translator = $this->get('translator');
         
         if($id > 0){
             $entity = $manager->find($id);
         } 
         else{
             $entity = $manager->getNewEntity();
+            
+            $status = new MemberStatusHistorical();
+            $status->setMember($entity)
+                ->setStartDate(new \DateTime())
+            ;
+            
+            $entity->addStatus($status);
         }
+
+        $pageH = $this->get('app.handler.page_historical');
+        $callBackUrl = $this->generateUrl('members_manager');//$pageH->getCallbackUrl('member_edit');
         
         $formHandler = $this->get('member.form.handler.member');
         $formHandler->setForm($entity);
+
+        if($formHandler->process($request)){
+            
+            $form = $formHandler->getForm();
+            //Identity
+            $entity->setFirstName($form['firstName']->getData());
+            $entity->setLastName($form['lastName']->getData());
+            $entity->setGender($form['gender']->getData());
+            $entity->setBirthday($form['birthday']->getData());
+            //Coordonate            
+            $entity->setCountry($form['country']->getData());
+            $entity->setCity($form['city']->getData());
+            $entity->setZipcode($form['zipcode']->getData());
+            $entity->setAddress($form['address']->getData());
+            $entity->setPhone($form['phone']->getData());
+            $entity->setCellular($form['cellular']->getData());
+            // Connection
+            $entity->setUsername($form['username']->getData());
+            $entity->setEmail($form['email']->getData());            
+            
+            $entity->setGroup($form['group']->getData());
+            
+            $entity->setRoles(array('ROLE_USER'));
+
+            $status = $form['status']->getData();
+            
+            $entity->setStatus(new ArrayCollection());
+            
+            $statusHistorical = new MemberStatusHistorical();            
+            $entity->addStatus($statusHistorical);
+            $status->addMember($statusHistorical);
+
+            if(!empty($form['password']->getData())){
+                $encoder = $this->get('security.password_encoder');
+                
+                $entity->setSalt(uniqid());
+                
+                $entity->setPassword(
+                    $encoder->encodePassword($entity, $form['password']->getData())
+                );
+            }
+            
+            dump($entity);
+            
+            if($manager->save($entity)){
+                $this->addFlash('success', $translator->trans('member.member.edit.saveSuccessText'));
+                
+                if(null !== $request->get('save_and_leave', null)){
+                    if(null!== $callBackUrl){
+                        return $this->redirect($callBackUrl);
+                    }
+                    
+                    return $this->redirect(
+                        $this->generateUrl('member_manager').'#users'
+                        );
+                }
+                
+                if(null !== $request->get('save_and_stay', null)){
+                    return $this->redirectToRoute('member_edit', [
+                        'id' => $entity->getId()
+                    ]);
+                }
+            }
+            
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.errorComming', [
+                    '%error%' => '<br />' . implode('<br />', $manager->getErrors())
+                ]));
+        }
+        
+        $breadcrumbs = [
+            [
+                'href' => $this->redirectToRoute('dashboard'),
+                'title' => $translator->trans('app.dashboard.callback'),
+                'label' => $translator->trans('app.dashboard.title')
+            ]
+        ];
+        
+        if(null !== $callBackUrl){
+            $breadcrumbs[] = [
+                'href' => $callBackUrl,
+                'title' => $translator->trans('member.manager.tabMembers'),
+                'label' => $translator->trans('member.manager.tabMembers')
+            ];
+        }
+        
+        $breadcrumbs[]  =  ['label' => $translator->trans('member.member.edit.title')];
+        
         
         return $this->render('member/memberEdit.html.twig', [
             'menuSelect' => 'members_manager',
-            'form' => $formHandler->getForm()->createView()
-        ]);
+            'form' => $formHandler->getForm()->createView(),
+            'callBackUrl' => $callBackUrl,
+            'breadcrumbs' => $breadcrumbs
+         ]);
     }
 
     /**

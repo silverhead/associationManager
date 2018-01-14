@@ -174,13 +174,26 @@ member:
                 phone: Téléphone
                 subscription: Abonnement
                 SubscriptionDateEnd: Anniversaire
+        add: Ajouter un adhérent
         edit:
-            gender:
-                label: Genre
-                female: Femme
-                male: Homme
-            phone: Fixe
-            cellular: Mobile
+            title: Editer l'adhérent        
+            tab:
+              identity: Identité
+              coordonate: Coordonnées
+              connexion: Connexion
+              memberInfo: Info. adhésion
+              subscription: Abonnement
+            form:
+              avatar: Photo
+              firstName: Prénom
+              lastName: Nom
+              gender:
+                  label: Genre
+                  female: Femme
+                  male: Homme
+              birthday: Date de naissance
+              phone: Fixe
+              cellular: Mobile
         delete:
             deleteQuestionText: La suppression du membre est définitf !
             deleteSuccessText: Le membre a été supprimé.

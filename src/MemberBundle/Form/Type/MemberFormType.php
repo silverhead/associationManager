@@ -2,13 +2,17 @@
 
 namespace MemberBundle\Form\Type;
 
-
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use UserBundle\Form\Type\UserFormType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 class MemberFormType extends UserFormType
 {
@@ -16,19 +20,42 @@ class MemberFormType extends UserFormType
     {
         parent::buildForm($builder, $options);
         $builder
-        ->add('birthday', DateType::class)
+        ->add('avatar', FileType::class, array(
+            'required' => false,
+            'attr' => [
+                'data-current' => $options['currentAvatar']
+            ]
+            ))
+        ->add('birthday', DateType::class, array(
+            'widget' => 'single_text'
+        ))
         ->add('gender', ChoiceType::class, array(
             'choices' => array(
-                'member.member.edit.gender.female' => 'f',
-                'member.member.edit.gender.male' => 'm',
+                'member.member.edit.form.gender.female' => 'f',
+                'member.member.edit.form.gender.male' => 'm',
             )
         ))
-        ;
+        ->add('country', CountryType::class, array('preferred_choices' => array('FR')))
+        ->add('city', TextType::class)
+        ->add('zipcode', TextType::class)
+        ->add('address', TextType::class)
+        
+        ->add('phone', TextType::class)
+        ->add('cellular', TextType::class)
+        ->add('status', EntityType::class, array(
+            'class' => 'MemberBundle\Entity\MemberStatus',
+            'query_builder' => function (EntityRepository $er) {
+                                    return $er->createQueryBuilder('ms')->orderBy('ms.label', 'ASC');
+                               },
+                'choice_label' => 'label'
+             ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-
+        $resolver->setRequired(array(
+            'currentAvatar'
+        ));
     }
 
     public function getBlockPrefix()

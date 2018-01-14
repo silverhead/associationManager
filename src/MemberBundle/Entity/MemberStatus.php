@@ -69,4 +69,44 @@ class MemberStatus
 
         return $this;
     }
+    
+    /**
+     * @param ArrayCollection
+     */
+    public function setMembers(ArrayCollection $members)
+    {
+        $this->members = $members;
+        
+        return $this;
+    }
+    
+    /**
+     * @param ArrayCollection
+     */
+    public function getMembers()
+    {
+        return $this->members;
+    }
+    
+    /**
+     * @param Member
+     */
+    public function addMember(MemberStatusHistorical $member)
+    {
+        $member->setStatus($this);
+        $this->members->add($member);
+        
+        return $this;
+    }
+    
+    /**
+     * @param Member
+     */
+    public function removeMember(MemberStatusHistorical $member)
+    {
+        $this->members->remove($member);
+        
+        return $this;
+    }
+    
 }

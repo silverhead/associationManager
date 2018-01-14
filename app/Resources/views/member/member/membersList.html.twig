@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xs-12">
         {% if is_granted('MEMBER_MEMBER_CREATE') %}
-        <a href="{{ path('member_edit') }}" class="btn bg-green waves-effect">Ajouter un adhérent</a>
+        <a href="{{ path('member_edit') }}" class="btn bg-green waves-effect">{{ 'member.member.add'|trans }}</a>
         {% endif %}
     </div>
 </div>
@@ -94,14 +94,14 @@
                             {#</td>#}
                             <td>{{ member.lastName }}</td>
                             <td>{{ member.firstName }}</td>
-                            <td>{% if member.status is defined %}{{ member.status[0].status.label }}{% endif %}</td>
+                            <td>{% if member.status|length > 0 %}{{ member.status[0].status.label }}{% endif %}</td>
                             <td>
                                 {% if member.phone != "" %}{{ 'member.edit.phone'|trans }} {{ member.phone }}{% endif %}
                                 {% if member.phone != "" and member.cellular != "" %}<br />{% endif %}
                                 {% if member.cellular != "" %}{{ 'member.edit.cellular'|trans }} {{ member.cellular }}{% endif %}
                             </td>
-                            <td>{% if member.subscriptions is defined %}{{ member.subscriptions[0].subscription.label }} {% endif %}</td>
-                            <td>{{ member.subscriptions[0].endDate|date('d/m/Y') }}</td>
+                            <td>{% if member.subscriptions|length > 0 %}{{ member.subscriptions[0].subscription.label }} {% endif %}</td>
+                            <td>{% if member.subscriptions|length > 0 %}{{ member.subscriptions[0].endDate|date('d/m/Y') }}{% endif %}</td>
                             <td>
                                 <a href="{{ path('member_view', {'id': member.id}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
                                 <a href="{{ path('member_edit', {'id': member.id}) }}" class="btn btn-warning material-icons">edit</a>

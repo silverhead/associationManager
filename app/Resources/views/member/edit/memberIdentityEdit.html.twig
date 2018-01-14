@@ -1,52 +1,25 @@
 <div class="row">
-    <div class="col-lg-4 col-md-6 avatar-group">
-        <div class="avatar-holder">
-            <img src="{{ asset('images/avatars/user.png') }}" alt="">
-        </div>
-        <div class="form-group col-sm-6">
-            <label class="control-label col-sm-10">Photo</label>
-            <div class="col-sm-10 form-line">
-                <input id="avatar" name="avatar" class="form-control" type="file">
-            </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="avatar-holder center-block">
+            {{ form_widget(form.avatar, {'attr': {'class': 'file-loading'}}) }}
         </div>
     </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="form-group">
-            <label class="control-label">Genre</label>
-            <div class="col-sm-12" style="padding: 0;">
-                <select class="form-control selectpicker" id="" title="Choisir">
-                    <option value="1">Femme</option>
-                    <option value="2">Homme</option>
-                </select>
+    <div class="col-lg-8 col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.gender, {'label': 'member.member.edit.form.gender.label'}) }}
             </div>
+            <div class="col-md-6">
+                {{ form_row(form.birthday, {'label': 'member.member.edit.form.birthday'}) }}     
+            </div>        
         </div>
-        <div class="form-group">
-            <label class="control-label">Nom</label>
-            <div class="col-sm-12 form-line">
-                <input type="text" class="form-control" id="" placeholder="">
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.lastName, {'label': 'member.member.edit.form.lastName'}) }}
             </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="form-group">
-            <label class="control-label">Date de naissance</label>
-            <div class="input-group col-sm-12 form-line">
-                <span class="input-group-addon">
-                    <i class="material-icons">date_range</i>
-                </span>
-                <div>
-                    <input type="text" title="Date de naissance" class="form-control date" id="birthday" placeholder="Date de naissance">
-                    {#<input type="text" value="{{ abonnement.cout }}" title="Coût" class="form-control money-euro text-right" placeholder="Coût">#}
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label">Prénom</label>
-            <div class="col-sm-12 form-line">
-                <input type="text" class="form-control" id="" placeholder="">
-            </div>
-        </div>
+            <div class="col-md-6">
+        {{ form_row(form.firstName, {'label': 'member.member.edit.form.firstName'}) }}                
+            </div>        
+        </div>        
     </div>
 </div>
-
-

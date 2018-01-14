@@ -9,26 +9,29 @@
 
 {% block content %}
     <div class="row block-header">
-        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
-        {
-            'href': path('dashboard'),
-            'title': 'retour tableau de bord',
-            'label': 'Tableau de bord'
-        },
-        {
-            'label': 'Gestion adhérents',
-            'href': path('members_manager'),
-            'title': 'retour gestion adhérents'
-        },
-        {
-        'label': "Edition d'un membre"
-        }
-        ] } %}
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
+{#         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [#}
+{#         {#}
+{#             'href': path('dashboard'),#}
+{#             'title': 'retour tableau de bord',#}
+{#             'label': 'Tableau de bord'#}
+{#         },#}
+{#         {#}
+{#             'label': 'Gestion adhérents',#}
+{#             'href': path('members_manager'),#}
+{#             'title': 'retour gestion adhérents'#}
+{#         },#}
+{#         {#}
+{#         'label': 'member.edit.title'|trans#}
+{#         }#}
+{#         ] } %}#}
         <h2 class="col-xs-12">
-            <a href="{{ path('members_manager') }}" class="btn bg-grey waves-effect">Retour</a>&nbsp;
-            Edition d'un membre
+            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;        
+{#             <a href="{{ path('members_manager') }}" class="btn bg-grey waves-effect">Retour</a>&nbsp;#}
+            {{ 'member.member.edit.title'|trans }}
         </h2>
     </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}    
     <div class="row">
         <div class="col-xs-12">
             <div class="card">
@@ -36,30 +39,33 @@
                     {{ form_start(form) }}
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                        <li role="presentation" class="active"><a href="#identity" data-toggle="tab">Identité <i class="material-icons text-danger">warning</i></a></li>
-                        <li role="presentation"><a href="#coordonates" data-toggle="tab">Coordonnées</a></li>
-                        <li role="presentation"><a href="#infos_connection" data-toggle="tab">Connexion</a></li>
-                        <li role="presentation"><a href="#infos_membre" data-toggle="tab">Infos membre</a></li>
+                        <li role="presentation" class="active"><a href="#tabIdentity" data-toggle="tab">{{ 'member.member.edit.tab.identity'|trans }} {#<i class="material-icons text-danger">warning</i>#}</a></li>
+                        <li role="presentation"><a href="#tabCoordonates" data-toggle="tab">{{ 'member.member.edit.tab.coordonate'|trans }}</a></li>
+                        <li role="presentation"><a href="#tabConnexion" data-toggle="tab">{{ 'member.member.edit.tab.connexion'|trans }}</a></li>
+                        <li role="presentation"><a href="#tabMemberInfos" data-toggle="tab">{{ 'member.member.edit.tab.memberInfo'|trans }}</a></li>
+{#                         <li role="presentation"><a href="#tabSubscription" data-toggle="tab">{{ 'member.member.edit.tab.subscription'|trans }}</a></li>                        #}
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade in active" id="identity">
+                        <div role="tabpanel" class="tab-pane fade in active" id="tabIdentity">
                             {% include 'member/edit/memberIdentityEdit.html.twig' %}
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="coordonates">
+                        <div role="tabpanel" class="tab-pane fade" id="tabCoordonates">
                             {% include 'member/edit/memberCoordonatesEdit.html.twig' %}
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="infos_connection">
+                        <div role="tabpanel" class="tab-pane fade" id="tabConnexion">
                             {% include 'member/edit/memberInfosConnectionEdit.html.twig' %}
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="infos_membre">
+                        <div role="tabpanel" class="tab-pane fade" id="tabMemberInfos">
                             {% include 'member/edit/memberInfosMemberEdit.html.twig' %}
                         </div>
+{#                         <div role="tabpanel" class="tab-pane fade" id="tabSubscription">#}
+{#                             {% include 'member/edit/memberSubscriptionEdit.html.twig' %}#}
+{#                         </div>                        #}
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <input class="btn btn-success" type="submit" value="Enregistrer et revenir sur la liste">
-                            <input class="btn btn-success"  type="submit" value="Enregistrer et rester">
+                            {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
                         </div>
                     </div>
                     {{ form_end(form) }}
