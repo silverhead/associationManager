@@ -96,9 +96,9 @@
                             <td>{{ member.firstName }}</td>
                             <td>{% if member.status|length > 0 %}{{ member.status[0].status.label }}{% endif %}</td>
                             <td>
-                                {% if member.phone != "" %}{{ 'member.edit.phone'|trans }} {{ member.phone }}{% endif %}
+                                {% if member.phone != "" %}{{ 'member.member.edit.form.phone'|trans }} : <a href="tel:{{ member.phone }}">{{ member.phone }}</a>{% endif %}
                                 {% if member.phone != "" and member.cellular != "" %}<br />{% endif %}
-                                {% if member.cellular != "" %}{{ 'member.edit.cellular'|trans }} {{ member.cellular }}{% endif %}
+                                {% if member.cellular != "" %}{{ 'member.member.edit.form.cellular'|trans }} : <a href="tel:{{ member.phone }}">{{ member.phone }}</a>{% endif %}
                             </td>
                             <td>{% if member.subscriptions|length > 0 %}{{ member.subscriptions[0].subscription.label }} {% endif %}</td>
                             <td>{% if member.subscriptions|length > 0 %}{{ member.subscriptions[0].endDate|date('d/m/Y') }}{% endif %}</td>

@@ -21,5 +21,8 @@ class MemberRepository extends UserRepository implements PaginatorRepositoryInte
 //            ->where("status.startDate <= ".(new \DateTime())->format("Y-m-d")." AND status.endDate IS NULL")
 //            ;
     }
-
+    
+    public function countMember(){
+        return $this->createQueryBuilder("m")->select("COUNT(m)")->getQuery()->getSingleScalarResult();
+    }
 }

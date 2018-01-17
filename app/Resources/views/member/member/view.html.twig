@@ -2,6 +2,7 @@
 
 {% block content %}
     <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}    
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
         {
         'href': path('dashboard'),
@@ -35,13 +36,13 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="identity">
-                            {% include 'member/view/memberIdentityView.html.twig' %}
+                            {% include 'member/member/view/identity.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="subscription">
-                            {% include 'member/view/memberSubscriptionsView.html.twig' %}
+                            {% include 'member/member/view/subscriptions.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="contribution">
-                            {% include 'member/view/memberContributionView.html.twig' %}
+                            {% include 'member/member/view/contribution.html.twig' %}
                         </div>
                     </div>
                 </div>

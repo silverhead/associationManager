@@ -50,4 +50,9 @@ class MemberMemberManager implements PaginatorOrderedManagerInterface
     {
         return $this->entityManager->getRepository("MemberBundle:Member");
     }
+    
+    public function getMemberNb()
+    {
+        return $this->getRepository()->countMember();
+    }
 }

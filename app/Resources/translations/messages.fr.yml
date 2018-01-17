@@ -72,7 +72,7 @@ app:
             inputPassword: Mot de passe
             inputPasswordCheck: Vérification
             tokenNotFoundMessage: token non trouvé !
-            errorOnSaveNewPassword: Une erreur est intervenue lors de l'enregistrement du nouveau mot de passe :
+            errorOnSaveNewPassword: "Une erreur est intervenue lors de l'enregistrement du nouveau mot de passe :"
         credential:
             accessDenied: Accès refusé !
             view: Voir
@@ -184,6 +184,7 @@ member:
               memberInfo: Info. adhésion
               subscription: Abonnement
             form:
+              # identity
               avatar: Photo
               firstName: Prénom
               lastName: Nom
@@ -192,8 +193,17 @@ member:
                   female: Femme
                   male: Homme
               birthday: Date de naissance
-              phone: Fixe
-              cellular: Mobile
+              # coordonates
+              phone: Téléphone fixe
+              cellular: Téléphone mobile
+              country: Pays
+              city: Ville
+              zipcode: Code postal
+              address: Adresse
+              # connexion
+              username: identifiant
+              email: E-mail
+              group: Groupe
         delete:
             deleteQuestionText: La suppression du membre est définitf !
             deleteSuccessText: Le membre a été supprimé.
@@ -214,7 +224,7 @@ member:
             deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
             deleteSuccessText: Le statut %label% à bien été supprimé !
     subscription:
-        endDate: Date de fin :
+        endDate: "Date de fin :"
 user:
     manager:
         tabUsers: Utilisateurs

@@ -35,7 +35,7 @@
                             <li role="presentation" class="active"><a href="#usersTab" data-toggle="tab">{{ 'user.manager.tabUsers'|trans }}</a></li>
                         {% endif %}
                         {% if is_granted('USER_GROUP_VIEW') %}
-                            <li role="presentation"><a href="#userGroups" data-toggle="tab">{{ 'user.manager.tabUserGroups'|trans }}</a></li>
+                            <li role="presentation"><a href="#groups" data-toggle="tab">{{ 'user.manager.tabUserGroups'|trans }}</a></li>
                         {% endif %}
                     </ul>
                     <div class="tab-content">
@@ -47,8 +47,8 @@
                             </div>
                         {% endif %}
                         {% if is_granted('USER_GROUP_VIEW') %}
-                            <div role="tabpanel" class="tab-pane fade in" id="userGroups">
-                                {{ render(controller('UserBundle:UserGroup:list', {'request': app.request, 'anchor': 'userGroups'})) }}
+                            <div role="tabpanel" class="tab-pane fade in" id="groups">
+                                {{ render(controller('UserBundle:UserGroup:list', {'request': app.request, 'anchor': 'groups'})) }}
                             </div>
                         {% endif %}
                     </div>

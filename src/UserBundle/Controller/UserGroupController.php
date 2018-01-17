@@ -26,7 +26,7 @@ class UserGroupController extends Controller
     public function listAction(Request $request, $anchor = null)
     {
         $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
-        $currentRoute = 'members_manager';
+        $currentRoute = 'user_manager';
 
         $userGroupManager = $this->get('user.manager.group');
 
@@ -91,7 +91,7 @@ class UserGroupController extends Controller
                     }
 
                     return $this->redirect(
-                        $this->generateUrl('members_manager').'#groups'
+                        $this->generateUrl('user_manager').'#groups'
                     );
                 }
 

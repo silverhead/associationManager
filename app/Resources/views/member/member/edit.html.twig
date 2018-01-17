@@ -10,21 +10,6 @@
 {% block content %}
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
-{#         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [#}
-{#         {#}
-{#             'href': path('dashboard'),#}
-{#             'title': 'retour tableau de bord',#}
-{#             'label': 'Tableau de bord'#}
-{#         },#}
-{#         {#}
-{#             'label': 'Gestion adhérents',#}
-{#             'href': path('members_manager'),#}
-{#             'title': 'retour gestion adhérents'#}
-{#         },#}
-{#         {#}
-{#         'label': 'member.edit.title'|trans#}
-{#         }#}
-{#         ] } %}#}
         <h2 class="col-xs-12">
             <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;        
 {#             <a href="{{ path('members_manager') }}" class="btn bg-grey waves-effect">Retour</a>&nbsp;#}
@@ -48,16 +33,16 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="tabIdentity">
-                            {% include 'member/edit/memberIdentityEdit.html.twig' %}
+                            {% include 'member/member/edit/identity.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="tabCoordonates">
-                            {% include 'member/edit/memberCoordonatesEdit.html.twig' %}
+                            {% include 'member/member/edit/coordonates.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="tabConnexion">
-                            {% include 'member/edit/memberInfosConnectionEdit.html.twig' %}
+                            {% include 'member/member/edit/infosConnection.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="tabMemberInfos">
-                            {% include 'member/edit/memberInfosMemberEdit.html.twig' %}
+                            {% include 'member/member/edit/infosMember.html.twig' %}
                         </div>
 {#                         <div role="tabpanel" class="tab-pane fade" id="tabSubscription">#}
 {#                             {% include 'member/edit/memberSubscriptionEdit.html.twig' %}#}

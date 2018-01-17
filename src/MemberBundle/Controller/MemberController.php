@@ -10,14 +10,17 @@ use MemberBundle\Entity\MemberStatus;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class MemberController extends Controller
-{
+{    
     /**
      * @Route("/members/manager", name="members_manager")
      */
     public function indexAction()
     {
+        $memberManager = $this->get('member.manager.member');
+        
         return $this->render('member/membersManager.html.twig', array(
-            'menuSelect' => 'members_manager'
+            'menuSelect' => 'members_manager',
+            'nbMember' => $memberManager->getMemberNb()
         ));
     }
 
@@ -42,7 +45,7 @@ class MemberController extends Controller
         
         $members = $memberManager->paginatedList();
         
-        return $this->render('member/member/membersList.html.twig', array(
+        return $this->render('member/member/list.html.twig', array(
             'members' => $members,
             'order' => $orders
         ));
@@ -53,9 +56,21 @@ class MemberController extends Controller
      */
     public function editMemberAction(Request $request, $id = 0)
     {
-        $manager = $this->get('member.manager.member');
-        
         $translator = $this->get('translator');
+        
+        dump($this->isGranted("MEMBER_MEMBER_EDIT"));
+        
+        if(!$this->isGranted("MEMBER_MEMBER_EDIT")){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+            
+                return $this->redirect(
+                    $this->generateUrl('members_manager').'#members'
+                    );
+        }
+        
+        $manager = $this->get('member.manager.member');
         
         if($id > 0){
             $entity = $manager->find($id);
@@ -79,46 +94,7 @@ class MemberController extends Controller
 
         if($formHandler->process($request)){
             
-            $form = $formHandler->getForm();
-            //Identity
-            $entity->setFirstName($form['firstName']->getData());
-            $entity->setLastName($form['lastName']->getData());
-            $entity->setGender($form['gender']->getData());
-            $entity->setBirthday($form['birthday']->getData());
-            //Coordonate            
-            $entity->setCountry($form['country']->getData());
-            $entity->setCity($form['city']->getData());
-            $entity->setZipcode($form['zipcode']->getData());
-            $entity->setAddress($form['address']->getData());
-            $entity->setPhone($form['phone']->getData());
-            $entity->setCellular($form['cellular']->getData());
-            // Connection
-            $entity->setUsername($form['username']->getData());
-            $entity->setEmail($form['email']->getData());            
-            
-            $entity->setGroup($form['group']->getData());
-            
-            $entity->setRoles(array('ROLE_USER'));
-
-            $status = $form['status']->getData();
-            
-            $entity->setStatus(new ArrayCollection());
-            
-            $statusHistorical = new MemberStatusHistorical();            
-            $entity->addStatus($statusHistorical);
-            $status->addMember($statusHistorical);
-
-            if(!empty($form['password']->getData())){
-                $encoder = $this->get('security.password_encoder');
-                
-                $entity->setSalt(uniqid());
-                
-                $entity->setPassword(
-                    $encoder->encodePassword($entity, $form['password']->getData())
-                );
-            }
-            
-            dump($entity);
+            $entity = $formHandler->getData();
             
             if($manager->save($entity)){
                 $this->addFlash('success', $translator->trans('member.member.edit.saveSuccessText'));
@@ -129,7 +105,7 @@ class MemberController extends Controller
                     }
                     
                     return $this->redirect(
-                        $this->generateUrl('member_manager').'#users'
+                        $this->generateUrl('members_manager').'#members'
                         );
                 }
                 
@@ -166,7 +142,7 @@ class MemberController extends Controller
         $breadcrumbs[]  =  ['label' => $translator->trans('member.member.edit.title')];
         
         
-        return $this->render('member/memberEdit.html.twig', [
+        return $this->render('member/member/edit.html.twig', [
             'menuSelect' => 'members_manager',
             'form' => $formHandler->getForm()->createView(),
             'callBackUrl' => $callBackUrl,
@@ -179,9 +155,29 @@ class MemberController extends Controller
      */
     public function viewMemberAction(Request $request, $id)
     {
+        $manager = $this->get('member.manager.member');
+        
+        $translator = $this->get('translator');
+        
         $member = $this->getMemberInfos();
-        return $this->render('member/memberView.html.twig', [
+        
+        $breadcrumbs = [
+            [
+                'href' => $this->redirectToRoute('dashboard'),
+                'title' => $translator->trans('app.dashboard.callback'),
+                'label' => $translator->trans('app.dashboard.title')
+            ],
+            [
+                'href' =>  $this->generateUrl('members_manager').'#members',
+                'title' => $translator->trans('member.manager.tabMembers'),
+                'label' => $translator->trans('member.manager.tabMembers')
+            ],
+            ['label' => $translator->trans('member.member.view.title')]
+        ];
+        
+        return $this->render('member/member/view.html.twig', [
             'member' => $member,
+            'breadcrumbs' => $breadcrumbs,
             'menuSelect' => 'member_manager'
         ]);
     }

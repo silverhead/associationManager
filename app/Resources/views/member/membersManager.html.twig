@@ -26,7 +26,7 @@
 
         <h2 class="col-xs-12">
             {{ 'member.member.list.title'|trans }}
-            <span class="pull-right">{{ 'member.manager.nbMembers'|transchoice(40) }}</span>
+            <span class="pull-right">{{ 'member.manager.nbMembers'|transchoice(nbMember) }}</span>
         </h2>
     </div>
     {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
