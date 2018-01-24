@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\DateTime;
 use UserBundle\Entity\User;
+use Symfony\Component\Intl\Intl;
 
 /**
  * Class Member
@@ -16,11 +17,18 @@ use UserBundle\Entity\User;
  */
 class Member extends User
 {
+    protected static $genders = array(
+        'm' => 'member.member.edit.form.gender.male',
+        'f' => 'member.member.edit.form.gender.female'
+    );
+
+
     protected $discr = 'member';
 
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberSubscriptionHistorical", mappedBy="member")
+     * @ORM\OrderBy({"endDate" = "DESC"})
      */
     protected $subscriptions;
 
@@ -29,6 +37,12 @@ class Member extends User
      * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberStatusHistorical", mappedBy="member", cascade={"persist"})
      */
     protected $status;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberSubscriptionFee", mappedBy="member")
+     */
+    protected $fees;
 
     /**
      * 
@@ -339,6 +353,58 @@ class Member extends User
         return $this;
     }
 
-    
-    
+    /**
+     * @return ArrayCollection
+     */
+    public function getFees(): ArrayCollection
+    {
+        return $this->fees;
+    }
+
+    /**
+     * @param ArrayCollection $fees
+     * @return Member
+     */
+    public function setFees(ArrayCollection $fees): Member
+    {
+        $this->fees = $fees;
+
+        return $this;
+    }
+
+
+
+    public function getFullGender(){
+        return self::$genders[$this->gender];
+    }
+
+    public function getFullCountryName(){
+        return Intl::getRegionBundle()->getCountryName($this->country);
+    }
+
+    /**
+     * Add fee.
+     *
+     * @param \MemberBundle\Entity\MemberSubscriptionFee $fee
+     *
+     * @return Member
+     */
+    public function addFee(\MemberBundle\Entity\MemberSubscriptionFee $fee)
+    {
+        $this->fees[] = $fee;
+
+        return $this;
+    }
+
+    /**
+     * Remove fee.
+     *
+     * @param \MemberBundle\Entity\MemberSubscriptionFee $fee
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeFee(\MemberBundle\Entity\MemberSubscriptionFee $fee)
+    {
+        return $this->fees->removeElement($fee);
+    }
 }

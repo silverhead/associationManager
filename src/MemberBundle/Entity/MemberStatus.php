@@ -109,4 +109,12 @@ class MemberStatus
         return $this;
     }
     
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->members = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }

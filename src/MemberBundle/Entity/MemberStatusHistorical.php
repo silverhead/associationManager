@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class MemberStatusHistorical
- * @package AppBundle\Entity
+ * @package MemberBundle\Entity
  * @ORM\Entity(repositoryClass="MemberBundle\Repository\MemberSubscriptionHistoricalRepository")
  */
 class MemberStatusHistorical

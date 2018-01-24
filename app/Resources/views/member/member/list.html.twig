@@ -5,6 +5,7 @@
         {% endif %}
     </div>
 </div>
+{#
 <div class="row">
     <div class="col-md-6">
         <form action="#">
@@ -25,6 +26,7 @@
         </a>
     </div>
 </div>
+#}
 <div class="row">
     <div class="col-xs-12">
         <div class="body table-responsive">
@@ -39,52 +41,10 @@
                         <th data-order-sortname="status" data-order-sort="{{ order.status }}" class="sortable">{{ 'member.member.list.table.status'|trans }}</th>
                         <th>{{ 'member.member.list.table.phone'|trans }}</th>
                         <th data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.member.list.table.subscription'|trans }}</th>
-                        <th>{{ 'member.member.list.table.SubscriptionDateEnd'|trans }}</th>
-{#  data-order-sortname="subscriptionDateEnd" data-order-sort="{{ order.subscriptionDateEnd }}" class="sortable"#}
+                        <th>{{ 'member.member.list.table.subscriptionDateEnd'|trans }}</th>
                         <th>{{ 'app.common.table.action'|trans }}</th>
                     </tr>
                     </thead>
-                    {#<thead>#}
-                    {#<tr>#}
-                    {#<th>&nbsp;</th>#}
-                    {#<th>&nbsp;</th>#}
-                    {#<th>#}
-                    {#<input type="text" placeholder="Nom" class="form-control">#}
-                    {#</th>#}
-                    {#<th>#}
-                    {#<input type="text" placeholder="Prénom" class="form-control">#}
-                    {#</th>#}
-                    {#<th>#}
-                    {#<select name="statutFilter" id="statutFilter" class="form-control selectpicker">#}
-                    {#<option value="1">Membre</option>#}
-                    {#<option value="1">Membre premium</option>#}
-                    {#<option value="1">Président</option>#}
-                    {#<option value="1">Secrétaire</option>#}
-                    {#</select>#}
-                    {#</th>#}
-                    {#<th>#}
-                    {#<select name="abonnementFilter" id="abonnementFilter" class="form-control selectpicker">#}
-                    {#<option value="1">Premium 1 an</option>#}
-                    {#<option value="1">Standard 1 an</option>#}
-                    {#<option value="1">Standard 3 mois</option>#}
-                    {#<option value="1">Standard 1 mois</option>#}
-                    {#</select>#}
-                    {#</th>#}
-                    {#<th>#}
-                    {#<div class="input-group">#}
-                    {#<span class="input-group-addon">#}
-                    {#<i class="material-icons">date_range</i>#}
-                    {#</span>#}
-                    {#<div class="form-line">#}
-                    {#<input type="text" class="form-control date" placeholder="Ex: 30/07/2016">#}
-                    {#</div>#}
-                    {#</div>#}
-                    {#</th>#}
-                    {#<th>#}
-                    {#<input type="submit" value="Filtrer">#}
-                    {#</th>#}
-                    {#</tr>#}
-                    {#</thead>#}
                     <tbody>
                     {% for member in members %}
                         <tr {% if loop.index % 4 == 0 %}class="bg-danger"{% endif %}>
@@ -103,9 +63,15 @@
                             <td>{% if member.subscriptions|length > 0 %}{{ member.subscriptions[0].subscription.label }} {% endif %}</td>
                             <td>{% if member.subscriptions|length > 0 %}{{ member.subscriptions[0].endDate|date('d/m/Y') }}{% endif %}</td>
                             <td>
+                                {% if is_granted('MEMBER_MEMBER_VIEW') %}
                                 <a href="{{ path('member_view', {'id': member.id}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
-                                <a href="{{ path('member_edit', {'id': member.id}) }}" class="btn btn-warning material-icons">edit</a>
-                                <a href="#" data-id="{{ member.id }}" class="btn btn-danger material-icons delMember">delete</a>
+                                {% endif %}
+                                {% if is_granted('MEMBER_MEMBER_EDIT') %}
+                                    <a href="{{ path('member_edit', {'id': member.id}) }}" class="btn btn-warning material-icons">edit</a>
+                                {% endif %}
+                                {% if is_granted('MEMBER_MEMBER_DELETE') %}
+                                    <a href="#" data-id="{{ member.id }}" class="btn btn-danger material-icons delMember">delete</a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

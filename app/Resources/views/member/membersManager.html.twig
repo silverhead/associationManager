@@ -42,7 +42,6 @@
                             {% if is_granted('MEMBER_STATUS_VIEW') %}
                         <li role="presentation"><a href="#status" data-toggle="tab">{{ 'member.manager.tabStatus'|trans }}</a></li>
                         {% endif %}
-                        {#<li role="presentation"><a href="#groups" data-toggle="tab">{{ 'member.manager.tabGroups'|trans }}</a></li>#}
                     </ul>
 
                     <!-- Tab panes -->
@@ -50,7 +49,6 @@
                         {% if is_granted('MEMBER_MEMBER_VIEW') %}
                         <div role="tabpanel" class="tab-pane fade in active" data-anchor="members" id="members">
                             {{ render(controller('MemberBundle:Member:list', {'request': app.request, 'anchor': 'members'})) }}
-                            {#{% include 'member/manager/membersList.html.twig' %}#}
                         </div>
                         {% endif %}
                         {% if is_granted('MEMBER_STATUS_VIEW') %}
@@ -60,11 +58,6 @@
                             </div>
                         </div>
                         {% endif %}
-                        {#<div role="tabpanel" class="tab-pane fade" id="groups">#}
-                            {#<div id="userGroupsContainer" data-anchor="groups" data-page-parameter-name="pageTab3">#}
-                                {#{{ render(controller('UserBundle:UserGroup:list', {'request': app.request, 'anchor': 'groups'})) }}#}
-                            {#</div>#}
-                        {#</div>#}
                     </div>
                 </div>
             </div>

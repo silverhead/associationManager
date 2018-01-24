@@ -10,8 +10,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use UserBundle\Entity\GroupCredential;
-use UserBundle\Form\Type\GroupCredentialType;
 
 class UserGroupController extends Controller
 {

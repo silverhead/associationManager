@@ -80,7 +80,7 @@ Trait PaginatorOrderedManagerTrait
         if(null === $this->paginatorOrders){
             throw new \Exception("Please set the orders pagination with method setPaginatorOrders!");
         }
-        
+
         foreach($this->paginatorOrders as $key => $order){
             $sort = $this->orderedTableCorresondance[$key];
             if($order != ''){

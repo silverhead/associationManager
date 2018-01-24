@@ -33,7 +33,7 @@ function reloadMemberList(action, paginatorOrders){
     var $container =  $('#members');
     
     $container.reloadlist({
-        masterRoute: 'member_manager',
+        masterRoute: 'members_manager',
         remoteURL: Routing.generate('member_member_list_part', {'anchor': $container.data('anchor')}),
         action: action,
         otherData: paginatorOrders,

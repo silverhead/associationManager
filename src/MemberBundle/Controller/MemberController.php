@@ -6,8 +6,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use MemberBundle\Entity\MemberStatusHistorical;
-use MemberBundle\Entity\MemberStatus;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class MemberController extends Controller
 {    
@@ -40,7 +38,7 @@ class MemberController extends Controller
             'subscription' => '',
 //             'subscriptionDateEnd' => 'asc',
         ));
-        
+
         $memberManager->setPaginatorOrders($orders);
         
         $members = $memberManager->paginatedList();
@@ -57,10 +55,12 @@ class MemberController extends Controller
     public function editMemberAction(Request $request, $id = 0)
     {
         $translator = $this->get('translator');
-        
-        dump($this->isGranted("MEMBER_MEMBER_EDIT"));
-        
-        if(!$this->isGranted("MEMBER_MEMBER_EDIT")){
+
+        if(
+            (!$this->isGranted("MEMBER_MEMBER_EDIT") && $id > 0)
+            ||
+            (!$this->isGranted("MEMBER_MEMBER_CREATE") && $id == 0)
+        ){
             $this->addFlash(
                 'error',
                 $translator->trans('app.common.notAuthorizedPage'));
@@ -155,12 +155,22 @@ class MemberController extends Controller
      */
     public function viewMemberAction(Request $request, $id)
     {
-        $manager = $this->get('member.manager.member');
-        
         $translator = $this->get('translator');
-        
-        $member = $this->getMemberInfos();
-        
+
+        $manager = $this->get('member.manager.member');
+
+        $member = $manager->find($id);
+
+        if(null === $member){
+            $this->addFlash(
+                'error',
+                $translator->trans('member.member.memberNotFound'));
+
+            return $this->redirect(
+                $this->generateUrl('members_manager').'#members'
+            );
+        }
+
         $breadcrumbs = [
             [
                 'href' => $this->redirectToRoute('dashboard'),
@@ -172,7 +182,7 @@ class MemberController extends Controller
                 'title' => $translator->trans('member.manager.tabMembers'),
                 'label' => $translator->trans('member.manager.tabMembers')
             ],
-            ['label' => $translator->trans('member.member.view.title')]
+            ['label' => $translator->trans('member.member.view.title', ['{firstName}' => $member->getFirstName(), '{lastName}' => $member->getLastName()])]
         ];
         
         return $this->render('member/member/view.html.twig', [

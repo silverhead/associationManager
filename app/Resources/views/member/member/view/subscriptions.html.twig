@@ -1,42 +1,25 @@
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="header bg-blue-grey">
-                <h2>
-                    Abonnement 1 an <small></small>
-                </h2>
-                <ul class="header-dropdown m-r-0">
-                    <li>
-                        <a class="btn btn-default btn-floating">Prolonger l'abonnement</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="body">
-                <p><label>Durée :</label>  1 an</p>
-                <p><label>Expire le :</label> XX/XX/XXXX</p>
-                <p><label>Coût :</label> 60, 00€</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="header bg-blue-grey">
-                <h2>
-                    Abonnement 1 an <small></small>
-                </h2>
-                {#<ul class="header-dropdown m-r-0">#}
-                    {#<li>#}
-                        {#<a class="btn btn-default btn-floating">Prolonger l'abonnement</a>#}
-                    {#</li>#}
-                {#</ul>#}
-            </div>
-            <div class="body">
-                <p><label>Durée :</label>  1 an</p>
-                <p><label>Expire le :</label> XX/XX/XXXX</p>
-                <p><label>Coût :</label> 60, 00€</p>
+{% for subscription in member.subscriptions %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header bg-blue-grey">
+                    <h2>
+                        {{ subscription.subscription.label }} <small></small>
+                    </h2>
+                    {% if loop.index == 1 %}
+                    <ul class="header-dropdown m-r-0">
+                        <li>
+                            <a class="btn btn-default btn-floating">{{ 'member.subscription.extend'|trans }}</a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="body">
+                    <p><label>{{ 'subscription.subscription.edit.duration'|trans }} :</label> {{ subscription.subscription.duration }}</p>
+                    <p><label>{{ 'member.subscription.endDate'|trans }} :</label> {{ subscription.endDate|date('d/m/Y') }}</p>
+                    <p><label>{{ 'subscription.subscription.edit.cost'|trans }} :</label> {{ subscription.cost|number_format(2, ",") }} €</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+{% endfor %}

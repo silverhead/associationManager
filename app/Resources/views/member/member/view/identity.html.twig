@@ -5,23 +5,23 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-6">
-                {{ member.lastName }} {{ member.firstName }}
+                <label>{{ 'member.member.view.fullNameLabel'|trans }} :</label> {{ member.lastName }} {{ member.firstName }}
             </div>
             <div class="col-md-6">
-                <label>E-mail :</label> {{ member.connection.email }}
+                <label>{{ 'member.member.edit.form.email'|trans }} :</label> <a href="mailto:{{ member.email }}">{{ member.email }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <label>Date d'inscription :</label> {{ member.infosMember.lastSubscriptionDate|date('d/m/Y') }}
+                <label>{{ 'member.member.view.subscriptionDate'|trans }} :</label> {% if member.subscriptions|length > 0 %} {{ member.subscriptions[0].startDate|date("d/m/Y") }}{% else %} {{ 'app.common.nc'|trans }} {% endif %}
             </div>
             <div class="col-md-6">
-                <label>tél :</label>{{ member.contactInformation.phone }}
+                <label>{{ 'member.member.edit.form.phone'|trans }} :</label> <a href="tel:{{ member.phone }}">{{ member.phone }}</a>
             </div>
         </div>
     </div>
     <div class="col-md-2">
-        <a href="{{ path('member_edit', {'id': 1}) }}" class="btn bg-grey waves-effect">Modifier</a>
+        <a href="{{ path('member_edit', {'id': member.id}) }}" class="btn bg-grey waves-effect">{{ 'app.common.editBtn'|trans }}</a>
     </div>
 </div>
 <div class="row">
@@ -29,74 +29,62 @@
         <div class="card">
             <div class="header bg-blue-grey">
                 <h2>
-                    Cordonnées <small></small>
+                    {{ 'member.member.edit.tab.coordonate'|trans }} <small></small>
                 </h2>
-                {#<ul class="header-dropdown m-r--5">#}
-                    {#<li>#}
-                        {#<a href="javascript:void(0);">#}
-                            {#<i class="material-icons">mic</i>#}
-                        {#</a>#}
-                    {#</li>#}
-                    {#<li class="dropdown">#}
-                        {#<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">#}
-                            {#<i class="material-icons">more_vert</i>#}
-                        {#</a>#}
-                        {#<ul class="dropdown-menu pull-right">#}
-                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>#}
-                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>#}
-                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>#}
-                        {#</ul>#}
-                    {#</li>#}
+            </div>
+            <div class="body">
+                <h3>{{ 'member.member.edit.tab.identity'|trans }}</h3>
+                <p><label>{{ 'member.member.edit.form.gender.label'|trans }} :</label> {{ member.getFullGender|trans }}</p>
+                <p><label>{{ 'member.member.view.fullNameLabel'|trans }} :</label> {{ member.firstName }} {{ member.lastName }}</p>
+                <p><label>{{ 'member.member.edit.form.birthday'|trans }} :</label> {{ member.birthday|date('d/m/Y') }}</p>
+                <h3>{{ 'member.member.edit.form.address'|trans }}</h3>
+                <p><label>{{ 'member.member.edit.form.country'|trans }} :</label> {{ member.getFullCountryName }}</p>
+                <p><label>{{ 'member.member.edit.form.city'|trans }} :</label> {{ member.zipcode }} {{ member.city }}</p>
+                <p><label>{{ 'member.member.edit.form.address'|trans }} :</label> {{ member.address }}</p>
+                <h3>{{ 'member.member.view.contact'|trans }}</h3>
+                <p><label>{{ 'member.member.edit.form.email'|trans }} :</label> <a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+                {% if member.phone is not empty %}
+                <p><label>{{ 'member.member.edit.form.phone'|trans }} :</label> <a href="tel:{{ member.phone }}">{{ member.phone }}</a></p>
+                {% endif %}
+                {% if member.cellular is not empty %}
+                    <p><label>{{ 'member.member.edit.form.cellular'|trans }} :</label> <a href="tel:{{ member.cellular }}">{{ member.cellular }}</a></p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="header bg-blue-grey">
+                <h2>
+                    {{ 'member.member.edit.tab.connexion'|trans }} <small></small>
+                </h2>
+            </div>
+            <div class="body">
+                <p><label>{{ 'member.member.edit.form.email'|trans }} :</label> <a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+                <p><label>{{ 'member.member.edit.form.username'|trans }} :</label> {{ member.username }}</p>
+                <p><label>{{ 'member.member.edit.form.group'|trans }} :</label> {{ member.group.label }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="header bg-blue-grey">
+                <h2>
+                    {{ 'member.member.edit.tab.memberInfo'|trans }} <small></small>
+                </h2>
+            </div>
+            <div class="body">
+                <p><label>{{ 'member.member.edit.form.status'|trans }} :</label> {{ member.status[0].status.label }}</p>
+                {#<p><label>Profession :</label> Développeur web</p>#}
+                {#<p>#}
+                    {#<label>Spécialité(s) :</label> <br />#}
+                    {#<ul>#}
+                    {#<li>Elecronique</li>#}
+                    {#<li>développeur web</li>#}
+                    {#<li>Menuiserie</li>#}
                 {#</ul>#}
-            </div>
-            <div class="body">
-                <h3>Civilité</h3>
-                <p><label>genre :</label> Homme</p>
-                <p><label>Nom et prénom :</label> Joe Doe</p>
-                <p><label>Date de naissance :</label> XX/XX/XXXX</p>
-                <h3>Adresse</h3>
-                <p><label>Pays :</label> France</p>
-                <p><label>Ville :</label> 84000 Avignon</p>
-                <p><label>Adresse :</label> 17 Boulevard Jean Mermoz</p>
-                <h3>Contact</h3>
-                <p><label>E-mail :</label> xxxx@xxx.fr</p>
-                <p><label>Tel :</label> 01 23 45 67 89</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="header bg-blue-grey">
-                <h2>
-                    Infos connexion <small></small>
-                </h2>
-            </div>
-            <div class="body">
-                <p><label>E-mail :</label> xxxx@xxx.fr</p>
-                <p><label>Pseudo :</label> joedoe</p>
-                <p><label>Statut :</label> membre</p>
-                <p><label>Groupe :</label> utilisateur</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="header bg-blue-grey">
-                <h2>
-                    Infos adhérents <small></small>
-                </h2>
-            </div>
-            <div class="body">
-                <p><label>Statut :</label> membre</p>
-                <p><label>Profession :</label> Développeur web</p>
-                <p>
-                    <label>Spécialité(s) :</label> <br />
-                    <ul>
-                    <li>Elecronique</li>
-                    <li>développeur web</li>
-                    <li>Menuiserie</li>
-                </ul>
-                </p>
+                {#</p>#}
             </div>
         </div>
     </div>
