@@ -1,0 +1,76 @@
+member:
+    manager:
+        tabMembers: Adhérents
+        tabStatus: Status
+        tabGroups: Groupes
+        nbMembers: '%count% membre|%count% membres'
+    member:
+        title: Adhérents (membres)
+        list:
+            title: Gestion des adhérents
+            table:
+                lastName: Nom
+                firstName: Prénom
+                status: Statut
+                phone: Téléphone
+                subscription: Abonnement
+                subscriptionDateEnd: Fin de l'abo.
+        add: Ajouter un adhérent
+        edit:
+            title: Editer l'adhérent
+            tab:
+              identity: Identité
+              coordonate: Coordonnées
+              connexion: Connexion
+              memberInfo: Info. adhésion
+              subscription: Abonnement
+            form:
+              # identity
+              avatar: Photo
+              firstName: Prénom
+              lastName: Nom
+              gender:
+                  label: Genre
+                  female: Femme
+                  male: Homme
+              birthday: Date de naissance
+              # coordonates
+              phone: Téléphone fixe
+              cellular: Téléphone mobile
+              country: Pays
+              city: Ville
+              zipcode: Code postal
+              address: Adresse
+              # connexion
+              username: identifiant
+              email: E-mail
+              group: Groupe
+              #member
+              status: Statut
+        view:
+            title: Fiche de {lastName} {firstName}
+            subscriptionDate: Date d'adhésion
+            fullNameLabel: Nom complet
+            contact: Contact
+        delete:
+            deleteQuestionText: La suppression du membre est définitf !
+            deleteSuccessText: Le membre a été supprimé.
+    status:
+        credential:
+            title: Adhérents (statuts)
+        add:
+            title: Ajouter un statut
+        edit:
+            saveSuccessText: Le statut a été enregistré avec succès !
+            title: Modifier un statut
+        list:
+            table:
+                label: Libellé
+                memberNumber: Nombre de membres
+        delete:
+            deleteQuestionText: La suppression du statut est définitf !
+            deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
+            deleteSuccessText: Le statut %label% à bien été supprimé !
+    subscription:
+        endDate: "Date de fin :"
+        extend: Prolonger l'abonnement

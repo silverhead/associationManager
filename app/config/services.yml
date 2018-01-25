@@ -10,11 +10,7 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - AppBundle\Entity\Setting
-    subscription.repository.subscription:
-        class: Doctrine\ORM\EntityRepository
-        factory: ['@doctrine.orm.default_entity_manager', getRepository]
-        arguments:
-            - SubscriptionBundle\Entity\Subscription
+
     # Security
     form_authenticator:
         class: AppBundle\Security\FormAuthenticator
@@ -36,22 +32,11 @@ services:
     app.form.handler.setting_app:
         class: AppBundle\Form\Handler\SettingAppHandler
         arguments: ['@form.factory', '@app.form.model.app_setting', '@app.manager.setting', '%kernel.root_dir%']
-    subscription.form.handler.periodicity:
-        class: SubscriptionBundle\Form\Handler\PeriodicityFormHandler
-        arguments: ['@form.factory']
-    subscription.form.handler.subscription:
-        class: SubscriptionBundle\Form\Handler\SubscriptionFormHandler
-        arguments: ['@form.factory']
 
     # Twig extension
     app.twig_extension.setting:
         class: AppBundle\Twig\SettingExtension
         arguments: ['@app.repository.setting']
-        tags:
-            - {name: twig.extension}
-    subscription.twig_extension.subscription:
-        class: SubscriptionBundle\Twig\SubscriptionExtension
-        arguments: ['@subscription.repository.subscription']
         tags:
             - {name: twig.extension}
     # Manager
@@ -61,12 +46,6 @@ services:
     app.manager.setting:
         class: AppBundle\Manager\SettingManager
         arguments: ['@app.repository.setting']
-    subscription.manager.periodicity:
-        class: SubscriptionBundle\Manager\PeriodicityManager
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
-    subscription.manager.subscription:
-        class: SubscriptionBundle\Manager\SubscriptionManager
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
 
     # Handler
     app.handler.page_historical:

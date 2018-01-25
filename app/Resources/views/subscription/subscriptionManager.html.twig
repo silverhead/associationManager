@@ -2,10 +2,13 @@
 
 {% block javascript %}
     {{ parent() }}
-    <script src="{{ asset("bundles/app/common/js/app.deleteConfirm.js") }}"></script>
     <script src="{{ asset("bundles/app/common/js/jquery.reload.list.js") }}"></script>
+    <script src="{{ asset('bundles/app/common/js/jquery.orderableList.js') }}"></script>
+    <script src="{{ asset('bundles/app/common/js/app.deleteConfirm.js') }}"></script>
+    <script src="{{ asset('bundles/app/common/js/app.savePrompt.js') }}"></script>
     <script src="{{ asset("bundles/subscription/subscription/js/manage.js") }}"></script>
     <script src="{{ asset("bundles/subscription/periodicity/js/manage.js") }}"></script>
+    <script src="{{ asset("bundles/subscription/paymentType/js/manage.js") }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -34,6 +37,7 @@
                 <ul class="nav nav-tabs tab-nav-right" role="tablist">
                     <li role="presentation" class="active"><a href="#subscriptions" data-toggle="tab">{{ 'subscription.manager.tabSubscriptions'|trans }}</a></li>
                     <li role="presentation"><a href="#periodicities" data-toggle="tab">{{ 'subscription.manager.tabPeriodicities'|trans }}</a></li>
+                    <li role="presentation"><a href="#paymentTypes" data-toggle="tab">{{ 'subscription.manager.tabPaymentTYpes'|trans }}</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
@@ -45,6 +49,11 @@
                     <div role="tabpanel" class="tab-pane fade" id="periodicities">
                         <div id="periodicitiesContainer" data-anchor="periodicities" data-page-parameter-name="{{ constant('SubscriptionBundle\\Controller\\PeriodicityController::PAGE_PARAMETER_NAME') }}">
                             {{ render(controller('SubscriptionBundle:Periodicity:list', {'request': app.request, 'anchor': 'periodicities'})) }}
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="paymentTypes">
+                        <div id="paymentTypesContainer" data-anchor="paymentTypes" data-page-parameter-name="{{ constant('SubscriptionBundle\\Controller\\PeriodicityController::PAGE_PARAMETER_NAME') }}">
+                            {{ render(controller('SubscriptionBundle:PaymentType:list', {'request': app.request, 'anchor': 'paymentTypes'})) }}
                         </div>
                     </div>
                 </div>

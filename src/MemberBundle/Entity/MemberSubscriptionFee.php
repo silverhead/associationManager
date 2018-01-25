@@ -3,6 +3,7 @@
 namespace MemberBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SubscriptionBundle\Entity\SubscriptionPaymentType;
 
 /**
  * Class MemberSubscriptionFee
@@ -30,6 +31,12 @@ class MemberSubscriptionFee
      * @ORM\ManyToOne(targetEntity="MemberBundle\Entity\MemberSubscriptionHistorical")
      */
     private $subscription;
+
+    /**
+     * @var SubscriptionPaymentType
+     * @ORM\ManyToOne(targetEntity="SubscriptionBundle\Entity\SubscriptionPaymentType")
+     */
+    private $payment;
 
     /**
      * @var float
@@ -191,5 +198,29 @@ class MemberSubscriptionFee
     public function getPaid()
     {
         return $this->paid;
+    }
+
+    /**
+     * Set payment.
+     *
+     * @param \SubscriptionBundle\Entity\SubscriptionPaymentType|null $payment
+     *
+     * @return MemberSubscriptionFee
+     */
+    public function setPayment(\SubscriptionBundle\Entity\SubscriptionPaymentType $payment = null)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment.
+     *
+     * @return \SubscriptionBundle\Entity\SubscriptionPaymentType|null
+     */
+    public function getPayment()
+    {
+        return $this->payment;
     }
 }

@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-xs-12">
+        {% if is_granted('SUBSCRIPTION_PAYMENT_TYPE_CREATE') %}
+            <a href="#" id="addPaymentType" class="btn bg-green waves-effect">{{ 'subscription.paymentType.add.title'|trans }}</a>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="body table-responsive">
+            <form action="#">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'subscription.paymentType.list.table.label'|trans }}</th>
+                        {% if is_granted('SUBSCRIPTION_PAYMENT_TYPE_EDIT') or is_granted('SUBSCRIPTION_PAYMENT_TYPE_DELETE') %}
+                            <th>{{ 'app.common.table.action'|trans }}</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for paymentType in results %}
+                        <tr>
+                            <td scope="row">{{ paymentType.getId() }}</td>
+                            <td>{{ paymentType.getLabel() }}</td>
+                            {% if is_granted('SUBSCRIPTION_PAYMENT_TYPE_EDIT') or is_granted('SUBSCRIPTION_PAYMENT_TYPE_DELETE') %}
+                                <td>
+                                    {% if is_granted('SUBSCRIPTION_PAYMENT_TYPE_EDIT') %}
+                                        <a href="#" data-id="{{ paymentType.getId() }}" data-label="{{ paymentType.getLabel() }}" class="btn btn-warning material-icons editPaymentType">edit</a>
+                                    {% endif %}
+                                    {% if is_granted('SUBSCRIPTION_PAYMENT_TYPE_DELETE') %}
+                                        <a href="#" data-id="{{ paymentType.getId() }}" data-label="{{ paymentType.getLabel() }}" class="btn btn-danger material-icons delPaymentType">delete</a>
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+            <div class="pull-right">
+                {{ knp_pagination_render(results) }}
+            </div>
+        </div>
+    </div>
+</div>

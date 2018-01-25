@@ -1,0 +1,47 @@
+services:
+    # EVENT LISTENER
+    subscription.paymentType.credential.event:
+        class: SubscriptionBundle\EventListener\PaymentTypeCredentialEventListener
+        arguments: ['%credentialVoterSubscriptionPaymentType%', 'subscription.paymentType.credential.title']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    # VOTER
+    subscription.paymentType.voter:
+        class: SubscriptionBundle\Security\PaymentTypeVoter
+        autowire: true
+        arguments: ['%credentialVoterSubscriptionPaymentType%']
+        tags:
+            - {name: security.voter}
+
+    # Repository
+    subscription.repository.subscription:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - SubscriptionBundle\Entity\Subscription
+
+    # Form handler
+    subscription.form.handler.periodicity:
+        class: SubscriptionBundle\Form\Handler\PeriodicityFormHandler
+        arguments: ['@form.factory']
+    subscription.form.handler.subscription:
+        class: SubscriptionBundle\Form\Handler\SubscriptionFormHandler
+        arguments: ['@form.factory']
+
+    # Twig extension
+    subscription.twig_extension.subscription:
+        class: SubscriptionBundle\Twig\SubscriptionExtension
+        arguments: ['@subscription.repository.subscription']
+        tags:
+            - {name: twig.extension}
+
+    # Manager
+    subscription.manager.periodicity:
+        class: SubscriptionBundle\Manager\PeriodicityManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    subscription.manager.subscription:
+        class: SubscriptionBundle\Manager\SubscriptionManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    subscription.manager.paymentType:
+        class: SubscriptionBundle\Manager\PaymentTypeManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
