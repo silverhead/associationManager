@@ -11,11 +11,12 @@ class MemberRepository extends UserRepository implements PaginatorRepositoryInte
     public function getQbPaginatedList()
     {
         return $this->createQueryBuilder("m")
-            ->select("m, msh, mshStatus, subscriptions, subscription" )
+            ->select("m, msh, mshStatus, subscriptions, subscription, fees" )
             ->leftJoin("m.status","msh")
             ->leftJoin("msh.status", "mshStatus")
             ->leftJoin("m.subscriptions", "subscriptions")
             ->leftJoin("subscriptions.subscription", "subscription")
+            ->leftJoin("m.fees", "fees")
             ;
 //            ->addGroupBy("m")
 //            ->where("status.startDate <= ".(new \DateTime())->format("Y-m-d")." AND status.endDate IS NULL")

@@ -1,3 +1,8 @@
+<div class="row">
+    <div class="col-md-12">
+        <a href="#" class="btn bg-green waves-effect">{{ 'member.subscription.extend'|trans }}</a>
+    </div>
+</div>
 {% for subscription in member.subscriptions %}
     <div class="row">
         <div class="col-md-12">
@@ -6,18 +11,36 @@
                     <h2>
                         {{ subscription.subscription.label }} <small></small>
                     </h2>
-                    {% if loop.index == 1 %}
-                    <ul class="header-dropdown m-r-0">
-                        <li>
-                            <a class="btn btn-default btn-floating">{{ 'member.subscription.extend'|trans }}</a>
-                        </li>
-                    </ul>
-                    {% endif %}
                 </div>
                 <div class="body">
                     <p><label>{{ 'subscription.subscription.edit.duration'|trans }} :</label> {{ subscription.subscription.duration }}</p>
                     <p><label>{{ 'member.subscription.endDate'|trans }} :</label> {{ subscription.endDate|date('d/m/Y') }}</p>
                     <p><label>{{ 'subscription.subscription.edit.cost'|trans }} :</label> {{ subscription.cost|number_format(2, ",") }} €</p>
+                </div>
+                <div class="panel-group" id="member_subscription_accordion_{{ loop.index }}" role="tablist" aria-multiselectable="false">
+                    <div class="panel panel-col-blue-grey">
+                        <div class="panel-heading" role="tab" id="member_subscription_accordion__header_{{ loop.index }}">
+                            <h4 class="panel-title">
+                                <a role="button" data-subscription-historical-id="{{ subscription.getId() }}" data-toggle="collapse" data-parent="member_subscription_accordion_{{ loop.index }}" href="#member_subscription_accordion__col_{{ loop.index }}" aria-expanded="true" aria-controls="collapseOne_1" class="">
+                                    {{ 'member.subscription.viewFees'|trans }}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="member_subscription_accordion__col_{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="member_subscription_accordion__header_{{ loop.index }}" aria-expanded="true" style="">
+                            <div class="panel-body text-center" data-anchor="contribution">
+                                <div class="preloader">
+                                    <div class="spinner-layer pl-red">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div>
+                                        <div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

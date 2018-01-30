@@ -17,6 +17,7 @@ app:
         returnBtn: Retour
         editBtn: Modifier
         addBtn: Ajouter
+        to: à
         form:
             submit:
                 save: Enregistrer

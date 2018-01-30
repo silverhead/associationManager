@@ -13,7 +13,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>{{ 'subscription.paymentType.list.table.label'|trans }}</th>
+                        <th class="col-lg-10">{{ 'subscription.paymentType.list.table.label'|trans }}</th>
                         {% if is_granted('SUBSCRIPTION_PAYMENT_TYPE_EDIT') or is_granted('SUBSCRIPTION_PAYMENT_TYPE_DELETE') %}
                             <th>{{ 'app.common.table.action'|trans }}</th>
                         {% endif %}

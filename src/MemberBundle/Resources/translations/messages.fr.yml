@@ -74,3 +74,13 @@ member:
     subscription:
         endDate: "Date de fin :"
         extend: Prolonger l'abonnement
+        viewFees: Voir les cotisations liés
+    contribution:
+        tabContributionHistorical: Historique des cotisations
+        list:
+            header:
+                cost: Montant
+                paymentDate: Date du payement
+                subscription: Abonnement
+                period: Période
+                paid: Payé

@@ -46,6 +46,12 @@ class MemberSubscriptionFee
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $paymentDate;
+
+    /**
+     * @var \DateTime
      * @ORM\Column(type="date")
      */
     private $startDate;
@@ -195,7 +201,7 @@ class MemberSubscriptionFee
      *
      * @return bool
      */
-    public function getPaid()
+    public function getPaid(): bool
     {
         return $this->paid;
     }
@@ -207,7 +213,7 @@ class MemberSubscriptionFee
      *
      * @return MemberSubscriptionFee
      */
-    public function setPayment(\SubscriptionBundle\Entity\SubscriptionPaymentType $payment = null)
+    public function setPayment(\SubscriptionBundle\Entity\SubscriptionPaymentType $payment)
     {
         $this->payment = $payment;
 
@@ -217,10 +223,31 @@ class MemberSubscriptionFee
     /**
      * Get payment.
      *
-     * @return \SubscriptionBundle\Entity\SubscriptionPaymentType|null
+     * @return \SubscriptionBundle\Entity\SubscriptionPaymentType
      */
-    public function getPayment()
+    public function getPayment(): SubscriptionPaymentType
     {
         return $this->payment;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPaymentDate():? \DateTime
+    {
+        return $this->paymentDate;
+    }
+
+    /**
+     * @param \DateTime $paymentDate
+     * @return MemberSubscriptionFee
+     */
+    public function setPaymentDate(\DateTime $paymentDate): MemberSubscriptionFee
+    {
+        $this->paymentDate = $paymentDate;
+
+        return $this;
+    }
+
+
 }

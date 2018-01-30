@@ -1,5 +1,11 @@
 {% extends 'layoutLogin.html.twig' %}
 
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/common/js/jquery.reload.list.js') }}"></script>
+    <script src="{{ asset('bundles/member/member/js/view.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
@@ -14,9 +20,9 @@
                 <div class="body">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                        <li role="presentation" class="active"><a href="#identity" data-toggle="tab">Identité</a></li>
-                        <li role="presentation"><a href="#subscription" data-toggle="tab">Abonnements</a></li>
-                        {#<li role="presentation"><a href="#contribution" data-toggle="tab">Historique des cotisations</a></li>#}
+                        <li role="presentation" class="active"><a href="#identity" data-toggle="tab">{{ 'member.member.edit.tab.identity'|trans }}</a></li>
+                        <li role="presentation"><a href="#subscription" data-toggle="tab">{{ 'subscription.manager.tabSubscriptions'|trans }}</a></li>
+                        <li role="presentation"><a href="#contribution" data-toggle="tab">{{ 'member.contribution.tabContributionHistorical'|trans }}</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -26,9 +32,9 @@
                         <div role="tabpanel" class="tab-pane fade" id="subscription">
                             {% include 'member/member/view/subscriptions.html.twig' %}
                         </div>
-                        {#<div role="tabpanel" class="tab-pane fade" id="contribution">#}
-                            {#{% include 'member/member/view/contribution.html.twig' %}#}
-                        {#</div>#}
+                        <div role="tabpanel" class="tab-pane fade" id="contribution">
+                            {% include 'member/member/view/contribution.html.twig' with {'fees': member.getFees()} %}
+                        </div>
                     </div>
                 </div>
             </div>

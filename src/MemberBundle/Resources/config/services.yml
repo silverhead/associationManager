@@ -31,6 +31,9 @@ services:
     member.manager.status:
         class: MemberBundle\Manager\MemberStatusManager
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    member.manager.subscription_fee:
+        class: MemberBundle\Manager\MemberSubscriptionFeeManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     # FORM
     member.form.handler.member:
         class: MemberBundle\Form\Handler\MemberFormHandler

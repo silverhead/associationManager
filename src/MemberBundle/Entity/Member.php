@@ -3,6 +3,7 @@
 namespace MemberBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -41,6 +42,7 @@ class Member extends User
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberSubscriptionFee", mappedBy="member")
+     * @ORM\OrderBy({"endDate" = "DESC"})
      */
     protected $fees;
 
@@ -102,7 +104,7 @@ class Member extends User
      * @ORM\Column(length=255, nullable=false)
      */
     protected $address;
-    
+
     /**
      * @return the $country
      */
@@ -229,6 +231,9 @@ class Member extends User
     {
         $this->subscriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->status = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fees = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->avatar = 'user.png';
     }
 
     /**
@@ -336,7 +341,7 @@ class Member extends User
         return $this->gender;
     }
     /**
-     * @return \MemberBundle\Entity\unknown
+     * @return string
      */
     public function getAvatar()
     {
@@ -344,7 +349,7 @@ class Member extends User
     }
 
     /**
-     * @param \MemberBundle\Entity\unknown $avatar
+     * @param string $avatar
      */
     public function setAvatar($avatar)
     {
@@ -356,7 +361,7 @@ class Member extends User
     /**
      * @return ArrayCollection
      */
-    public function getFees(): ArrayCollection
+    public function getFees(): Collection
     {
         return $this->fees;
     }
@@ -365,7 +370,7 @@ class Member extends User
      * @param ArrayCollection $fees
      * @return Member
      */
-    public function setFees(ArrayCollection $fees): Member
+    public function setFees(Collection $fees): Member
     {
         $this->fees = $fees;
 
