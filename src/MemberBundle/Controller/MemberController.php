@@ -2,6 +2,7 @@
 
 namespace MemberBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -192,15 +193,26 @@ class MemberController extends Controller
         ]);
     }
 
-    //member_fees_list_part
     /**
-     * @Route("/members/fees/list_part/{id}/{anchor}", name="member_subscription_fees_list_part", requirements={"id": "\d+"}, options = { "expose" = true });
+     * @Route("/members/fees/list_part/{subHistId}/{anchor}", name="member_subscription_fees_list_part", requirements={"subHistId": "\d+"}, options = { "expose" = true });
      */
-    public function feesListPartAction(Request $request, $id)
+    public function feesListPartAction(Request $request, $subHistId)
     {
-        $manager = $this->get('member.manager.subscription_fee');
+        $managerSubHistorical = $this->get('member.manager.subscription_historical');
 
-        $memberSubscriptionFees = $manager->paginatedList();
+        $subscriptionHistorical = $managerSubHistorical->find($subHistId);
+
+        $manager = $this->get('member.manager.subscription_fee');
+        $memberSubscriptionFees = $manager->paginatedFilteredAndOrdered(
+            array(
+                [
+                    'search' => $subscriptionHistorical,
+                    'operation' => "=",
+                    'property' => "memberSubscriptionFee.subscription"
+                ]
+            ),
+            array(["memberSubscriptionFee.endDate","desc"])
+        );
 
         return $this->render('member/member/view/contribution.html.twig', array(
             'fees' => $memberSubscriptionFees
