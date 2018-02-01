@@ -1,3 +1,6 @@
 imports:
     - {resource: credentials.yml}
     - {resource: services.yml}
+
+parameters:
+    avatars_directory: '%kernel.root_dir%/../web/images/avatars/'

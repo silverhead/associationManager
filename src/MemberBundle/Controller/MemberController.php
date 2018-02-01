@@ -3,8 +3,10 @@
 namespace MemberBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use MemberBundle\Entity\MemberSubscriptionHistorical;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use MemberBundle\Entity\MemberStatusHistorical;
 
@@ -75,6 +77,9 @@ class MemberController extends Controller
         
         if($id > 0){
             $entity = $manager->find($id);
+            $entity->setAvatar(
+                new File($this->getParameter('avatars_directory') . $entity->getAvatar())
+            );
         } 
         else{
             $entity = $manager->getNewEntity();
@@ -172,6 +177,10 @@ class MemberController extends Controller
             );
         }
 
+        $formHandler = $this->get('member.form.handler.subscription_historical');
+        $formHandler->setForm(new MemberSubscriptionHistorical());
+
+
         $breadcrumbs = [
             [
                 'href' => $this->redirectToRoute('dashboard'),
@@ -189,7 +198,8 @@ class MemberController extends Controller
         return $this->render('member/member/view.html.twig', [
             'member' => $member,
             'breadcrumbs' => $breadcrumbs,
-            'menuSelect' => 'member_manager'
+            'menuSelect' => 'member_manager',
+            'formSub' => $formHandler->getForm()->createView()
         ]);
     }
 
@@ -199,7 +209,6 @@ class MemberController extends Controller
     public function feesListPartAction(Request $request, $subHistId)
     {
         $managerSubHistorical = $this->get('member.manager.subscription_historical');
-
         $subscriptionHistorical = $managerSubHistorical->find($subHistId);
 
         $manager = $this->get('member.manager.subscription_fee');

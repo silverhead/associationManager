@@ -2,6 +2,7 @@
 
 namespace MemberBundle\Form\Type;
 
+use MemberBundle\Entity\Member;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use UserBundle\Form\Type\UserFormType;
@@ -55,6 +56,9 @@ class MemberFormType extends UserFormType
     {
         $resolver->setRequired(array(
             'currentAvatar'
+        ))
+        ->setDefaults(array(
+            'data_class' => Member::class
         ));
     }
 

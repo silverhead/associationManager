@@ -75,6 +75,8 @@ member:
         endDate: "Date de fin :"
         extend: Prolonger l'abonnement
         viewFees: Voir les cotisations liés
+        edit:
+            title: Ajout un nouvel abonnement
     contribution:
         tabContributionHistorical: Historique des cotisations
         list:

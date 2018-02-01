@@ -46,7 +46,7 @@ Trait PaginatorManagerTrait
 
     public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page', $anchor = null, $route = null)
     {
-        checkUsingInterface();
+        $this->checkUsingInterface();
 
         $qb = $this->getRepository()->getQbPaginatedList();
 

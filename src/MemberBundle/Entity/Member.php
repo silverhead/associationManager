@@ -53,7 +53,7 @@ class Member extends User
      * @Assert\File(mimeTypes={ "image/jpg", "image/gif", "image/png" })
      */
     protected $avatar;
-    
+
     /**
      * @var DateTime
      * @ORM\Column(type="date")
