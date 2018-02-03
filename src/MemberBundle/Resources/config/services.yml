@@ -40,7 +40,7 @@ services:
     # FORM
     member.form.handler.member:
         class: MemberBundle\Form\Handler\MemberFormHandler
-        arguments: ['@form.factory', '@service_container']
+        arguments: ['@form.factory', '@member.manager.member']
     member.form.handler.subscription_historical:
         class: MemberBundle\Form\Handler\MemberSubscriptionHistoricalFormHandler
         arguments: ['@form.factory', '@service_container']

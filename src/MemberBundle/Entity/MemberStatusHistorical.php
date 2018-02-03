@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class MemberStatusHistorical
  * @package MemberBundle\Entity
- * @ORM\Entity(repositoryClass="MemberBundle\Repository\MemberSubscriptionHistoricalRepository")
+ * @ORM\Entity(repositoryClass="MemberBundle\Repository\MemberStatusHistoricalRepository")
  */
 class MemberStatusHistorical
 {
@@ -21,7 +21,7 @@ class MemberStatusHistorical
 
     /**
      * @var Member
-     * @ORM\ManyToOne(targetEntity="MemberBundle\Entity\Member", inversedBy="status")
+     * @ORM\ManyToOne(targetEntity="MemberBundle\Entity\Member", inversedBy="statusHistorical")
      *
      */
     private $member;

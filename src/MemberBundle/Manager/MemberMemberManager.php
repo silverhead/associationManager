@@ -2,7 +2,6 @@
 
 namespace MemberBundle\Manager;
 
-
 use AppBundle\Handler\ErrorHandlerTrait;
 use AppBundle\Manager\EntityManagerTrait;
 use AppBundle\Manager\PaginatorManagerInterface;
@@ -54,5 +53,9 @@ class MemberMemberManager implements PaginatorOrderedManagerInterface
     public function getMemberNb()
     {
         return $this->getRepository()->countMember();
+    }
+
+    public function getLastStatus(Member $member){
+        return $this->entityManager->getRepository("MemberBundle:MemberStatusHistorical")->getLastStatusOfMember($member);
     }
 }

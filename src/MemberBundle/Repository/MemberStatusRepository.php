@@ -11,5 +11,4 @@ class MemberStatusRepository extends EntityRepository implements PaginatorReposi
     {
         return $this->createQueryBuilder("ms");
     }
-
 }

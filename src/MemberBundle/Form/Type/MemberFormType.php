@@ -3,6 +3,7 @@
 namespace MemberBundle\Form\Type;
 
 use MemberBundle\Entity\Member;
+use MemberBundle\Entity\MemberStatus;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use UserBundle\Form\Type\UserFormType;
@@ -45,6 +46,7 @@ class MemberFormType extends UserFormType
         ->add('cellular', TextType::class)
         ->add('status', EntityType::class, array(
             'class' => 'MemberBundle\Entity\MemberStatus',
+            'data' => $options['entity']->getStatus()->count() > 0 ? $options['entity']->getStatus()->first()->getStatus() : '',
             'query_builder' => function (EntityRepository $er) {
                                     return $er->createQueryBuilder('ms')->orderBy('ms.label', 'ASC');
                                },
@@ -55,7 +57,8 @@ class MemberFormType extends UserFormType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(array(
-            'currentAvatar'
+            'currentAvatar',
+            'entity'
         ))
         ->setDefaults(array(
             'data_class' => Member::class

@@ -36,6 +36,12 @@ class Member extends User
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberStatusHistorical", mappedBy="member", cascade={"persist"})
+     * @ORM\OrderBy({"startDate" = "DESC", "endDate" = "ASC"})
+     */
+    protected $statusHistorical;
+
+    /**
+     * @var ArrayCollection
      */
     protected $status;
 
@@ -104,6 +110,19 @@ class Member extends User
      * @ORM\Column(length=255, nullable=false)
      */
     protected $address;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->subscriptions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->statusHistorical = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->status = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fees = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->avatar = 'user.png';
+    }
 
     /**
      * @return the $country
@@ -191,23 +210,6 @@ class Member extends User
     }
 
     /**
-     * @return ArrayCollection
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param ArrayCollection $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-        return $this;
-    }
-
-    /**
      * @return DateTime
      */
     public function getBirthday()
@@ -224,17 +226,7 @@ class Member extends User
         return $this;
     }
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->subscriptions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->status = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->fees = new \Doctrine\Common\Collections\ArrayCollection();
 
-        $this->avatar = 'user.png';
-    }
 
     /**
      * Add subscription
@@ -261,16 +253,64 @@ class Member extends User
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getStatus()
+    {
+        $status = new ArrayCollection();
+        foreach($this->statusHistorical as $statusHist){
+            $status->add($statusHist);
+        }
+        return $status;
+    }
+
+    /**
+     * @param ArrayCollection $status
+     */
+    public function setStatus($status)
+    {
+        $statusHistoricalOld = $this->statusHistorical->first();
+
+        if($statusHistoricalOld == null || $statusHistoricalOld->getStatus()->getId() != $status->getId()){
+            $statusHistorical = new MemberStatusHistorical();
+            $statusHistorical->setStatus($status)
+                ->setMember($this)
+                ->setStartDate(new \DateTime());
+
+            $this->statusHistorical->add($statusHistorical);
+
+            $this->statusHistorical->removeElement($statusHistoricalOld);
+            $statusHistoricalOld->setEndDate(new \DateTime());
+
+            $this->statusHistorical->add($statusHistoricalOld);
+        }
+
+        return $this;
+    }
+
+//    /**
+//     * @return ArrayCollection
+//     */
+//    public function getStatusHistorical(){
+//        return $this->statusHistorical;
+//    }
+//
+//    public function setStatusHistorical(ArrayCollection $statusHistorical){
+//        $this->statusHistorical = $statusHistorical;
+//        return $this;
+//    }
+
+    /**
      * Add status
      *
      * @param \MemberBundle\Entity\MemberStatusHistorical $status
      *
      * @return Member
      */
-    public function addStatus(\MemberBundle\Entity\MemberStatusHistorical $status)
+    public function addStatusHistorical(\MemberBundle\Entity\MemberStatusHistorical $statusHistorical)
     {
-        $status->setMember($this);
-        $this->status->add($status);
+        $statusHistorical->setMember($this);
+        $this->statusHistorical->add($statusHistorical);
 
         return $this;
     }
@@ -280,9 +320,9 @@ class Member extends User
      *
      * @param \MemberBundle\Entity\MemberStatusHistorical $status
      */
-    public function removeStatus(\MemberBundle\Entity\MemberStatusHistorical $status)
+    public function removeStatusHistorical(\MemberBundle\Entity\MemberStatusHistorical $statusHistorical)
     {
-        $this->status->removeElement($status);
+        $this->statusHistorical->removeElement($statusHistorical);
     }
 
     /**

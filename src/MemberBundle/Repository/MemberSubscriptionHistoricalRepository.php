@@ -2,6 +2,8 @@
 
 namespace MemberBundle\Repository;
 
+use MemberBundle\Entity\Member;
+
 /**
  * MemberSubscriptionHistoricalRepository
  *

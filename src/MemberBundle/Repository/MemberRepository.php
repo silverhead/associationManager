@@ -12,7 +12,7 @@ class MemberRepository extends UserRepository implements PaginatorRepositoryInte
     {
         return $this->createQueryBuilder("m")
             ->select("m, msh, mshStatus, subscriptions, subscription, fees" )
-            ->leftJoin("m.status","msh")
+            ->leftJoin("m.statusHistorical","msh")
             ->leftJoin("msh.status", "mshStatus")
             ->leftJoin("m.subscriptions", "subscriptions")
             ->leftJoin("subscriptions.subscription", "subscription")
