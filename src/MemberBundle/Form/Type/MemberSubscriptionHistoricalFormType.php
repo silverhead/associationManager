@@ -2,7 +2,9 @@
 
 namespace MemberBundle\Form\Type;
 
+use Doctrine\DBAL\Types\DecimalType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,10 +34,13 @@ class MemberSubscriptionHistoricalFormType extends AbstractType
             'choice_label' => 'label'
         ))
         ->add('startDate', DateType::class, array(
+            'data' => new \DateTime(),
             'widget' => 'single_text'
         ))
         ->add('endDate', DateType::class, array(
             'widget' => 'single_text'
+        ))
+        ->add('cost', NumberType::class, array(
         ))
         ;
     }

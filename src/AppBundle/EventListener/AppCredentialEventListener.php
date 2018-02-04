@@ -1,10 +1,10 @@
 <?php
 
-namespace MemberBundle\EventListener;
+namespace AppBundle\EventListener;
 
 use AppBundle\Event\CredentialEvent;
 
-class MemberCredentialEventListener
+class AppCredentialEventListener
 {
     private $credentials;
 

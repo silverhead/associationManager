@@ -227,4 +227,62 @@ class MemberController extends Controller
             'fees' => $memberSubscriptionFees
         ));
     }
+
+    /**
+     * @Route("/member/subscription/add/{memberId}", name="member_add_subscription", requirements={"memberId": "\d+"}, options= {"expose" = true});
+     */
+    public function addSubscription(Request $request, $memberId)
+    {
+        $translator = $this->get('translator');
+
+        if(!$this->isGranted("MEMBER_SUBSCRIPTION_CREATE")){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('member_view', ['id' => $member->getId()]).'#subscription'
+            );
+        }
+
+        $memberManager = $this->get("member.manager.member");
+        $member = $memberManager->find($memberId);
+
+        if(null == $member){
+            $this->addFlash(
+                'error',
+                $translator->trans('member.member.memberNotFound'));
+
+            return $this->redirect(
+                $this->generateUrl('member_view', ['id' => $member->getId()]).'#subscription'
+            );
+        }
+
+        $formHandler = $this->get('member.form.handler.subscription_historical');
+        $formHandler->setForm(new MemberSubscriptionHistorical());
+
+        if($formHandler->process($request)){
+            $subscription = $formHandler->getData();
+
+            $member->addSubscription($subscription);
+
+            dump($member);
+
+
+            $memberManager->save($member);
+
+            $this->addFlash('success', $translator->trans('member.subscription.edit.saveSuccessText'));
+        }
+        else{
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.errorComming', [
+                    '%error%' => '<br />' . implode('<br />', $memberManager->getErrors())
+                ]));
+        }
+
+        return $this->redirect(
+            $this->generateUrl('member_view', ['id' => $member->getId()]).'#subscription'
+        );
+    }
 }

@@ -68,6 +68,11 @@ class MemberSubscriptionFee
      */
     private $paid;
 
+    public function __construct()
+    {
+        $this->paid = false;
+    }
+
     /**
      * @return int
      */

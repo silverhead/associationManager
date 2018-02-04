@@ -1,0 +1,40 @@
+<div class="modal fade" id="editSubscriptionHistoricalModal" tabindex="-1" role="dialog" style="display: none;">
+    {{ form_start(form, {'action': path('member_add_subscription', {'memberId': member.getId()})}) }}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center" id="editSubscriptionHistoricalLabel">{{ 'member.subscription.edit.title'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.subscription, {'label': 'member.subscription.edit.form.subscription'|trans}) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.subscriptionPaymentPeriodicity, {'label': 'member.subscription.edit.form.periodicity'|trans}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.startDate, {'label': 'member.subscription.edit.form.startDate'|trans}) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.endDate, {'label': 'member.subscription.edit.form.endDate'|trans}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.cost, {'label': 'member.subscription.edit.form.cost'|trans}) }}
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-link waves-effect">{{ 'app.common.form.submit.save'|trans }}</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">{{ 'app.common.cancelBtn'|trans }}</button>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>

@@ -28,8 +28,8 @@ class Member extends User
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberSubscriptionHistorical", mappedBy="member")
-     * @ORM\OrderBy({"endDate" = "DESC"})
+     * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberSubscriptionHistorical", mappedBy="member", cascade={"persist"})
+     * @ORM\OrderBy({"endDate" = "DESC", "id" = "DESC"})
      */
     protected $subscriptions;
 
@@ -47,7 +47,7 @@ class Member extends User
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberSubscriptionFee", mappedBy="member")
+     * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberSubscriptionFee", mappedBy="member", cascade={"persist"})
      * @ORM\OrderBy({"endDate" = "DESC"})
      */
     protected $fees;
@@ -237,6 +237,40 @@ class Member extends User
      */
     public function addSubscription(\MemberBundle\Entity\MemberSubscriptionHistorical $subscription)
     {
+        $subscription->setMember($this);
+
+        $periodicity = $subscription->getSubscriptionPaymentPeriodicity();
+
+        $nbCotisations = ceil($subscription->getSubscription()->getDuration() / $periodicity->getDuration());
+
+        $dayByFee = ceil($subscription->getSubscription()->getDuration() / $nbCotisations);
+
+        for($i=0; $i<$nbCotisations;$i++){
+            $startDate = clone $subscription->getStartDate();
+            $cost = ceil($subscription->getCost() / $nbCotisations);
+
+            if($i > 0){
+                $cost = floor($subscription->getCost() / $nbCotisations);
+                $dayByFee = floor($subscription->getSubscription()->getDuration() / $nbCotisations);
+                $dayStart = $dayByFee * $i;
+                $startDate->add(new \DateInterval("P" .$dayStart . "D"));
+            }
+
+            $endDate = clone $startDate;
+            $endDate->add(new \DateInterval("P" . $dayByFee . "D"));
+
+            $fee = new MemberSubscriptionFee();
+            $fee->setMember($this)
+                ->setSubscription($subscription)
+                ->setStartDate($startDate)
+                ->setEndDate($endDate)
+                ->setCost($cost)
+            ;
+
+            $this->addFee($fee);
+        }
+
+
         $this->subscriptions->add($subscription);
 
         return $this;

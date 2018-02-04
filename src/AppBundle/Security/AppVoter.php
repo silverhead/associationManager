@@ -1,11 +1,11 @@
 <?php
 
-namespace MemberBundle\Security;
+namespace AppBundle\Security;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class MemberStatusVoter extends Voter
+class AppVoter extends Voter
 {
     private $credentials = array();
 

@@ -72,11 +72,20 @@ member:
             deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
             deleteSuccessText: Le statut %label% à bien été supprimé !
     subscription:
+        title: Abonnements de l'adhérant
         endDate: "Date de fin :"
-        extend: Prolonger l'abonnement
+        extend: Créer un nouvel abonnement
         viewFees: Voir les cotisations liés
         edit:
-            title: Ajout un nouvel abonnement
+            title: Créer un nouvel abonnement
+            form:
+                subscription: Abonnement
+                periodicity: Période de payement
+                startDate: Date de début
+                endDate: Date de fin
+                cost: Montant
+        credential:
+            create: Créer un nouvel abonnement
     contribution:
         tabContributionHistorical: Historique des cotisations
         list:
@@ -86,3 +95,5 @@ member:
                 subscription: Abonnement
                 period: Période
                 paid: Payé
+        credential:
+            edit: Editer les cotisation
