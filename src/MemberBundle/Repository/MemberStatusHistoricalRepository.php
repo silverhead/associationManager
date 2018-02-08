@@ -19,7 +19,7 @@ class MemberStatusHistoricalRepository extends EntityRepository
             ->getFirstResult();
     }
 
-    public function getStatusListOfMember(Member $member, $orders = array(array("s.startDate", "desc")), $limit = 5)
+    public function getStatusListOfMember(Member $member, $orders = array("s.startDate" => "desc"), $limit = 5)
     {
         $qb = $this->createQueryBuilder("s")
             ->select("s, status")
@@ -27,12 +27,12 @@ class MemberStatusHistoricalRepository extends EntityRepository
             ->where("s.member = :member")
             ->setParameter(":member", $member);
 
-        foreach ($orders as $order){
-            $qb->AddOrderBy($order[0], $order[1]);
+        foreach ($orders as $field => $order){
+            $qb->addOrderBy($field, $order);
         }
 
         $qb->setMaxResults($limit);
 
-        return $qb->getMaxResults();
+        return $qb->getResult();
     }
 }

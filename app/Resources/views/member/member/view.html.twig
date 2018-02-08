@@ -31,7 +31,7 @@
                             {% include 'member/member/view/identity.html.twig' %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="subscription">
-                            {% include 'member/member/view/subscriptions.html.twig' %}
+                            {% include 'member/member/view/subscriptions.html.twig' with {'subscriptions': subscriptions, 'form': formSub} %}
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="contribution">
                             {% include 'member/member/view/contribution.html.twig' with {'fees': member.getFees()} %}

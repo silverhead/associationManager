@@ -5,7 +5,7 @@
         {% endif %}
     </div>
 </div>
-{% for subscription in member.subscriptions %}
+{% for subscription in subscriptions %}
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -48,4 +48,4 @@
         </div>
     </div>
 {% endfor %}
-{% include ':member/member/subscriptionHistorical:createModal.html.twig' with {'form' : formSub} %}
+{% include ':member/member/subscriptionHistorical:createModal.html.twig' with {'form' : form} %}

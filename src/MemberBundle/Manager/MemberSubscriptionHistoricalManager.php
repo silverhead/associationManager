@@ -8,6 +8,7 @@ use AppBundle\Manager\PaginatorManagerInterface;
 use AppBundle\Manager\PaginatorManagerTrait;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
+use MemberBundle\Entity\Member;
 use MemberBundle\Entity\MemberSubscriptionFee;
 use MemberBundle\Entity\MemberSubscriptionHistorical;
 
@@ -41,5 +42,12 @@ class MemberSubscriptionHistoricalManager implements PaginatorManagerInterface
     public function getRepository()
     {
         return $this->entityManager->getRepository("MemberBundle:MemberSubscriptionHistorical");
+    }
+
+    public function getListByMember(Member $member, int $limit = 0, array $orders = array('msh.endDate' => 'desc'))
+    {
+        $result = $this->getRepository()->getListByMember($member, $limit, $orders);
+
+        return $result;
     }
 }

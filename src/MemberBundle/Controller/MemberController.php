@@ -163,9 +163,21 @@ class MemberController extends Controller
     {
         $translator = $this->get('translator');
 
-        $manager = $this->get('member.manager.member');
+        if(!$this->isGranted("MEMBER_MEMBER_VIEW")){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
 
+            return $this->redirect(
+                $this->generateUrl('members_manager').'#members'
+            );
+        }
+
+        $manager = $this->get('member.manager.member');
         $member = $manager->find($id);
+
+        $subcriptionManager = $this->get('member.manager.subscription_historical');
+        $subscriptions = $subcriptionManager->getListByMember($member, 5);
 
         if(null === $member){
             $this->addFlash(
@@ -179,7 +191,6 @@ class MemberController extends Controller
 
         $formHandler = $this->get('member.form.handler.subscription_historical');
         $formHandler->setForm(new MemberSubscriptionHistorical());
-
 
         $breadcrumbs = [
             [
@@ -197,6 +208,7 @@ class MemberController extends Controller
         
         return $this->render('member/member/view.html.twig', [
             'member' => $member,
+            'subscriptions' => $subscriptions,
             'breadcrumbs' => $breadcrumbs,
             'menuSelect' => 'member_manager',
             'formSub' => $formHandler->getForm()->createView()
@@ -265,9 +277,6 @@ class MemberController extends Controller
             $subscription = $formHandler->getData();
 
             $member->addSubscription($subscription);
-
-            dump($member);
-
 
             $memberManager->save($member);
 

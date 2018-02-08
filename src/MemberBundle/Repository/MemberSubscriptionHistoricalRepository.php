@@ -12,4 +12,22 @@ use MemberBundle\Entity\Member;
  */
 class MemberSubscriptionHistoricalRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getListByMember(Member $member, int $limit = 0, array $orders = array('msh.endDate' => 'desc'))
+    {
+        $qb = $this->createQueryBuilder("msh")
+            ->select("msh")
+            ->where("msh.member = :member")
+            ->setParameter('member', $member)
+        ;
+
+        foreach($orders as $field => $order){
+            $qb->addOrderBy($field, $order);
+        }
+
+        if($limit > 0){
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }
