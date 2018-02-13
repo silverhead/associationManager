@@ -19,10 +19,20 @@ class MemberSubscriptionHistoricalFormType extends AbstractType
         $builder
         ->add('subscription', EntityType::class, array(
             'class' => 'SubscriptionBundle:Subscription',
+            'choice_attr' =>  function($choice, $index, $value){
+                    $periodicitiesId = $choice->getPeriodicities()->map(function($en){
+                        return $en->getId();
+                    });
+
+                    return array(
+                        'data-cost' => $choice->getCost(),
+                        'data-periodicities' => join(",", $periodicitiesId->getValues())
+                    );
+                },
             'query_builder' => function (EntityRepository $er) {
-            return $er->createQueryBuilder('s')
-            ->orderBy('s.label', 'ASC');
-            },
+                    return $er->createQueryBuilder('s')
+                            ->orderBy('s.label', 'ASC');
+                },
             'choice_label' => 'label'
         ))
         ->add('subscriptionPaymentPeriodicity', EntityType::class, array(

@@ -2,6 +2,7 @@
 
 {% block javascript %}
     {{ parent() }}
+    <script src="{{ asset('plugins/jquery-inputmask/jquery.inputmask.bundle.js') }}"></script>
     <script src="{{ asset('bundles/app/common/js/jquery.reload.list.js') }}"></script>
     <script src="{{ asset('bundles/member/member/js/subscription.js') }}"></script>
 {% endblock %}

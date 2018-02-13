@@ -1,4 +1,5 @@
 $(function(){
+
     $('.panel-group .panel-heading a').click(function(){
         var $this = $(this);
         var alreadyLoading = $this.data('alreadyloading');
@@ -24,7 +25,31 @@ $(function(){
                 }
             });
         }
+    });
 
+    setSubformField();
+
+    $('#member_member_subscription_form_type_subscription').change(function(elt){
+        setSubformField();
     });
 });
+
+function setSubformField(){
+    var selectedOption = $('#member_member_subscription_form_type_subscription').find('option:selected');
+
+    var cost = selectedOption.data('cost');
+    var periodicities = selectedOption.data('periodicities').split(",");
+
+    $('#member_member_subscription_form_type_cost').val( parseFloat(cost).toFixed(2));
+
+    $('#member_member_subscription_form_type_subscriptionPaymentPeriodicity').find('option:selected').removeAttr('selected');
+    $('#member_member_subscription_form_type_subscriptionPaymentPeriodicity').find('option').prop('disabled', true);
+
+    for(var i in periodicities){
+        $('#member_member_subscription_form_type_subscriptionPaymentPeriodicity').find('option[value='+periodicities[i]+']').prop('disabled', false);
+    }
+    $('#member_member_subscription_form_type_subscriptionPaymentPeriodicity').find('option[value='+periodicities[0]+']').prop('selected', true);
+
+    $('#member_member_subscription_form_type_subscriptionPaymentPeriodicity').selectpicker('refresh');
+}
 
