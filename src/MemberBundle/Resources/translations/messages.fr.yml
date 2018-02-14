@@ -84,6 +84,7 @@ member:
                 startDate: Date de début
                 endDate: Date de fin
                 cost: Montant
+            saveSuccessText: Nouvel abonnement créé avec succès !
         credential:
             create: Créer un nouvel abonnement
     contribution:

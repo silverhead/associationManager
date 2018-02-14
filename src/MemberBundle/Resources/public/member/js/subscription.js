@@ -39,6 +39,15 @@ function setSubformField(){
 
     var cost = selectedOption.data('cost');
     var periodicities = selectedOption.data('periodicities').split(",");
+    var duration = selectedOption.data('duration');
+
+    var startDate = $('#member_member_subscription_form_type_startDate').val();
+
+    var endDate = moment(startDate, "YYYY-MM-DD").add(duration, "days").format("YYYY-MM-DD");
+
+    $('#member_member_subscription_form_type_endDate').val(endDate);
+
+    //console.log(startDate);
 
     $('#member_member_subscription_form_type_cost').val( parseFloat(cost).toFixed(2));
 

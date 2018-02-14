@@ -26,7 +26,8 @@ class MemberSubscriptionHistoricalFormType extends AbstractType
 
                     return array(
                         'data-cost' => $choice->getCost(),
-                        'data-periodicities' => join(",", $periodicitiesId->getValues())
+                        'data-periodicities' => join(",", $periodicitiesId->getValues()),
+                        'data-duration' => $choice->getDuration()
                     );
                 },
             'query_builder' => function (EntityRepository $er) {

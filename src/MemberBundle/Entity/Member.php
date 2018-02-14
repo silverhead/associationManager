@@ -251,13 +251,13 @@ class Member extends User
 
             if($i > 0){
                 $cost = floor($subscription->getCost() / $nbCotisations);
-                $dayByFee = floor($subscription->getSubscription()->getDuration() / $nbCotisations);
+                $dayByFee = ceil($subscription->getSubscription()->getDuration() / $nbCotisations);
                 $dayStart = $dayByFee * $i;
                 $startDate->add(new \DateInterval("P" .$dayStart . "D"));
             }
 
             $endDate = clone $startDate;
-            $endDate->add(new \DateInterval("P" . $dayByFee . "D"));
+            $endDate->add(new \DateInterval("P" . ($dayByFee - 1) . "D"));
 
             $fee = new MemberSubscriptionFee();
             $fee->setMember($this)
