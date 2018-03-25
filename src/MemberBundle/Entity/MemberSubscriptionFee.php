@@ -68,15 +68,27 @@ class MemberSubscriptionFee
      */
     private $paid;
 
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $note;
+
     public function __construct()
     {
         $this->paid = false;
+
+        $this->cost = 0;
+
+        $this->paymentDate = new \DateTime();
+        $this->startDate = new \DateTime();
+        $this->endDate = new \DateTime();
     }
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId():? int
     {
         return $this->id;
     }
@@ -152,7 +164,7 @@ class MemberSubscriptionFee
     /**
      * @return \DateTime
      */
-    public function getStartDate(): \DateTime
+    public function getStartDate():? \DateTime
     {
         return $this->startDate;
     }
@@ -171,7 +183,7 @@ class MemberSubscriptionFee
     /**
      * @return \DateTime
      */
-    public function getEndDate(): \DateTime
+    public function getEndDate():? \DateTime
     {
         return $this->endDate;
     }
@@ -206,7 +218,7 @@ class MemberSubscriptionFee
      *
      * @return bool
      */
-    public function getPaid(): bool
+    public function getPaid():? bool
     {
         return $this->paid;
     }
@@ -230,7 +242,7 @@ class MemberSubscriptionFee
      *
      * @return \SubscriptionBundle\Entity\SubscriptionPaymentType
      */
-    public function getPayment(): SubscriptionPaymentType
+    public function getPayment():? SubscriptionPaymentType
     {
         return $this->payment;
     }
@@ -254,5 +266,19 @@ class MemberSubscriptionFee
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getNote():? string
+    {
+        return $this->note;
+    }
 
+    /**
+     * @param string $note
+     */
+    public function setNote(string $note): void
+    {
+        $this->note = $note;
+    }
 }

@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="body table-responsive">
+            <form action="#">
+                <table class="table table-striped" id="tableFee">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'member.subscriptionFee.list.header.subscription'|trans }}</th>
+                        <th>{{ 'member.subscriptionFee.list.header.period'|trans }}</th>
+                        <th>{{ 'member.subscriptionFee.list.header.cost'|trans }}</th>
+                        <th>{{ 'member.subscriptionFee.list.header.paymentDate'|trans }}</th>
+                        <th>{{ 'member.subscriptionFee.list.header.paid'|trans }}</th>
+                        {% if is_granted('MEMBER_SUBSCRIPTION_FEE_SAVE') %}
+                            <th>{{ 'app.common.table.action'|trans }}</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for fee in fees %}
+                        <tr data-row-fee="{{ fee.getId() }}">
+                            <td>{{ fee.getId() }}</td>
+                            <td>{{ fee.getSubscription().getSubscription().getLabel() }}</td>
+                            <td>{{ fee.getStartDate()|date('d/m/Y') }} {{ 'app.common.to'|trans }} {{ fee.getEndDate()|date('d/m/Y') }}</td>
+                            <td>{{ fee.getCost()|number_format(2, ",", " ") }} €</td>
+                            <td>{% if fee.getPaymentDate() is not null %} {{ fee.getPaymentDate()|date('d/m/Y') }} {% endif %}</td>
+                            <td>
+                                {% include ':common:boolean.html.twig' with {'status': fee.getPaid()} %}
+                            </td>
+                            <td>
+                                {% if is_granted('MEMBER_SUBSCRIPTION_FEE_SAVE') %}
+                                    <a href="#" data-subscription-label="{{ fee.getSubscription().getSubscription().getLabel() }}" data-id="{{ fee.getId() }}" class="editFee btn btn-warning material-icons">euro_symbol</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

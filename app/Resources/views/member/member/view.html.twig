@@ -6,6 +6,9 @@
     <script src="{{ asset('plugins/momentjs/moment.js') }}"></script>
     <script src="{{ asset('bundles/app/common/js/jquery.reload.list.js') }}"></script>
     <script src="{{ asset('bundles/member/member/js/subscription.js') }}"></script>
+    {% if is_granted('MEMBER_SUBSCRIPTION_FEE_SAVE') %}
+        <script src="{{ asset('bundles/member/member/js/subscriptionFee.js') }}"></script>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -25,7 +28,7 @@
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
                         <li role="presentation" class="active"><a href="#identity" data-toggle="tab">{{ 'member.member.edit.tab.identity'|trans }}</a></li>
                         <li role="presentation"><a href="#subscription" data-toggle="tab">{{ 'subscription.manager.tabSubscriptions'|trans }}</a></li>
-                        <li role="presentation"><a href="#contribution" data-toggle="tab">{{ 'member.contribution.tabContributionHistorical'|trans }}</a></li>
+                        <li role="presentation"><a href="#subscriptionFee" data-toggle="tab">{{ 'member.subscriptionFee.tabContributionHistorical'|trans }}</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -35,12 +38,29 @@
                         <div role="tabpanel" class="tab-pane fade" id="subscription">
                             {% include 'member/member/view/subscriptions.html.twig' with {'subscriptions': subscriptions, 'form': formSub} %}
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="contribution">
-                            {% include 'member/member/view/contribution.html.twig' with {'fees': member.getFees()} %}
+                        <div role="tabpanel" class="tab-pane fade" id="subscriptionFee">
+                            {% include 'member/member/view/subscriptionFee.html.twig' with {'fees': member.getFees()} %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {% if is_granted('MEMBER_SUBSCRIPTION_FEE_SAVE') %}
+    <div class="modal fade" id="editSubscriptionFeeModal" tabindex="-1" role="dialog" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center" id="editSubscriptionFeeLabel">{{ 'member.subscriptionFee.edit.title'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+                <div class="modal-footer">
+                    <button type="submit" id="saveFeeBtn" class="btn btn-link waves-effect">{{ 'app.common.form.submit.save'|trans }}</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">{{ 'app.common.cancelBtn'|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}

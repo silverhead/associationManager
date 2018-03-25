@@ -4954,6 +4954,7 @@ section.content {
     .input-group .form-line + .input-group-addon {
       padding-right: 0;
       padding-left: 10px; }
+
   .input-group .help-info {
     float: right;
     font-size: 12px;

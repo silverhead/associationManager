@@ -48,7 +48,7 @@ class Member extends User
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberSubscriptionFee", mappedBy="member", cascade={"persist"})
-     * @ORM\OrderBy({"endDate" = "DESC"})
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $fees;
 

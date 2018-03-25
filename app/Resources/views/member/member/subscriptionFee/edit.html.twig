@@ -1,0 +1,35 @@
+{{ form_start(form, {'action': path('member_subscription_fees_save', {'memberId': fee.getMember().getId(), 'id': fee.getId(),})}) }}
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_label(form.cost, 'member.subscriptionFee.edit.form.cost'|trans) }}
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="material-icons">euro_symbol</i>
+                </span>
+                {{ form_widget(form.cost, { 'attr': {'class': 'text-right'}}) }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.payment, {'label': 'member.subscriptionFee.edit.form.payment'|trans}) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.paid, {'label': 'member.subscriptionFee.edit.form.paid'|trans}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(form.paymentDate, {'label': 'member.subscriptionFee.edit.form.paymentDate'|trans}) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.startDate, {'label': 'member.subscriptionFee.edit.form.startDate'|trans}) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.endDate, {'label': 'member.subscriptionFee.edit.form.endDate'|trans}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.note, {'label': 'member.subscriptionFee.edit.form.note'|trans}) }}
+        </div>
+    </div>
+{{ form_end(form) }}
