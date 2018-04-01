@@ -34,15 +34,17 @@ class MemberController extends Controller
      */
     public function listAction(Request $request, $anchor = null)
     {
-        $ordersRequest = $request->get('orders', array(
-            'lastName' => 'asc',
-            'firstName' => 'asc',
-            'status' => '',
-            'subscription' => ''
-        ));
-
         $memberManager = $this->get('member.manager.member');
         $memberManager->activateCache('memberList');
+
+        $ordersRequest = $request->get('orders',  $memberManager->getArrayOrdersInCacheByKey(
+            array(
+                "lastName" => "ASC",
+                "firstName" => "ASC",
+                "status" => "",
+                "subscription" => "",
+            )
+         ));
 
         $memberManager
             ->addOrder(
@@ -65,20 +67,9 @@ class MemberController extends Controller
 
         $members = $memberManager->paginatedList();
 
-        /**
-         * @var ArrayCollection
-         */
-        $orderQueries = $memberManager->getOrdersInCache();
-        $orders = array(
-            'lastName' => $orderQueries->get('lastName')->getOrder(),
-            'firstName' => $orderQueries->get('firstName')->getOrder(),
-            'status' => $orderQueries->get('status')->getOrder(),
-            'subscription' => $orderQueries->get('subscription')->getOrder()
-        );
-
         return $this->render('member/member/list.html.twig', array(
             'members' => $members,
-            'order' => $orders
+            'order' => $ordersRequest
         ));
     }
 

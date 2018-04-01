@@ -88,8 +88,7 @@ Trait PaginatorManagerTrait
             return $qb;
         }
 
-        $i = 0;
-        foreach($filters as $filter){
+        foreach($filters as $key => $filter){
             if(!in_array($filter->getOperator(),  $authorizedOperators)){
                 throw new \Exception("the filter operator \”".$filter->getOperator()."\” is not recognized! Please
                 check the \”".$authorizedOperators."\" for use the correctly operator !");
@@ -98,9 +97,7 @@ Trait PaginatorManagerTrait
             $property   = $filter->getEntityProperty();
             $operator  = $filter->getOperator();
             $search     = $filter->getValue();
-            $pattern    = "value".$i;
-
-            $i++;
+            $pattern    = $key;
 
             if(!in_array($operator, array('in', 'notin', '%like', 'like%', '%like%', '%notlike', 'notlike%', '%notlike%'))){
                 $qb->andWhere($property ." ".$operator." :".$pattern)->setParameter($pattern, $search);
@@ -139,6 +136,10 @@ Trait PaginatorManagerTrait
             }
         }
 
+        if($this->activeCache){
+            $this->putFiltersInCache();
+        }
+
         return $qb;
     }
 
@@ -153,10 +154,15 @@ Trait PaginatorManagerTrait
 
         foreach($orders as $order){
             $sort = $order->getSort();
-            if($order != ''){
+
+            if($order->getOrder() != ''){
                 $qb->addOrderBy($sort, $order->getOrder());
             }
         };
+
+        if($this->activeCache){
+            $this->putOrdersInCache();
+        }
 
         return $qb;
     }
@@ -169,11 +175,6 @@ Trait PaginatorManagerTrait
 
         $qb = $this->filteringList($qb);
         $qb = $this->orderingList($qb);
-
-        if($this->activeCache){
-            $this->putFiltersInCache();
-            $this->putOrdersInCache();
-        }
 
         return $qb;
     }
@@ -253,6 +254,16 @@ Trait PaginatorManagerTrait
         return $cache['orders'];
     }
 
+    public function getArrayOrdersInCacheByKey(array $defaultValue = array())
+    {
+        $orders = $defaultValue;
+        foreach($this->getOrdersInCache() as $key => $order){
+            $orders[$key] = $order->getOrder();
+        }
+
+        return $orders;
+    }
+
     private function putFiltersInCache(){
         $this->iniSessionCache();
 
@@ -271,4 +282,15 @@ Trait PaginatorManagerTrait
         $cache = $this->session->get($this->namespace);
         return $cache['filters'];
     }
+
+    public function getArrayFiltersInCacheByKey(array $defaultValue)
+    {
+        $filters = array();
+        foreach($this->getFiltersInCache() as $key => $filter){
+            $filters[$key] = $filter->getValue();
+        }
+
+        return $filters;
+    }
+
 }

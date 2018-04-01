@@ -22,10 +22,12 @@ class MemberSubscriptionController extends Controller
         $manager = $this->get('member.manager.subscription_fee');
 
         $manager->addFilter(
-            new FilterQuery("memberSubscriptionFee.subscription", $subscriptionHistorical)
+            new FilterQuery("memberSubscriptionFee.subscription", $subscriptionHistorical),
+            'subscription'
         )
         ->addOrder(
-            new OrderQuery("memberSubscriptionFee.endDate", "DESC")
+            new OrderQuery("memberSubscriptionFee.endDate", "DESC"),
+            'feeEndDate'
         );
 
         $memberSubscriptionFees = $manager->paginatedList();
