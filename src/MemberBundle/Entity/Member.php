@@ -122,6 +122,8 @@ class Member extends User
         $this->fees = new \Doctrine\Common\Collections\ArrayCollection();
 
         $this->avatar = 'user.png';
+
+        $this->active = true;
     }
 
     /**
@@ -485,5 +487,25 @@ class Member extends User
     public function removeFee(\MemberBundle\Entity\MemberSubscriptionFee $fee)
     {
         return $this->fees->removeElement($fee);
+    }
+
+    /**
+     * Get statusHistorical.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStatusHistorical()
+    {
+        return $this->statusHistorical;
+    }
+
+    public function getLastStatus():? MemberStatus
+    {
+
+        if(isset($this->getStatus()[0])){
+            return $this->getStatus()[0]->getStatus();
+        }
+
+        return null;
     }
 }

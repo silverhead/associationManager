@@ -108,7 +108,7 @@ class MemberStatus
         
         return $this;
     }
-    
+
     /**
      * Constructor
      */

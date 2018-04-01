@@ -2,6 +2,8 @@
 
 namespace MemberBundle\Controller;
 
+use AppBundle\QueryHelper\FilterQuery;
+use AppBundle\QueryHelper\OrderQuery;
 use MemberBundle\Entity\MemberSubscriptionFee;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,16 +20,15 @@ class MemberSubscriptionController extends Controller
         $subscriptionHistorical = $managerSubHistorical->find($subHistId);
 
         $manager = $this->get('member.manager.subscription_fee');
-        $memberSubscriptionFees = $manager->paginatedFilteredAndOrdered(
-            array(
-                [
-                    'search' => $subscriptionHistorical,
-                    'operation' => "=",
-                    'property' => "memberSubscriptionFee.subscription"
-                ]
-            ),
-            array(["memberSubscriptionFee.endDate","desc"])
+
+        $manager->addFilter(
+            new FilterQuery("memberSubscriptionFee.subscription", $subscriptionHistorical)
+        )
+        ->addOrder(
+            new OrderQuery("memberSubscriptionFee.endDate", "DESC")
         );
+
+        $memberSubscriptionFees = $manager->paginatedList();
 
         return $this->render('member/member/view/subscriptionFee.html.twig', array(
             'fees' => $memberSubscriptionFees

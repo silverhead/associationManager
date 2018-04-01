@@ -3,57 +3,200 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Repository\PaginatorRepositoryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;
+use AppBundle\QueryHelper\FilterQuery;
+use AppBundle\QueryHelper\OrderQuery;
 
 Trait PaginatorManagerTrait
 {
+    /**
+     *
+     * @var string
+     */
+    protected $cacheNamespace;
 
-    public function paginatedFilteredAndOrdered($filters = array(), $orders = array(), $page = 1, $itemPerPage = 10, $pageParameterName = 'page', $anchor = null, $route = null)
+    /**
+     * @var bool
+     */
+    protected $activeCache = false;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $filters;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $orders;
+
+    public function activateCache(string $cacheNamespace)
+    {
+        $this->namespace = $cacheNamespace;
+        $this->activeCache = true;
+    }
+
+    public function addFilter(FilterQuery $filterQuery, string $key = "")
+    {
+        if($this->filters == null){
+            $this->filters = new ArrayCollection();
+        }
+
+        if($key == ""){
+            $key = $filterQuery->getEntityProperty();
+        }
+
+        $this->filters->set($key, $filterQuery);
+
+        return $this;
+    }
+
+    public function addOrder(OrderQuery $orderQuery, string $key = "")
+    {
+        if($this->orders == null){
+            $this->orders = new ArrayCollection();
+        }
+
+        if($key == ""){
+            $key = $orderQuery->getSort();
+        }
+
+        $this->orders->set($key, $orderQuery);
+
+        return $this;
+    }
+
+    /**
+     * @param array $filters
+     * @param array $orders
+     * @return QueryBuilder
+     */
+    private function filteringList(QueryBuilder $qb): QueryBuilder
+    {
+        $authorizedOperators = array(
+            '=', '>', '<', '>=', '<=',
+            '%like%', 'like%', '%like', '%notlike%', 'notlike%', '%notlike',
+            'in', 'notin'
+        );
+
+        $filters = $this->filters;
+
+        // If filters is not used them not use the filter system
+        if($filters == null || $filters->isEmpty()){
+            return $qb;
+        }
+
+        $i = 0;
+        foreach($filters as $filter){
+            if(!in_array($filter->getOperator(),  $authorizedOperators)){
+                throw new \Exception("the filter operator \”".$filter->getOperator()."\” is not recognized! Please
+                check the \”".$authorizedOperators."\" for use the correctly operator !");
+            }
+
+            $property   = $filter->getEntityProperty();
+            $operator  = $filter->getOperator();
+            $search     = $filter->getValue();
+            $pattern    = "value".$i;
+
+            $i++;
+
+            if(!in_array($operator, array('in', 'notin', '%like', 'like%', '%like%', '%notlike', 'notlike%', '%notlike%'))){
+                $qb->andWhere($property ." ".$operator." :".$pattern)->setParameter($pattern, $search);
+            }
+            else if(in_array($operator, array('%like', 'like%', '%like%', '%notlike', 'notlike%', '%notlike%'))){
+                switch ($operator){
+                    case 'like%':
+                        $qb->andWhere($property ." LIKE :".$pattern)->setParameter($pattern, $search."%");
+                        break;
+                    case '%like':
+                        $qb->andWhere($property ." LIKE :".$pattern)->setParameter($pattern, "%".$search);
+                        break;
+                    case '%like%':
+                        $qb->andWhere($property ." LIKE :".$pattern)->setParameter($pattern, "%".$search."%");
+                        break;
+                    case 'notlike%':
+                        $qb->andWhere($property ." NOT LIKE :".$pattern)->setParameter($pattern, $search."%");
+                        break;
+                    case '%notlike':
+                        $qb->andWhere($property ." NOT LIKE :".$pattern)->setParameter($pattern, "%".$search);
+                        break;
+                    case '%notlike%':
+                        $qb->andWhere($property ." NOT LIKE :".$pattern)->setParameter($pattern, "%".$search."%");
+                        break;
+                }
+            }
+            else if(in_array($operator, array('%in', 'notin'))){
+                switch ($operator){
+                    case 'in':
+                        $qb->andWhere($property ." IN (:".$pattern.")")->setParameter($pattern, implode("','", $search));
+                        break;
+                    case 'not':
+                        $qb->andWhere($property ." NOT IN (:".$pattern.")")->setParameter($pattern, implode("','", $search));
+                        break;
+                }
+            }
+        }
+
+        return $qb;
+    }
+
+    private function orderingList(QueryBuilder $qb): QueryBuilder
+    {
+        $orders = $this->orders;
+
+        // If $orders is not used them not use the order system
+        if($orders == null || $orders->isEmpty()){
+            return $qb;
+        }
+
+        foreach($orders as $order){
+            $sort = $order->getSort();
+            if($order != ''){
+                $qb->addOrderBy($sort, $order->getOrder());
+            }
+        };
+
+        return $qb;
+    }
+
+    private function getQueryList(): QueryBuilder
     {
         $this->checkUsingInterface();
 
-        /**
-         * @var QueryBuilder
-         */
         $qb = $this->getRepository()->getQbPaginatedList();
 
-        foreach($filters as $i => $data){
-            $property   = $data['property'];
-            $search     = $data['search'];
-            $operation  = $data['operation'];
-            $pattern    = "value".$i;
+        $qb = $this->filteringList($qb);
+        $qb = $this->orderingList($qb);
 
-            $qb->andWhere($property ." ".$operation." :".$pattern)->setParameter($pattern, $search);
+        if($this->activeCache){
+            $this->putFiltersInCache();
+            $this->putOrdersInCache();
         }
 
-        foreach($orders as $data){
-            $qb->addOrderBy($data[0], $data[1]);
-        }
+        return $qb;
+    }
 
+    public function getList($offset = 1, $limit = 10)
+    {
+        $qb = $this->getQueryList();
 
-        $paginate = $this->paginator->paginate($qb, $page, $itemPerPage, [
-            'pageParameterName' => $pageParameterName,
-            'anchor' => $anchor
-        ]);
+        $qb->setFirstResult($offset);
+        $qb->setMaxResults($limit);
 
-        if(null !== $route){
-            $paginate->setUsedRoute($route);
-        }
-
-        return $paginate;
+        return $qb->getQuery()->getResult();
     }
 
     public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page', $anchor = null, $route = null)
     {
-        $this->checkUsingInterface();
-
-        $qb = $this->getRepository()->getQbPaginatedList();
+        $qb = $this->getQueryList();
 
         $paginate = $this->paginator->paginate($qb, $page, $itemPerPage, [
             'pageParameterName' => $pageParameterName,
             'anchor' => $anchor
         ]);
+
 
         if(null !== $route){
             $paginate->setUsedRoute($route);
@@ -79,5 +222,53 @@ Trait PaginatorManagerTrait
         if(!($this->paginator instanceof PaginatorInterface)){
             throw new \Exception("The paginator property must to implement PaginatorInterface!");
         }
+    }
+
+    private function iniSessionCache(){
+        if(!$this->activeCache){
+            throw new \Exception("Please active the cache list before it!");
+        }
+
+        if($this->session->get($this->namespace) === null){
+            $this->session->set($this->namespace, array('filters' => array(), 'orders' => array()));
+        }
+    }
+
+    private function putOrdersInCache(){
+        $this->iniSessionCache();
+
+        $cache = $this->session->get($this->namespace);
+        $cache['orders'] = $this->orders;
+
+        $this->session->set($this->namespace, $cache);
+    }
+
+    /**
+     * @return ArrayCollection|null
+     * @throws \Exception
+     */
+    public function getOrdersInCache(){
+        $this->iniSessionCache();
+        $cache = $this->session->get($this->namespace);
+        return $cache['orders'];
+    }
+
+    private function putFiltersInCache(){
+        $this->iniSessionCache();
+
+        $cache = $this->session->get($this->namespace);
+        $cache['filters'] = $this->filters;
+
+        $this->session->set($this->namespace, $cache);
+    }
+
+    /**
+     * @return ArrayCollection|null
+     * @throws \Exception
+     */
+    public function getFiltersInCache(){
+        $this->iniSessionCache();
+        $cache = $this->session->get($this->namespace);
+        return $cache['filters'];
     }
 }

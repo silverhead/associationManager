@@ -10,13 +10,13 @@ use AppBundle\Manager\PaginatorOrderedManagerTrait;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use MemberBundle\Entity\Member;
-use AppBundle\Manager\PaginatorOrderedManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class MemberMemberManager implements PaginatorOrderedManagerInterface
+class MemberMemberManager implements PaginatorManagerInterface
 {
     use EntityManagerTrait,
-        PaginatorOrderedManagerTrait,
+
+        PaginatorManagerTrait,
         ErrorHandlerTrait;
 
     /**
@@ -29,16 +29,18 @@ class MemberMemberManager implements PaginatorOrderedManagerInterface
      */
     private $paginator;
 
-    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator, SessionInterface $session, string $paginatorNamespace, array $orderedTableCorrespondance )
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator, SessionInterface $session)
     {
         $this->entityManager = $entityManager;
         $this->paginator = $paginator;
         
         $this->session = $session;
-        
-        $this->setPaginatorOrederedNamespace($paginatorNamespace);
-        $this->setOrderedTableCorrespondence($orderedTableCorrespondance);
-    }
+        }
 
     public function getNewEntity()
     {
@@ -50,9 +52,9 @@ class MemberMemberManager implements PaginatorOrderedManagerInterface
         return $this->entityManager->getRepository("MemberBundle:Member");
     }
     
-    public function getMemberNb()
+    public function getMemberNb(bool $active = false)
     {
-        return $this->getRepository()->countMember();
+        return $this->getRepository()->countMember($active);
     }
 
     public function getLastStatus(Member $member){

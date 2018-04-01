@@ -41,4 +41,8 @@ class MemberSubscriptionFeeManager implements PaginatorManagerInterface
     {
         return $this->entityManager->getRepository("MemberBundle:MemberSubscriptionFee");
     }
+
+    public function getTotalPaidFee(){
+        return $this->getRepository()->getTotalFee(true);
+    }
 }

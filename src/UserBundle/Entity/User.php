@@ -94,6 +94,12 @@ class User implements UserInterface
     private $group;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $active;
+
+    /**
      * @param mixed $roles
      * @return User
      */
@@ -303,4 +309,25 @@ class User implements UserInterface
     {
         return false;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     * @return User
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+
 }

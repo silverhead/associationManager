@@ -10,20 +10,37 @@ class MemberRepository extends UserRepository implements PaginatorRepositoryInte
 {
     public function getQbPaginatedList()
     {
-        return $this->createQueryBuilder("m")
-            ->select("m, msh, mshStatus, subscriptions, subscription, fees" )
+        $subquery = $this->_em->createQuery("
+            SELECT MAX(sub2.id) 
+            FROM MemberBundle:MemberSubscriptionHistorical sub2 
+            WHERE sub2.member = m
+            ")->getDQL();
+
+        $qb = $this->createQueryBuilder("m");
+
+        $qb->select("m, msh, mshStatus, subscriptions, subscription, fees ")
             ->leftJoin("m.statusHistorical","msh")
             ->leftJoin("msh.status", "mshStatus")
             ->leftJoin("m.subscriptions", "subscriptions")
             ->leftJoin("subscriptions.subscription", "subscription")
             ->leftJoin("m.fees", "fees")
+            ->where($qb->expr()->isNull("msh.endDate"))
+            ->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->isNull("subscriptions.id")
+                )->add($qb->expr()->in("subscriptions.id", $subquery ))
+            )
             ;
-//            ->addGroupBy("m")
-//            ->where("status.startDate <= ".(new \DateTime())->format("Y-m-d")." AND status.endDate IS NULL")
-//            ;
+        return $qb;
     }
     
-    public function countMember(){
-        return $this->createQueryBuilder("m")->select("COUNT(m)")->getQuery()->getSingleScalarResult();
+    public function countMember(bool $active = false){
+        $qb = $this->createQueryBuilder("m")->select("COUNT(m)");
+
+        if($active){
+            $qb->where("m.active = 1");
+        }
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 }

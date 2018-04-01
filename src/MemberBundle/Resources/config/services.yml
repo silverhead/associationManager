@@ -38,16 +38,16 @@ services:
     member.manager.member:
         class: MemberBundle\Manager\MemberMemberManager
         #, subscriptionDateEnd: 'subscriptions.endDate'
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session', 'paginator_order_member_list', {lastName: 'm.lastName', firstName: 'm.firstName', status: 'mshStatus.label', subscription: 'subscription.label'}]
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']
     member.manager.status:
         class: MemberBundle\Manager\MemberStatusManager
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']
     member.manager.subscription_historical:
         class: MemberBundle\Manager\MemberSubscriptionHistoricalManager
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']
     member.manager.subscription_fee:
         class: MemberBundle\Manager\MemberSubscriptionFeeManager
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']
     # FORM
     member.form.handler.member:
         class: MemberBundle\Form\Handler\MemberFormHandler

@@ -31,6 +31,7 @@ class MemberStatusController extends Controller
         $currentRoute = $request->get('masterRoute', $request->get('_route'));
 
         $memberStatusManager = $this->get('member.manager.status');
+        $memberStatusManager->activateCache('memberStatusList');
 
         $results = $memberStatusManager->paginatedList(
             $page,

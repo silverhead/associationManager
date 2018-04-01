@@ -2,6 +2,7 @@
 
 namespace MemberBundle\Controller;
 
+use AppBundle\QueryHelper\OrderQuery;
 use Doctrine\Common\Collections\ArrayCollection;
 use MemberBundle\Entity\MemberSubscriptionFee;
 use MemberBundle\Entity\MemberSubscriptionHistorical;
@@ -33,20 +34,48 @@ class MemberController extends Controller
      */
     public function listAction(Request $request, $anchor = null)
     {
-        $memberManager = $this->get('member.manager.member');
-
-        $orders = $request->get('orders', array(
+        $ordersRequest = $request->get('orders', array(
             'lastName' => 'asc',
             'firstName' => 'asc',
             'status' => '',
-            'subscription' => '',
-//             'subscriptionDateEnd' => 'asc',
+            'subscription' => ''
         ));
 
-        $memberManager->setPaginatorOrders($orders);
-        
+        $memberManager = $this->get('member.manager.member');
+        $memberManager->activateCache('memberList');
+
+        $memberManager
+            ->addOrder(
+            new OrderQuery("m.lastName" , $ordersRequest['lastName']),
+            'lastName'
+            )
+            ->addOrder(
+                new OrderQuery("m.firstName" , $ordersRequest['firstName']),
+                'firstName'
+            )
+            ->addOrder(
+                new OrderQuery("mshStatus.label" , $ordersRequest['status']),
+                'status'
+            )
+            ->addOrder(
+                new OrderQuery("subscription.label" , $ordersRequest['subscription']),
+                'subscription'
+            )
+        ;
+
         $members = $memberManager->paginatedList();
-        
+
+        /**
+         * @var ArrayCollection
+         */
+        $orderQueries = $memberManager->getOrdersInCache();
+        $orders = array(
+            'lastName' => $orderQueries->get('lastName')->getOrder(),
+            'firstName' => $orderQueries->get('firstName')->getOrder(),
+            'status' => $orderQueries->get('status')->getOrder(),
+            'subscription' => $orderQueries->get('subscription')->getOrder()
+        );
+
         return $this->render('member/member/list.html.twig', array(
             'members' => $members,
             'order' => $orders

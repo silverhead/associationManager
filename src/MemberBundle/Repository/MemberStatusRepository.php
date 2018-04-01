@@ -9,6 +9,10 @@ class MemberStatusRepository extends EntityRepository implements PaginatorReposi
 {
     public function getQbPaginatedList()
     {
-        return $this->createQueryBuilder("ms");
+        $qb = $this->createQueryBuilder("ms");
+        $qb->select("ms, msh")
+            ->leftJoin("ms.members", "msh")
+           ->where($qb->expr()->isNull("msh.endDate"));
+        return $qb;
     }
 }

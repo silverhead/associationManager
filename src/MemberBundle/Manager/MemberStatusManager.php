@@ -10,6 +10,7 @@ use AppBundle\Handler\ErrorHandlerTrait;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class MemberStatusManager implements PaginatorManagerInterface
 {
@@ -27,10 +28,13 @@ class MemberStatusManager implements PaginatorManagerInterface
      */
     private $paginator;
 
-    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator )
+    private $session;
+
+    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator, SessionInterface $session )
     {
         $this->entityManager = $entityManager;
         $this->paginator = $paginator;
+        $this->session = $session;
     }
 
     public function getNewEntity()
