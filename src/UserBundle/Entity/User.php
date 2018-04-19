@@ -38,7 +38,6 @@ class User implements UserInterface
 
      */
 
-
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=false)
@@ -325,6 +324,25 @@ class User implements UserInterface
     public function setActive($active)
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDiscr(): string
+    {
+        return $this->discr;
+    }
+
+    /**
+     * @param string $discr
+     * @return User
+     */
+    public function setDiscr(string $discr): User
+    {
+        $this->discr = $discr;
 
         return $this;
     }

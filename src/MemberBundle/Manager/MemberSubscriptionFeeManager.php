@@ -9,6 +9,7 @@ use AppBundle\Manager\PaginatorManagerTrait;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use MemberBundle\Entity\MemberSubscriptionFee;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class MemberSubscriptionFeeManager implements PaginatorManagerInterface
 {
@@ -26,10 +27,17 @@ class MemberSubscriptionFeeManager implements PaginatorManagerInterface
      */
     private $paginator;
 
-    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator)
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator, SessionInterface $session)
     {
         $this->entityManager = $entityManager;
         $this->paginator = $paginator;
+
+        $this->session = $session;
     }
 
     public function getNewEntity()

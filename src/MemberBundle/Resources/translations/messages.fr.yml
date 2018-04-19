@@ -26,7 +26,11 @@ member:
               subscription: Abonnement
             form:
               # identity
-              avatar: Photo
+              avatar:
+                picture: Photo
+                alt: Cliquer la photo pour la changer
+                clickToChange: Cliquer la photo pour la changer
+                cancel: Annuler
               firstName: Prénom
               lastName: Nom
               gender:
@@ -55,6 +59,8 @@ member:
         delete:
             deleteQuestionText: La suppression du membre est définitf !
             deleteSuccessText: Le membre a été supprimé.
+        profile:
+            title: Votre profils
     status:
         credential:
             title: Adhérents (statuts)
@@ -96,6 +102,7 @@ member:
                 subscription: Abonnement
                 period: Période
                 paid: Payé
+                member: Membre
         edit:
             title: Cotisation pour "%subscription%"
             form:

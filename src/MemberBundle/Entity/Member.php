@@ -9,12 +9,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\DateTime;
 use UserBundle\Entity\User;
 use Symfony\Component\Intl\Intl;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Class Member
  * @package AppBundle\Entity
  *
  * @ORM\Entity(repositoryClass="MemberBundle\Repository\MemberRepository")
+ * @Vich\Uploadable
  */
 class Member extends User
 {
@@ -22,7 +25,6 @@ class Member extends User
         'm' => 'member.member.edit.form.gender.male',
         'f' => 'member.member.edit.form.gender.female'
     );
-
 
     protected $discr = 'member';
 
@@ -52,11 +54,20 @@ class Member extends User
      */
     protected $fees;
 
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="member_avatar", fileNameProperty="avatar")
+     *
+     * @var File
+     */
+    private $avatarFile;
+
     /**
      * 
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={ "image/jpg", "image/gif", "image/png" })
      */
     protected $avatar;
 
@@ -110,6 +121,31 @@ class Member extends User
      * @ORM\Column(length=255, nullable=false)
      */
     protected $address;
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     * @return Member
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): Member
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    protected $updatedAt;
 
     /**
      * Constructor
@@ -508,4 +544,28 @@ class Member extends User
 
         return null;
     }
+
+    /**
+     * @return File
+     */
+    public function getAvatarFile(): ?File
+    {
+        return $this->avatarFile;
+    }
+
+    /**
+     * @param File $avatarFile
+     * @return Member
+     */
+    public function setAvatarFile(?File $avatarFile = null): Member
+    {
+        $this->avatarFile = $avatarFile;
+
+        if($avatarFile){
+            $this->updatedAt = new \DateTime();
+        }
+
+        return $this;
+    }
+
 }

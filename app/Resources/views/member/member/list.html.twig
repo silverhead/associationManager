@@ -33,17 +33,17 @@
             <form action="#">
                 <table class="table table-striped dataTable">
                     <thead>
-                    <tr>
-                        <th>#</th>
-                        {#<th>{{ 'member.member.list.table.picture'|trans }}</th>#}
-                        <th data-order-sortname="lastName" data-order-sort="{{ order.lastName }}" class="sortable">{{ 'member.member.list.table.lastName'|trans }}</th>
-                        <th data-order-sortname="firstName" data-order-sort="{{ order.firstName }}" class="sortable">{{ 'member.member.list.table.firstName'|trans }}</th>
-                        <th data-order-sortname="status" data-order-sort="{{ order.status }}" class="sortable">{{ 'member.member.list.table.status'|trans }}</th>
-                        <th>{{ 'member.member.list.table.phone'|trans }}</th>
-                        <th data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.member.list.table.subscription'|trans }}</th>
-                        <th>{{ 'member.member.list.table.subscriptionDateEnd'|trans }}</th>
-                        <th>{{ 'app.common.table.action'|trans }}</th>
-                    </tr>
+                        <tr>
+                            <th>#</th>
+                            {#<th>{{ 'member.member.list.table.picture'|trans }}</th>#}
+                            <th data-order-sortname="lastName" data-order-sort="{{ order.lastName }}" class="sortable">{{ 'member.member.list.table.lastName'|trans }}</th>
+                            <th data-order-sortname="firstName" data-order-sort="{{ order.firstName }}" class="sortable">{{ 'member.member.list.table.firstName'|trans }}</th>
+                            <th data-order-sortname="status" data-order-sort="{{ order.status }}" class="sortable">{{ 'member.member.list.table.status'|trans }}</th>
+                            <th>{{ 'member.member.list.table.phone'|trans }}</th>
+                            <th data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.member.list.table.subscription'|trans }}</th>
+                            <th>{{ 'member.member.list.table.subscriptionDateEnd'|trans }}</th>
+                            <th>{{ 'app.common.table.action'|trans }}</th>
+                        </tr>
                     </thead>
                     <tbody>
                     {% for member in members %}
@@ -79,7 +79,8 @@
                 </table>
             </form>
             <div class="pull-right">
-                {% include 'main/pagination.html.twig' %}
+                {{ knp_pagination_render(members) }}
+                {#{% include 'main/pagination.html.twig' %}#}
             </div>
         </div>
     </div>

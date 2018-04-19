@@ -1,5 +1,6 @@
 subscription:
     manager:
+        tabSubscriptionsFee: Cotisations
         tabSubscriptions: Abonnements
         tabPeriodicities: Périodicités de paiements
         tabPaymentTYpes: Mode de payement

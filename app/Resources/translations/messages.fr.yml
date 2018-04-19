@@ -127,10 +127,13 @@ user:
                 group: Groupe
         add:
             title: Ajouter un utilisateur
+        profile:
+            title: Votre profils
         edit:
             title: Modifier un utilisateur
             form:
                 group: Groupe
+                active: Actif
                 firstName: Prénom
                 lastName: Nom
                 username: Identifiant

@@ -15,7 +15,10 @@ class SubscriptionRepository extends EntityRepository implements PaginatorReposi
 
     public function getQbPaginatedList()
     {
-        return $this->getQb();
+        return $this->getQb()
+            ->select("s, ms")
+            ->leftJoin("s.memberSubscription", "ms")
+            ->where("(ms.id IS NULL OR ms.endDate >= :now )")->setParameter(":now", new \DateTime());
     }
 
     public function getCountSubscriberMembers(Subscription $subscription)

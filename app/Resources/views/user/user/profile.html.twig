@@ -4,8 +4,8 @@
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
         <h2 class="col-xs-12">
-            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
-            {{ 'user.user.edit.title'|trans }}
+            {#<a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;#}
+            {{ 'user.user.profile.title'|trans }}
         </h2>
     </div>
     {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
@@ -14,16 +14,6 @@
             <div class="card">
                 <div class="body">
                     {{ form_start(formUser) }}
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ form_row(formUser.group, {
-                                'label': 'user.user.edit.form.group'|trans
-                            }) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(formUser.active, {'label': 'user.user.edit.form.active'|trans}) }}
-                        </div>
-                    </div>                    
                     <div class="row">
                         <div class="col-md-6">
                             {{ form_row(formUser.firstName, {
@@ -73,7 +63,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
+                            {% include 'form/submitBtnSave.html.twig' with {} only %}
                         </div>
                     </div>
 

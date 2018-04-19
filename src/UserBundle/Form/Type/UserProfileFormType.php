@@ -12,10 +12,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class UserFormType extends AbstractType
+class UserProfileFormType extends UserFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
         $builder
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
@@ -27,16 +28,8 @@ class UserFormType extends AbstractType
                 'first_options' => array('label' => 'user.user.edit.form.password'),
                 'second_options' => array('label' => 'user.user.edit.form.password_confirmation'),
             ])
-            ->add('group', EntityType::class, [
-                'class' => 'UserBundle:UserGroup',
-                'choice_label' => 'label'
-            ])
-            ->add('active', ChoiceType::class, [
-                'choices' => [
-                    'app.common.status.enabled' => true,
-                    'app.common.status.disabled' => false,
-                ]
-            ])
+            ->remove('group')
+            ->remove('active')
         ;
     }
 

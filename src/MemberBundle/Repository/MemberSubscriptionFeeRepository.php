@@ -10,7 +10,14 @@ class MemberSubscriptionFeeRepository extends EntityRepository implements Pagina
 {
     public function getQbPaginatedList()
     {
-        return $this->createQueryBuilder("memberSubscriptionFee");
+        $qb = $this->createQueryBuilder("memberSubscriptionFee")
+                ->select("memberSubscriptionFee, subHist, sub, mber")
+                ->leftJoin("memberSubscriptionFee.subscription", "subHist")
+                ->leftJoin("subHist.subscription", "sub")
+                ->leftJoin("memberSubscriptionFee.member", "mber")
+        ;
+
+        return $qb;
     }
 
     public function getTotalFee(bool $paid = true):? float

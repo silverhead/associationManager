@@ -5,6 +5,7 @@ namespace MemberBundle\Controller;
 use AppBundle\QueryHelper\FilterQuery;
 use AppBundle\QueryHelper\OrderQuery;
 use MemberBundle\Entity\MemberSubscriptionFee;
+use MemberBundle\Entity\MemberSubscriptionHistorical;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,9 @@ class MemberSubscriptionController extends Controller
      */
     public function feesListPartAction(Request $request, $subHistId)
     {
+        $pageParamName = 'memberSubFeePage';
+        $page = 1;
+
         $managerSubHistorical = $this->get('member.manager.subscription_historical');
         $subscriptionHistorical = $managerSubHistorical->find($subHistId);
 
@@ -31,6 +35,17 @@ class MemberSubscriptionController extends Controller
         );
 
         $memberSubscriptionFees = $manager->paginatedList();
+
+        $pageH = $this->get('app.handler.page_historical');
+
+        $pageH->setCallbackUrl(
+            'subscription_fee_save',
+            $this->generateUrl('member_view', $subscriptionHistorical->getMember()->getId()),
+            [$pageParamName => $page],
+            'subscriptionFees'
+        );
+
+        dump($this->get('session')->get('page_historical_subscription_fee_save'));
 
         return $this->render('member/member/view/subscriptionFee.html.twig', array(
             'fees' => $memberSubscriptionFees
@@ -92,8 +107,6 @@ class MemberSubscriptionController extends Controller
         if($formHandler->process($request)){
             $subscriptionFee = $formHandler->getData();
 
-            dump($subscriptionFee);
-
             $manager->save($subscriptionFee);
 
             $this->addFlash('success', $translator->trans('member.subscriptionFee.edit.saveSuccessText'));
@@ -106,9 +119,11 @@ class MemberSubscriptionController extends Controller
                 ]));
         }
 
-        return $this->redirect(
-            $this->generateUrl('member_view', ['id' => $memberId]).'#subscriptionFee'
-        );
+        $pageH = $this->get('app.handler.page_historical');
+
+        $urlCallbak = $pageH->getCallbackUrl('subscription_fee_save');
+
+        return $this->redirect($urlCallbak);
     }
 
     /**

@@ -6,6 +6,7 @@ use AppBundle\Event\CredentialEvent;
 use Doctrine\ORM\EntityNotFoundException;
 use MemberBundle\Security\MemberStatusVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -19,6 +20,11 @@ class MemberStatusController extends Controller
 {
     const ITEMS_PER_PAGE = 4;
     const PAGE_PARAMETER_NAME = 'pageTab2';
+
+    public function __construct(ContainerInterface $container = null)
+    {
+        $this->setContainer($container);
+    }
 
     /**
      * @Route("/member/status/list-part/{anchor}", name="member_status_list_part",  options = { "expose" = true })
@@ -50,7 +56,7 @@ class MemberStatusController extends Controller
             $anchor
         );
 
-        return $this->render(
+        return $this->renderView(
             '/member/status/statusList.html.twig',
             array(
                 'results' => $results,

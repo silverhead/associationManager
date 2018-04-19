@@ -11,19 +11,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use MemberBundle\Entity\MemberStatusHistorical;
+use Symfony\Component\HttpFoundation\Response;
 
 class MemberController extends Controller
 {    
     /**
      * @Route("/members/manager", name="members_manager")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $memberManager = $this->get('member.manager.member');
-        
+
+        $memberListTpl = $this->memberlist($request, "");
+        $statusListTpl = $this->get('member.controller.status')->listAction($request, "");
+
         return $this->render('member/membersManager.html.twig', array(
             'menuSelect' => 'members_manager',
-            'nbMember' => $memberManager->getMemberNb()
+            'nbMember' => $memberManager->getMemberNb(),
+            'memberListTpl' => $memberListTpl,
+            'statusListTpl' => $statusListTpl,
         ));
     }
 
@@ -33,6 +39,11 @@ class MemberController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(Request $request, $anchor = null)
+    {
+        return new Response( $this->memberList($request, $anchor));
+    }
+
+    public function memberList(Request $request, $anchor = null)
     {
         $memberManager = $this->get('member.manager.member');
         $memberManager->activateCache('memberList');
@@ -44,12 +55,12 @@ class MemberController extends Controller
                 "status" => "",
                 "subscription" => "",
             )
-         ));
+        ));
 
         $memberManager
             ->addOrder(
-            new OrderQuery("m.lastName" , $ordersRequest['lastName']),
-            'lastName'
+                new OrderQuery("m.lastName" , $ordersRequest['lastName']),
+                'lastName'
             )
             ->addOrder(
                 new OrderQuery("m.firstName" , $ordersRequest['firstName']),
@@ -65,12 +76,85 @@ class MemberController extends Controller
             )
         ;
 
-        $members = $memberManager->paginatedList();
+        $members = $memberManager->paginatedList( $request->query->getInt('page', 1), 10, 'pageMemberList');
 
-        return $this->render('member/member/list.html.twig', array(
+        return $this->renderView('member/member/list.html.twig', array(
             'members' => $members,
             'order' => $ordersRequest
         ));
+    }
+
+    /**
+     * @Route("/members/profile/{id}", name="member_profile", requirements={"id": "\d+"}, defaults={"id": 0});
+     */
+    public function editProfileAction(Request $request, $id = 0)
+    {
+        $translator = $this->get('translator');
+
+        if($id == 0){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
+        $callBackUrl = $this->generateUrl('dashboard');
+
+        $manager = $this->get('member.manager.member');
+        $entity = $manager->find($id);
+
+        $formHandler = $this->get('member.form.handler.member');
+        $formHandler->setForm($entity, true);
+
+        if($formHandler->process($request)){
+            $entity = $formHandler->getData();
+
+            if($manager->save($entity)){
+                $this->addFlash('success', $translator->trans('member.member.profile.saveSuccessText'));
+
+                if(null !== $request->get('save_and_leave', null)){
+                    if(null!== $callBackUrl){
+                        return $this->redirect($callBackUrl);
+                    }
+
+                    return $this->redirect(
+                        $this->generateUrl('dashboard')
+                    );
+                }
+
+                if(null !== $request->get('save_and_stay', null)){
+                    return $this->redirectToRoute('member_edit', [
+                        'id' => $entity->getId()
+                    ]);
+                }
+            }
+
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.errorComming', [
+                    '%error%' => '<br />' . implode('<br />', $manager->getErrors())
+                ]));
+        }
+
+        $breadcrumbs = [
+            [
+                'href' => $this->redirectToRoute('dashboard'),
+                'title' => $translator->trans('app.dashboard.callback'),
+                'label' => $translator->trans('app.dashboard.title')
+            ],
+            ['label' => $translator->trans('member.member.profile.title')]
+        ];
+
+        return $this->render('member/member/profile.html.twig', [
+            'menuSelect' => 'members_manager',
+            'form' => $formHandler->getForm()->createView(),
+            'callBackUrl' => $callBackUrl,
+            'breadcrumbs' => $breadcrumbs,
+            'member' => $entity
+        ]);
     }
 
     /**
@@ -98,9 +182,6 @@ class MemberController extends Controller
         
         if($id > 0){
             $entity = $manager->find($id);
-            $entity->setAvatar(
-                new File($this->getParameter('avatars_directory') . $entity->getAvatar())
-            );
         } 
         else{
             $entity = $manager->getNewEntity();
@@ -119,11 +200,16 @@ class MemberController extends Controller
         $formHandler = $this->get('member.form.handler.member');
         $formHandler->setForm($entity);
 
+
+
         if($formHandler->process($request)){
             
             $entity = $formHandler->getData();
-            
+
+           // $this->container->get('vich_uploader.storage')->upload($entity);
+
             if($manager->save($entity)){
+
                 $this->addFlash('success', $translator->trans('member.member.edit.saveSuccessText'));
                 
                 if(null !== $request->get('save_and_leave', null)){
@@ -173,7 +259,8 @@ class MemberController extends Controller
             'menuSelect' => 'members_manager',
             'form' => $formHandler->getForm()->createView(),
             'callBackUrl' => $callBackUrl,
-            'breadcrumbs' => $breadcrumbs
+            'breadcrumbs' => $breadcrumbs,
+            'member' => $entity
          ]);
     }
 

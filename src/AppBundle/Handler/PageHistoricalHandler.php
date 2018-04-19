@@ -42,6 +42,7 @@ class PageHistoricalHandler
 
     public function setCallbackUrl($name, $callBackUrl, $urlParams = [], $anchor = null)
     {
+
         $this->session->set(
             $this->sessionName.'_'.$name,
             // todo improve that

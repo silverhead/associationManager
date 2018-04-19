@@ -1,0 +1,56 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block javascript %}
+    <script src="{{ asset('plugins/jquery-inputmask/jquery.inputmask.bundle.js') }}"></script>
+    <script src="{{ asset('plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('plugins/fileinput/locales/fr.js') }}"></script>
+    <script src="{{ asset('bundles/member/member/js/profile.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
+        <h2 class="col-xs-12">
+            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
+            {{ 'member.member.profile.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(form) }}
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        <li role="presentation" class="active"><a href="#tabIdentity" data-toggle="tab">{{ 'member.member.edit.tab.identity'|trans }} {#<i class="material-icons text-danger">warning</i>#}</a></li>
+                        <li role="presentation"><a href="#tabCoordonates" data-toggle="tab">{{ 'member.member.edit.tab.coordonate'|trans }}</a></li>
+                        <li role="presentation"><a href="#tabConnexion" data-toggle="tab">{{ 'member.member.edit.tab.connexion'|trans }}</a></li>
+                        <li role="presentation"><a href="#tabMemberInfos" data-toggle="tab">{{ 'member.member.edit.tab.memberInfo'|trans }}</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="tabIdentity">
+                            {% include 'member/member/profile/identity.html.twig' %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tabCoordonates">
+                            {% include 'member/member/profile/coordonates.html.twig' %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tabConnexion">
+                            {% include 'member/member/profile/infosConnection.html.twig' %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tabMemberInfos">
+                            {% include 'member/member/profile/infosMember.html.twig' %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            {% include ':form:submitBtnSaveAndStay.html.twig' with {} only %}
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

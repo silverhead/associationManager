@@ -5,6 +5,9 @@ namespace AppBundle\Manager;
 use AppBundle\Repository\PaginatorRepositoryInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
+use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use AppBundle\QueryHelper\FilterQuery;
 use AppBundle\QueryHelper\OrderQuery;
@@ -189,10 +192,13 @@ Trait PaginatorManagerTrait
         return $qb->getQuery()->getResult();
     }
 
-    public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page', $anchor = null, $route = null)
+    public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page', $anchor = null, $route = null): PaginationInterface
     {
         $qb = $this->getQueryList();
 
+        /**
+         * @var \Knp\Component\Pager\Pagination\PaginationInterface
+         */
         $paginate = $this->paginator->paginate($qb, $page, $itemPerPage, [
             'pageParameterName' => $pageParameterName,
             'anchor' => $anchor

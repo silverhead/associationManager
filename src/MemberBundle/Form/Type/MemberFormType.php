@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class MemberFormType extends UserFormType
 {
@@ -22,12 +23,15 @@ class MemberFormType extends UserFormType
     {
         parent::buildForm($builder, $options);
         $builder
-        ->add('avatar', FileType::class, array(
+        ->add('avatarFile', VichFileType::class, [
             'required' => false,
+            'allow_delete' => false,
+            'download_uri' => false,
+            'download_label' => '...',
             'attr' => [
                 'data-current' => $options['currentAvatar']
             ]
-            ))
+        ])
         ->add('birthday', DateType::class, array(
             'widget' => 'single_text'
         ))
@@ -51,7 +55,11 @@ class MemberFormType extends UserFormType
                                     return $er->createQueryBuilder('ms')->orderBy('ms.label', 'ASC');
                                },
                 'choice_label' => 'label'
-             ));
+             ))
+            ->remove('group')
+            ->remove('active')
+        ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

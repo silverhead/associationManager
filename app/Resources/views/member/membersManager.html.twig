@@ -37,26 +37,28 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
                         {% if is_granted('MEMBER_MEMBER_VIEW') %}
-                        <li role="presentation" class="active"><a href="#members" data-toggle="tab">{{ 'member.manager.tabMembers'|trans }}</a></li>
+                            <li role="presentation" class="active"><a href="#members" data-toggle="tab">{{ 'member.manager.tabMembers'|trans }}</a></li>
                         {% endif %}
-                            {% if is_granted('MEMBER_STATUS_VIEW') %}
-                        <li role="presentation"><a href="#status" data-toggle="tab">{{ 'member.manager.tabStatus'|trans }}</a></li>
+                        {% if is_granted('MEMBER_STATUS_VIEW') %}
+                            <li role="presentation"><a href="#status" data-toggle="tab">{{ 'member.manager.tabStatus'|trans }}</a></li>
                         {% endif %}
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
                         {% if is_granted('MEMBER_MEMBER_VIEW') %}
-                        <div role="tabpanel" class="tab-pane fade in active" data-anchor="members" id="members">
-                            {{ render(controller('MemberBundle:Member:list', {'request': app.request, 'anchor': 'members'})) }}
-                        </div>
+                            <div role="tabpanel" class="tab-pane fade in active" data-anchor="members" id="members">
+                                {{ memberListTpl|raw }}
+                                {#{{ render(controller('MemberBundle:Member:list', {'request': app.request, 'anchor': 'members'})) }}#}
+                            </div>
                         {% endif %}
                         {% if is_granted('MEMBER_STATUS_VIEW') %}
-                        <div role="tabpanel" class="tab-pane fade" id="status">
-                            <div id="memberStatusContainer" data-anchor="status" data-page-parameter-name="pageTab2">
-                                {{ render(controller('MemberBundle:MemberStatus:list', {'request': app.request, 'anchor': 'status'})) }}
+                            <div role="tabpanel" class="tab-pane fade" id="status">
+                                <div id="memberStatusContainer" data-anchor="status" data-page-parameter-name="pageTab2">
+                                    {{ statusListTpl|raw }}
+                                    {#{{ render(controller('MemberBundle:MemberStatus:list', {'request': app.request, 'anchor': 'status'})) }}#}
+                                </div>
                             </div>
-                        </div>
                         {% endif %}
                     </div>
                 </div>

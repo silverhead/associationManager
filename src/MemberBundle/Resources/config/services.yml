@@ -51,10 +51,14 @@ services:
     # FORM
     member.form.handler.member:
         class: MemberBundle\Form\Handler\MemberFormHandler
-        arguments: ['@form.factory', '@member.manager.member']
+        arguments: ['@form.factory', '@service_container']
     member.form.handler.subscription_historical:
         class: MemberBundle\Form\Handler\MemberSubscriptionHistoricalFormHandler
         arguments: ['@form.factory', '@service_container']
     member.form.handler.subscription_fee:
         class: MemberBundle\Form\Handler\MemberSubscriptionFeeFormHandler
         arguments: ['@form.factory', '@service_container']
+    # CONTROLLER
+    member.controller.status:
+        class: MemberBundle\Controller\MemberStatusController
+        arguments: ['@service_container']

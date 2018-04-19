@@ -36,4 +36,4 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     user.manager.user:
         class: UserBundle\Manager\UserManager
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session', 'paginator_order_user_list', {username: 'u.username', email: 'u.email', group: 'g.label'}]
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']

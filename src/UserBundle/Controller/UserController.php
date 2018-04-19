@@ -6,11 +6,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use AppBundle\QueryHelper\OrderQuery;
+use Symfony\Component\HttpFoundation\Response;
+
 class UserController extends Controller
 {
     const ITEMS_PER_PAGE = 4;
     const PAGE_PARAMETER_NAME = 'pageTab3';
-
 
     /**
      * @Route("/user/manager", name="user_manager")
@@ -20,7 +22,6 @@ class UserController extends Controller
     {
         return $this->render('user/manager.html.twig', array());
     }
-
 
     /**
      * @Route("/user/list-part/{anchor}", name="user_list_part",  options = { "expose" = true })
@@ -32,18 +33,31 @@ class UserController extends Controller
         $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
         $currentRoute = 'user_manager';
 
-        //dump($request);exit();
-        
         $userManager = $this->get('user.manager.user');
-        
-        $orders = $request->get('orders', array(
-            'username' => 'asc',
+
+        $userManager->activateCache('userList');
+
+        $orders = $request->get('orders', $userManager->getArrayOrdersInCacheByKey(array(
+        'username' => 'asc',
             'email' => '',
             'group' => ''
-        ));
-        
-        $userManager->setPaginatorOrders($orders);
-        
+        )));
+
+        $userManager
+            ->addOrder(
+                new OrderQuery("u.username" , $orders['username']),
+                'username'
+            )
+            ->addOrder(
+                new OrderQuery("u.email" , $orders['email']),
+                'email'
+            )
+            ->addOrder(
+                new OrderQuery("g.label" , $orders['group']),
+                'group'
+            )
+        ;
+
         $results = $userManager->paginatedList(
             $page,
             self::ITEMS_PER_PAGE,
@@ -63,6 +77,57 @@ class UserController extends Controller
         return $this->render('/user/user/list.html.twig', array(
             'results' => $results,
             'order' => $orders
+        ));
+    }
+
+    /**
+     * @Route("/user/profile/{id}", name="user_profile")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function profileAction(Request $request, $id)
+    {
+        $translator = $this->get('translator');
+        $manager = $this->get('user.manager.user');
+        $formHandler = $this->get('user.form.handler.user');
+
+        $entity = $manager->find($id);
+
+        $formHandler->setForm($entity, true);
+
+        if($formHandler->process($request)){
+            $entity = $formHandler->getData();
+
+            if($manager->save($entity)){
+                $this->addFlash('success', $translator->trans('user.user.edit.saveSuccessText'));
+
+                return $this->redirectToRoute('user_profile', [
+                    'id' => $entity->getId()
+                ]);
+            }
+
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.errorComming', [
+                    '%error%' => '<br />' . implode('<br />', $manager->getErrors())
+                ]));
+        }
+
+        $breadcrumbs = [
+            [
+                'href' => $this->redirectToRoute('dashboard'),
+                'title' => $translator->trans('app.dashboard.callback'),
+                'label' => $translator->trans('app.dashboard.title')
+            ]
+        ];
+
+        $breadcrumbs[] = [
+            'label' => $translator->trans('user.user.profile.title')
+        ];
+
+        return $this->render('/user/user/profile.html.twig', array(
+            'formUser' =>  $formHandler->getForm()->createView(),
+            'breadcrumbs' => $breadcrumbs,
         ));
     }
 
@@ -90,23 +155,7 @@ class UserController extends Controller
         $formHandler->setForm($entity);
 
         if($formHandler->process($request)){
-
-            $form = $formHandler->getForm();
-
-            $entity->setFirstName($form['firstName']->getData());
-            $entity->setLastName($form['lastName']->getData());
-            $entity->setUsername($form['username']->getData());
-            $entity->setEmail($form['email']->getData());
-
-            if(!empty($form['password']->getData())){
-                $encoder = $this->get('security.password_encoder');
-
-                $entity->setSalt(uniqid());
-
-                $entity->setPassword(
-                    $encoder->encodePassword($entity, $form['password']->getData())
-                );
-            }
+            $entity = $formHandler->getData();
 
             if($manager->save($entity)){
                 $this->addFlash('success', $translator->trans('user.user.edit.saveSuccessText'));

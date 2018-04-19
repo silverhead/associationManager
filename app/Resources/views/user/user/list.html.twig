@@ -40,7 +40,8 @@
                 </table>
             </form>
             <div class="pull-right">
-                {% include 'main/pagination.html.twig' %}
+                {{ knp_pagination_render(results) }}
+                {#{% include 'main/pagination.html.twig' %}#}
             </div>
         </div>
     </div>

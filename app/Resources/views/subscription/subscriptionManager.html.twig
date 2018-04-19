@@ -9,6 +9,7 @@
     <script src="{{ asset("bundles/subscription/subscription/js/manage.js") }}"></script>
     <script src="{{ asset("bundles/subscription/periodicity/js/manage.js") }}"></script>
     <script src="{{ asset("bundles/subscription/paymentType/js/manage.js") }}"></script>
+    <script src="{{ asset("bundles/member/member/js/subscriptionFee.js") }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -35,15 +36,21 @@
             <div class="body">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                    <li role="presentation" class="active"><a href="#subscriptions" data-toggle="tab">{{ 'subscription.manager.tabSubscriptions'|trans }}</a></li>
+                    <li role="presentation" class="active"><a href="#subscriptionFees" data-toggle="tab">{{ 'subscription.manager.tabSubscriptionsFee'|trans }}</a></li>
+                    <li role="presentation"><a href="#subscriptions" data-toggle="tab">{{ 'subscription.manager.tabSubscriptions'|trans }}</a></li>
                     <li role="presentation"><a href="#periodicities" data-toggle="tab">{{ 'subscription.manager.tabPeriodicities'|trans }}</a></li>
                     <li role="presentation"><a href="#paymentTypes" data-toggle="tab">{{ 'subscription.manager.tabPaymentTYpes'|trans }}</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="subscriptions">
+                    <div role="tabpanel" class="tab-pane fade in active" id="subscriptionFees">
+                        <div id="subscriptionFeesContainer" data-anchor="subscriptionFees" data-page-parameter-name="{{ constant('SubscriptionBundle\\Controller\\SubscriptionController::PAGE_PARAMETER_NAME') }}">
+                            {{ render(controller('SubscriptionBundle:SubscriptionFee:list', {'request': app.request, 'anchor': 'subscriptionFees'})) }}
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade in " id="subscriptions">
                         <div id="subscriptionsContainer" data-anchor="subscriptions" data-page-parameter-name="{{ constant('SubscriptionBundle\\Controller\\SubscriptionController::PAGE_PARAMETER_NAME') }}">
-                         {{ render(controller('SubscriptionBundle:Subscription:list', {'request': app.request, 'anchor': 'subscriptions'})) }}
+                            {{ render(controller('SubscriptionBundle:Subscription:list', {'request': app.request, 'anchor': 'subscriptions'})) }}
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="periodicities">

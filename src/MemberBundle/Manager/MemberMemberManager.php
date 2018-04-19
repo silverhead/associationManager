@@ -40,7 +40,7 @@ class MemberMemberManager implements PaginatorManagerInterface
         $this->paginator = $paginator;
         
         $this->session = $session;
-        }
+    }
 
     public function getNewEntity()
     {
