@@ -1,13 +1,35 @@
 services:
     # EVENT LISTENER
+    subscription.subscription.credential.event:
+        class: AppBundle\EventListener\AppCredentialEventListener
+        arguments: ['%credentialVoterSubscriptionSubscription%', 'subscription.subscription.credential.title']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     subscription.paymentType.credential.event:
-        class: SubscriptionBundle\EventListener\PaymentTypeCredentialEventListener
+        class: AppBundle\EventListener\AppCredentialEventListener
         arguments: ['%credentialVoterSubscriptionPaymentType%', 'subscription.paymentType.credential.title']
         tags:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    subscription.periodicity.credential.event:
+        class: AppBundle\EventListener\AppCredentialEventListener
+        arguments: ['%credentialVoterSubscriptionPeriodicity%', 'subscription.periodicity.credential.title']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     # VOTER
+    subscription.subscritpion.voter:
+        class: AppBundle\Security\AppVoter
+        autowire: true
+        arguments: ['%credentialVoterSubscriptionSubscription%']
+        tags:
+            - {name: security.voter}
+    subscription.periodicity.voter:
+        class: AppBundle\Security\AppVoter
+        autowire: true
+        arguments: ['%credentialVoterSubscriptionPeriodicity%']
+        tags:
+            - {name: security.voter}
     subscription.paymentType.voter:
-        class: SubscriptionBundle\Security\PaymentTypeVoter
+        class: AppBundle\Security\AppVoter
         autowire: true
         arguments: ['%credentialVoterSubscriptionPaymentType%']
         tags:

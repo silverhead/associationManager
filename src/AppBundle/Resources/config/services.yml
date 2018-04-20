@@ -1,0 +1,14 @@
+services:
+    # EVENT LISTENER
+    app.setting.credential.event:
+        class: AppBundle\EventListener\AppCredentialEventListener
+        arguments: ['%credentialVoterAppSetting%', 'app.setting.credential.title']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    # VOTER
+    app.setting.voter:
+        class: AppBundle\Security\AppVoter
+        autowire: true
+        arguments: ['%credentialVoterAppSetting%']
+        tags:
+            - {name: security.voter}

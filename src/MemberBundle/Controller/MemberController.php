@@ -20,6 +20,22 @@ class MemberController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $translator = $this->get('translator');
+
+        if(
+            (!$this->isGranted("MEMBER_MEMBER_VIEW"))
+            &&
+            (!$this->isGranted("MEMBER_STATUS_VIEW"))
+        ){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
         $memberManager = $this->get('member.manager.member');
 
         $memberListTpl = $this->memberlist($request, "");

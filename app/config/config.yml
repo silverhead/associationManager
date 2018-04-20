@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: ../../src/AppBundle/Resources/config/config.yml }
     - { resource: ../../src/SubscriptionBundle/Resources/config/config.yml }
     - { resource: ../../src/MemberBundle/Resources/config/config.yml }
     - { resource: ../../src/UserBundle/Resources/config/config.yml }

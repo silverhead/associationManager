@@ -21,6 +21,26 @@ class SubscriptionController extends Controller
      */
     public function managerAction()
     {
+        $translator = $this->get('translator');
+
+        if(
+            (!$this->isGranted("SUBSCRIPTION_SUBSCRIPTION_VIEW"))
+            &&
+            (!$this->isGranted("SUBSCRIPTION_PERIODICITY_VIEW"))
+            &&
+            (!$this->isGranted("SUBSCRIPTION_PAYMENT_TYPE_VIEW"))
+            &&
+            (!$this->isGranted("MEMBER_SUBSCRIPTION_VIEW"))
+        ){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
         $subscriptionManager = $this->get('subscription.manager.subscription');
         $totalSubscriberMembers = $subscriptionManager->getCountAllSubscriberMembers();
 
