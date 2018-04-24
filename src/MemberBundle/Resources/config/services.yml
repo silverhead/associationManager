@@ -28,10 +28,16 @@ services:
         arguments: ['%credentialVoterMemberStatus%']
         tags:
             - {name: security.voter}
-    member.sbuscription.voter:
+    member.subscription.voter:
         class: AppBundle\Security\AppVoter
         autowire: true
         arguments: ['%credentialvotermembersubscription%']
+        tags:
+            - {name: security.voter}
+    member.menu.voter:
+        class: MemberBundle\security\MemberMenuVoter
+        autowire: true
+        arguments: ['%credentialVoterMemberMenu%', '%masterCredentialMenuMember%']
         tags:
             - {name: security.voter}
     # MANAGER

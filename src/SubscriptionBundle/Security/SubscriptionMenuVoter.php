@@ -1,31 +1,36 @@
 <?php
 
-namespace AppBundle\Security;
+namespace SubscriptionBundle\Security;
 
+use AppBundle\Security\AppVoter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class AppVoter extends Voter
+class SubscriptionMenuVoter extends AppVoter
 {
     protected $credentials = array();
 
-    public function __construct($credentials){
+    private $masterCredentialMenu;
+
+    public function __construct($credentials, $masterCredentialMenu){
         $this->credentials = $credentials;
+
+        $this->masterCredentialMenu = $masterCredentialMenu;
     }
 
     protected function supports($attribute, $subject = null)
     {
-        return in_array($attribute, $this->credentials);
+        return $attribute == $this->masterCredentialMenu;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         $credentials = $token->getUser()->getGroup()->getCredentials();
 
-        if(in_array($attribute, $credentials)){
+        if( count(array_intersect($this->credentials, $credentials)) > 0 && $attribute == $this->masterCredentialMenu){
             return true;
         }
 
         return false;
     }
+
 }

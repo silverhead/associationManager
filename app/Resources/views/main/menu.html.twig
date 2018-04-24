@@ -1,0 +1,49 @@
+<div class="menu">
+    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 463px;">
+        <ul class="list" style="height: 463px; overflow: hidden; width: auto;">
+        <li class="header">Menu</li>
+        <li class="{% if menuSelect == 'dashboard' %}active{% endif %}">
+            <a href="{{ path('dashboard') }}" class=" waves-effect waves-block">
+                <i class="material-icons">dashboard</i>
+                <span>{{ 'menu.dashboard'|trans }}</span>
+            </a>
+        </li>
+        {% if is_granted('MEMBER_MANAGER_MENU') %}
+            <li class="{% if menuSelect == 'members_manager' %}active{% endif %}">
+                <a href="{{ path('members_manager') }}" class=" waves-effect waves-block">
+                    <i class="material-icons">recent_actors</i>
+                    <span>{{ 'menu.member'|trans }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('SUBSCRIPTION_MANAGER_MENU') %}
+            <li class="{% if menuSelect == 'subscription_manager' %}active{% endif %}">
+                <a href="{{ path('subscription_manager') }}" class=" waves-effect waves-block">
+                    <i class="material-icons">cached</i>
+                    <span>{{ 'menu.subscription'|trans }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('APP_MASTER_SETTING_MENU') %}
+            <li class="header">{{ 'menu.application'|trans }}</li>
+            {% if is_granted('APP_SETTING_VIEW') %}
+                <li  class="{% if menuSelect == 'setting_manager' %}active{% endif %}">
+                    <a href="{{ path('setting_manager') }}" class=" waves-effect waves-block">
+                        <i class="material-icons">settings</i>
+                        <span>{{ 'menu.setting'|trans }}</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted('USER_MANAGER_MENU') %}
+                <li  class="{% if menuSelect == 'user_manager' %}active{% endif %}">
+                    <a href="{{ path('user_manager') }}" class=" waves-effect waves-block">
+                        <i class="material-icons">group</i>
+                        <span>{{ 'menu.user'|trans }}</span>
+                    </a>
+                </li>
+            {% endif %}
+        {% endif %}
+        </ul>
+        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.498039); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 189.038px;"></div><div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+    </div>
+</div>

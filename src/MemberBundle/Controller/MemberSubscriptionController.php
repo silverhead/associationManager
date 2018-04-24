@@ -45,8 +45,6 @@ class MemberSubscriptionController extends Controller
             'subscriptionFees'
         );
 
-        dump($this->get('session')->get('page_historical_subscription_fee_save'));
-
         return $this->render('member/member/view/subscriptionFee.html.twig', array(
             'fees' => $memberSubscriptionFees
         ));

@@ -10,6 +10,11 @@ services:
         arguments: ['%credentialVoterUserUser%', 'user.user.credential.title']
         tags:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    user.menu_setting_credential.event:
+        class: AppBundle\EventListener\AppMenuCredentialEventListener
+        arguments: ['%credentialvoterusermenu%']
+        tags:
+            - { name: kernel.event_listener, event: app.security.menu.credential.event, method: onProvideCredential }
     # VOTER
     user_group_voter:
         class: UserBundle\Security\UserGroupVoter
@@ -21,6 +26,12 @@ services:
         class: UserBundle\Security\UserVoter
         autowire: true
         arguments: ['%credentialVoterUserUser%']
+        tags:
+            - {name: security.voter}
+    user_menu_voter:
+        class: UserBundle\Security\UserMenuVoter
+        autowire: true
+        arguments: ['%credentialvoterusermenu%', '%masterCredentialMenuUser%']
         tags:
             - {name: security.voter}
     # Form Handler

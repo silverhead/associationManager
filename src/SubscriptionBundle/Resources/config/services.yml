@@ -34,7 +34,12 @@ services:
         arguments: ['%credentialVoterSubscriptionPaymentType%']
         tags:
             - {name: security.voter}
-
+    subscription_menu_voter:
+        class: SubscriptionBundle\Security\SubscriptionMenuVoter
+        autowire: true
+        arguments: ['%credentialVoterMenuSubscription%', '%masterCredentialMenuSubscription%']
+        tags:
+            - {name: security.voter}
     # Repository
     subscription.repository.subscription:
         class: Doctrine\ORM\EntityRepository

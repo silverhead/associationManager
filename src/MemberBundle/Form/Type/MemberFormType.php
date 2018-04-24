@@ -56,8 +56,6 @@ class MemberFormType extends UserFormType
                                },
                 'choice_label' => 'label'
              ))
-            ->remove('group')
-            ->remove('active')
         ;
 
     }

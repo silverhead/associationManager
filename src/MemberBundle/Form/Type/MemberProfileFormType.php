@@ -11,7 +11,11 @@ class MemberProfileFormType extends MemberFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->remove('status');
+        $builder
+            ->remove('status')
+            ->remove('group')
+            ->remove('active')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

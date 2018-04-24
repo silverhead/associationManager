@@ -1,36 +1,35 @@
 <?php
 
-namespace UserBundle\Security;
+namespace MemberBundle\security;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class UserVoter extends Voter
+class MemberMenuVoter extends Voter
 {
-    private $credentials = array();
+    protected $credentials;
 
-    public function __construct($credentials){
+    protected $masterCredentialMenu;
+
+    public function __construct($credentials, $masterCredentialMenu){
         $this->credentials = $credentials;
+
+        $this->masterCredentialMenu = $masterCredentialMenu;
     }
 
     protected function supports($attribute, $subject = null)
     {
-        return in_array($attribute, $this->credentials);
+        return $attribute ==  $this->masterCredentialMenu;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         $credentials = $token->getUser()->getGroup()->getCredentials();
 
-        if(
-            in_array($attribute, $credentials)
-            ||
-            in_array('ROLE_ADMIN', $token->getUser()->getRoles())
-        ){
+        if( count(array_intersect($this->credentials, $credentials)) > 0 &&  $attribute == $this->masterCredentialMenu){
             return true;
         }
 
         return false;
     }
-
 }
