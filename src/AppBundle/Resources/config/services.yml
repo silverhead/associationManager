@@ -23,3 +23,11 @@ services:
         arguments: ['@service_container', '%masterCredentialVoterAppSettingMenu%']
         tags:
             - {name: security.voter}
+    # Form handler
+    app.form.handler.dashboard_bundle_setting:
+        class: AppBundle\Form\Handler\DashboardBundleFormHandler
+        arguments: ['@form.factory', '@event_dispatcher']
+    # Manager
+    app.manager.dashboard_bundle_setting:
+        class: AppBundle\Manager\DashboardBundleSettingManager
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']

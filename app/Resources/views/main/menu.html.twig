@@ -34,6 +34,14 @@
                     </a>
                 </li>
             {% endif %}
+            {#{% if is_granted('APP_SETTING_VIEW') %}#}
+                <li  class="{% if menuSelect == 'dashboard_manager' %}active{% endif %}">
+                    <a href="{{ path('dashboard_manager') }}" class=" waves-effect waves-block">
+                        <i class="material-icons">settings</i>
+                        <span>{{ 'menu.dashboard_manager'|trans }}</span>
+                    </a>
+                </li>
+            {#{% endif %}            #}
             {% if is_granted('USER_MANAGER_MENU') %}
                 <li  class="{% if menuSelect == 'user_manager' %}active{% endif %}">
                     <a href="{{ path('user_manager') }}" class=" waves-effect waves-block">

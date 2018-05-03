@@ -182,12 +182,16 @@ Trait PaginatorManagerTrait
         return $qb;
     }
 
-    public function getList($offset = 1, $limit = 10)
+    public function getList($offset = 0, $limit = 10)
     {
         $qb = $this->getQueryList();
 
         $qb->setFirstResult($offset);
-        $qb->setMaxResults($limit);
+
+        if($limit > 0){
+            $qb->setMaxResults($limit);
+        }
+
 
         return $qb->getQuery()->getResult();
     }

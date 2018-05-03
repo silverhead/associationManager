@@ -29,102 +29,15 @@
     <h2>Tableau de bord</h2>
 </div>
 {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
-<div class="row clearfix">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="info-box bg-orange hover-expand-effect">
-            <div class="icon">
-                <a href="{{ path('member_edit') }}" title="Ajouter un nouveau membre">
-                    <i class="material-icons">person_add</i>
-                </a>
+    <div class="row clearfix">
+        {% for bundle in dashboardBundlesList %}
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                {{ bundle|raw }}
             </div>
-            <div class="content">
-                <div class="text">Total membres</div>
-                <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">{{ memberActifCount }}</div>
+            {% if loop.index % 2 == 0 %}
             </div>
-        </div>
+            <div class="row clearfix">
+            {% endif %}
+        {% endfor %}
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="info-box bg-orange hover-expand-effect">
-            <div class="icon">
-                <i class="material-icons">cached</i>
-            </div>
-            <div class="content">
-                <div class="text">Total cotisation</div>
-                <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">{{ totalPayedFee|number_format(2, ",") }} €</div>
-            </div>
-        </div>
-</div>
-<div class="row clearfix">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="card">
-            <div class="header">
-                <h2>
-                    Liste des 10 membres les plus en retard
-                    {#<small>Use <code>.table-striped</code> to add zebra-striping to any table row within the <code>&lt;tbody&gt;</code></small>#}
-                </h2>
-                {#<ul class="header-dropdown m-r--5">#}
-                    {#<li class="dropdown">#}
-                        {#<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#}
-                            {#<i class="material-icons">more_vert</i>#}
-                        {#</a>#}
-                        {#<ul class="dropdown-menu pull-right">#}
-                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>#}
-                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>#}
-                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>#}
-                        {#</ul>#}
-                    {#</li>#}
-                {#</ul>#}
-            </div>
-            <div class="body table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nom complet</th>
-                        <th>Statut</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for member in latePaymentMemberList %}
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>{{ member.getFullName() }}</td>
-                        <td>{{ member.getLastStatus().getLabel() }}</td>
-                        <td>
-                            <a href="{{ path('member_view', {'id': 1}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
-                            <a href="{{ path('member_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
-                            <a href="#" class="btn btn-danger material-icons">delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="card">
-            <div class="header">
-                <h2>Taux types d'abonnement</h2>
-                {#<ul class="header-dropdown m-r--5">#}
-                    {#<li class="dropdown">#}
-                        {#<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#}
-                            {#<i class="material-icons">more_vert</i>#}
-                        {#</a>#}
-                        {#<ul class="dropdown-menu pull-right">#}
-                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>#}
-                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>#}
-                            {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>#}
-                        {#</ul>#}
-                    {#</li>#}
-                {#</ul>#}
-            </div>
-            <div class="body">
-                <div id="abo_chart" class="graph"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
 {% endblock %}

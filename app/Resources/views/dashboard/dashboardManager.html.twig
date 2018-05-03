@@ -1,0 +1,53 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/dashboardSetting/js/manage.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <div class="row block-header">
+        {#{% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}#}
+        <h2 class="col-xs-12">
+            {#<a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;#}
+            {{ 'dashboard.manager.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                {{ form_start(form) }}
+                <div class="body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="col-md-12">{{ 'dashboard.manager.bundle_manager'|trans }}</h3>
+                            <p class="m-t-15 m-b-30">{{ 'dashboard.manager.subtitle'|trans }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="#" id="addDashboardBundle" data-list="#collectionContainer" class="btn btn-success">{{ 'dashboard.manager.add'|trans }}</a>
+                        </div>
+                    </div>
+                    {{ form_start(form) }}
+                    <div id="collectionContainer"
+                         data-prototype="{% filter escape %}
+                            {{ include(':dashboard:dashboardSettingForm.html.twig', { 'form': form.bundles.vars.prototype, 'displayAddButton': false }) }}
+                         {% endfilter %}">
+                        {% for bundle in form.bundles %}
+                            {{ include(':dashboard:dashboardSettingForm.html.twig', { 'form': bundle, 'displayAddButton': false }) }}
+                        {% endfor %}
+                    </div>
+                    {{ form_end(form) }}
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            {% include ':form:submitBtnSave.html.twig' with {} only %}
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                    {#{{ form_end(formUserGroup) }}#}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

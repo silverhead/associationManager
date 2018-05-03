@@ -1,0 +1,45 @@
+<div class="info-box bg-orange hover-expand-effect">
+    <div class="icon">
+        <a href="{{ path('member_edit') }}" title="{{ 'member.member.add'|trans }}">
+            <i class="material-icons">person_add</i>
+        </a>
+    </div>
+    <div class="content">
+        <div class="text">{{ 'member.dashboard.totalMembers'|trans }}</div>
+        <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">{{ memberActifCount }}</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="header">
+        <h2>
+            {{ 'member.dashboard.tableTitleTop10'|trans }}
+        </h2>
+    </div>
+    <div class="body table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>{{ 'member.dashboard.table.fullName'|trans }}</th>
+                <th>{{ 'member.dashboard.table.status'|trans }}</th>
+                <th>{{ 'app.common.table.action'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for member in latePaymentMemberList %}
+                <tr>
+                    <th scope="row">{{ member.getId() }}</th>
+                    <td>{{ member.getFullName() }}</td>
+                    <td>{{ member.getLastStatus().getLabel() }}</td>
+                    <td>
+                        <a href="{{ path('member_view', {'id': 1}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
+                        <a href="{{ path('member_edit', {'id': 1}) }}" class="btn btn-warning material-icons">edit</a>
+                        <a href="#" class="btn btn-danger material-icons">delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

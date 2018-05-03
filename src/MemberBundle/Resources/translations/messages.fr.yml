@@ -38,14 +38,14 @@ member:
                   female: Femme
                   male: Homme
               birthday: Date de naissance
-              # coordonates
+              # contact information
               phone: Téléphone fixe
               cellular: Téléphone mobile
               country: Pays
               city: Ville
               zipcode: Code postal
               address: Adresse
-              # connexion
+              # connection
               username: identifiant
               email: E-mail
               group: Groupe
@@ -117,3 +117,10 @@ member:
         credential:
             edit: Editer les cotisation
             save: Enregistrer la cotisation
+    dashboard:
+        membersInLate: Membres en retard de cotisations
+        totalMembers: Total membres
+        tableTitleTop10: Top 10 des membres les plus en retard
+        table:
+            fullName: Nom complet
+            status: Statut

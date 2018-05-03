@@ -53,3 +53,5 @@ subscription:
         list:
             table:
                 label: Libellé
+    dashboard:
+        tableTitleTop10: Top 10 abonnement

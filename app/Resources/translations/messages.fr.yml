@@ -169,3 +169,13 @@ menu:
     application: Application
     setting: Paramètre
     user: Utilisateurs
+dashboard:
+    manager:
+        title: Gestionnaire du tableau de bord
+        subtitle: Gérer l'affichage des modules en fonction du groupe utilisateur
+        bundle_manager: Gestion affichage des modules
+        add: Ajouter nouveau module sur le tableau de board
+        form:
+            bundle: Module
+            group: Groupe utilisateur
+            order: Ordre d'affichage

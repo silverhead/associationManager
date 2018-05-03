@@ -15,6 +15,11 @@ services:
         arguments: ['%credentialvotermembersubscription%', 'member.subscription.title']
         tags:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    member.dashboard.bundle.event:
+        class: AppBundle\EventListener\AppDashboardBundleEventListener
+        arguments: ['member.dashboard_bundle.top10_late_payment_members', '%member.dashboard_bundle.top10_late_payment_members%']
+        tags:
+            - { name: kernel.event_listener, event: app.dashboard.bundle.event, method: onProvideBundle }
     # VOTER
     member.member.voter:
         class: AppBundle\Security\AppVoter
@@ -67,4 +72,7 @@ services:
     # CONTROLLER
     member.controller.status:
         class: MemberBundle\Controller\MemberStatusController
+        arguments: ['@service_container']
+    member.controller.dashboard:
+        class: MemberBundle\Controller\DashboardController
         arguments: ['@service_container']

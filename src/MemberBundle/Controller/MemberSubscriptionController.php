@@ -4,7 +4,6 @@ namespace MemberBundle\Controller;
 
 use AppBundle\QueryHelper\FilterQuery;
 use AppBundle\QueryHelper\OrderQuery;
-use MemberBundle\Entity\MemberSubscriptionFee;
 use MemberBundle\Entity\MemberSubscriptionHistorical;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

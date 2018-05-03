@@ -1,0 +1,6 @@
+parameters:
+    # DASHBOARD BUNDLES
+    subscription.dashboard_bundle.subscription_list:
+        service: 'subscription.controller.dashboard'
+        action: 'totalSubscribersListAction'
+        label: 'subscription.dashboard.tableTitleTop10'

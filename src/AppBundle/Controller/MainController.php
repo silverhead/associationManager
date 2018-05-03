@@ -25,32 +25,25 @@ class MainController extends Controller
      */
     public function dashboard()
     {
-        $memberManager = $this->get('member.manager.member');
-        $memberActifCount = $memberManager->getMemberNb(true);
-
-        $subscriptionFeeManager = $this->get('member.manager.subscription_fee');
-        $totalPayedFee = $subscriptionFeeManager->getTotalPaidFee();
-
-        $memberManager->addFilter(
-            new FilterQuery("fees.startDate", new \DateTime(), "<"),
-            'feeStartDate'
-        )
-        ->addFilter(
-            new FilterQuery("fees.paid", false, "="),
-            'feesPaid'
+        $dashboardBundlesList = array(
+            (object) array(
+                'service' => 'member.controller.dashboard',
+                'action' => 'latePaymentMemberListAction'
+            ),
+            (object) array(
+                'service' => 'subscription.controller.dashboard',
+                'action' => 'totalSubscribersListAction'
+            ),
         );
 
-        $memberManager->addOrder(
-            new OrderQuery('fees.startDate', OrderQuery::DESC),
-            'feeStartDate'
-        );
+        $dashboardBundlesActionList = array();
 
-        $latePaymentMemberList = $memberManager->getList(0,10);
+        foreach ($dashboardBundlesList as $bundle){
+            $dashboardBundlesActionList[] = $this->get($bundle->service)->getAction($bundle->action);
+        }
 
         return $this->render('main/dashboard.html.twig', array(
-            'memberActifCount' => $memberActifCount,
-            'totalPayedFee' => $totalPayedFee,
-            'latePaymentMemberList' => $latePaymentMemberList
+            'dashboardBundlesList' => $dashboardBundlesActionList
         ));
     }
 }
