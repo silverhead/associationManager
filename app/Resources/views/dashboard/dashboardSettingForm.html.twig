@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="bundle-{{ index }}">
     <div class="col-md-6">
         {{ form_row(form.bundle, {'label': 'dashboard.manager.form.bundle'|trans, 'attr': {'class': 'text-right'}}) }}
     </div>
@@ -11,7 +11,7 @@
         {{ form_row(form.order, {'label': 'dashboard.manager.form.order'|trans, 'attr': {'class': 'text-right'}}) }}
     </div>
     <div class="col-md-1">
-        <a href="#" class="btn btn-danger">
+        <a href="#" class="btn btn-danger del-bundle" data-bundle="{{ index }}">
             <i class="material-icons">delete</i>
         </a>
     </div>

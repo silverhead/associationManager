@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Event\DashboardBundleEvent;
 use AppBundle\QueryHelper\FilterQuery;
 use AppBundle\QueryHelper\OrderQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -25,21 +26,25 @@ class MainController extends Controller
      */
     public function dashboard()
     {
-        $dashboardBundlesList = array(
-            (object) array(
-                'service' => 'member.controller.dashboard',
-                'action' => 'latePaymentMemberListAction'
-            ),
-            (object) array(
-                'service' => 'subscription.controller.dashboard',
-                'action' => 'totalSubscribersListAction'
-            ),
+        $dashboardBundleEvent = new DashboardBundleEvent();
+        $this->container->get('event_dispatcher')->dispatch(
+            DashboardBundleEvent::EVENT_NAME,
+            $dashboardBundleEvent
         );
+        $bundles = $dashboardBundleEvent->getBundlesList();
+
+        $dashboardBundlesManager  = $this->get('app.manager.dashboard_bundle_setting');
+
+        $dashboardBundlesList = $dashboardBundlesManager->getListByUserGroup($this->getUser()->getGroup());
 
         $dashboardBundlesActionList = array();
 
-        foreach ($dashboardBundlesList as $bundle){
-            $dashboardBundlesActionList[] = $this->get($bundle->service)->getAction($bundle->action);
+        foreach ($dashboardBundlesList as $bundleSetting){
+
+            if($bundles[$bundleSetting->getBundleCode()]){
+              $bundle =  $bundles[$bundleSetting->getBundleCode()];
+              $dashboardBundlesActionList[] = $this->get($bundle->getService())->getAction($bundle->getAction());
+            }
         }
 
         return $this->render('main/dashboard.html.twig', array(

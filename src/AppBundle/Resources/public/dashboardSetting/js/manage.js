@@ -22,5 +22,43 @@ $(document).ready(function () {
         //var newElem = $(list.attr('data-widget-tags')).html(newWidget);
         // newWidget.appendTo(list);
         list.prepend(newWidget);
+
+        recalculIndexRow();
     });
 });
+
+$(document).on('click', '.del-bundle', function(){
+    var bundleIndex = $(this).data('bundle');
+
+    swal({
+            title: "Supprimer l'affichage du module ?",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Oui",
+            cancelButtonText: "Annuler",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+        function(isConfirm) {
+            if (!isConfirm) return false;
+
+            $('#bundle-' + bundleIndex).remove();
+            recalculIndexRow();
+        });
+});
+
+function recalculIndexRow()
+{
+    var $rows =  $('#collectionContainer').find('.row');
+
+    $rows.each(function(index){
+        var num = ++index;
+        var idRow = "bundle-" + num;
+
+        $(this).attr('id', idRow);
+
+        $(this).find('.del-bundle').attr('data-bundle', num);
+    });
+}
