@@ -46,6 +46,6 @@ class DashboardBundleFormType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'app_bundle_forgot_password_form_type';
+        return 'app_bundle_dashboard_setting_form_type';
     }
 }

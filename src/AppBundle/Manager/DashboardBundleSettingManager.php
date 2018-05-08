@@ -4,9 +4,11 @@ namespace AppBundle\Manager;
 
 use AppBundle\Entity\DashboardBundle;
 use AppBundle\Entity\DashboardBundleSetting;
+use AppBundle\Form\Model\DashboardBundleCollectionModel;
 use AppBundle\Handler\ErrorHandlerTrait;
 use AppBundle\QueryHelper\FilterQuery;
 use AppBundle\QueryHelper\OrderQuery;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use UserBundle\Entity\UserGroup;

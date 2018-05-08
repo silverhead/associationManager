@@ -23,6 +23,7 @@ class AppDashboardBundleEventListener
         $dashboardBundle->setService($data['service']);
         $dashboardBundle->setAction($data['action']);
         $dashboardBundle->setLabel($data['label']);
+        $dashboardBundle->setJsFiles($data['js_files']);
 
         $this->dashboardBundle = $dashboardBundle;
     }

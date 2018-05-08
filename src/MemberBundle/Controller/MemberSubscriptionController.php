@@ -118,9 +118,9 @@ class MemberSubscriptionController extends Controller
 
         $pageH = $this->get('app.handler.page_historical');
 
-        $urlCallbak = $pageH->getCallbackUrl('subscription_fee_save');
+        $urlCallback = $pageH->getCallbackUrl('subscription_fee_save');
 
-        return $this->redirect($urlCallbak);
+        return $this->redirect($urlCallback);
     }
 
     /**

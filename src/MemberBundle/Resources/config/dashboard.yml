@@ -1,6 +1,7 @@
 parameters:
     # DASHBOARD BUNDLES
-    member.dashboard_bundle.top10_late_payment_members:
+    member.dashboard.tableTitleTop10:
         service: 'member.controller.dashboard'
         action: 'latePaymentMemberListAction'
         label: 'member.dashboard.tableTitleTop10'
+        js_files: []

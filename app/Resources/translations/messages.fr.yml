@@ -170,12 +170,26 @@ menu:
     setting: Paramètre
     user: Utilisateurs
 dashboard:
+    title: Tableau de bord
+    menu:
+        manager: Gestion du tableau de bord
     manager:
         title: Gestionnaire du tableau de bord
         subtitle: Gérer l'affichage des modules en fonction du groupe utilisateur
         bundle_manager: Gestion affichage des modules
-        add: Ajouter nouveau module sur le tableau de board
-        form:
-            bundle: Module
-            group: Groupe utilisateur
-            order: Ordre d'affichage
+        add: Ajouter nouveau module sur le tableau de bord
+    list:
+        bundle: Module
+        group: Groupe utilisateur
+        order: Ordre d'affichage
+    form:
+        saveSuccessText: L'affichage du module "%bundleName%" a été enregistré avec succès !
+        add_title: Ajouter un nouveau module à afficher sur le tableau de bord
+        edit_title: Modifier l'affichage du module
+        bundle: Module
+        group: Groupe utilisateur
+        order: Ordre d'affichage
+    delete:
+        deleteQuestionText: Supprimer l'affichage du module ?
+        deleteErrorMissingText: La gestion de l'affichage du module n'a pas été trouvée !
+        deleteSucessText: L'affichage du module a été supprimé avec succès !

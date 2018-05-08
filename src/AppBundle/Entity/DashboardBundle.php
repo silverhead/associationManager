@@ -25,6 +25,16 @@ class DashboardBundle
     private $label;
 
     /**
+     * @var array
+     */
+    private $jsFiles;
+
+    public function __construct()
+    {
+        $this->jsFiles = array();
+    }
+
+    /**
      * @return string
      */
     public function getBundleCode():? string
@@ -99,4 +109,25 @@ class DashboardBundle
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getJsFiles(): array
+    {
+        return $this->jsFiles;
+    }
+
+    /**
+     * @param array $jsFiles
+     * @return DashboardBundle
+     */
+    public function setJsFiles(array $jsFiles): DashboardBundle
+    {
+        $this->jsFiles = $jsFiles;
+
+        return $this;
+    }
+
+
 }

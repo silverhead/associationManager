@@ -2,6 +2,8 @@
 
 {% block javascript %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/common/js/jquery.reload.list.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/app/common/js/app.deleteConfirm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/dashboardSetting/js/manage.js') }}"></script>
 {% endblock %}
 {% block content %}
@@ -16,36 +18,40 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="card">
-                {{ form_start(form) }}
                 <div class="body">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="col-md-12">{{ 'dashboard.manager.bundle_manager'|trans }}</h3>
-                            <p class="m-t-15 m-b-30">{{ 'dashboard.manager.subtitle'|trans }}</p>
+                        <h3 class="col-md-12">{{ 'dashboard.manager.bundle_manager'|trans }}</h3>
+                        <p class="m-t-15 m-b-30">{{ 'dashboard.manager.subtitle'|trans }}</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="#" id="addDashboardBundle" data-list="#collectionContainer" class="btn btn-success">{{ 'dashboard.manager.add'|trans }}</a>
+                            <a href="#" id="addDashboardBundle" data-list="#dashboardSettingContainer" data-id="0" class="editDashboardBundleDisplay btn btn-success">{{ 'dashboard.manager.add'|trans }}</a>
                         </div>
                     </div>
-                    {{ form_start(form) }}
-                    <div id="collectionContainer"
-                         data-prototype="{% filter escape %}
-                            {{ include(':dashboard:dashboardSettingForm.html.twig', { 'form': form.bundles.vars.prototype, 'index': 0 }) }}
-                         {% endfilter %}">
-                        {% for bundle in form.bundles %}
-                            {{ include(':dashboard:dashboardSettingForm.html.twig', { 'form': bundle, 'index': loop.index }) }}
-                        {% endfor %}
-                    </div>
-                    {{ form_end(form) }}
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            {% include ':form:submitBtnSave.html.twig' with {} only %}
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="dashboardSettingContainer">
+                            {% include ':dashboard:dashboardList.html.twig' %}
                         </div>
                     </div>
-                    {{ form_end(form) }}
-                    {#{{ form_end(formUserGroup) }}#}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editDashboardBundleModal" tabindex="-1" role="dialog" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" id="editDashboardBundleTitle"></h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="saveDashboardBundleBtn" data-id="" class="btn btn-link waves-effect">{{ 'app.common.form.submit.save'|trans }}</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">{{ 'app.common.cancelBtn'|trans }}</button>
                 </div>
             </div>
         </div>

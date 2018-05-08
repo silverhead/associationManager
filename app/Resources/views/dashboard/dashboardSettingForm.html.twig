@@ -1,18 +1,17 @@
-<div class="row" id="bundle-{{ index }}">
-    <div class="col-md-6">
-        {{ form_row(form.bundle, {'label': 'dashboard.manager.form.bundle'|trans, 'attr': {'class': 'text-right'}}) }}
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            {{ form_row(form.group, {'label': 'dashboard.manager.form.group'|trans, 'attr': {'class': 'text-right'}}) }}
-        </div>
-    </div>
-    <div class="col-md-2">
-        {{ form_row(form.order, {'label': 'dashboard.manager.form.order'|trans, 'attr': {'class': 'text-right'}}) }}
-    </div>
-    <div class="col-md-1">
-        <a href="#" class="btn btn-danger del-bundle" data-bundle="{{ index }}">
-            <i class="material-icons">delete</i>
-        </a>
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-12">
+        {{ form_row(form.bundle, {'label': 'dashboard.form.bundle'|trans, 'attr': {'class': 'text-right'}}) }}
     </div>
 </div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="form-group">
+            {{ form_row(form.group, {'label': 'dashboard.form.group'|trans, 'attr': {'class': 'text-right'}}) }}
+        </div>
+    </div>
+    <div class="col-md-4">
+        {{ form_row(form.order, {'label': 'dashboard.form.order'|trans, 'attr': {'class': 'text-right'}}) }}
+    </div>
+</div>
+{{ form_end(form) }}

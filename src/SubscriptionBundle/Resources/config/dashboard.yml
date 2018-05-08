@@ -1,6 +1,7 @@
 parameters:
     # DASHBOARD BUNDLES
-    subscription.dashboard_bundle.subscription_list:
+    subscription.dashboard.tableTitleTop10:
         service: 'subscription.controller.dashboard'
         action: 'totalSubscribersListAction'
         label: 'subscription.dashboard.tableTitleTop10'
+        js_files: ['bundles/subscription/dashboard/js/tableTop10Subcription.js']

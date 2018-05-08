@@ -17,7 +17,7 @@ services:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     member.dashboard.bundle.event:
         class: AppBundle\EventListener\AppDashboardBundleEventListener
-        arguments: ['member.dashboard_bundle.top10_late_payment_members', '%member.dashboard_bundle.top10_late_payment_members%']
+        arguments: ['member.dashboard.tableTitleTop10', '%member.dashboard.tableTitleTop10%']
         tags:
             - { name: kernel.event_listener, event: app.dashboard.bundle.event, method: onProvideBundle }
     # VOTER

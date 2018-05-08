@@ -40,7 +40,7 @@ class DashboardBundleSetting
 
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(name="display_order", type="integer", nullable=false)
      */
     private $order;
 

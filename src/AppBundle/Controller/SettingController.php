@@ -14,6 +14,18 @@ class SettingController extends Controller
      */
     public function ManagerAction(Request $request)
     {
+        $translator = $this->get('translator');
+
+        if(!$this->isGranted("APP_SETTING_VIEW")){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
         $formSettingAppHandler = $this->get('app.form.handler.setting_app');
 
         $formSettingAppHandler->setForm();

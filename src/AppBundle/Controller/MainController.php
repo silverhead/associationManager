@@ -38,17 +38,22 @@ class MainController extends Controller
         $dashboardBundlesList = $dashboardBundlesManager->getListByUserGroup($this->getUser()->getGroup());
 
         $dashboardBundlesActionList = array();
+        $jsBundles = array();
 
         foreach ($dashboardBundlesList as $bundleSetting){
-
             if($bundles[$bundleSetting->getBundleCode()]){
-              $bundle =  $bundles[$bundleSetting->getBundleCode()];
-              $dashboardBundlesActionList[] = $this->get($bundle->getService())->getAction($bundle->getAction());
+                $bundle =  $bundles[$bundleSetting->getBundleCode()];
+                $dashboardBundlesActionList[] = $this->get($bundle->getService())->getAction($bundle->getAction());
+
+                foreach($bundle->getJsFiles() as $jsFile){
+                    $jsBundles[] = $jsFile;
+                }
             }
         }
 
         return $this->render('main/dashboard.html.twig', array(
-            'dashboardBundlesList' => $dashboardBundlesActionList
+            'dashboardBundlesList' => $dashboardBundlesActionList,
+            'jsBundles' => $jsBundles
         ));
     }
 }

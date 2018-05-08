@@ -1,0 +1,29 @@
+<div class="body table-responsive">
+    <table class="table table-striped dataTable">
+        <thead>
+        <tr>
+            <th>{{ 'dashboard.list.bundle'|trans }}</th>
+            <th>{{ 'dashboard.list.group'|trans }}</th>
+            <th>{{ 'dashboard.list.order'|trans }}</th>
+            <th>{{ 'app.common.table.action'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for bundle in bundles %}
+            <tr>
+                <td class="left">{{ bundle.getBundleCode()|trans }}</td>
+                <td class="left">{{ bundle.getGroup().getLabel() }}</td>
+                <td class="center">{{ bundle.getOrder() }}</td>
+                <td class="center">
+                    <a href="" data-id="{{ bundle.getId() }}" class="editDashboardBundleDisplay btn btn-warning">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    <a href="#" class="btn btn-danger del-bundle" data-id="{{ bundle.getId() }}">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

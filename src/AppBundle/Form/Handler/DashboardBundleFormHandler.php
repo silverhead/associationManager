@@ -6,7 +6,8 @@ use AppBundle\Entity\DashboardBundleSetting;
 use AppBundle\Event\DashboardBundleEvent;
 use AppBundle\Form\Model\DashboardBundleCollectionModel;
 use AppBundle\Form\Type\DashboardBundleCollectionFormType;
-use Symfony\Component\BrowserKit\Request;
+use AppBundle\Form\Type\DashboardBundleFormType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactory;
 
@@ -30,7 +31,7 @@ class DashboardBundleFormHandler
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function setForm(DashboardBundleCollectionModel $dashboardBundleCollectionModel)
+    public function setForm(DashboardBundleSetting $dashboardBundleSetting)
     {
         $dashboardBundleEvent = new DashboardBundleEvent();
         $this->eventDispatcher->dispatch(
@@ -39,12 +40,12 @@ class DashboardBundleFormHandler
         );
         $bundles = $dashboardBundleEvent->getBundlesList();
 
-        foreach($dashboardBundleCollectionModel->getBundles() as $dashboardBundle){
-            $bundle = $bundles[$dashboardBundle->getBundleCode()];
-            $dashboardBundle->setBundle($bundle);
+        if($dashboardBundleSetting->getId() > 0){
+            $bundle = $bundles[$dashboardBundleSetting->getBundleCode()];
+            $dashboardBundleSetting->setBundle($bundle);
         }
 
-        $this->form = $this->formFactory->create(DashboardBundleCollectionFormType::class, $dashboardBundleCollectionModel, array(
+        $this->form = $this->formFactory->create(DashboardBundleFormType::class, $dashboardBundleSetting, array(
             'bundles' => $bundles
         ));
     }
@@ -67,5 +68,16 @@ class DashboardBundleFormHandler
         }
 
         return false;
+    }
+
+    public function getData()
+    {
+        $data =  $this->form->getData();
+
+        $data->setBundleCode(
+            $data->getBundle()->getBundleCode()
+        );
+
+        return $data;
     }
 }
