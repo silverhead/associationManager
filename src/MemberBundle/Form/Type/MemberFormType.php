@@ -36,10 +36,13 @@ class MemberFormType extends UserFormType
             'widget' => 'single_text'
         ))
         ->add('gender', ChoiceType::class, array(
-            'choices' => array(
-                'member.member.edit.form.gender.female' => 'f',
-                'member.member.edit.form.gender.male' => 'm',
-            )
+            'choices' => $options['gender'],
+            'choice_label' => function($gender){
+                return $gender;
+            },
+            'choice_value' => function($gender){
+                return $gender;
+            }
         ))
         ->add('country', CountryType::class, array('preferred_choices' => array('FR')))
         ->add('city', TextType::class)
@@ -48,6 +51,7 @@ class MemberFormType extends UserFormType
         
         ->add('phone', TextType::class)
         ->add('cellular', TextType::class)
+
         ->add('status', EntityType::class, array(
             'class' => 'MemberBundle\Entity\MemberStatus',
             'data' => $options['entity']->getStatus()->count() > 0 ? $options['entity']->getStatus()->first()->getStatus() : '',
@@ -56,15 +60,36 @@ class MemberFormType extends UserFormType
                                },
                 'choice_label' => 'label'
              ))
+        ->add('expertise', ChoiceType::class, array(
+           'multiple' => true,
+           'choices' => $options['expertise'],
+           'choice_label' => function($expertise){
+               return $expertise;
+            },
+            'choice_value' => function($expertise){
+                return $expertise;
+            }
+        ))
+            ->add('study', ChoiceType::class, array(
+                'choices' => $options['study'],
+                'choice_label' => function($study){
+                    return $study;
+                },
+                'choice_value' => function($study){
+                    return $study;
+                }
+            ))
         ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(array(
             'currentAvatar',
-            'entity'
+            'entity',
+            'gender',
+            'study',
+            'expertise'
         ))
         ->setDefaults(array(
             'data_class' => Member::class
@@ -73,6 +98,6 @@ class MemberFormType extends UserFormType
 
     public function getBlockPrefix()
     {
-        return 'app_bundle_member_status_form_type';
+        return 'app_bundle_member_edit_form_type';
     }
 }

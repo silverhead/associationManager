@@ -2,6 +2,7 @@
 
 namespace MemberBundle\Entity;
 
+use AppBundle\Entity\FieldsList;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -86,7 +87,7 @@ class Member extends User
     /**
      * 
      * @var string
-     * @ORM\Column(length=2, nullable=false)
+     * @ORM\Column(length=255, nullable=false)
      */
     protected $gender;
     
@@ -123,23 +124,16 @@ class Member extends User
     protected $address;
 
     /**
-     * @return \DateTime
+     * @var array
+     * @ORM\Column(type="array", nullable=false)
      */
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
+    protected $expertise;
 
     /**
-     * @param \DateTime $updatedAt
-     * @return Member
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
-    public function setUpdatedAt(\DateTime $updatedAt): Member
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
+    protected $study;
 
     /**
      * @ORM\Column(type="datetime")
@@ -343,7 +337,10 @@ class Member extends User
     {
         $statusHistoricalOld = $this->statusHistorical->first();
 
-        if($statusHistoricalOld == null || $statusHistoricalOld->getStatus()->getId() != $status->getId()){
+        dump($statusHistoricalOld);
+        dump($status);
+
+        if($statusHistoricalOld == null || $statusHistoricalOld->getStatus() == null || $statusHistoricalOld->getStatus()->getId() != $status->getId()){
             $statusHistorical = new MemberStatusHistorical();
             $statusHistorical->setStatus($status)
                 ->setMember($this)
@@ -568,4 +565,60 @@ class Member extends User
         return $this;
     }
 
+    /**
+     * @return array
+     */
+    public function getExpertise():? array
+    {
+        return $this->expertise;
+    }
+
+    /**
+     * @param array $expertise
+     * @return Member
+     */
+    public function setExpertise(array $expertise): Member
+    {
+        $this->expertise = $expertise;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStudy():? string
+    {
+        return $this->study;
+    }
+
+    /**
+     * @param string $study
+     * @return Member
+     */
+    public function setStudy(string $study): Member
+    {
+        $this->study = $study;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     * @return Member
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): Member
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 }

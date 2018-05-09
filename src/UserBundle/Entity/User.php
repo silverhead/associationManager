@@ -64,13 +64,13 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=255, nullable=false, unique=false)
      */
     private $firstName;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=255, nullable=false, unique=false)
      */
     private $lastName;
 

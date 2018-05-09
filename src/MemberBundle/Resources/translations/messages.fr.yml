@@ -24,6 +24,7 @@ member:
               connexion: Connexion
               memberInfo: Info. adhésion
               subscription: Abonnement
+            saveSuccessText: Le membre a été enregistré avec succès !
             form:
               # identity
               avatar:
@@ -49,8 +50,12 @@ member:
               username: identifiant
               email: E-mail
               group: Groupe
+              active: Actif
               #member
               status: Statut
+              expertise: Spécialités
+              study: Etude
+              expertise_placeholder: Vous pouvez selectionner plusieurs spécialités
         view:
             title: Fiche de {lastName} {firstName}
             subscriptionDate: Date d'adhésion
@@ -61,6 +66,13 @@ member:
             deleteSuccessText: Le membre a été supprimé.
         profile:
             title: Votre profils
+        setting:
+            tab: Configuration
+            form:
+                gender: Genre/statut
+                study: Etude
+                expertise: Spécialité
+                saveSuccessText: Les configurations ont été enregistrées avec succès !
     status:
         credential:
             title: Adhérents (statuts)

@@ -1,7 +1,7 @@
 $(function(){
     $('.date').inputmask('dd/mm/yyyy', { placeholder: '__/__/____' });
 
-    var $logoInput = $("#app_bundle_member_status_form_type_avatarFile_file");
+    var $logoInput = $("#app_bundle_member_edit_form_type_avatarFile_file");
     var logo = $logoInput.parents('.avatar-holder').data('current-avatar');
 
     $logoInput.fileinput({
@@ -27,7 +27,7 @@ $(function(){
     $('#add-subscription').on('click', function(e){
     		e.preventDefault();
     		
-    		var $formSubscription = $('#app_bundle_member_status_form_type_subscriptions').data('prototype');
+    		var $formSubscription = $('#app_bundle_member_edit_form_type_subscriptions').data('prototype');
     		
     		$('#subscription-container').html($formSubscription);
     });

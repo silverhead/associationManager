@@ -15,6 +15,11 @@ services:
         arguments: ['%credentialvotermembersubscription%', 'member.subscription.title']
         tags:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    member.setting.credential.event:
+        class: AppBundle\EventListener\AppCredentialEventListener
+        arguments: ['%credentialVoterMemberSetting%', 'member.setting.title']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     member.dashboard.bundle.event:
         class: AppBundle\EventListener\AppDashboardBundleEventListener
         arguments: ['member.dashboard.tableTitleTop10', '%member.dashboard.tableTitleTop10%']
@@ -39,6 +44,12 @@ services:
         arguments: ['%credentialvotermembersubscription%']
         tags:
             - {name: security.voter}
+    member.setting.voter:
+        class: AppBundle\Security\AppVoter
+        autowire: true
+        arguments: ['%credentialVoterMemberSetting%']
+        tags:
+            - {name: security.voter}
     member.menu.voter:
         class: MemberBundle\security\MemberMenuVoter
         autowire: true
@@ -59,7 +70,10 @@ services:
     member.manager.subscription_fee:
         class: MemberBundle\Manager\MemberSubscriptionFeeManager
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']
-    # FORM
+    # FORM MODEL
+    member.form.model.member_setting:
+        class: MemberBundle\Form\Model\MemberSettingModel
+    # FORM HANDLER
     member.form.handler.member:
         class: MemberBundle\Form\Handler\MemberFormHandler
         arguments: ['@form.factory', '@service_container']
@@ -69,10 +83,16 @@ services:
     member.form.handler.subscription_fee:
         class: MemberBundle\Form\Handler\MemberSubscriptionFeeFormHandler
         arguments: ['@form.factory', '@service_container']
+    member.form.handler.member_setting:
+        class: MemberBundle\Form\Handler\MemberSettingHandler
+        arguments: ['@form.factory', '@member.form.model.member_setting', '@app.manager.setting']
     # CONTROLLER
     member.controller.status:
         class: MemberBundle\Controller\MemberStatusController
         arguments: ['@service_container']
     member.controller.dashboard:
         class: MemberBundle\Controller\DashboardController
+        arguments: ['@service_container']
+    member.controller.setting:
+        class: MemberBundle\Controller\MemberSettingController
         arguments: ['@service_container']

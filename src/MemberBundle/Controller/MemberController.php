@@ -4,6 +4,7 @@ namespace MemberBundle\Controller;
 
 use AppBundle\QueryHelper\OrderQuery;
 use Doctrine\Common\Collections\ArrayCollection;
+use MemberBundle\Entity\Member;
 use MemberBundle\Entity\MemberSubscriptionFee;
 use MemberBundle\Entity\MemberSubscriptionHistorical;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -40,12 +41,14 @@ class MemberController extends Controller
 
         $memberListTpl = $this->memberlist($request, "");
         $statusListTpl = $this->get('member.controller.status')->listAction($request, "");
+        $settingTpl = $this->get('member.controller.setting')->settingAction($request);
 
         return $this->render('member/membersManager.html.twig', array(
             'menuSelect' => 'members_manager',
             'nbMember' => $memberManager->getMemberNb(),
             'memberListTpl' => $memberListTpl,
             'statusListTpl' => $statusListTpl,
+            'settingTpl' => $settingTpl
         ));
     }
 
@@ -200,6 +203,9 @@ class MemberController extends Controller
             $entity = $manager->find($id);
         } 
         else{
+            /**
+             * @var Member
+             */
             $entity = $manager->getNewEntity();
             
             $status = new MemberStatusHistorical();
@@ -207,7 +213,7 @@ class MemberController extends Controller
                 ->setStartDate(new \DateTime())
             ;
             
-            $entity->addStatus($status);
+            $entity->addStatusHistorical($status);
         }
 
         $pageH = $this->get('app.handler.page_historical');
@@ -221,8 +227,7 @@ class MemberController extends Controller
         if($formHandler->process($request)){
             
             $entity = $formHandler->getData();
-
-           // $this->container->get('vich_uploader.storage')->upload($entity);
+            $entity->setUpdatedAt(new \DateTime());
 
             if($manager->save($entity)){
 

@@ -11,6 +11,8 @@ class MemberFormHandler extends UserFormHandler
 {
     public function setForm(UserInterface $member = null, $profile = false)
     {
+        $settingManager = $this->container->get('app.manager.setting');
+
         parent::setForm($member, $profile);
 
         $currentAvatar = '/images/avatars/user.png';
@@ -23,7 +25,10 @@ class MemberFormHandler extends UserFormHandler
 
         $this->form = $this->formFactory->create($formType, $member, [
             'currentAvatar' => $currentAvatar,
-            'entity' => $this->entity
+            'entity' => $this->entity,
+            'gender' => $settingManager->getFormatedSettingValue('member.setting.gender'),
+            'study' => $settingManager->getFormatedSettingValue('member.setting.study'),
+            'expertise' => $settingManager->getFormatedSettingValue('member.setting.expertise')
         ]);
     }
 }

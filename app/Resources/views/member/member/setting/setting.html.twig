@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="body table-responsive">
+            {{ form_start(form, {'action': path('members_manager') ~ '#setting' }) }}
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ form_row(form.gender, {'label': 'member.member.setting.form.gender'|trans, 'attr': {'class': 'form-control', 'data-role': 'tagsinput'}}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ form_row(form.study, {'label': 'member.member.setting.form.study'|trans, 'attr': {'class': 'form-control', 'data-role': 'tagsinput'}}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ form_row(form.expertise, {'label': 'member.member.setting.form.expertise'|trans, 'attr': {'class': 'form-control', 'data-role': 'tagsinput'}}) }}
+                    </div>
+                </div>
+                {% include ':form:submitBtnSave.html.twig' %}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

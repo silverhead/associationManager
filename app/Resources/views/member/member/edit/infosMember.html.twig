@@ -1,28 +1,13 @@
 <div class="row">
-    <div class="col-lg-4 col-md-6">
+    <div class="col-lg-4 col-md-12">
         {{ form_row(form.status) }}
     </div>
-    {#     
+</div>
+<div class="row">
     <div class="col-lg-4 col-md-6">
-         <div class="form-group">
-             <label class="control-label col-sm-10">Spécialités</label>
-             <div class="col-sm-10 form-line">
-                 <select class="form-control selectpicker" multiple id="" title="Selectionner">
-                     <option value="1">Biologie</option>
-                     <option value="2">Electronique</option>
-                     <option value="3">Informatique</option>
-                     <option value="4">Travail du bois</option>
-                 </select>
-             </div>
-         </div>
+        {{ form_row(form.expertise, {'label': 'member.member.edit.form.expertise'|trans, 'attr': {'title': 'member.member.edit.form.expertise_placeholder'|trans}}) }}
     </div>
     <div class="col-lg-4 col-md-6">
-        <div class="form-group">
-            <label class="control-label col-sm-10">Profession</label>
-            <div class="col-sm-10 form-line">
-                <input type="text" title="Profession" class="form-control" id="" placeholder="Profession">
-            </div>
-        </div>
+        {{ form_row(form.study) }}
     </div>
-    #}    
 </div>
