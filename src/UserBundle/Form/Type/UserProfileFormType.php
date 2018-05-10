@@ -22,7 +22,7 @@ class UserProfileFormType extends UserFormType
             ->add('lastName', TextType::class)
             ->add('username', TextType::class)
             ->add('email', EmailType::class)
-            ->add('password', RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => false,
                 'first_options' => array('label' => 'user.user.edit.form.password'),
@@ -44,6 +44,6 @@ class UserProfileFormType extends UserFormType
 
     public function getBlockPrefix()
     {
-        return 'user_bundle_user_group_form_type';
+        return 'user_bundle_user_profile_form_type';
     }
 }

@@ -99,7 +99,7 @@ class UserController extends Controller
             $entity = $formHandler->getData();
 
             if($manager->save($entity)){
-                $this->addFlash('success', $translator->trans('user.user.edit.saveSuccessText'));
+                $this->addFlash('success', $translator->trans('user.user.profile.saveSuccessText'));
 
                 return $this->redirectToRoute('user_profile', [
                     'id' => $entity->getId()

@@ -128,7 +128,8 @@ user:
         add:
             title: Ajouter un utilisateur
         profile:
-            title: Votre profils
+            title: Votre profil
+            saveSuccessText: Votre profil a été enregistré !
         edit:
             title: Modifier un utilisateur
             form:

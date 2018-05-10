@@ -22,11 +22,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Member extends User
 {
-    protected static $genders = array(
-        'm' => 'member.member.edit.form.gender.male',
-        'f' => 'member.member.edit.form.gender.female'
-    );
-
     protected $discr = 'member';
 
     /**
@@ -55,7 +50,6 @@ class Member extends User
      */
     protected $fees;
 
-
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
@@ -83,6 +77,12 @@ class Member extends User
      * @ORM\Column(length=10, nullable=true)
      */
     protected $phone;
+
+    /**
+     * @var string
+     * @ORM\Column(length=255, nullable=true)
+     */
+    protected $organization;
 
     /**
      * 
@@ -337,9 +337,6 @@ class Member extends User
     {
         $statusHistoricalOld = $this->statusHistorical->first();
 
-        dump($statusHistoricalOld);
-        dump($status);
-
         if($statusHistoricalOld == null || $statusHistoricalOld->getStatus() == null || $statusHistoricalOld->getStatus()->getId() != $status->getId()){
             $statusHistorical = new MemberStatusHistorical();
             $statusHistorical->setStatus($status)
@@ -425,7 +422,7 @@ class Member extends User
      * @param string $cellular
      * @return Member
      */
-    public function setCellular($cellular)
+    public function setCellular($cellular = null)
     {
         $this->cellular = $cellular;
 
@@ -449,6 +446,26 @@ class Member extends User
     {
         return $this->gender;
     }
+
+    /**
+     * @return string
+     */
+    public function getOrganization():? string
+    {
+        return $this->organization;
+    }
+
+    /**
+     * @param string $organization
+     * @return Member
+     */
+    public function setOrganization(string $organization = null): Member
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
     /**
      * @return string
      */
@@ -484,12 +501,6 @@ class Member extends User
         $this->fees = $fees;
 
         return $this;
-    }
-
-
-
-    public function getFullGender(){
-        return self::$genders[$this->gender];
     }
 
     public function getFullCountryName(){

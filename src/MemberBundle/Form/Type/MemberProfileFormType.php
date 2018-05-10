@@ -20,6 +20,8 @@ class MemberProfileFormType extends MemberFormType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
+
         $resolver->setRequired(array(
             'currentAvatar',
             'entity'

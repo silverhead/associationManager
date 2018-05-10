@@ -35,6 +35,9 @@ class MemberFormType extends UserFormType
         ->add('birthday', DateType::class, array(
             'widget' => 'single_text'
         ))
+        ->add('organization', TextType::class, array(
+            'required' => false
+        ))
         ->add('gender', ChoiceType::class, array(
             'choices' => $options['gender'],
             'choice_label' => function($gender){
@@ -49,9 +52,12 @@ class MemberFormType extends UserFormType
         ->add('zipcode', TextType::class)
         ->add('address', TextType::class)
         
-        ->add('phone', TextType::class)
-        ->add('cellular', TextType::class)
-
+        ->add('phone', TextType::class, array(
+            'required' => false
+        ))
+        ->add('cellular', TextType::class, array(
+            'required' => false
+        ))
         ->add('status', EntityType::class, array(
             'class' => 'MemberBundle\Entity\MemberStatus',
             'data' => $options['entity']->getStatus()->count() > 0 ? $options['entity']->getStatus()->first()->getStatus() : '',
@@ -61,6 +67,7 @@ class MemberFormType extends UserFormType
                 'choice_label' => 'label'
              ))
         ->add('expertise', ChoiceType::class, array(
+            'required' => false,
            'multiple' => true,
            'choices' => $options['expertise'],
            'choice_label' => function($expertise){
@@ -70,15 +77,15 @@ class MemberFormType extends UserFormType
                 return $expertise;
             }
         ))
-            ->add('study', ChoiceType::class, array(
-                'choices' => $options['study'],
-                'choice_label' => function($study){
-                    return $study;
-                },
-                'choice_value' => function($study){
-                    return $study;
-                }
-            ))
+        ->add('study', ChoiceType::class, array(
+            'choices' => $options['study'],
+            'choice_label' => function($study){
+                return $study;
+            },
+            'choice_value' => function($study){
+                return $study;
+            }
+        ))
         ;
     }
 

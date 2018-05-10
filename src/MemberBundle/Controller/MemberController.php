@@ -133,29 +133,14 @@ class MemberController extends Controller
 
             if($manager->save($entity)){
                 $this->addFlash('success', $translator->trans('member.member.profile.saveSuccessText'));
-
-                if(null !== $request->get('save_and_leave', null)){
-                    if(null!== $callBackUrl){
-                        return $this->redirect($callBackUrl);
-                    }
-
-                    return $this->redirect(
-                        $this->generateUrl('dashboard')
-                    );
-                }
-
-                if(null !== $request->get('save_and_stay', null)){
-                    return $this->redirectToRoute('member_edit', [
-                        'id' => $entity->getId()
-                    ]);
-                }
             }
-
-            $this->addFlash(
-                'error',
-                $translator->trans('app.common.errorComming', [
-                    '%error%' => '<br />' . implode('<br />', $manager->getErrors())
-                ]));
+            else{
+                $this->addFlash(
+                    'error',
+                    $translator->trans('app.common.errorComming', [
+                        '%error%' => '<br />' . implode('<br />', $manager->getErrors())
+                    ]));
+            }
         }
 
         $breadcrumbs = [

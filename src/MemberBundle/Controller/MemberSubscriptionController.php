@@ -39,7 +39,9 @@ class MemberSubscriptionController extends Controller
 
         $pageH->setCallbackUrl(
             'subscription_fee_save',
-            $this->generateUrl('member_view', $subscriptionHistorical->getMember()->getId()),
+            $this->generateUrl('member_view', array(
+                'id' => $subscriptionHistorical->getMember()->getId()
+            )),
             [$pageParamName => $page],
             'subscriptionFees'
         );

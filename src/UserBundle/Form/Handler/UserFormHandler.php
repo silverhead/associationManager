@@ -97,13 +97,15 @@ class UserFormHandler
     {
         $form = $this->form;
 
-        if(!empty($form['password']->getData())){
+        $this->entity->setRoles(array('ROLE_USER'));
+
+        if(null !== $form['plainPassword']->getData()){
             $encoder = $this->container->get('security.password_encoder');
 
             $this->entity->setSalt(uniqid());
 
             $this->entity->setPassword(
-                $encoder->encodePassword($this->entity, $form['password']->getData())
+                $encoder->encodePassword($this->entity, $form['plainPassword']->getData())
             );
         }
 

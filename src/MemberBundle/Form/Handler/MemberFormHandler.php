@@ -18,7 +18,6 @@ class MemberFormHandler extends UserFormHandler
         $currentAvatar = '/images/avatars/user.png';
 
         $formType = MemberFormType::class;
-
         if($profile){
             $formType = MemberProfileFormType::class;
         }

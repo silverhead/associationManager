@@ -34,6 +34,7 @@ member:
                 cancel: Annuler
               firstName: Prénom
               lastName: Nom
+              organization: Organisation
               gender:
                   label: Genre
                   female: Femme
@@ -56,6 +57,9 @@ member:
               expertise: Spécialités
               study: Etude
               expertise_placeholder: Vous pouvez selectionner plusieurs spécialités
+        profile:
+            saveSuccessText: Votre profil a été enregistré !
+            title: Votre profil
         view:
             title: Fiche de {lastName} {firstName}
             subscriptionDate: Date d'adhésion
