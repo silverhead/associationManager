@@ -104,13 +104,15 @@ class MemberController extends Controller
     }
 
     /**
-     * @Route("/members/profile/{id}", name="member_profile", requirements={"id": "\d+"}, defaults={"id": 0});
+     * @Route("/members/your_profile", name="member_profile");
      */
-    public function editProfileAction(Request $request, $id = 0)
+    public function editProfileAction(Request $request)
     {
         $translator = $this->get('translator');
 
-        if($id == 0){
+        $user = $this->getUser();
+
+        if(null === $user){
             $this->addFlash(
                 'error',
                 $translator->trans('app.common.notAuthorizedPage'));
@@ -120,10 +122,8 @@ class MemberController extends Controller
             );
         }
 
-        $callBackUrl = $this->generateUrl('dashboard');
-
         $manager = $this->get('member.manager.member');
-        $entity = $manager->find($id);
+        $entity = $manager->find($user->getId());
 
         $formHandler = $this->get('member.form.handler.member');
         $formHandler->setForm($entity, true);
@@ -141,11 +141,13 @@ class MemberController extends Controller
                         '%error%' => '<br />' . implode('<br />', $manager->getErrors())
                     ]));
             }
+
+            return $this->redirectToRoute('member_profile');
         }
 
         $breadcrumbs = [
             [
-                'href' => $this->redirectToRoute('dashboard'),
+                'href' => $this->generateUrl('dashboard'),
                 'title' => $translator->trans('app.dashboard.callback'),
                 'label' => $translator->trans('app.dashboard.title')
             ],
@@ -155,7 +157,7 @@ class MemberController extends Controller
         return $this->render('member/member/profile.html.twig', [
             'menuSelect' => 'members_manager',
             'form' => $formHandler->getForm()->createView(),
-            'callBackUrl' => $callBackUrl,
+            'callBackUrl' => $this->generateUrl('dashboard'),
             'breadcrumbs' => $breadcrumbs,
             'member' => $entity
         ]);

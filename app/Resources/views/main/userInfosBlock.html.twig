@@ -9,13 +9,13 @@
         <div class="btn-group user-helper-dropdown">
             <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
             <ul class="dropdown-menu pull-right">
-                <li><a href="{% if app.getUser().getDiscr() == 'member' %}{{ path('member_profile', {'id': app.getUser().getId()}) }}{% else %}{{ path('user_profile', {'id': app.getUser().getId()}) }}{% endif %}" class=" waves-effect waves-block"><i class="material-icons">person</i>Profil</a></li>
+                <li><a href="{{ path('your_profile') }}" class=" waves-effect waves-block"><i class="material-icons">person</i>{{ 'app.user.profile'|trans }}</a></li>
                 {#<li role="seperator" class="divider"></li>#}
                 {#<li><a href="javascript:void(0);" class=" waves-effect waves-block"></li>#}
                 {#<li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">shopping_cart</i>Sales</a></li>#}
                 {#<li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">favorite</i>Likes</a></li>#}
                 <li role="seperator" class="divider"></li>
-                <li><a href="{{ path('logout') }}" class=" waves-effect waves-block"><i class="material-icons">input</i>Se déconnecter</a></li>
+                <li><a href="{{ path('logout') }}" class=" waves-effect waves-block"><i class="material-icons">input</i>{{ 'app.user.logout'|trans }}</a></li>
             </ul>
         </div>
     </div>

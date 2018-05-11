@@ -15,6 +15,11 @@ services:
         arguments: ['%credentialvoterusermenu%']
         tags:
             - { name: kernel.event_listener, event: app.security.menu.credential.event, method: onProvideCredential }
+    user.user.profile_route.event:
+        class: AppBundle\EventListener\AppUserProfileRouteEventListener
+        arguments: ['user', 'user_profile']
+        tags:
+            - { name: kernel.event_listener, event: app.user.profile_route.event, method: onProvideProfileRoute }
     # VOTER
     user_group_voter:
         class: UserBundle\Security\UserGroupVoter

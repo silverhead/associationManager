@@ -114,6 +114,10 @@ app:
                 address: Saisir l'adresse où se situe le siège de votre association
                 description: Saisir une description de votre association
             saveSuccessText: Paramètres de l'application enregistrés avec succès !
+    user:
+        logout: Se déconnecter
+        profile: Profil
+        profileRouteNotFound: User profile route not found for %discr%
 user:
     manager:
         tabUsers: Utilisateurs

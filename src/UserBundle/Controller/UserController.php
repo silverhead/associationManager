@@ -81,17 +81,30 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/profile/{id}", name="user_profile")
+     * @Route("/user/your_profile", name="user_profile")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function profileAction(Request $request, $id)
+    public function profileAction(Request $request)
     {
         $translator = $this->get('translator');
+
+        $user = $this->getUser();
+
+        if(null === $user){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
         $manager = $this->get('user.manager.user');
         $formHandler = $this->get('user.form.handler.user');
 
-        $entity = $manager->find($id);
+        $entity = $manager->find($user->getId());
 
         $formHandler->setForm($entity, true);
 
@@ -100,17 +113,16 @@ class UserController extends Controller
 
             if($manager->save($entity)){
                 $this->addFlash('success', $translator->trans('user.user.profile.saveSuccessText'));
-
-                return $this->redirectToRoute('user_profile', [
-                    'id' => $entity->getId()
-                ]);
+            }
+            else{
+                $this->addFlash(
+                    'error',
+                    $translator->trans('app.common.errorComming', [
+                        '%error%' => '<br />' . implode('<br />', $manager->getErrors())
+                ]));
             }
 
-            $this->addFlash(
-                'error',
-                $translator->trans('app.common.errorComming', [
-                    '%error%' => '<br />' . implode('<br />', $manager->getErrors())
-                ]));
+            return $this->redirectToRoute('user_profile');
         }
 
         $breadcrumbs = [

@@ -9,22 +9,22 @@
             <div class="col-md-6">
                 {{ form_row(form.organization, {'label': 'member.member.edit.form.organization'}) }}
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
                 {{ form_row(form.gender, {'label': 'member.member.edit.form.gender.label'}) }}
             </div>
-            <div class="col-md-6">
-                {{ form_row(form.birthday, {'label': 'member.member.edit.form.birthday'}) }}     
-            </div>        
         </div>
         <div class="row">
             <div class="col-md-6">
                 {{ form_row(form.lastName, {'label': 'member.member.edit.form.lastName'}) }}
             </div>
             <div class="col-md-6">
-        {{ form_row(form.firstName, {'label': 'member.member.edit.form.firstName'}) }}                
+                {{ form_row(form.firstName, {'label': 'member.member.edit.form.firstName'}) }}
             </div>        
-        </div>        
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.birthday, {'label': 'member.member.edit.form.birthday'}) }}
+            </div>
+        </div>
     </div>
 </div>

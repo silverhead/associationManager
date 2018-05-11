@@ -25,6 +25,11 @@ services:
         arguments: ['member.dashboard.tableTitleTop10', '%member.dashboard.tableTitleTop10%']
         tags:
             - { name: kernel.event_listener, event: app.dashboard.bundle.event, method: onProvideBundle }
+    member.user.profile_route.event:
+        class: AppBundle\EventListener\AppUserProfileRouteEventListener
+        arguments: ['member', 'member_profile']
+        tags:
+            - { name: kernel.event_listener, event: app.user.profile_route.event, method: onProvideProfileRoute }
     # VOTER
     member.member.voter:
         class: AppBundle\Security\AppVoter

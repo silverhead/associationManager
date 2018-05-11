@@ -34,6 +34,9 @@
             </div>
             <div class="body">
                 <h3>{{ 'member.member.edit.tab.identity'|trans }}</h3>
+                {% if member.organization is not empty %}
+                    <p><label>{{ 'member.member.edit.form.organization'|trans }} :</label> {{ member.organization }}</p>
+                {% endif %}
                 <p><label>{{ 'member.member.edit.form.gender.label'|trans }} :</label> {{ member.getGender|trans }}</p>
                 <p><label>{{ 'member.member.view.fullNameLabel'|trans }} :</label> {{ member.firstName }} {{ member.lastName }}</p>
                 <p><label>{{ 'member.member.edit.form.birthday'|trans }} :</label> {{ member.birthday|date('d/m/Y') }}</p>
@@ -76,15 +79,15 @@
             </div>
             <div class="body">
                 <p><label>{{ 'member.member.edit.form.status'|trans }} :</label> {{ member.status[0].status.label }}</p>
-                {#<p><label>Profession :</label> Développeur web</p>#}
-                {#<p>#}
-                    {#<label>Spécialité(s) :</label> <br />#}
-                    {#<ul>#}
-                    {#<li>Elecronique</li>#}
-                    {#<li>développeur web</li>#}
-                    {#<li>Menuiserie</li>#}
-                {#</ul>#}
-                {#</p>#}
+                <p><label>{{ 'member.member.edit.form.study'|trans }} :</label> {{ member.study }}</p>
+                <p>
+                    <label>{{ 'member.member.edit.form.expertise'|trans }} :</label> <br />
+                    <ul>
+                    {% for expertise in member.expertise %}
+                        <li>{{ expertise }}</li>
+                    {% endfor %}
+                    </ul>
+                </p>
             </div>
         </div>
     </div>

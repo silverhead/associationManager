@@ -1,25 +1,30 @@
 <div class="row">
     <div class="col-lg-4 col-md-6">
         <div class="avatar-holder center-block" data-current-avatar="{{ vich_uploader_asset(member, 'avatarFile') }}">
-            {{ form_widget(form.avatarFile, {'attr': {'class': 'file-loading'}}) }}
+            {{ form_widget(form.avatarFile, {'attr': {'class': 'file-loading', 'data-current': vich_uploader_asset(member, 'avatarFile')}}) }}
         </div>
     </div>
     <div class="col-lg-8 col-md-6">
         <div class="row">
             <div class="col-md-6">
-                {{ form_row(form.gender, {'label': 'member.member.edit.form.gender.label'}) }}
+                {{ form_row(form.organization, {'label': 'member.member.edit.form.organization'}) }}
             </div>
             <div class="col-md-6">
-                {{ form_row(form.birthday, {'label': 'member.member.edit.form.birthday'}) }}     
-            </div>        
+                {{ form_row(form.gender, {'label': 'member.member.edit.form.gender.label'}) }}
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 {{ form_row(form.lastName, {'label': 'member.member.edit.form.lastName'}) }}
             </div>
             <div class="col-md-6">
-        {{ form_row(form.firstName, {'label': 'member.member.edit.form.firstName'}) }}                
-            </div>        
-        </div>        
+                {{ form_row(form.firstName, {'label': 'member.member.edit.form.firstName'}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.birthday, {'label': 'member.member.edit.form.birthday'}) }}
+            </div>
+        </div>
     </div>
 </div>
