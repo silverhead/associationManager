@@ -27,11 +27,12 @@
                             <td>
                                 {% include ':common:boolean.html.twig' with {'status': fee.getPaid()} %}
                             </td>
+                            {% if is_granted('MEMBER_SUBSCRIPTION_FEE_SAVE') %}
                             <td>
-                                {% if is_granted('MEMBER_SUBSCRIPTION_FEE_SAVE') %}
-                                    <a href="#" data-subscription-label="{{ fee.getSubscription().getSubscription().getLabel() }}" data-id="{{ fee.getId() }}" class="editFee btn btn-warning material-icons">euro_symbol</a>
-                                {% endif %}
+                                <a href="#" data-toggle="popover" data-placement="left" data-content="{{ fee.note }}" class="popoverBtn btn {% if fee.note == "" %}btn-default{% else %}btn-info{% endif %} material-icons">info</a>
+                                <a href="#" data-subscription-label="{{ fee.getSubscription().getSubscription().getLabel() }}" data-id="{{ fee.getId() }}" class="editFee btn btn-warning material-icons">euro_symbol</a>
                             </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>

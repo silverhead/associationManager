@@ -97,9 +97,27 @@ class MemberController extends Controller
 
         $members = $memberManager->paginatedList( $request->query->getInt('page', 1), 10, 'pageMemberList');
 
+        $membersIdList = array();
+        foreach($members as $member){
+            $membersIdList[] = $member->getId();
+        }
+
+        $feeManager = $this->get('member.manager.subscription_fee');
+
+        $latePaymentFeeList = $feeManager->getLatePaymentFeeByMemberIdList($membersIdList);
+        $latePaymentmemberList = array_column($latePaymentFeeList, "id");
+
+        $now = new \DateTime();
+        $delayDayMax = (clone $now)->add(new \DateInterval("P20D"));
+
+        $soonPaymentFeeList = $feeManager->getSoonFeeNewPaymentListByMemberIdList($now,$delayDayMax, $membersIdList);
+        $soonPaymentmemberList = array_column($soonPaymentFeeList, "id");
+
         return $this->renderView('member/member/list.html.twig', array(
             'members' => $members,
-            'order' => $ordersRequest
+            'order' => $ordersRequest,
+            'latePaymentmemberList' => $latePaymentmemberList,
+            'soonPaymentmemberList' => $soonPaymentmemberList
         ));
     }
 

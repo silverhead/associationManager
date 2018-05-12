@@ -30,23 +30,12 @@ class DashboardController extends Controller
         $memberManager = $this->get('member.manager.member');
         $memberActifCount = $memberManager->getMemberNb(true);
 
+        $memberFeeManager = $this->get('member.manager.subscription_fee');
 
-
-        $memberManager->addFilter(
-            new FilterQuery("fees.startDate", new \DateTime(), "<"),
-            'feeStartDate'
-        )
-        ->addFilter(
-            new FilterQuery("fees.paid", false, "="),
-            'feesPaid'
-        );
-
-        $memberManager->addOrder(
-            new OrderQuery('fees.startDate', OrderQuery::DESC),
-            'feeStartDate'
-        );
-
-        $latePaymentMemberList = $memberManager->getList(0,10);
+        $latePaymentMemberList = $memberFeeManager->getLatePaymentFeeMemberList(10, array(
+            'cost' => 'DESC',
+            'msf.startDate' => 'ASC'
+        ));
 
         return $this->renderView(
             ':member/member/dashboard:latePaymentMembersList.html.twig',array(

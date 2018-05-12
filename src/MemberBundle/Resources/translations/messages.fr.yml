@@ -140,3 +140,4 @@ member:
         table:
             fullName: Nom complet
             status: Statut
+            cost: Montant dû

@@ -259,7 +259,7 @@ class MemberSubscriptionFee
      * @param \DateTime $paymentDate
      * @return MemberSubscriptionFee
      */
-    public function setPaymentDate(\DateTime $paymentDate): MemberSubscriptionFee
+    public function setPaymentDate(\DateTime $paymentDate = null): MemberSubscriptionFee
     {
         $this->paymentDate = $paymentDate;
 

@@ -1,4 +1,4 @@
-$('.editFee').on('click', function(e){
+$(document).on('click', '.editFee', function(e){
     e.preventDefault();
 
     var id  = $(this).data('id');
@@ -17,4 +17,10 @@ $('.editFee').on('click', function(e){
 
 $('#saveFeeBtn').on('click', function(){
     $('#editSubscriptionFeeModal').find('form').submit();
+});
+
+$(document).on('click', '.popoverBtn', function(e){
+    e.preventDefault();
+
+    $(this).popover();
 });
