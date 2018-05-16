@@ -1,15 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolaspin
- * Date: 22/03/2017
- * Time: 22:25
- */
 
 namespace AppBundle\Controller;
 
-use AppBundle\Form\Type\ChangePasswordFormType;
-use AppBundle\Form\Type\ForgotPasswordFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,6 +43,8 @@ class SecurityController extends Controller
      */
     public function forgotPassword(Request $request)
     {
+        $settingManager = $this->get('app.manager.setting');
+
         $formHandler = $this->get('app.form.handler.security_forgot_password');
 
         if($formHandler->process($request))
@@ -62,7 +56,6 @@ class SecurityController extends Controller
             $user = $askPasswordManager->getUserByEmail($email);
 
             $translator = $this->get('translator');
-
 
             if(!$askPasswordManager->declareNewAskPassword($user)){
                 $this->addFlash('error',
@@ -80,7 +73,10 @@ class SecurityController extends Controller
         }
 
         return $this->render('security/forgotPassword.html.twig', [
-            'form' => $formHandler->getForm()->createView()
+            'form' => $formHandler->getForm()->createView(),
+            'logo' => $settingManager->getFormatedSettingValue('app.setting.association_name'),
+            'associationName' => $settingManager->getFormatedSettingValue('app.setting.association_name'),
+            'slogan' => $settingManager->getFormatedSettingValue('app.setting.description'),
         ]);
     }
 

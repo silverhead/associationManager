@@ -37,6 +37,8 @@ class SettingAppFormType extends AbstractType
             ->add('zipcode', TextType::class, [])
             ->add('address', TextType::class, [])
             ->add('description', TextareaType::class, [])
+            ->add('urlFacebook', TextType::class, [])
+            ->add('urlTwitter', TextType::class, [])
         ;
     }
 

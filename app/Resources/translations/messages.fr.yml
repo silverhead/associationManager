@@ -103,6 +103,8 @@ app:
                 zipcode: Code postal
                 address: Adresse
                 description: Description
+                url_facebook: Facebook
+                url_twitter: Twitter
             placeholder:
                 associationName: Saisir le nom de votre association
                 contactEmail: Saisir l'e-mail sur laquelle vous souhaitez communiquer
@@ -113,11 +115,16 @@ app:
                 zipcode: Saisir le code postal où se situe le siège de votre association
                 address: Saisir l'adresse où se situe le siège de votre association
                 description: Saisir une description de votre association
+                url_facebook: Url de votre Facebook
+                url_twitter: Url de votre twitter
             saveSuccessText: Paramètres de l'application enregistrés avec succès !
+        social_network: Réseaux sociaux
     user:
         logout: Se déconnecter
         profile: Profil
         profileRouteNotFound: User profile route not found for %discr%
+    email:
+        end_body: Ce message vous a été envoyé automatiquement par %appName%
 user:
     manager:
         tabUsers: Utilisateurs

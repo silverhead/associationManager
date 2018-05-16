@@ -18,7 +18,7 @@ services:
     # Service helper
     app.email_templating:
         class: AppBundle\Service\MailerTemplating
-        arguments: ['@mailer', '@templating']
+        arguments: ['@mailer', '@templating', '@app.manager.setting']
     # Form Model
     app.form.model.app_setting:
         class: AppBundle\Form\Model\SettingAppModel

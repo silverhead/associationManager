@@ -64,7 +64,7 @@ class SecurityManager
         $this->em = $em;
         $this->emailTemplating = $emailTemplating;
 
-        $this->userRepo = $this->em->getRepository("AppBundle:User");
+        $this->userRepo = $this->em->getRepository("UserBundle:User");
 
         $this->translator = $translator;
         $this->templatingPath = $templatingPath;

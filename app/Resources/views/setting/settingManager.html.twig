@@ -110,6 +110,31 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-sm-12">{{ 'app.setting.social_network'|trans }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(formSetting.urlFacebook, {
+                                    'label' : 'app.setting.form.label.url_facebook'|trans,
+                                    'attr': {
+                                        'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
+                                        'class': 'form-control no-resize auto-growth', 'placeholder': 'app.setting.form.label.url_facebook'|trans
+                                        }
+                                    }
+                                ) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(formSetting.urlTwitter, {
+                                    'label' : 'app.setting.form.label.url_twitter'|trans,
+                                    'attr': {
+                                        'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
+                                        'class': 'form-control no-resize auto-growth', 'placeholder': 'app.setting.form.label.url_twitter'|trans
+                                    }
+                                }
+                                ) }}
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12 text-center">
                                 <input class="btn btn-success" name="save"  type="submit" value="{{ 'app.common.form.submit.save'|trans }}">
                             </div>

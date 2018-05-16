@@ -100,6 +100,12 @@ class SettingAppHandler
             ->setAddress(
                 $this->settingManager->getSetting('app.setting.address')->getValue()
             )
+            ->setUrlFacebook(
+                $this->settingManager->getSetting('app.setting.url_facebook')->getValue()
+            )
+            ->setUrlTwitter(
+                $this->settingManager->getSetting('app.setting.url_twitter')->getValue()
+            )
         ;
     }
 
@@ -129,6 +135,9 @@ class SettingAppHandler
         $this->settingManager->save('app.setting.city', $data->getCity());
         $this->settingManager->save('app.setting.zipcode', $data->getZipcode());
         $this->settingManager->save('app.setting.address', $data->getAddress());
+
+        $this->settingManager->save('app.setting.url_facebook', $data->getUrlFacebook());
+        $this->settingManager->save('app.setting.url_twitter', $data->getUrlTwitter());
 
         if(null !== $data->getLogo()){
             $logoFullPath = $this->saveLogo($data->getLogo());

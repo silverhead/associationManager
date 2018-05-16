@@ -2,8 +2,6 @@
 
 namespace MemberBundle\Controller;
 
-use AppBundle\QueryHelper\FilterQuery;
-use AppBundle\QueryHelper\OrderQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

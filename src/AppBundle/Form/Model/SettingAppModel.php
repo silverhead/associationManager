@@ -32,6 +32,16 @@ class SettingAppModel
     private $description;
 
     /**
+     * @var string
+     */
+    private $urlFacebook;
+
+    /**
+     * @var string
+     */
+    private $urlTwitter;
+
+    /**
      * @return mixed
      */
     public function getLogo()
@@ -221,5 +231,41 @@ class SettingAppModel
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getUrlFacebook()
+    {
+        return $this->urlFacebook;
+    }
 
+    /**
+     * @param string $urlFacebook
+     * @return SettingAppModel
+     */
+    public function setUrlFacebook($urlFacebook)
+    {
+        $this->urlFacebook = $urlFacebook;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlTwitter()
+    {
+        return $this->urlTwitter;
+    }
+
+    /**
+     * @param string $urlTwitter
+     * @return SettingAppModel
+     */
+    public function setUrlTwitter($urlTwitter)
+    {
+        $this->urlTwitter = $urlTwitter;
+
+        return $this;
+    }
 }

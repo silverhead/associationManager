@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="body table-responsive">
+            {#{{ form_start(form, {'action': path('members_manager') ~ '#setting' }) }}#}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-line">
+                            <label for="welcome_email" class="label-control">{{ 'member.member.email_setting.form.welcome_email'|trans }}</label>
+                            <textarea name="welcome_email" id="welcome_email" cols="30" rows="10"></textarea>
+                        </div>
+                        {#{{ form_row(form.gender, {'label': 'member.member.email_setting.form.welcome_email'|trans, 'attr': {'class': 'form-control', 'data-role': 'tagsinput'}}) }}#}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-line">
+                            <label for="new_subscription_email" class="label-control">{{ 'member.member.email_setting.form.new_subscription_email'|trans }}</label>
+                            <textarea name="new_subscription_email" id="new_subscription_email" cols="30" rows="10"></textarea>
+                        </div>
+                        {#{{ form_row(form.gender, {'label': 'member.member.email_setting.form.welcome_email'|trans, 'attr': {'class': 'form-control', 'data-role': 'tagsinput'}}) }}#}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-line">
+                            <label for="new_cotisation_coming_soon_email" class="label-control">{{ 'member.member.email_setting.form.new_cotisation_coming_soon_email'|trans }}</label>
+                            <textarea name="new_cotisation_coming_soon_email" id="new_cotisation_coming_soon_email" cols="30" rows="10"></textarea>
+                        </div>
+                        {#{{ form_row(form.gender, {'label': 'member.member.email_setting.form.welcome_email'|trans, 'attr': {'class': 'form-control', 'data-role': 'tagsinput'}}) }}#}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-line">
+                            <label for="late_member_notification_email" class="label-control">{{ 'member.member.email_setting.form.late_member_notification_email'|trans }}</label>
+                            <textarea name="late_member_notification_email" id="late_member_notification_email" cols="30" rows="10"></textarea>
+                        </div>
+                        {#{{ form_row(form.gender, {'label': 'member.member.email_setting.form.welcome_email'|trans, 'attr': {'class': 'form-control', 'data-role': 'tagsinput'}}) }}#}
+                    </div>
+                </div>
+                {% include ':form:submitBtnSave.html.twig' %}
+            {#{{ form_end(form) }}#}
+        </div>
+    </div>
+</div>

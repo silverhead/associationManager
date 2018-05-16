@@ -10,6 +10,39 @@
     <script src="{{ asset('bundles/member/status/js/manage.js') }}"></script>
     <script src="{{ asset('bundles/user/group/js/manage.js') }}"></script>
     <script src="{{ asset('bundles/member/member/js/manage.js') }}"></script>
+
+    <script src="{{ asset('plugins/tinymce/tinymce.js') }}"></script>
+    <script type="text/javascript">
+    $(function () {
+        //TinyMCE
+        tinymce.init({
+            selector: "#welcome_email",
+            theme: "modern",
+            height: 300,
+            width: 550
+        });
+        tinymce.init({
+            selector: "#new_subscription_email",
+            theme: "modern",
+            height: 300,
+            width: 550
+        });
+        tinymce.init({
+            selector: "#new_cotisation_coming_soon_email",
+            theme: "modern",
+            height: 300,
+            width: 550
+        });
+        tinymce.init({
+            selector: "#late_member_notification_email",
+            theme: "modern",
+            height: 300,
+            width: 550
+        });
+        tinymce.suffix = ".min";
+        tinyMCE.baseURL = '/plugins/tinymce';
+    });
+    </script>
 {% endblock %}
 
 {% block style %}
@@ -50,8 +83,8 @@
                         {% endif %}
                         {% if is_granted('MEMBER_SETTING_EDIT') %}
                             <li role="presentation"><a href="#setting" data-toggle="tab">{{ 'member.member.setting.tab'|trans }}</a></li>
+                            <li role="presentation"><a href="#email-setting" data-toggle="tab">{{ 'member.member.email-setting.tab'|trans }}</a></li>
                         {% endif %}
-
                     </ul>
 
                     <!-- Tab panes -->
@@ -74,6 +107,11 @@
                             <div role="tabpanel" class="tab-pane fade" id="setting">
                                 <div id="memberSettingContainer" data-anchor="status" data-page-parameter-name="pageTab3">
                                     {{ settingTpl|raw }}
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="email-setting">
+                                <div id="memberEmailSettingContainer" data-anchor="status" data-page-parameter-name="pageTab4">
+                                    {{ render(controller('MemberBundle:MemberSetting:emailSetting')) }}
                                 </div>
                             </div>
                         {% endif %}

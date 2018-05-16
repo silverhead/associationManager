@@ -45,4 +45,14 @@ class MemberSettingController extends Controller
             'form' => $formSettingAppHandler->getForm()->createView()
         ));
     }
+
+    /**
+     * @Route("/member/email_setting", name="member_email_setting")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function emailSettingAction()
+    {
+        return $this->render(':member/member/setting:email_setting.html.twig', array(
+        ));
+    }
 }

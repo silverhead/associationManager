@@ -30,6 +30,11 @@ services:
         arguments: ['member', 'member_profile']
         tags:
             - { name: kernel.event_listener, event: app.user.profile_route.event, method: onProvideProfileRoute }
+    member.member.send.welcome_email:
+        class: MemberBundle\EventListener\SendWelcomeEmail
+        arguments: ['@app.manager.setting', '@app.email_templating', '%sendermail%']
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, lazy: true }
     # VOTER
     member.member.voter:
         class: AppBundle\Security\AppVoter
