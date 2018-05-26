@@ -30,7 +30,7 @@
                                 {% if is_granted('USER_USER_EDIT') %}
                                     <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning material-icons">edit</a>
                                 {% endif %}
-                                {% if is_granted('USER_USER_DELETE') %}                                
+                                {% if is_granted('USER_USER_DELETE') %}
                                     <a href="#" data-id="{{ user.id }}" class="btn btn-danger material-icons {% if user.isDeletable()%}delUser{% endif %}" {% if user.isDeletable() != true %}disabled="disabled"{% endif %}>delete</a>
                                 {% endif %}
                             </td>

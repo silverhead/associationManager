@@ -1,32 +1,63 @@
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-6">
         {% if is_granted('MEMBER_MEMBER_CREATE') %}
         <a href="{{ path('member_edit') }}" class="btn bg-green waves-effect">{{ 'member.member.add'|trans }}</a>
         {% endif %}
     </div>
+    <div class="col-xs-6">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span>
+                    <i class="material-icons">email</i>
+                    {{ 'member.member.list.action.send_email'|trans }}
+                </span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="javascript:void(0);" class="waves-effect waves-block">
+                        {{ 'member.member.list.action.send_email_new_fee_coming_soon'|trans }}
+                    </a></li>
+                <li><a href="javascript:void(0);" class="waves-effect waves-block">
+                        {{ 'member.member.list.action.send_email_late_payment_member'|trans }}
+                    </a></li>
+            </ul>
+        </div>
+    </div>
 </div>
-{#
+
+{#<div class="row">#}
+    {#<div class="col-md-6">#}
+        {#<form action="#">#}
+            {#<div class="input-group">#}
+                {#<div class="form-line">#}
+                    {#<input type="text" class="form-control date" placeholder="Rechercher">#}
+                {#</div>#}
+                {#<span class="input-group-addon">#}
+                {#<i class="material-icons">search</i>#}
+            {#</span>#}
+            {#</div>#}
+        {#</form>#}
+    {#</div>#}
+    {#<div class="col-md-12">#}
+
+        {#<a href="#" class="btn bg-grey waves-effect pull-right">#}
+            {#<i class="material-icons">archive</i>#}
+            {#Export C.S.V.#}
+        {#</a>#}
+    {#</div>#}
+{#</div>#}
+
 <div class="row">
-    <div class="col-md-6">
-        <form action="#">
-            <div class="input-group">
-                <div class="form-line">
-                    <input type="text" class="form-control date" placeholder="Rechercher">
-                </div>
-                <span class="input-group-addon">
-                <i class="material-icons">search</i>
-            </span>
-            </div>
-        </form>
-    </div>
-    <div class="col-md-6">
-        <a href="#" class="btn bg-grey waves-effect pull-right">
-            <i class="material-icons">archive</i>
-            Export C.S.V.
-        </a>
+    <div class="col-md-3">
+        <p class="bg-amber p-l-10 p-r-10">
+            {{ 'member.member.list.legend.new_fee_coming_soon'|trans }}
+        </p>
+        <p class="bg-red p-l-10 p-r-10">
+            {{ 'member.member.list.legend.late_payment_member'|trans }}
+        </p>
     </div>
 </div>
-#}
+
 <div class="row">
     <div class="col-xs-12">
             <div class="body table-responsive">
@@ -36,19 +67,23 @@
                         <tr>
                             <th>#</th>
                             {#<th>{{ 'member.member.list.table.picture'|trans }}</th>#}
-                            <th data-order-sortname="lastName" data-order-sort="{{ order.lastName }}" class="sortable">{{ 'member.member.list.table.lastName'|trans }}</th>
-                            <th data-order-sortname="firstName" data-order-sort="{{ order.firstName }}" class="sortable">{{ 'member.member.list.table.firstName'|trans }}</th>
-                            <th data-order-sortname="status" data-order-sort="{{ order.status }}" class="sortable">{{ 'member.member.list.table.status'|trans }}</th>
+                            <th style="width:15%" data-order-sortname="lastName" data-order-sort="{{ order.lastName }}" class="sortable">{{ 'member.member.list.table.lastName'|trans }}</th>
+                            <th style="width:15%" data-order-sortname="firstName" data-order-sort="{{ order.firstName }}" class="sortable">{{ 'member.member.list.table.firstName'|trans }}</th>
+                            <th style="width:15%" data-order-sortname="status" data-order-sort="{{ order.status }}" class="sortable">{{ 'member.member.list.table.status'|trans }}</th>
                             <th>{{ 'member.member.list.table.phone'|trans }}</th>
-                            <th data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.member.list.table.subscription'|trans }}</th>
-                            <th>{{ 'member.member.list.table.subscriptionDateEnd'|trans }}</th>
-                            <th>{{ 'app.common.table.action'|trans }}</th>
+                            <th style="width:15%"  data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.member.list.table.subscription'|trans }}</th>
+                            <th style="width:10%" >{{ 'member.member.list.table.subscriptionDateEnd'|trans }}</th>
+                            <th style="width:2%" >{{ 'member.member.list.table.active'|trans }}</th>
+                            <th style="width:20%" >{{ 'app.common.table.action'|trans }}</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for member in members %}
                         <tr class="{% if member.id in soonPaymentmemberList %}bg-amber{% endif %}{% if member.id in latePaymentmemberList %}bg-red{% endif %}">
-                            <td scope="row">{{ member.id }}</td>
+                            <td scope="row">
+                                <input type="checkbox" class="filled-in chk-col-blue" name="select[{{ member.id }}]" id="select_{{ member.id }}" value="{{ member.id }}">
+                                <label for="select_{{ member.id }}" value="{{ member.id }}"></label>
+                            </td>
                             {#<td>#}
                                 {#<img src="{{ asset('images/avatars/user.png') }}" class="img-circle">#}
                             {#</td>#}
@@ -56,12 +91,13 @@
                             <td>{{ member.firstName }}</td>
                             <td>{% if member.getStatus()|length > 0 %}{{ member.getStatus()[0].status.label }}{% endif %}</td>
                             <td>
-                                {% if member.phone != "" %}{{ 'member.member.edit.form.phone'|trans }} : <a href="tel:{{ member.phone }}">{{ member.phone }}</a>{% endif %}
+                                {% if member.phone != "" %}{{ 'member.member.edit.form.phone'|trans }} : <br /><a href="tel:{{ member.phone }}">{{ member.phone }}</a>{% endif %}
                                 {% if member.phone != "" and member.cellular != "" %}<br />{% endif %}
-                                {% if member.cellular != "" %}{{ 'member.member.edit.form.cellular'|trans }} : <a href="tel:{{ member.phone }}">{{ member.phone }}</a>{% endif %}
+                                {% if member.cellular != "" %}{{ 'member.member.edit.form.cellular'|trans }} : <br /><a href="tel:{{ member.phone }}">{{ member.phone }}</a>{% endif %}
                             </td>
                             <td>{% if member.subscriptions|length > 0 %}{{ member.subscriptions[0].subscription.label }} {% endif %}</td>
                             <td>{% if member.subscriptions|length > 0 %}{{ member.subscriptions[0].endDate|date('d/m/Y') }}{% endif %}</td>
+                            <td>{{ member.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
                             <td>
                                 {% if is_granted('MEMBER_MEMBER_VIEW') %}
                                 <a href="{{ path('member_view', {'id': member.id}) }}" class="btn btn-primary material-icons">remove_red_eye</a>

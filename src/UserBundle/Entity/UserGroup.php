@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class MemberGroup
+ * Class UserGroup
  * @package UserBundle\Entity
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserGroupRepository")
  */

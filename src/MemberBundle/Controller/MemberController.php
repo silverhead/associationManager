@@ -64,6 +64,7 @@ class MemberController extends Controller
 
     public function memberList(Request $request, $anchor = null)
     {
+
         $memberManager = $this->get('member.manager.member');
         $memberManager->activateCache('memberList');
 
@@ -95,7 +96,13 @@ class MemberController extends Controller
             )
         ;
 
-        $members = $memberManager->paginatedList( $request->query->getInt('page', 1), 10, 'pageMemberList');
+        $members = $memberManager->paginatedList(
+            $request->query->getInt('pageMemberList', 1),
+            10,
+            'pageMemberList',
+            $anchor,
+            $request->get('master_route', 'members_manager')
+            );
 
         $membersIdList = array();
         foreach($members as $member){

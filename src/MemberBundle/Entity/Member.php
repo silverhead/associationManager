@@ -125,15 +125,33 @@ class Member extends User
 
     /**
      * @var array
-     * @ORM\Column(type="array", nullable=false)
+     * @ORM\Column(type="array", nullable=true)
      */
     protected $expertise;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $study;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $profession;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $comment;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    protected $createAt;
 
     /**
      * @ORM\Column(type="datetime")
@@ -154,6 +172,10 @@ class Member extends User
         $this->avatar = 'user.png';
 
         $this->active = true;
+
+        if($this->getId() == 0){
+            $this->createAt = new \DateTime();
+        }
     }
 
     /**
@@ -607,9 +629,66 @@ class Member extends User
      * @param string $study
      * @return Member
      */
-    public function setStudy(string $study): Member
+    public function setStudy(string $study = null): Member
     {
         $this->study = $study;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfession()
+    {
+        return $this->profession;
+    }
+
+    /**
+     * @param string $profession
+     * @return Member
+     */
+    public function setProfession(string $profession = null)
+    {
+        $this->profession = $profession;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param string $comment
+     * @return Member
+     */
+    public function setComment(string $comment = null)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreateAt()
+    {
+        return $this->createAt;
+    }
+
+    /**
+     * @param \DateTime $createAt
+     * @return Member
+     */
+    public function setCreateAt($createAt)
+    {
+        $this->createAt = $createAt;
 
         return $this;
     }

@@ -333,6 +333,11 @@ class User implements UserInterface
         return $this;
     }
 
+    public function isActive()
+    {
+        return $this->active;
+    }
+
     /**
      * @return string
      */

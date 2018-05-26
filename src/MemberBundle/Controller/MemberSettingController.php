@@ -50,9 +50,31 @@ class MemberSettingController extends Controller
      * @Route("/member/email_setting", name="member_email_setting")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function emailSettingAction()
+    public function emailSettingAction(Request $request)
     {
+        $translator = $this->get('translator');
+
+        if(!$this->isGranted("MEMBER_SETTING_EDIT")){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
+        $formEmailSettingAppHandler = $this->get('member.form.handler.member_email_setting');
+
+        $formEmailSettingAppHandler->setForm();
+
+        if($formEmailSettingAppHandler->process($request)){
+            $translator = $this->get('translator');
+            $this->addFlash('success', $translator->trans('member.member.email_setting.form.saveSuccessText'));
+        }
+
         return $this->render(':member/member/setting:email_setting.html.twig', array(
+            'form' => $formEmailSettingAppHandler->getForm()->createView()
         ));
     }
 }

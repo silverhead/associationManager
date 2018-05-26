@@ -4,6 +4,7 @@ namespace MemberBundle\Form\Type;
 
 use MemberBundle\Entity\Member;
 use MemberBundle\Entity\MemberStatus;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use UserBundle\Form\Type\UserFormType;
@@ -78,6 +79,7 @@ class MemberFormType extends UserFormType
             }
         ))
         ->add('study', ChoiceType::class, array(
+            'required' => false,
             'choices' => $options['study'],
             'choice_label' => function($study){
                 return $study;
@@ -85,6 +87,12 @@ class MemberFormType extends UserFormType
             'choice_value' => function($study){
                 return $study;
             }
+        ))
+        ->add('profession', TextType::class, array(
+            'required' => false
+        ))
+        ->add('comment', TextareaType::class, array(
+            'required' => false
         ))
         ;
     }

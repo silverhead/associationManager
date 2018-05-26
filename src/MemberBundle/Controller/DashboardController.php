@@ -26,7 +26,7 @@ class DashboardController extends Controller
     public function latePaymentMemberListAction()
     {
         $memberManager = $this->get('member.manager.member');
-        $memberActifCount = $memberManager->getMemberNb(true);
+        $memberActiveCount = $memberManager->getMemberNb(true);
 
         $memberFeeManager = $this->get('member.manager.subscription_fee');
 
@@ -37,7 +37,7 @@ class DashboardController extends Controller
 
         return $this->renderView(
             ':member/member/dashboard:latePaymentMembersList.html.twig',array(
-            'memberActifCount' => $memberActifCount,
+            'memberActifCount' => $memberActiveCount,
             'latePaymentMemberList' => $latePaymentMemberList
         ));
     }

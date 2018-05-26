@@ -35,6 +35,11 @@ services:
         arguments: ['@app.manager.setting', '@app.email_templating', '%sendermail%']
         tags:
             - { name: doctrine.event_listener, event: postPersist, lazy: true }
+    member.member.send.new_subscription_email:
+        class: MemberBundle\EventListener\SendNewSubscriptionEmail
+        arguments: ['@app.manager.setting', '@app.email_templating', '%sendermail%']
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, lazy: true }
     # VOTER
     member.member.voter:
         class: AppBundle\Security\AppVoter
@@ -83,6 +88,8 @@ services:
     # FORM MODEL
     member.form.model.member_setting:
         class: MemberBundle\Form\Model\MemberSettingModel
+    member.form.model.member_email_setting:
+        class: MemberBundle\Form\Model\MemberEmailSettingModel
     # FORM HANDLER
     member.form.handler.member:
         class: MemberBundle\Form\Handler\MemberFormHandler
@@ -96,6 +103,9 @@ services:
     member.form.handler.member_setting:
         class: MemberBundle\Form\Handler\MemberSettingHandler
         arguments: ['@form.factory', '@member.form.model.member_setting', '@app.manager.setting']
+    member.form.handler.member_email_setting:
+        class: MemberBundle\Form\Handler\MemberEmailSettingHandler
+        arguments: ['@form.factory', '@member.form.model.member_email_setting', '@app.manager.setting']
     # CONTROLLER
     member.controller.status:
         class: MemberBundle\Controller\MemberStatusController

@@ -1,6 +1,9 @@
 <div class="row">
-    <div class="col-lg-4 col-md-12">
-        {{ form_row(form.status) }}
+    <div class="col-md-6">
+        {{ form_row(form.status, {'label': 'member.member.edit.form.status'|trans}) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.profession, {'label': 'member.member.edit.form.profession'|trans}) }}
     </div>
 </div>
 <div class="row">
@@ -8,6 +11,11 @@
         {{ form_row(form.expertise, {'label': 'member.member.edit.form.expertise'|trans, 'attr': {'title': 'member.member.edit.form.expertise_placeholder'|trans}}) }}
     </div>
     <div class="col-md-6">
-        {{ form_row(form.study) }}
+        {{ form_row(form.study, {'label': 'member.member.edit.form.study'|trans}) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        {{ form_row(form.comment, {'label': 'member.member.edit.form.comment'|trans}) }}
     </div>
 </div>

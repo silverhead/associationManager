@@ -28,7 +28,7 @@ class Setting
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=40)
+     * @ORM\Column(type="string", length=255)
      */
     private $code;
 

@@ -33,7 +33,11 @@ class AppMenuSettingVoter extends Voter
     {
         $credentials = $token->getUser()->getGroup()->getCredentials();
 
-        if(count(array_intersect($this->credentials, $credentials))  > 0  && $this->masterSettingCredentialMenu == $attribute){
+        if(
+            in_array('ROLE_ADMIN', $token->getUser()->getRoles())
+            ||
+            count(array_intersect($this->credentials, $credentials))  > 0  && $this->masterSettingCredentialMenu == $attribute)
+        {
             return true;
         }
 

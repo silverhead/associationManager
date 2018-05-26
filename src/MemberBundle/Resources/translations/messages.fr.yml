@@ -15,6 +15,14 @@ member:
                 phone: Téléphone
                 subscription: Abonnement
                 subscriptionDateEnd: Fin de l'abo.
+                active: Actif
+            action:
+                send_email: Envoyer un e-mail
+                send_email_new_fee_coming_soon: De notification d'échéance de cotisation
+                send_email_late_payment_member: De notification de retard de paiement
+            legend:
+                new_fee_coming_soon: Arrive à échéance de cotisation
+                late_payment_member: En retard de paiement
         add: Ajouter un adhérent
         edit:
             title: Editer l'adhérent
@@ -57,6 +65,8 @@ member:
               expertise: Spécialités
               study: Etude
               expertise_placeholder: Vous pouvez selectionner plusieurs spécialités
+              profession: Métier
+              comment: Remarque
         profile:
             saveSuccessText: Votre profil a été enregistré !
             title: Votre profil
@@ -77,6 +87,28 @@ member:
                 study: Etude
                 expertise: Spécialité
                 saveSuccessText: Les configurations ont été enregistrées avec succès !
+        email_setting:
+            tab: Configuration des e-mails
+            form:
+                subject: Sujet
+                body: Corps
+                welcome_email: E-mail de bienvenue
+                new_subscription_email: E-mail de confirmation d'inscription d'abonnement
+                new_fee_coming_soon_email: E-mail de notification d'une nouvelle échéance de cotisation
+                late_member_notification_email: E-mail de notification de retard de paiement
+                placeholder:
+                    keywords_for_welcome_email: Mots clefs pour l'e-mail de bienvenue
+                    keywords_for_new_subscription_email: Mots clefs pour l'e-mail de nouvelle inscription
+                    keywords_for_new_fee_coming_soon_email: Mots clefs pour l'e-mail de notification de nouvelle échéance
+                    keywords_for_late_member_notification_email: Mots clefs pour l'e-mail de notification de retard de paiement
+                    gender: Genre
+                    last_name: Nom
+                    first_name: Prénom
+                    association_name: Nom de l'association
+                    subscription_label: Libellé de l'abonnement
+                    start_date: Date de début
+                    end_date: Date de fin
+                    total_cost: Montant total
     status:
         credential:
             title: Adhérents (statuts)

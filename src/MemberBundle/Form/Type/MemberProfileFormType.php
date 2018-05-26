@@ -15,6 +15,7 @@ class MemberProfileFormType extends MemberFormType
             ->remove('status')
             ->remove('group')
             ->remove('active')
+            ->remove('comment')
         ;
     }
 

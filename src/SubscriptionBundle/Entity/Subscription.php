@@ -53,6 +53,7 @@ class Subscription
 
     /**
      * @var boolean
+     * @ORM\Column(type="boolean")
      */
     private $active;
 
