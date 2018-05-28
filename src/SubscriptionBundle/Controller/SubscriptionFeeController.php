@@ -23,13 +23,17 @@ class SubscriptionFeeController extends Controller
 
         $ordersRequest = $request->get('orders',  $managerSubFee->getArrayOrdersInCacheByKey(
             array(
+                "period" => "DESC",
                 "fullName" => "ASC",
                 "subscription" => "ASC",
-                "period" => ""
             )
         ));
 
         $managerSubFee
+            ->addOrder(
+                new OrderQuery("memberSubscriptionFee.endDate", $ordersRequest['period']),
+                'period'
+            )
             ->addOrder(
                 new OrderQuery("CONCAT(mber.lastName,' ',mber.firstName)", $ordersRequest['fullName']),
                 'fullName'
@@ -38,13 +42,9 @@ class SubscriptionFeeController extends Controller
                 new OrderQuery("sub.label", $ordersRequest['subscription']),
                 'subscription'
             )
-            ->addOrder(
-                new OrderQuery("memberSubscriptionFee.endDate", $ordersRequest['period']),
-                'period'
-            )
         ;
 
-        $subscriptionFees = $managerSubFee->paginatedList();
+        $subscriptionFees = $managerSubFee->paginatedList($page, 20, $pageParamName);
 
         $pageH = $this->get('app.handler.page_historical');
 

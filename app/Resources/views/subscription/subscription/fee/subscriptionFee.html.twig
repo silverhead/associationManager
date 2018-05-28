@@ -39,6 +39,10 @@
                     </tbody>
                 </table>
             </form>
+            <div class="pull-right">
+                {{ knp_pagination_render(fees) }}
+                {#{% include 'main/pagination.html.twig' %}#}
+            </div>
         </div>
         {% if is_granted('MEMBER_SUBSCRIPTION_FEE_SAVE') %}
             <div class="modal fade" id="editSubscriptionFeeModal" tabindex="-1" role="dialog" style="display: none;">
