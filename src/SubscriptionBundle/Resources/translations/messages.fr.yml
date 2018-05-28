@@ -9,7 +9,7 @@ subscription:
         list:
             title: Gestion des abonnements
             callback: Retour gestion des abonnements
-            totalActiveMember: Total membres actifs
+            totalActiveMember: Total membres avec un abonnement
             table:
                 label: Libellé
                 membersNumber: Nombre d'adhérents

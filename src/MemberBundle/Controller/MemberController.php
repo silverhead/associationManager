@@ -45,7 +45,8 @@ class MemberController extends Controller
 
         return $this->render('member/membersManager.html.twig', array(
             'menuSelect' => 'members_manager',
-            'nbMember' => $memberManager->getMemberNb(),
+            'nbTotalMembers' => $memberManager->getMemberNb(),
+            'nbTotalActiveMembers' => $memberManager->getMemberNb(true),
             'memberListTpl' => $memberListTpl,
             'statusListTpl' => $statusListTpl,
             'settingTpl' => $settingTpl

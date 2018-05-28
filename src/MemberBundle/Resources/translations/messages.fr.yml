@@ -3,7 +3,8 @@ member:
         tabMembers: Adhérents
         tabStatus: Status
         tabGroups: Groupes
-        nbMembers: '%count% membre|%count% membres'
+        nb_total_members: '%count% membre total|%count% membres total'
+        nb_total_active_members: '%count% membre actif|%count% membres actifs'
     member:
         title: Adhérents (membres)
         list:
@@ -18,8 +19,10 @@ member:
                 active: Actif
             action:
                 send_email: Envoyer un e-mail
-                send_email_new_fee_coming_soon: De notification d'échéance de cotisation
-                send_email_late_payment_member: De notification de retard de paiement
+                send_email_new_fee_coming_soon: Envoyer un e-mail de notification d'échéance de cotisation
+                send_email_late_payment_member: Envoyer un e-mail de notification de retard de paiement
+                display_all_new_fee_coming_soon: Afficher que les membres qui arrivent à échéance de cotisation
+                display_all_late_payment_member: Afficher que les membres qui sont en retard de payment
             legend:
                 new_fee_coming_soon: Arrive à échéance de cotisation
                 late_payment_member: En retard de paiement

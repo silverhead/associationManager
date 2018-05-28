@@ -52,9 +52,9 @@ class MemberMemberManager implements PaginatorManagerInterface
         return $this->entityManager->getRepository("MemberBundle:Member");
     }
     
-    public function getMemberNb(bool $active = false)
+    public function getMemberNb(bool $onlyActive = false)
     {
-        return $this->getRepository()->countMember($active);
+        return $this->getRepository()->countMember($onlyActive);
     }
 
     public function getLastStatus(Member $member){

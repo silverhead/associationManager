@@ -8,9 +8,6 @@
         </div>
         <div class="card">
             <div class="body">
-                {#{% if error is not null %}#}
-                    {#{{ error.message }}#}
-                {#{% endif %}#}
                 {% include ':main/flashMessage:flashMessageBlock.html.twig' with {'colClass':'col-lg-12'} %}
                 <form action="{{ path('login') }}" id="sign_in" method="POST">
                     <div class="msg">{{ 'app.security.login.formTitle'|trans }}</div>
@@ -32,17 +29,17 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-7 p-t-5">
-                            <input type="checkbox" name="_remember_me" id="rememberme" class="filled-in chk-col-pink">
-                            <label for="rememberme">{{ 'app.security.login.inputRememberMe'|trans }}</label>
+                            {#<input type="checkbox" name="_remember_me" id="rememberme" class="filled-in chk-col-pink">#}
+                            {#<label for="rememberme">{{ 'app.security.login.inputRememberMe'|trans }}</label>#}
                         </div>
                         <div class="col-xs-5">
                             <button class="btn btn-block bg-pink waves-effect" type="submit">{{ 'app.security.login.submitBtn'|trans }}</button>
                         </div>
                     </div>
                     <div class="row m-t-15 m-b--20">
-                        <div class="col-xs-6">
-                            <a href="{{ path('inscription') }}">{{ 'app.security.login.becomeMemberLink'|trans }}</a>
-                        </div>
+                        {#<div class="col-xs-6">#}
+                            {#<a href="{{ path('inscription') }}">{{ 'app.security.login.becomeMemberLink'|trans }}</a>#}
+                        {#</div>#}
                         <div class="col-xs-6 align-right">
                             <a href="{{ path('forgot_password') }}">{{ 'app.security.login.forgottenPassword'|trans }}</a>
                         </div>

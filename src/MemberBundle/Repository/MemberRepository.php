@@ -34,10 +34,10 @@ class MemberRepository extends UserRepository implements PaginatorRepositoryInte
         return $qb;
     }
     
-    public function countMember(bool $active = false){
+    public function countMember(bool $onlyActive = false){
         $qb = $this->createQueryBuilder("m")->select("COUNT(m)");
 
-        if($active){
+        if($onlyActive){
             $qb->where("m.active = 1");
         }
 
