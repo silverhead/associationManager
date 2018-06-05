@@ -38,7 +38,9 @@ function setSubformField(){
     var selectedOption = $('#member_member_subscription_form_type_subscription').find('option:selected');
 
     var cost = selectedOption.data('cost');
-    var periodicities = selectedOption.data('periodicities').split(",");
+
+    var periodicities = selectedOption.data('periodicities').toString().split(",");
+    
     var duration = selectedOption.data('duration');
 
     var startDate = $('#member_member_subscription_form_type_startDate').val();

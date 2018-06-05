@@ -15,10 +15,21 @@ class SubscriptionRepository extends EntityRepository implements PaginatorReposi
 
     public function getQbPaginatedList()
     {
-        return $this->getQb()
-            ->select("s, ms")
-            ->leftJoin("s.memberSubscription", "ms")
-            ->where("(ms.id IS NULL OR ms.endDate >= :now )")->setParameter(":now", new \DateTime());
+        $subquery = $this->_em->createQuery("
+            SELECT COUNT(sub2.id) FROM MemberBundle:MemberSubscriptionHistorical sub2 
+            WHERE sub2.subscription = s
+            GROUP BY sub2.subscription
+            ")
+//            ->setParameter(":now", new \DateTime()) AND sub2.endDate >= :now
+            ->getDQL();
+
+        $qb = $this->getQb()
+            ->select("s")
+            ->addSelect("(" . $subquery .") AS nbMembres ");
+
+        dump($qb);
+
+        return $qb;
     }
 
     public function getCountSubscriberMembers(Subscription $subscription)

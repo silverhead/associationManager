@@ -119,6 +119,8 @@ app:
                 url_twitter: Url de votre twitter
             saveSuccessText: Paramètres de l'application enregistrés avec succès !
         social_network: Réseaux sociaux
+        credential:
+            title: Droits paramètres application
     user:
         logout: Se déconnecter
         profile: Profil
@@ -153,6 +155,8 @@ user:
                 password: Mot de passe
                 password_confirmation: Mot de passe (Vérification)
                 passwordHelp: Le mot de passe doit contenir une majuscule, des chiffres et des caractères spéciaux (!@$%^&*-)
+        credential:
+            title: Droits gestion utilisateurs
     group:
         credential:
             title: Utilisateurs (Groupes)

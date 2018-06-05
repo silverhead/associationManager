@@ -90,6 +90,8 @@ member:
                 study: Etude
                 expertise: Spécialité
                 saveSuccessText: Les configurations ont été enregistrées avec succès !
+            credential:
+                title: Droits accès paramètrages module Adhérents
         email_setting:
             tab: Configuration des e-mails
             form:
@@ -112,6 +114,9 @@ member:
                     start_date: Date de début
                     end_date: Date de fin
                     total_cost: Montant total
+    security:
+        credential:
+            setting: Edition paramètres Adhérents
     status:
         credential:
             title: Adhérents (statuts)
@@ -129,7 +134,7 @@ member:
             deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
             deleteSuccessText: Le statut %label% à bien été supprimé !
     subscription:
-        title: Abonnements de l'adhérent
+        title: Adhérents (Abonnements)
         endDate: "Date de fin :"
         extend: Créer un nouvel abonnement
         viewFees: Voir les cotisations liés

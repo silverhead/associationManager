@@ -58,12 +58,17 @@ class SubscriptionController extends Controller
      */
     public function listAction(Request $request, $anchor = null)
     {
-        $page =  1;//$request->get(self::PAGE_PARAMETER_NAME, 1);
+        $page =  $request->get(self::PAGE_PARAMETER_NAME, 1);
         $currentRoute = 'subscription_manager';
 
         $subscriptionManager = $this->get('subscription.manager.subscription');
 
-        $results = $subscriptionManager->paginatedList($page, self::ITEMS_PER_PAGE, self::PAGE_PARAMETER_NAME);
+        $results = $subscriptionManager->paginatedList(
+            $page,
+            self::ITEMS_PER_PAGE,
+            self::PAGE_PARAMETER_NAME,
+            $anchor,
+            $currentRoute);
 
         $pageH = $this->get('app.handler.page_historical');
 
@@ -103,7 +108,7 @@ class SubscriptionController extends Controller
             $subscription = $formHandler->getData();
 
             if($subscriptionManager->save($subscription)){
-                $this->addFlash('success', $translator->trans('subscription.subscription.edit.saveSucessText'));
+                $this->addFlash('success', $translator->trans('subscription.subscription.edit.saveSuccessText'));
 
                 if(null !== $request->get('save_and_leave', null)){
                     $pageH = $this->get('app.handler.page_historical');
@@ -178,7 +183,7 @@ class SubscriptionController extends Controller
 
         $array = [
             'code' => 'success',
-            'message' => $translator->trans('subscription.subscription.edit.saveSucessText')
+            'message' => $translator->trans('subscription.subscription.edit.saveSuccessText')
         ];
 
         return new Response(

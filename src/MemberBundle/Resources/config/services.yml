@@ -17,7 +17,7 @@ services:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     member.setting.credential.event:
         class: AppBundle\EventListener\AppCredentialEventListener
-        arguments: ['%credentialVoterMemberSetting%', 'member.setting.title']
+        arguments: ['%credentialVoterMemberSetting%', 'member.member.setting.credential.title']
         tags:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     member.dashboard.bundle.event:

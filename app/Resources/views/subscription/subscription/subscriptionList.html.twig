@@ -42,17 +42,17 @@
                     <tbody>
                     {% for subscription in results %}
                         <tr>
-                            <th scope="row">{{ subscription.getId() }}</th>
-                            <td>{{ subscription.getLabel() }}</td>
-                            <td class="text-center">{{ subscription|countSubscriberMembers }}</td>
-                            <td class="text-right">{{ subscription.getCost()|number_format(2,',',' ') }} €</td>
-                            <td class="text-right">{{ subscription.getDuration() }}</td>
-                            <td>{{ subscription.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
+                            <th scope="row">{{ subscription[0].getId() }}</th>
+                            <td>{{ subscription[0].getLabel() }}</td>
+                            <td class="text-center">{{ subscription.nbMembres }}</td>
+                            <td class="text-right">{{ subscription[0].getCost()|number_format(2,',',' ') }} €</td>
+                            <td class="text-right">{{ subscription[0].getDuration() }}</td>
+                            <td>{{ subscription[0].isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
                             <td>
-                                {#<a href="#" class="btn btn-primary material-icons">remove_red_eye</a>#}
-                                <a href="{{ path('subscription_subscription_edit', {'id': subscription.getId()}) }}" class="btn btn-warning material-icons">edit</a>
-                                {% if subscription.canDeleted() %}
-                                    <a href="#" data-id="{{ subscription.getId() }}" class="btn btn-danger material-icons delSubscription">delete</a>
+                                <a href="#" class="btn btn-primary material-icons">remove_red_eye</a>
+                                <a href="{{ path('subscription_subscription_edit', {'id': subscription[0].getId()}) }}" class="btn btn-warning material-icons">edit</a>
+                                {% if subscription[0].canDeleted() %}
+                                    <a href="#" data-id="{{ subscription[0].getId() }}" class="btn btn-danger material-icons delSubscription">delete</a>
                                 {% else %}
                                     <a href="#" data-id="#" class="btn btn-danger material-icons disabled">delete</a>
                                 {% endif %}

@@ -8071,29 +8071,39 @@ html.ie11 .bs-searchbox .form-control {
 
 .groupedCheckboxList ul{
     list-style: none;
-    display: flex;
-    justify-content: left;
     margin:0;
     padding: 0;
+    width: 100%;
 }
 
 .groupedCheckboxList > ul{
-	flex-wrap: wrap;
 }
 
 .groupedCheckboxList > ul > li{
-    border: 1px solid #CCC;
-    border-radius: 5px;
     padding: 0 10px;
-    width: 32%;
-    margin: 5px;
 }
 
 .groupedCheckboxList ul ul{
     margin:0;
+    display: flex;
+    justify-content: left;
 }
 
 .groupedCheckboxList > ul > li > ul > li{
     margin: 0;
     padding: 0;
+    width: 250px;
+}
+
+[type="checkbox"].bdr-amber.filled-in:not(:checked) + label:after{
+    border: 2px solid #FFC107;
+}
+
+[type="checkbox"].bdr-red.filled-in:not(:checked) + label:after{
+    border: 2px solid #FF7777 !important;
+}
+
+[type="checkbox"].filled-in:checked.chk-col-red + label:after {
+    border: 2px solid #FF7777 !important;
+    background-color: #FF7777 !important;
 }

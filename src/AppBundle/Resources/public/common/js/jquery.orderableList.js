@@ -25,7 +25,7 @@
 	        		
 	        		var classNameReg = /^sorting(_asc|_desc)?$/
 	        		
-	        		var 	sortClass = sort == 'asc'?'_asc':(sort == 'desc'?'_desc': '');
+	        		var 	sortClass = sort == 'ASC'?'_asc':(sort == 'DESC'?'_desc': '');
 	        			
 	        		$(this).removeClass(classNameReg);
 	        		$(this).addClass('sorting' + sortClass);

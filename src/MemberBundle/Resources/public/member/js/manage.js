@@ -23,9 +23,13 @@ $(function(){
             },
             function(isConfirm){
                 if (isConfirm) {
-                    swal(ranslator.trans('app.common.deleteTitle'), Translator.trans('app.common.deleteQuestionNo'));
+                    swal(translator.trans('app.common.deleteTitle'), Translator.trans('app.common.deleteQuestionNo'));
                 }
             });
+    });
+
+    $('#display_all_new_fee_coming_soon').on('click', function(){
+
     });
 });
 
