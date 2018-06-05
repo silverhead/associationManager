@@ -18,7 +18,6 @@ class DashboardBundleFormType extends AbstractType
             ->add('bundle', ChoiceType::class, array(
                 'choices' => $options['bundles'],
                 'choice_value' => function($bundle = null){
-                    //dump($bundle);
                     return $bundle!= null? $bundle->getBundleCode(): '';
                 },
                 'choice_label' =>  function($bundle, $key, $index){

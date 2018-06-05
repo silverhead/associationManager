@@ -17,17 +17,14 @@ class SubscriptionRepository extends EntityRepository implements PaginatorReposi
     {
         $subquery = $this->_em->createQuery("
             SELECT COUNT(sub2.id) FROM MemberBundle:MemberSubscriptionHistorical sub2 
-            WHERE sub2.subscription = s
+            WHERE sub2.subscription = s  AND sub2.endDate >= '".(new \DateTime())->format("Y-m-d H:i:s")."'
             GROUP BY sub2.subscription
             ")
-//            ->setParameter(":now", new \DateTime()) AND sub2.endDate >= :now
             ->getDQL();
 
         $qb = $this->getQb()
             ->select("s")
             ->addSelect("(" . $subquery .") AS nbMembres ");
-
-        dump($qb);
 
         return $qb;
     }
