@@ -4492,6 +4492,10 @@ section.content {
   -ms-border-radius: 0;
   border-radius: 0; }
 
+label.required::after{
+    content: ' *';
+}
+
 .label-primary {
   background-color: #1f91f3; }
 

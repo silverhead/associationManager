@@ -56,28 +56,34 @@ class MemberEmailSettingHandler
     {
         $this->memberEmailSettingModel
             ->setWelcomeEmailSubject(
-                $this->settingManager->getSetting('member.email.welcome_subject')->getValue()
+                $this->settingManager->getFormatedSettingValue('member.email.welcome_subject')
             )
             ->setWelcomeEmailBody(
-                nl2br($this->settingManager->getSetting('member.email.welcome_body')->getValue())
+                nl2br($this->settingManager->getFormatedSettingValue('member.email.welcome_body'))
             )
             ->setNewSubscriptionEmailSubject(
-                $this->settingManager->getSetting('member.email.new_subscription_subject')->getValue()
+                $this->settingManager->getFormatedSettingValue('member.email.new_subscription_subject')
             )
             ->setNewSubscriptionEmailBody(
-                nl2br($this->settingManager->getSetting('member.email.new_subscription_body')->getValue())
+                nl2br($this->settingManager->getFormatedSettingValue('member.email.new_subscription_body'))
             )
             ->setNewFeeComingSoonEmailSubject(
-                $this->settingManager->getSetting('member.email.new_fee_coming_soon_email_subject')->getValue()
+                $this->settingManager->getFormatedSettingValue('member.email.new_fee_coming_soon_email_subject')
             )
             ->setNewFeeComingSoonEmailBody(
-                nl2br($this->settingManager->getSetting('member.email.new_fee_coming_soon_email_body')->getValue())
+                nl2br($this->settingManager->getFormatedSettingValue('member.email.new_fee_coming_soon_email_body'))
             )
             ->setLateMemberNotificationEmailSubject(
-                $this->settingManager->getSetting('member.email.late_member_notification_email_subject')->getValue()
+                $this->settingManager->getFormatedSettingValue('member.email.late_member_notification_email_subject')
             )
             ->setLateMemberNotificationEmailBody(
-                nl2br($this->settingManager->getSetting('member.email.late_member_notification_email_body')->getValue())
+                nl2br($this->settingManager->getFormatedSettingValue('member.email.late_member_notification_email_body'))
+            )
+            ->setNewFeeComingSoonEmailSendingDelay(
+                $this->settingManager->getFormatedSettingValue('subscription.delay.new_fee_coming_soon_email_sending')
+            )
+            ->setLatePaymentMemberEmailSendingDelay(
+                $this->settingManager->getFormatedSettingValue('subscription.delay.late_payment_member_email_sending')
             )
         ;
     }
@@ -97,16 +103,22 @@ class MemberEmailSettingHandler
 
     private function saveSetting()
     {
+        /**
+         * @var MemberEmailSettingModel
+         */
         $data = $this->form->getData();
 
-        $this->settingManager->save('member.email.welcome_subject', $data->getGender());
-        $this->settingManager->save('member.email.welcome_body', $data->getStudy());
-        $this->settingManager->save('member.email.new_subscription_subject', $data->getExpertise());
-        $this->settingManager->save('member.email.new_subscription_body', $data->getExpertise());
-        $this->settingManager->save('member.email.new_fee_coming_soon_email_subject', $data->getExpertise());
-        $this->settingManager->save('member.email.new_fee_coming_soon_email_body', $data->getExpertise());
-        $this->settingManager->save('member.email.late_member_notification_email_subject', $data->getExpertise());
-        $this->settingManager->save('member.email.late_member_notification_email_body', $data->getExpertise());
+        $this->settingManager->save('member.email.welcome_subject', $data->getWelcomeEmailSubject());
+        $this->settingManager->save('member.email.welcome_body', $data->getWelcomeEmailBody());
+        $this->settingManager->save('member.email.new_subscription_subject', $data->getNewSubscriptionEmailSubject());
+        $this->settingManager->save('member.email.new_subscription_body', $data->getNewSubscriptionEmailBody());
+        $this->settingManager->save('member.email.new_fee_coming_soon_email_subject', $data->getNewFeeComingSoonEmailSubject());
+        $this->settingManager->save('member.email.new_fee_coming_soon_email_body', $data->getNewFeeComingSoonEmailBody());
+        $this->settingManager->save('member.email.late_member_notification_email_subject', $data->getLateMemberNotificationEmailSubject());
+        $this->settingManager->save('member.email.late_member_notification_email_body', $data->getLateMemberNotificationEmailBody());
+
+        $this->settingManager->save('subscription.delay.late_payment_member_email_sending', $data->getLatePaymentMemberEmailSendingDelay());
+        $this->settingManager->save('subscription.delay.new_fee_coming_soon_email_sending', $data->getNewFeeComingSoonEmailSendingDelay());
 
         $this->setForm();
     }

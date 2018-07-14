@@ -98,6 +98,53 @@ class MemberSubscriptionFeeRepository extends EntityRepository implements Pagina
         return $qb->getQuery()->getArrayResult();
     }
 
+    public function getLatePaymentFeeMemberIdList()
+    {
+        $qb = $this->createQueryBuilder("msf")
+            ->select("m.id")
+            ->join("msf.member", "m")
+        ;
+
+        $qb->where("msf.startDate < :today")
+            ->andWhere("msf.paid = 0")
+            ->setParameter(":today", new \DateTime());
+
+
+        //$qb->groupBy("m.id");
+
+        $result = $qb->getQuery()->getArrayResult();
+
+        $array = array();
+
+        foreach($result as $item){
+            $array[] = $item['id'];
+        }
+
+        return $array;
+    }
+
+    public function getSoonFeeNewPaymentMemberIdList(\DateTime $startPeriod, \DateTime $endPeriod, $limit = 10, $orders = array())
+    {
+        $qb = $this->createQueryBuilder("msf")
+            ->select("m.id")
+            ->join('msf.member', 'm')
+        ;
+
+        $qb->where("msf.startDate between :startPeriod and :endPeriod")
+            ->setParameter(":startPeriod", $startPeriod)
+            ->setParameter(":endPeriod", $endPeriod);
+
+        if(count($orders) > 0){
+            foreach ($orders as $sort => $order){
+                $qb->addOrderBy($sort, $order);
+            }
+        }
+
+        $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
     public function getSoonFeeNewPaymentListByMemberIdList(\DateTime $startPeriod, \DateTime $endPeriod, array $memberIdList)
     {
         $qb = $this->createQueryBuilder("msf")

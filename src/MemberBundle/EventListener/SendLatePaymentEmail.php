@@ -36,13 +36,21 @@ class SendLatePaymentEmail
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-//        $entityManager = $args->getEntityManager();
+        $entityManager = $args->getEntityManager();
 
-        if ($entity instanceof Member) {
+        if ($entity instanceof MemberSubscriptionHistorical) {
             $associationName = $this->settingManager->getSettingValue("app.setting.association_name");
 
             $latePaymentEmailSubject = $this->settingManager->getSettingValue("member.email.late_payment_subject");
             $latePaymentEmailBody = $this->settingManager->getSettingValue("member.email.late_payment_body");
+
+
+            $memberRepo = $entityManager->getRepository('MemberBundle:Member');
+            $subFeeRepo = $entityManager->getRepository('MemberBundle:MemberSubscriptionFee');
+
+            $memberRepo->getQbPaginatedList();
+
+            //$subFeeRepo->getSoonFeeNewPaymentListByMemberIdList();
 
             $keywordsToReplace = array(
                 '{gender}',
@@ -57,6 +65,29 @@ class SendLatePaymentEmail
                 $entity->getFirstName(),
                 $associationName
             );
+
+            $keywordsToReplace = array(
+                '{gender}',
+                '{lastName}',
+                '{firstName}',
+                '{subscriptionLabel}',
+                '{startDate}',
+                '{endDate}',
+                '{totalCost}',
+                '{associationName}'
+            );
+
+            $data = array(
+                $entity->getMember()->getGender(),
+                $entity->getMember()->getLastName(),
+                $entity->getMember()->getFirstName(),
+                $entity->getSubscription()->getLabel(),
+                $entity->getStartDate()->format('d/m/Y'),
+                $entity->getEndDate()->format('d/m/Y'),
+                number_format($entity->getCost(), 2, ",", " "),
+                $associationName
+            );
+
 
             $latePaymentEmailSubject = str_replace('{associationName}', $associationName, $latePaymentEmailSubject);
             $latePaymentEmailBody = str_replace($keywordsToReplace, $data, $latePaymentEmailBody);

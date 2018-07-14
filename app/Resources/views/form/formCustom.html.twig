@@ -10,11 +10,15 @@
         <i class="material-icons">{{ attr.inputGroupIcon }}</i>
         </span>
     {% endif %}
-    <div class="{{ attr.blockClass|default('col-sm-10') }} form-line">
+    <div class="{{ attr.blockClass|default('col-sm-10 form-line') }}">
+        {% if attr.formLine is defined %}<div class="form-line">{% endif %}
         {% if type is not defined or type not in ['file', 'hidden'] %}
             {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
         {% endif %}
         {{- parent() -}}
+        {% if attr.formLine is defined %}
+        </div>
+        {% endif %}
     </div>
     {% if attr.inputGroup is defined %}
         </div>
@@ -265,7 +269,7 @@
 {# Rows #}
 
 {% block form_row -%}
-    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    <div class="form-group {{ row_attr.class|default('') }}{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
         {{- form_label(form) -}}
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}

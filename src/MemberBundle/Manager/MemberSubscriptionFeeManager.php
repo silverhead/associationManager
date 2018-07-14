@@ -54,9 +54,9 @@ class MemberSubscriptionFeeManager implements PaginatorManagerInterface
         return $this->getRepository()->getTotalFee(true);
     }
 
-    public function getLatePaymentFeeByMemberIdList(array $membersIdLis)
+    public function getLatePaymentFeeByMemberIdList(array $membersIdList)
     {
-        return $this->getRepository()->getLatePaymentFeeByMemberIdList($membersIdLis);
+        return $this->getRepository()->getLatePaymentFeeByMemberIdList($membersIdList);
     }
 
     public function getLatePaymentFeeMemberList($limit = 10, $order = array())
@@ -72,5 +72,15 @@ class MemberSubscriptionFeeManager implements PaginatorManagerInterface
     public function getSoonFeeNewPaymentMemberList(\DateTime $startPeriod, \DateTime $endPeriod, $limit = 10, $order = array())
     {
         return $this->getRepository()->getSoonFeeNewPaymentMemberList($startPeriod, $endPeriod, $limit, $order);
+    }
+
+    public function getSoonFeeNewPaymentMemberIdList(\DateTime $startPeriod, \DateTime $endPeriod, $limit = 10, $order = array())
+    {
+        return $this->getRepository()->getSoonFeeNewPaymentMemberIdList($startPeriod, $endPeriod, $limit, $order);
+    }
+
+    public function getLatePaymentFeeMemberIdList()
+    {
+        return $this->getRepository()->getLatePaymentFeeMemberIdList();
     }
 }

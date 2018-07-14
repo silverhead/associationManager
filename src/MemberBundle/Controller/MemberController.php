@@ -2,6 +2,7 @@
 
 namespace MemberBundle\Controller;
 
+use AppBundle\QueryHelper\FilterQuery;
 use AppBundle\QueryHelper\OrderQuery;
 use Doctrine\Common\Collections\ArrayCollection;
 use MemberBundle\Entity\Member;
@@ -42,6 +43,7 @@ class MemberController extends Controller
         $memberListTpl = $this->memberlist($request, "");
         $statusListTpl = $this->get('member.controller.status')->listAction($request, "");
         $settingTpl = $this->get('member.controller.setting')->settingAction($request);
+        $settingEmailTpl = $this->get('member.controller.setting')->emailSettingAction($request);
 
         return $this->render('member/membersManager.html.twig', array(
             'menuSelect' => 'members_manager',
@@ -49,7 +51,8 @@ class MemberController extends Controller
             'nbTotalActiveMembers' => $memberManager->getMemberNb(true),
             'memberListTpl' => $memberListTpl,
             'statusListTpl' => $statusListTpl,
-            'settingTpl' => $settingTpl
+            'settingTpl' => $settingTpl,
+            'settingEmailTpl' => $settingEmailTpl
         ));
     }
 
@@ -68,6 +71,23 @@ class MemberController extends Controller
 
         $memberManager = $this->get('member.manager.member');
         $memberManager->activateCache('memberList');
+
+        $filtersRequest = array();
+        $filtersRequest['new_fee_coming_soon']   = $request->get('new_fee_coming_soon', '-1');
+        $filtersRequest['display_all_late_payment_member']  =$request->get('display_all_late_payment_member', '-1');
+
+        $filter = $this->get('session')->get('filter', array(
+            'new_fee_coming_soon' => '-1',
+            'display_all_late_payment_member' => '-1'
+        ));
+
+        if($filtersRequest['new_fee_coming_soon'] != '-1'){
+            $filter['new_fee_coming_soon'] = $filtersRequest['new_fee_coming_soon'];
+        }
+
+        if($filtersRequest['display_all_late_payment_member'] != '-1'){
+            $filter['display_all_late_payment_member'] = $filtersRequest['display_all_late_payment_member'];
+        }
 
         $ordersRequest = $request->get('orders',  $memberManager->getArrayOrdersInCacheByKey(
             array(
@@ -97,6 +117,35 @@ class MemberController extends Controller
             )
         ;
 
+        $now = new \DateTime();
+        $delayDayMax = (clone $now)->add(new \DateInterval("P20D"));
+
+        $feeManager = $this->get('member.manager.subscription_fee');
+
+        if ($filter['new_fee_coming_soon'] == '1'){
+            $membersFeeIdList = $feeManager->getSoonFeeNewPaymentMemberIdList($now, $delayDayMax, 1000);
+
+            if(count($membersFeeIdList) == 0){
+                $membersFeeIdList[] = 0;
+            }
+
+            $memberManager->addFilter(
+                new FilterQuery('m.id', $membersFeeIdList, FilterQuery::OPERATOR_IN)
+            );
+        }
+
+        if ($filter['display_all_late_payment_member'] == '1'){
+            $membersFeeIdList = $feeManager->getLatePaymentFeeMemberIdList();
+
+            if(count($membersFeeIdList) == 0){
+                $membersFeeIdList[] = 0;
+            }
+
+            $memberManager->addFilter(
+                new FilterQuery('m.id', $membersFeeIdList, FilterQuery::OPERATOR_IN)
+            );
+        }
+
         $members = $memberManager->paginatedList(
             $request->query->getInt('pageMemberList', 1),
             10,
@@ -110,13 +159,8 @@ class MemberController extends Controller
             $membersIdList[] = $member->getId();
         }
 
-        $feeManager = $this->get('member.manager.subscription_fee');
-
         $latePaymentFeeList = $feeManager->getLatePaymentFeeByMemberIdList($membersIdList);
         $latePaymentmemberList = array_column($latePaymentFeeList, "id");
-
-        $now = new \DateTime();
-        $delayDayMax = (clone $now)->add(new \DateInterval("P20D"));
 
         $soonPaymentFeeList = $feeManager->getSoonFeeNewPaymentListByMemberIdList($now,$delayDayMax, $membersIdList);
         $soonPaymentmemberList = array_column($soonPaymentFeeList, "id");
@@ -124,6 +168,7 @@ class MemberController extends Controller
         return $this->renderView('member/member/list.html.twig', array(
             'members' => $members,
             'order' => $ordersRequest,
+            'filter' => $filter,
             'latePaymentmemberList' => $latePaymentmemberList,
             'soonPaymentmemberList' => $soonPaymentmemberList
         ));

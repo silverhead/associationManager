@@ -85,6 +85,9 @@ services:
     member.manager.subscription_fee:
         class: MemberBundle\Manager\MemberSubscriptionFeeManager
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']
+    member.manager.send_mail_late_payment:
+         class: MemberBundle\Manager\SendMailLatePaymentManager
+         arguments: ['@app.manager.send_mail']
     # FORM MODEL
     member.form.model.member_setting:
         class: MemberBundle\Form\Model\MemberSettingModel

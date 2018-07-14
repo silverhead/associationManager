@@ -73,8 +73,8 @@ class MemberSettingController extends Controller
             $this->addFlash('success', $translator->trans('member.member.email_setting.form.saveSuccessText'));
         }
 
-        return $this->render(':member/member/setting:email_setting.html.twig', array(
-            'form' => $formEmailSettingAppHandler->getForm()->createView()
+        return $this->renderView(':member/member/setting:email_setting.html.twig', array(
+            'formEmailSetting' => $formEmailSettingAppHandler->getForm()->createView()
         ));
     }
 }

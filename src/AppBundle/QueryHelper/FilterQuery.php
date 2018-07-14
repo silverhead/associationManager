@@ -5,6 +5,8 @@ namespace AppBundle\QueryHelper;
 
 class FilterQuery
 {
+    const OPERATOR_IN = 'in';
+
     /**
      * @var string
      */

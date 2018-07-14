@@ -74,7 +74,7 @@ class Member extends User
 
     /**
      * @var string
-     * @ORM\Column(length=10, nullable=true)
+     * @ORM\Column(length=30, nullable=true)
      */
     protected $phone;
 
@@ -93,7 +93,7 @@ class Member extends User
     
     /**
      * @var string
-     * @ORM\Column(length=10, nullable=true)
+     * @ORM\Column(length=30, nullable=true)
      */
     protected $cellular;
 
@@ -158,6 +158,18 @@ class Member extends User
      * @var \DateTime
      */
     protected $updatedAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    protected $lastSendingComingSoonFeeEmailDate;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    protected $lastSendingLatePaymentEmailDate;
 
     /**
      * Constructor
@@ -708,6 +720,44 @@ class Member extends User
     public function setUpdatedAt(\DateTime $updatedAt): Member
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastSendingComingSoonFeeEmailDate()
+    {
+        return $this->lastSendingComingSoonFeeEmailDate;
+    }
+
+    /**
+     * @param mixed $lastSendingComingSoonFeeEmailDate
+     * @return Member
+     */
+    public function setLastSendingComingSoonFeeEmailDate($lastSendingComingSoonFeeEmailDate)
+    {
+        $this->lastSendingComingSoonFeeEmailDate = $lastSendingComingSoonFeeEmailDate;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastSendingLatePaymentEmailDate()
+    {
+        return $this->lastSendingLatePaymentEmailDate;
+    }
+
+    /**
+     * @param mixed $lastSendingLatePaymentEmailDate
+     * @return Member
+     */
+    public function setLastSendingLatePaymentEmailDate($lastSendingLatePaymentEmailDate)
+    {
+        $this->lastSendingLatePaymentEmailDate = $lastSendingLatePaymentEmailDate;
 
         return $this;
     }

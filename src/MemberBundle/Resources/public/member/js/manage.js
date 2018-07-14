@@ -27,10 +27,18 @@ $(function(){
                 }
             });
     });
+});
 
-    $('#display_all_new_fee_coming_soon').on('click', function(){
+$(document).on('click', '.display_all_new_fee_coming_soon', function(){
+    var checked = $('#display_all_new_fee_coming_soon').is(':checked');
 
-    });
+    reloadMemberList('list', '&new_fee_coming_soon=' + (checked == true?"1":"0"));
+});
+
+$(document).on('click', '.display_all_late_payment_member', function(){
+    var checked = $('#display_all_late_payment_member').is(':checked');
+
+    reloadMemberList('list', '&display_all_late_payment_member=' + (checked == true?"1":"0"));
 });
 
 function reloadMemberList(action, paginatorOrders){
@@ -46,7 +54,7 @@ function reloadMemberList(action, paginatorOrders){
 	        		listToOrder: function(orders){
 	        			reloadMemberList('order', orders);			
 	        		}		
-	        	});        	
+	        	});
         },
         remoteErrorCallBack: function(){
         		swal(

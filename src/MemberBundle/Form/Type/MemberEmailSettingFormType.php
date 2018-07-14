@@ -3,6 +3,7 @@
 namespace MemberBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +22,9 @@ class MemberEmailSettingFormType extends AbstractType
             ->add('newFeeComingSoonEmailBody', TextareaType::class)
             ->add('lateMemberNotificationEmailSubject', TextType::class)
             ->add('lateMemberNotificationEmailBody', TextareaType::class)
+
+            ->add('latePaymentMemberEmailSendingDelay', IntegerType::class)
+            ->add('newFeeComingSoonEmailSendingDelay', IntegerType::class)
         ;
     }
 

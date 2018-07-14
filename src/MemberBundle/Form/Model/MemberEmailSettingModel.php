@@ -46,6 +46,16 @@ class MemberEmailSettingModel
     private $lateMemberNotificationEmailBody;
 
     /**
+     * @var integer
+     */
+    private $newFeeComingSoonEmailSendingDelay;
+
+    /**
+     * @var integer
+     */
+    private $latePaymentMemberEmailSendingDelay;
+
+    /**
      * @return string
      */
     public function getWelcomeEmailSubject()
@@ -193,6 +203,44 @@ class MemberEmailSettingModel
     public function setLateMemberNotificationEmailBody($lateMemberNotificationEmailBody)
     {
         $this->lateMemberNotificationEmailBody = $lateMemberNotificationEmailBody;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getNewFeeComingSoonEmailSendingDelay(): int
+    {
+        return $this->newFeeComingSoonEmailSendingDelay;
+    }
+
+    /**
+     * @param int $newFeeComingSoonEmailSendingDelay
+     * @return MemberEmailSettingModel
+     */
+    public function setNewFeeComingSoonEmailSendingDelay(int $newFeeComingSoonEmailSendingDelay): MemberEmailSettingModel
+    {
+        $this->newFeeComingSoonEmailSendingDelay = $newFeeComingSoonEmailSendingDelay;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLatePaymentMemberEmailSendingDelay(): int
+    {
+        return $this->latePaymentMemberEmailSendingDelay;
+    }
+
+    /**
+     * @param int $latePaymentMemberEmailSendingDelay
+     * @return MemberEmailSettingModel
+     */
+    public function setLatePaymentMemberEmailSendingDelay(int $latePaymentMemberEmailSendingDelay): MemberEmailSettingModel
+    {
+        $this->latePaymentMemberEmailSendingDelay = $latePaymentMemberEmailSendingDelay;
 
         return $this;
     }

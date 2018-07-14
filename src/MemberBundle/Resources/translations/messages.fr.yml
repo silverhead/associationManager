@@ -101,6 +101,7 @@ member:
                 new_subscription_email: E-mail de confirmation d'inscription d'abonnement
                 new_fee_coming_soon_email: E-mail de notification d'une nouvelle échéance de cotisation
                 late_member_notification_email: E-mail de notification de retard de paiement
+                delay_between_sending: Delai entre chaque envoie (en jours)
                 placeholder:
                     keywords_for_welcome_email: Mots clefs pour l'e-mail de bienvenue
                     keywords_for_new_subscription_email: Mots clefs pour l'e-mail de nouvelle inscription
@@ -114,6 +115,7 @@ member:
                     start_date: Date de début
                     end_date: Date de fin
                     total_cost: Montant total
+                saveSuccessText: Les configurations e-mails ont été enregistrées avec succès !
     security:
         credential:
             setting: Edition paramètres Adhérents

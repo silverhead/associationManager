@@ -113,7 +113,7 @@
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="email-setting">
                                 <div id="memberEmailSettingContainer" data-anchor="status" data-page-parameter-name="pageTab4">
-                                    {{ render(controller('MemberBundle:MemberSetting:emailSetting')) }}
+                                    {{ settingEmailTpl|raw }}
                                 </div>
                             </div>
                         {% endif %}

@@ -48,7 +48,7 @@ Trait PaginatorManagerTrait
         }
 
         if($key == ""){
-            $key = $filterQuery->getEntityProperty();
+            $key = "filter" . count($this->filters);
         }
 
         $this->filters->set($key, $filterQuery);
@@ -127,13 +127,16 @@ Trait PaginatorManagerTrait
                         break;
                 }
             }
-            else if(in_array($operator, array('%in', 'notin'))){
+            else if(in_array($operator, array('in', 'notin'))){
                 switch ($operator){
                     case 'in':
-                        $qb->andWhere($property ." IN (:".$pattern.")")->setParameter($pattern, implode("','", $search));
+
+                        dump($search);
+
+                        $qb->andWhere($property ." IN (':".implode("','", $search)."')");
                         break;
                     case 'not':
-                        $qb->andWhere($property ." NOT IN (:".$pattern.")")->setParameter($pattern, implode("','", $search));
+                        $qb->andWhere($property ." NOT IN (':".$pattern."')")->setParameter($pattern, implode("','", $search));
                         break;
                 }
             }
@@ -194,6 +197,19 @@ Trait PaginatorManagerTrait
 
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getArrayList($offset = 0, $limit = 10)
+    {
+        $qb = $this->getQueryList();
+
+        $qb->setFirstResult($offset);
+
+        if($limit > 0){
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getArrayResult();
     }
 
     public function paginatedList($page = 1, $itemPerPage = 10, $pageParameterName = 'page', $anchor = null, $route = null): PaginationInterface
