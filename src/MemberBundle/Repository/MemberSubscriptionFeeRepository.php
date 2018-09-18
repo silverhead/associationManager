@@ -56,6 +56,43 @@ class MemberSubscriptionFeeRepository extends EntityRepository implements Pagina
         return $qb->getQuery()->getResult();
     }
 
+    public function getLatePaymentFeeMemberListForSendingMail($delaySending)
+    {
+
+
+        $qb = $this->createQueryBuilder("msf")
+            ->select('
+            m.id,
+            m.gender,
+            m.lastName,
+            m.firstName,
+            m.email,
+            s.label as subscriptionLabel,                    
+            msf.startDate,
+            msf.endDate,
+            SUM(msf.cost) as cost'
+            )
+            ->join("msf.member", "m")
+            ->join("msf.subscription", "msh")
+            ->join("msh.subscription", "s")
+        ;
+
+        $qb->where("msf.startDate < :today")
+            ->andWhere("msf.paid = 0")
+            ->andWhere("m.active = 1")
+            ->setParameter(":today", new \DateTime());
+
+        $dateStarAuthorized = new \DateTime();
+        $dateStarAuthorized->sub(new \DateInterval("P". $delaySending . "D"));
+
+        $qb->andWhere("m.lastSendingLatePaymentEmailDate < :dateStarAuthorized")
+            ->setParameter(":dateStarAuthorized", $dateStarAuthorized);
+
+        $qb->groupBy("m");
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
     public function getLatePaymentFeeByMemberIdList(array $memberIdList)
     {
         $qb = $this->createQueryBuilder("msf")
@@ -92,8 +129,35 @@ class MemberSubscriptionFeeRepository extends EntityRepository implements Pagina
             }
         }
 
-
         $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
+    /**
+     * @param \DateTime $startPeriod
+     * @param \DateTime $endPeriod
+     * @param $delaySending
+     * @return array
+     * @throws \Exception
+     */
+    public function getSoonFeeNewPaymentMemberListForSendingEmail(\DateTime $startPeriod, \DateTime $endPeriod, $delaySending)
+    {
+        $qb = $this->createQueryBuilder("msf")
+            ->select('msf, m')
+            ->join("msf.member", "m")
+            ->join("msf.subscription", "s")
+        ;
+
+        $qb->where("msf.startDate between :startPeriod and :endPeriod")
+            ->setParameter(":startPeriod", $startPeriod)
+            ->setParameter(":endPeriod", $endPeriod);
+
+        $dateStarAuthorized = new \DateTime();
+        $dateStarAuthorized->sub(new \DateInterval("P". $delaySending . "D"));
+
+        $qb->andWhere("m.lastSendingComingSoonFeeEmailDate < :dateStarAuthorized")
+            ->setParameter(":dateStarAuthorized", $dateStarAuthorized);
 
         return $qb->getQuery()->getArrayResult();
     }

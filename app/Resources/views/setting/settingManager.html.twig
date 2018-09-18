@@ -37,14 +37,34 @@
                                     {{ form_widget(formSetting.logo, {'attr': {'class': 'file-loading'}}) }}
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group {% if not formSetting.associationName.vars.valid %}text-danger{% endif %}">
-                                    {{ form_label(formSetting.associationName, 'app.setting.form.label.associationName'|trans) }}
-                                    {{ form_widget(formSetting.associationName, {'attr': {
-                                        'class': 'form-control', 'placeholder': 'app.setting.form.placeholder.associationName'|trans}}
-                                    ) }}
-                                    {{ form_errors(formSetting.associationName) }}
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-12 padding-0">
+                                        <div class="form-group {% if not formSetting.associationName.vars.valid %}text-danger{% endif %}">
+                                            {{ form_label(formSetting.associationName, 'app.setting.form.label.associationName'|trans) }}
+                                            {{ form_widget(formSetting.associationName, {'attr': {
+                                                'class': 'form-control', 'placeholder': 'app.setting.form.placeholder.associationName'|trans}}
+                                            ) }}
+                                            {{ form_errors(formSetting.associationName) }}
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12 padding-0">
+                                        <div class="col-sm-12 padding-0 form-group {% if not formSetting.description.vars.valid %}text-danger{% endif %}">
+                                            {{ form_label(formSetting.description, 'app.setting.form.label.description'|trans) }}
+                                            {{ form_widget(formSetting.description, {'attr': {
+                                                'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
+                                                'class': 'form-control no-resize auto-growth', 'placeholder': 'app.setting.form.label.description'|trans}}
+                                            ) }}
+                                            {{ form_errors(formSetting.description) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
                                 <div class="form-group {% if not formSetting.contactEmail.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.contactEmail, 'app.setting.form.label.contactEmail'|trans) }}
                                     {{ form_widget(formSetting.contactEmail, {'attr': {
@@ -52,13 +72,8 @@
                                     ) }}
                                     {{ form_errors(formSetting.contactEmail) }}
                                 </div>
-                                <div class="form-group {% if not formSetting.robotEmail.vars.valid %}text-danger{% endif %}">
-                                    {{ form_label(formSetting.contactEmail, 'app.setting.form.label.robotEmail'|trans) }}
-                                    {{ form_widget(formSetting.robotEmail, {'attr': {
-                                        'class': 'form-control', 'placeholder': 'app.setting.form.label.robotEmail'|trans}}
-                                    ) }}
-                                    {{ form_errors(formSetting.robotEmail) }}
-                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group {% if not formSetting.phone.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.phone, 'app.setting.form.label.phone'|trans) }}
                                     {{ form_widget(formSetting.phone, {'attr': {
@@ -67,7 +82,17 @@
                                     {{ form_errors(formSetting.phone) }}
                                 </div>
                             </div>
-
+                            <div class="col-md-4">
+                                <div class="form-group {% if not formSetting.gsm.vars.valid %}text-danger{% endif %}">
+                                    {{ form_label(formSetting.gsm, 'app.setting.form.label.gsm'|trans) }}
+                                    {{ form_widget(formSetting.gsm, {'attr': {
+                                        'class': 'form-control', 'placeholder': 'app.setting.form.label.gsm'|trans}}
+                                    ) }}
+                                    {{ form_errors(formSetting.gsm) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group {% if not formSetting.country.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.country, 'app.setting.form.label.country'|trans) }}
@@ -76,6 +101,8 @@
                                     ) }}
                                     {{ form_errors(formSetting.country) }}
                                 </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group {% if not formSetting.city.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.city, 'app.setting.form.label.city'|trans) }}
                                     {{ form_widget(formSetting.city, {'attr': {
@@ -83,6 +110,8 @@
                                     ) }}
                                     {{ form_errors(formSetting.city) }}
                                 </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group {% if not formSetting.zipcode.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.zipcode, 'app.setting.form.label.zipcode'|trans) }}
                                     {{ form_widget(formSetting.zipcode, {'attr': {
@@ -90,6 +119,10 @@
                                     ) }}
                                     {{ form_errors(formSetting.zipcode) }}
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-group {% if not formSetting.address.vars.valid %}text-danger{% endif %}">
                                     {{ form_label(formSetting.address, 'app.setting.form.label.address'|trans) }}
                                     {{ form_widget(formSetting.address, {'attr': {
@@ -97,16 +130,6 @@
                                     ) }}
                                     {{ form_errors(formSetting.address) }}
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 form-group {% if not formSetting.description.vars.valid %}text-danger{% endif %}">
-                                {{ form_label(formSetting.description, 'app.setting.form.label.description'|trans) }}
-                                {{ form_widget(formSetting.description, {'attr': {
-                                    'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
-                                    'class': 'form-control no-resize auto-growth', 'placeholder': 'app.setting.form.label.description'|trans}}
-                                ) }}
-                                {{ form_errors(formSetting.description) }}
                             </div>
                         </div>
                         <div class="row">
@@ -129,6 +152,31 @@
                                     'attr': {
                                         'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
                                         'class': 'form-control no-resize auto-growth', 'placeholder': 'app.setting.form.label.url_twitter'|trans
+                                    }
+                                }
+                                ) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">{{ 'app.setting.application'|trans }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(formSetting.applicationName, {
+                                    'label' : 'app.setting.form.label.applicationName'|trans,
+                                    'attr': {
+                                        'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
+                                        'class': 'form-control no-resize auto-growth', 'placeholder': 'app.setting.form.label.applicationName'|trans
+                                    }
+                                }
+                                ) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(formSetting.applicationDescription, {
+                                    'label' : 'app.setting.form.label.applicationDescription'|trans,
+                                    'attr': {
+                                        'style': 'overflow: hidden; word-wrap: break-word; height: 32px;',
+                                        'class': 'form-control no-resize auto-growth', 'placeholder': 'app.setting.form.label.applicationDescription'|trans
                                     }
                                 }
                                 ) }}

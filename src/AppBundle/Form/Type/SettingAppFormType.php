@@ -28,10 +28,8 @@ class SettingAppFormType extends AbstractType
             ->add('contactEmail', EmailType::class, [
                 'constraints' => new Email()
             ])
-            ->add('robotEmail', EmailType::class, [
-                'constraints' => new Email()
-            ])
             ->add('phone', TextType::class, [])
+            ->add('gsm', TextType::class, [])
             ->add('country', CountryType::class, [])
             ->add('city', TextType::class, [])
             ->add('zipcode', TextType::class, [])
@@ -39,6 +37,8 @@ class SettingAppFormType extends AbstractType
             ->add('description', TextareaType::class, [])
             ->add('urlFacebook', TextType::class, [])
             ->add('urlTwitter', TextType::class, [])
+            ->add('applicationName', TextType::class, [])
+            ->add('applicationDescription', TextType::class, [])
         ;
     }
 

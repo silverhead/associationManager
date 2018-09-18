@@ -5,6 +5,8 @@ namespace UserBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Class User
@@ -12,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -29,7 +32,7 @@ class User implements UserInterface
      * @var array
      * @ORM\Column(type="array", nullable=false)
      */
-    private $roles;
+    protected $roles;
 
     /**
      * Assert\Regex(pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/", match=true)
@@ -42,66 +45,100 @@ class User implements UserInterface
      * @var string
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var string
      */
-    private $plainPassword;
+    protected $plainPassword;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $salt;
+    protected $salt;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=false, unique=false)
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=false, unique=false)
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $lastDateAskNewPassword;
+    protected $lastDateAskNewPassword;
 
     /**
      * @var string
      * @ORM\Column(name="ask_password_token", type="string", length=255, nullable=true)
      */
-    private $askPasswordToken;
+    protected $askPasswordToken;
 
     /**
      * @var UserGroup
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\UserGroup", inversedBy="users")
      */
-    private $group;
+    protected $group;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
     protected $active;
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="member_avatar", fileNameProperty="avatar")
+     *
+     * @var File
+     */
+    protected $avatarFile;
+
+    /**
+     *
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $avatar;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    protected $createAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    protected $updatedAt;
+
+
+    public function __construct()
+    {
+        $this->avatar = 'user.png';
+    }
 
     /**
      * @param mixed $roles
@@ -372,6 +409,87 @@ class User implements UserInterface
     public function setPlainPassword(string $plainPassword): User
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+
+    /**
+     * @return File
+     */
+    public function getAvatarFile(): ?File
+    {
+        return $this->avatarFile;
+    }
+
+    /**
+     * @param File $avatarFile
+     * @return Member
+     */
+    public function setAvatarFile(?File $avatarFile = null): User
+    {
+        $this->avatarFile = $avatarFile;
+
+        if($avatarFile){
+            $this->updatedAt = new \DateTime();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreateAt()
+    {
+        return $this->createAt;
+    }
+
+    /**
+     * @param \DateTime $createAt
+     * @return Member
+     */
+    public function setCreateAt($createAt) : User
+    {
+        $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     * @return Member
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): User
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

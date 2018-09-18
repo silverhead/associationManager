@@ -4,13 +4,10 @@ namespace MemberBundle\Controller;
 
 use AppBundle\QueryHelper\FilterQuery;
 use AppBundle\QueryHelper\OrderQuery;
-use Doctrine\Common\Collections\ArrayCollection;
 use MemberBundle\Entity\Member;
-use MemberBundle\Entity\MemberSubscriptionFee;
 use MemberBundle\Entity\MemberSubscriptionHistorical;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use MemberBundle\Entity\MemberStatusHistorical;
 use Symfony\Component\HttpFoundation\Response;

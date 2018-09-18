@@ -79,11 +79,11 @@ class SettingAppHandler
             ->setContactEmail(
                 $this->settingManager->getSetting('app.setting.contact_email')->getValue()
             )
-            ->setRobotEmail(
-                $this->settingManager->getSetting('app.setting.robot_email')->getValue()
-            )
             ->setPhone(
                 $this->settingManager->getSetting('app.setting.phone')->getValue()
+            )
+            ->setGsm(
+                $this->settingManager->getSetting('app.setting.gsm')->getValue()
             )
             ->setDescription(
                 $this->settingManager->getSetting('app.setting.description')->getValue()
@@ -105,6 +105,12 @@ class SettingAppHandler
             )
             ->setUrlTwitter(
                 $this->settingManager->getSetting('app.setting.url_twitter')->getValue()
+            )
+            ->setApplicationName(
+                $this->settingManager->getSetting('app.setting.name')->getValue()
+            )
+            ->setApplicationDescription(
+                $this->settingManager->getSetting('app.setting.description')->getValue()
             )
         ;
     }
@@ -128,8 +134,8 @@ class SettingAppHandler
 
         $this->settingManager->save('app.setting.association_name', $data->getAssociationName());
         $this->settingManager->save('app.setting.contact_email', $data->getContactEmail());
-        $this->settingManager->save('app.setting.robot_email', $data->getRobotEmail());
         $this->settingManager->save('app.setting.phone', $data->getPhone());
+        $this->settingManager->save('app.setting.gsm', $data->getPhone());
         $this->settingManager->save('app.setting.description', $data->getDescription());
         $this->settingManager->save('app.setting.country', $data->getCountry());
         $this->settingManager->save('app.setting.city', $data->getCity());
@@ -138,6 +144,9 @@ class SettingAppHandler
 
         $this->settingManager->save('app.setting.url_facebook', $data->getUrlFacebook());
         $this->settingManager->save('app.setting.url_twitter', $data->getUrlTwitter());
+
+        $this->settingManager->save('app.setting.name', $data->getApplicationName());
+        $this->settingManager->save('app.setting.description', $data->getApplicationDescription());
 
         if(null !== $data->getLogo()){
             $logoFullPath = $this->saveLogo($data->getLogo());

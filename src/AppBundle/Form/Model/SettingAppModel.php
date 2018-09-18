@@ -17,9 +17,9 @@ class SettingAppModel
 
     private $contactEmail;
 
-    private $robotEmail;
-
     private $phone;
+
+    private $gsm;
 
     private $country;
 
@@ -30,6 +30,10 @@ class SettingAppModel
     private $address;
 
     private $description;
+
+    private $applicationName;
+
+    private $applicationDescription;
 
     /**
      * @var string
@@ -101,25 +105,6 @@ class SettingAppModel
     /**
      * @return mixed
      */
-    public function getRobotEmail()
-    {
-        return $this->robotEmail;
-    }
-
-    /**
-     * @param mixed $robotEmail
-     * @return SettingAppModel
-     */
-    public function setRobotEmail($robotEmail)
-    {
-        $this->robotEmail = $robotEmail;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getPhone()
     {
         return $this->phone;
@@ -132,6 +117,25 @@ class SettingAppModel
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGsm()
+    {
+        return $this->gsm;
+    }
+
+    /**
+     * @param mixed $gsm
+     * @return SettingAppModel
+     */
+    public function setGsm($gsm)
+    {
+        $this->gsm = $gsm;
 
         return $this;
     }
@@ -265,6 +269,44 @@ class SettingAppModel
     public function setUrlTwitter($urlTwitter)
     {
         $this->urlTwitter = $urlTwitter;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApplicationName()
+    {
+        return $this->applicationName;
+    }
+
+    /**
+     * @param mixed $applicationName
+     * @return SettingAppModel
+     */
+    public function setApplicationName($applicationName)
+    {
+        $this->applicationName = $applicationName;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApplicationDescription()
+    {
+        return $this->applicationDescription;
+    }
+
+    /**
+     * @param mixed $applicationDescription
+     * @return SettingAppModel
+     */
+    public function setApplicationDescription($applicationDescription)
+    {
+        $this->applicationDescription = $applicationDescription;
 
         return $this;
     }

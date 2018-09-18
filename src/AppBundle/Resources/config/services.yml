@@ -33,4 +33,4 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     app.manager.send_mail:
         class: AppBundle\Manager\SendMailManager
-        arguments: ['@app.manager.setting', '@app.email_templating']
+        arguments: ['@app.manager.setting', '@app.email_templating', '%sendermail%']

@@ -27,6 +27,8 @@ $(function(){
                 }
             });
     });
+
+    $('[data-original-title]').tooltip();
 });
 
 $(document).on('click', '.display_all_new_fee_coming_soon', function(){
@@ -39,6 +41,53 @@ $(document).on('click', '.display_all_late_payment_member', function(){
     var checked = $('#display_all_late_payment_member').is(':checked');
 
     reloadMemberList('list', '&display_all_late_payment_member=' + (checked == true?"1":"0"));
+});
+
+$(document).on('click', '#send_new_fee_coming_soon', function(){
+    $.ajax({
+        'type': 'post',
+        'url' : Routing.generate('member_member_send_soon_fee_new_payment_mail'),
+        'success' : function()
+        {
+            swal(
+                Translator.trans('app.common.sendingMailSuccessTitle'),
+                Translator.trans('app.common.sendingMailBody', data['nbMailSuccess']),
+                "error"
+            );
+        },
+        'error': function()
+        {
+            swal(
+                Translator.trans('app.common.errorTitle'),
+                Translator.trans('app.common.errorUnknow'),
+                "error"
+            );
+        }
+    });
+});
+
+$(document).on('click', '#send_new_late_payment_member', function(){
+    $.ajax({
+        'type': 'post',
+        'dataType': 'json',
+        'url' : Routing.generate('member_member_send_late_payment_mail'),
+        'success' : function(data)
+        {
+            swal(
+                Translator.trans('app.common.sendingMailSuccessTitle'),
+                Translator.trans('app.common.sendingMailBody', data['nbMailSuccess']),
+                "error"
+            );
+        },
+        'error': function()
+        {
+            swal(
+                Translator.trans('app.common.errorTitle'),
+                Translator.trans('app.common.errorUnknow'),
+                "error"
+            );
+        }
+    });
 });
 
 function reloadMemberList(action, paginatorOrders){
@@ -55,6 +104,8 @@ function reloadMemberList(action, paginatorOrders){
 	        			reloadMemberList('order', orders);			
 	        		}		
 	        	});
+
+                $('[data-original-title]').tooltip();
         },
         remoteErrorCallBack: function(){
         		swal(

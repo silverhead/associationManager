@@ -18,7 +18,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @package AppBundle\Entity
  *
  * @ORM\Entity(repositoryClass="MemberBundle\Repository\MemberRepository")
- * @Vich\Uploadable
  */
 class Member extends User
 {
@@ -49,22 +48,6 @@ class Member extends User
      * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $fees;
-
-    /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     *
-     * @Vich\UploadableField(mapping="member_avatar", fileNameProperty="avatar")
-     *
-     * @var File
-     */
-    private $avatarFile;
-
-    /**
-     * 
-     * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $avatar;
 
     /**
      * @var DateTime
@@ -151,18 +134,6 @@ class Member extends User
      * @ORM\Column(type="datetime")
      * @var \DateTime
      */
-    protected $createAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @var \DateTime
-     */
-    protected $updatedAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @var \DateTime
-     */
     protected $lastSendingComingSoonFeeEmailDate;
 
     /**
@@ -176,12 +147,12 @@ class Member extends User
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->subscriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->statusHistorical = new \Doctrine\Common\Collections\ArrayCollection();
         $this->status = new \Doctrine\Common\Collections\ArrayCollection();
         $this->fees = new \Doctrine\Common\Collections\ArrayCollection();
-
-        $this->avatar = 'user.png';
 
         $this->active = true;
 
@@ -388,18 +359,6 @@ class Member extends User
         return $this;
     }
 
-//    /**
-//     * @return ArrayCollection
-//     */
-//    public function getStatusHistorical(){
-//        return $this->statusHistorical;
-//    }
-//
-//    public function setStatusHistorical(ArrayCollection $statusHistorical){
-//        $this->statusHistorical = $statusHistorical;
-//        return $this;
-//    }
-
     /**
      * Add status
      *
@@ -500,23 +459,6 @@ class Member extends User
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * @param string $avatar
-     */
-    public function setAvatar($avatar)
-    {
-        $this->avatar = $avatar;
-        
-        return $this;
-    }
 
     /**
      * @return ArrayCollection
@@ -585,29 +527,6 @@ class Member extends User
         }
 
         return null;
-    }
-
-    /**
-     * @return File
-     */
-    public function getAvatarFile(): ?File
-    {
-        return $this->avatarFile;
-    }
-
-    /**
-     * @param File $avatarFile
-     * @return Member
-     */
-    public function setAvatarFile(?File $avatarFile = null): Member
-    {
-        $this->avatarFile = $avatarFile;
-
-        if($avatarFile){
-            $this->updatedAt = new \DateTime();
-        }
-
-        return $this;
     }
 
     /**
@@ -686,43 +605,6 @@ class Member extends User
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreateAt()
-    {
-        return $this->createAt;
-    }
-
-    /**
-     * @param \DateTime $createAt
-     * @return Member
-     */
-    public function setCreateAt($createAt)
-    {
-        $this->createAt = $createAt;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     * @return Member
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): Member
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
 
     /**
      * @return mixed

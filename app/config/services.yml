@@ -46,7 +46,6 @@ services:
     app.manager.setting:
         class: AppBundle\Manager\SettingManager
         arguments: ['@app.repository.setting']
-
     # Handler
     app.handler.page_historical:
         class: AppBundle\Handler\PageHistoricalHandler

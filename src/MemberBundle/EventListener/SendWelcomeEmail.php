@@ -36,7 +36,6 @@ class SendWelcomeEmail
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-//        $entityManager = $args->getEntityManager();
 
         if ($entity instanceof Member) {
             $associationName = $this->settingManager->getSettingValue("app.setting.association_name");

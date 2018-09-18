@@ -180,53 +180,53 @@ class MemberSubscriptionController extends Controller
         );
     }
 
-    /**
-     * @route("member/subscription/sendLatePaymentMail/{id}", name="member_subscription_send_late_payment_mail", requirements={"id": "\d+"}, options= {"expose" = true})
-     */
-    public function sendLatePaymentAction($id)
-    {
-        $translator = $this->get('translator');
-
-        if(!$this->isGranted("MEMBER_SUBSCRIPTION_VIEW")){
-            $this->addFlash(
-                'error',
-                $translator->trans('app.common.notAuthorizedPage'));
-
-            return $this->redirect(
-                $this->generateUrl('member_view', ['id' => $memberId]).'#subscription'
-            );
-        }        
-        
-        
-        $associationName = $this->settingManager->getSettingValue("app.setting.association_name");
-
-        $latePaymentEmailSubject = $this->settingManager->getSettingValue("member.email.late_payment_subject");
-        $latePaymentEmailBody = $this->settingManager->getSettingValue("member.email.late_payment_body");
-
-        $keywordsToReplace = array(
-            '{gender}',
-            '{lastName}',
-            '{firstName}',
-            '{associationName}'
-        );
-
-        $data = array(
-            $entity->getGender(),
-            $entity->getLastName(),
-            $entity->getFirstName(),
-            $associationName
-        );
-
-        $latePaymentEmailSubject = str_replace('{associationName}', $associationName, $latePaymentEmailSubject);
-        $latePaymentEmailBody = str_replace($keywordsToReplace, $data, $latePaymentEmailBody);
-
-        $this->mailerTemplating->send(
-            ':member/email:latePayment.html.twig',
-            ['bodyContent' => nl2br($latePaymentEmailBody)],
-            $latePaymentEmailSubject,
-            $this->robotEmail,
-            $entity->getEmail()
-        );
-
-    }
+//    /**
+//     * @route("member/subscription/sendLatePaymentMail/{id}", name="member_subscription_send_late_payment_mail", requirements={"id": "\d+"}, options= {"expose" = true})
+//     */
+//    public function sendLatePaymentAction($id)
+//    {
+//        $translator = $this->get('translator');
+//
+//        if(!$this->isGranted("MEMBER_SUBSCRIPTION_VIEW")){
+//            $this->addFlash(
+//                'error',
+//                $translator->trans('app.common.notAuthorizedPage'));
+//
+//            return $this->redirect(
+//                $this->generateUrl('member_view', ['id' => $memberId]).'#subscription'
+//            );
+//        }
+//
+//
+//        $associationName = $this->settingManager->getSettingValue("app.setting.association_name");
+//
+//        $latePaymentEmailSubject = $this->settingManager->getSettingValue("member.email.late_payment_subject");
+//        $latePaymentEmailBody = $this->settingManager->getSettingValue("member.email.late_payment_body");
+//
+//        $keywordsToReplace = array(
+//            '{gender}',
+//            '{lastName}',
+//            '{firstName}',
+//            '{associationName}'
+//        );
+//
+//        $data = array(
+//            $entity->getGender(),
+//            $entity->getLastName(),
+//            $entity->getFirstName(),
+//            $associationName
+//        );
+//
+//        $latePaymentEmailSubject = str_replace('{associationName}', $associationName, $latePaymentEmailSubject);
+//        $latePaymentEmailBody = str_replace($keywordsToReplace, $data, $latePaymentEmailBody);
+//
+//        $this->mailerTemplating->send(
+//            ':member/email:latePayment.html.twig',
+//            ['bodyContent' => nl2br($latePaymentEmailBody)],
+//            $latePaymentEmailSubject,
+//            $this->robotEmail,
+//            $entity->getEmail()
+//        );
+//
+//    }
 }

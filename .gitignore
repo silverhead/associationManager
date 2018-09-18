@@ -18,5 +18,6 @@
 /web/images/logo/
 /web/images/avatars/
 .idea/
+--Vagrantfile
 /nbproject/
 /nbproject/private/

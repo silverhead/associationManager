@@ -60,4 +60,38 @@ class MemberMemberManager implements PaginatorManagerInterface
     public function getLastStatus(Member $member){
         return $this->entityManager->getRepository("MemberBundle:MemberStatusHistorical")->getLastStatusOfMember($member);
     }
+
+    public function saveLastDateSendingMailForLatePaymentMember(array $memberIdList)
+    {
+        $repo = $this->getRepository();
+
+        $members = $repo->findBy(
+            array(
+                'id' => $memberIdList
+            )
+        );
+
+        foreach ($members as $member){
+            $member->setLastSendingLatePaymentEmailDate(new \DateTime());
+        }
+
+        $this->entityManager->flush();
+    }
+
+    public function saveLastDateSendingMailForSoonFeeNewPayment(array $memberIdList)
+    {
+        $repo = $this->getRepository();
+
+        $members = $repo->findBy(
+            array(
+                'id' => $memberIdList
+            )
+        );
+
+        foreach ($members as $member){
+            $member->setLastSendingComingSoonFeeEmailDate(new \DateTime());
+        }
+
+        $this->entityManager->flush();
+    }
 }

@@ -22,7 +22,7 @@ member:
                 send_email_new_fee_coming_soon: Envoyer un e-mail de notification d'échéance de cotisation
                 send_email_late_payment_member: Envoyer un e-mail de notification de retard de paiement
                 display_all_new_fee_coming_soon: Afficher que les membres qui arrivent à échéance de cotisation
-                display_all_late_payment_member: Afficher que les membres qui sont en retard de payment
+                display_all_late_payment_member: Afficher que les membres qui sont en retard de paiement
             legend:
                 new_fee_coming_soon: Arrive à échéance de cotisation
                 late_payment_member: En retard de paiement

@@ -3,6 +3,10 @@ app:
         appName: Association manager
         appSlogan: Gérer votre association
     common:
+        dateFormat: d/m/Y
+        dateHourFormat: d/m/Y H:i
+        hourFormat: d/m/Y H:i
+        noData: Pas données
         nc: n.c.
         errorUnknow: Erreur inconnu, veuillez contacter l'administrateur de l'application !
         errorComming: Une erreur est intervenue ! %error%
@@ -96,8 +100,8 @@ app:
             label:
                 associationName: Nom de l'association
                 contactEmail: E-mail de contact
-                robotEmail: E-mail robot <br/><small>Pour les envois d'e-mail</small>
                 phone: Téléphone
+                gsm: Mobile
                 country: Pays
                 city: Ville
                 zipcode: Code postal
@@ -105,11 +109,13 @@ app:
                 description: Description
                 url_facebook: Facebook
                 url_twitter: Twitter
+                applicationName: Nom de l'application
+                applicationDescription : Description de l'application
             placeholder:
                 associationName: Saisir le nom de votre association
                 contactEmail: Saisir l'e-mail sur laquelle vous souhaitez communiquer
-                robotEmail: Saisir l'e-mail qui doit servir pour l'envoie à partir du gestionnaire
-                phone: Saisir le téléphone permettant de communiquer
+                phone: Saisir le téléphone fixe permettant de vous joindre
+                gsm: Saisir le mobile permettant de vous joindre
                 country: Saisir le pays où se situe le siège de votre association
                 city: Saisir la ville où se situe le siège de votre association
                 zipcode: Saisir le code postal où se situe le siège de votre association
@@ -117,8 +123,12 @@ app:
                 description: Saisir une description de votre association
                 url_facebook: Url de votre Facebook
                 url_twitter: Url de votre twitter
+                applicationName: Nom de votre application
+                applicationDescription : Description de votre application
             saveSuccessText: Paramètres de l'application enregistrés avec succès !
         social_network: Réseaux sociaux
+        application: Configuration de l'application
+
         credential:
             title: Droits paramètres application
     user:

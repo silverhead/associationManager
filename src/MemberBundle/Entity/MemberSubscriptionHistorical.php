@@ -3,6 +3,8 @@
 namespace MemberBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SubscriptionBundle\Entity\Subscription;
+use SubscriptionBundle\Entity\SubscriptionPaymentPeriodicity;
 
 /**
  * Class MemberSubscriptionHistorical

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Manager;
 
+use AppBundle\Service\MailerTemplating;
 use MemberBundle\Manager\SendMailManagerInterface;
 
 class SendMailManager implements SendMailManagerInterface
@@ -17,6 +18,11 @@ class SendMailManager implements SendMailManagerInterface
     private $mailerTemplating;
 
     /**
+     * @var string
+     */
+    private $robotEmail;
+
+    /**
      * @var array
      */
     private $placeholderWords;
@@ -24,73 +30,122 @@ class SendMailManager implements SendMailManagerInterface
     /**
      * @var string
      */
-    private $subjectCode;
+    private $subject;
 
     /**
      * @var string
      */
-    private $bodyCode;
+    private $body;
 
     /**
      * @var string
      */
     private $templatePath;
 
-    public function __construct(SettingManager $setting, MailerTemplating $mailerTemplating)
+    /**
+     * @var string
+     */
+    private $dateFormat;
+
+    public function __construct(SettingManager $setting, MailerTemplating $mailerTemplating, $robotEmail)
     {
         $this->setting = $setting;
 
         $this->mailerTemplating = $mailerTemplating;
+
+        $this->robotEmail = $robotEmail;
     }
 
-    public function prepareCustomData(array $placeholderWords, string $subjectCode, string $bodyCode, string $templatePath)
+    /**
+     * @param array $placeholderWords
+     * @param string $subject
+     * @param string $body
+     * @param string $templatePath
+     */
+    public function prepareData(array $placeholderWords, string $subject, string $body, string $templatePath, string $dateFormat): void
     {
         $this->placeholderWords = $placeholderWords;
 
-        $this->subjectCode = $subjectCode;
+        $this->subject = $subject;
 
-        $this->bodyCode = $bodyCode;
+        $this->body = $body;
 
         $this->templatePath = $templatePath;
+
+        $this->dateFormat = $dateFormat;
     }
 
-    public function send(array $data)
+    /**
+     * @param array $data
+     * @return int
+     * @throws \Exception
+     */
+    public function send(array $data): int
     {
-        $associationName = $this->settingManager->getSettingValue("app.setting.association_name");
+        $associationName = $this->setting->getSettingValue("app.setting.association_name");
 
-        $from = $this->setting->getSettingValue('app.setting.robot_email');
+        $from = $this->robotEmail;
 
         $subject = $this->prepareSubject($data, $associationName);
         $body = $this->prepareBody($data, $associationName);
 
-        $this->mailerTemplating->send(
+        return $this->mailerTemplating->send(
             $this->templatePath,
-            $body,
+            ['bodyContent' => nl2br($body)],
             $subject,
             $from,
             $data['email']
         );
     }
 
-    private function prepareSubject($data, $associationName)
+    /**
+     * @param $data
+     * @param $associationName
+     * @return string
+     * @throws \Exception
+     */
+    private function prepareSubject($data, $associationName): string
     {
-        $subject = $this->setting->getFormatedSettingValue($this->subjectCode);
+        $subject = $this->subject;
 
-        $subject = str_replace($subject,'associationName', $associationName);
+        $subject = str_replace('{associationName}', $associationName, $subject);
 
         foreach ($this->placeholderWords as $keyword => $property) {
-            $subject = str_replace($subject,'{' .$keyword . '}', $data[$property]);
+
+            $value = $data[$property];
+
+            if ($value instanceof \DateTime)
+            {
+                $value = $value->format($this->dateFormat);
+            }
+
+            $subject = str_replace('{' .$keyword . '}', $value, $subject);
         }
 
         return $subject;
     }
 
-    private function prepareBody($data)
+    /**
+     * @param $data
+     * @param $associationName
+     * @return string
+     * @throws \Exception
+     */
+    private function prepareBody($data, $associationName): string
     {
-        $body = $this->setting->getFormatedSettingValue($this->bodyCode);
+        $body = $this->body;
+
+        $body = str_replace('{associationName}', $associationName, $body);
 
         foreach ($this->placeholderWords as $keyword => $property) {
-            $body = str_replace($body,'{' .$keyword . '}', $data[$property]);
+            $value = $data[$property];
+
+            if ($value instanceof \DateTime)
+            {
+                $value = $value->format($this->dateFormat);
+            }
+
+            $body = str_replace('{' .$keyword . '}', $value, $body);
         }
 
         return $body;

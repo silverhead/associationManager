@@ -2,9 +2,10 @@
 {% block title %}{{ parent() }} - {{ 'app.security.login.title'|trans }}{% endblock %}
 {% block content %}
     <div class="login-box">
-        <div class="logo">
-            <a href="#">{{ 'app.setting.association_name'|toValue }}</a>
-            <small>{{ 'app.setting.description'|toValue }}</small>
+        <div class="logo text-center">
+                <img style="max-height:100px" src="{{ asset('app.setting.logo'|toValue) }}" alt="{{ 'app.setting.name'|toValue }}">
+                <a href="#">{{ 'app.setting.name'|toValue }}</a>
+                <small>{{ 'app.setting.description'|toValue }}</small>
         </div>
         <div class="card">
             <div class="body">

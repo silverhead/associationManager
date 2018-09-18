@@ -20,7 +20,7 @@ class SendMailLatePaymentManager
 
         $this->placeholderWords = $placeholderWords;
 
-        $this->sendMailManager->prepareCustomData(
+        $this->sendMailManager->prepareData(
             $placeholderWords,
             'member.email.late_member_notification_email_subject',
             'member.email.late_member_notification_email_body',

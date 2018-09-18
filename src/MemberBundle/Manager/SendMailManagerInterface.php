@@ -6,12 +6,13 @@ Interface SendMailManagerInterface
 {
     /**
      * @param array $placeholderWords
-     * @param string $subjectCode
-     * @param string $bodyCode
+     * @param string $subject
+     * @param string $body
      * @param string $templatePath
+     * @param string $dateFormat
      * @return mixed
      */
-    public function prepareCustomData(array $placeholderWords, string $subjectCode, string $bodyCode, string $templatePath);
+    public function prepareData(array $placeholderWords, string $subject, string $body, string $templatePath, string $dateFormat);
 
     /**
      * @param array $dataList
