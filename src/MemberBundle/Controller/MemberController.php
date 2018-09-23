@@ -373,6 +373,15 @@ class MemberController extends Controller
             );
         }
 
+        $pageH = $this->get('app.handler.page_historical');
+
+        $pageH->setCallbackUrl('subscription_fee_save',
+            $this->generateUrl('member_view', ['id' => $id]),
+            [],
+            'subscriptionFee',
+            'member_view'
+        );
+
         $formHandler = $this->get('member.form.handler.subscription_historical');
         $formHandler->setForm(new MemberSubscriptionHistorical());
 

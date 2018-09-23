@@ -183,3 +183,8 @@ member:
             fullName: Nom complet
             status: Statut
             cost: Montant dû
+    email:
+        sendingLatePaymentMailSuccessTitle: E-mail de notification de retard de paiement envoyé !
+        sendingLatePaymentBody: "{0} %nbMailsSent% envoyé! (Attention l'e-mail est envoyé qu'aux membres actifs uniquement)|{1} %nbMailsSent% envoyé! (Attention l'e-mail est envoyé qu'aux membres actifs uniquement)|%nbMailsSent% envoyés! (Attention l'e-mail est envoyé qu'aux membres actifs uniquement)"
+        sendingEndOfSubscriptionMailSuccessTitle: E-mail de notifiaction d'échéance de cotisation envoyé !
+        sendingEndOfSubscriptionBody: "{0} %nbMailsSent% envoyé! (Attention l'e-mail est envoyé qu'aux membres actifs uniquement)|{1} %nbMailsSent% envoyé! (Attention l'e-mail est envoyé qu'aux membres actifs uniquement)|%nbMailsSent% envoyés! (Attention l'e-mail est envoyé qu'aux membres actifs uniquement)"

@@ -119,7 +119,7 @@ class MemberSubscriptionFeeRepository extends EntityRepository implements Pagina
             ->join("msf.member", "m")
         ;
 
-        $qb->where("msf.startDate between :startPeriod and :endPeriod")
+        $qb->where("msf.endDate between :startPeriod and :endPeriod")
             ->setParameter(":startPeriod", $startPeriod)
             ->setParameter(":endPeriod", $endPeriod);
 
@@ -144,12 +144,23 @@ class MemberSubscriptionFeeRepository extends EntityRepository implements Pagina
     public function getSoonFeeNewPaymentMemberListForSendingEmail(\DateTime $startPeriod, \DateTime $endPeriod, $delaySending)
     {
         $qb = $this->createQueryBuilder("msf")
-            ->select('msf, m')
+            ->select('
+            m.id,
+            m.gender,
+            m.lastName,
+            m.firstName,
+            m.email,
+            s.label as subscriptionLabel,                    
+            msf.startDate,
+            msf.endDate,
+            SUM(msf.cost) as cost'
+            )
             ->join("msf.member", "m")
-            ->join("msf.subscription", "s")
+            ->join("msf.subscription", "msh")
+            ->join("msh.subscription", "s")
         ;
 
-        $qb->where("msf.startDate between :startPeriod and :endPeriod")
+        $qb->where("msf.endDate between :startPeriod and :endPeriod")
             ->setParameter(":startPeriod", $startPeriod)
             ->setParameter(":endPeriod", $endPeriod);
 
@@ -158,6 +169,8 @@ class MemberSubscriptionFeeRepository extends EntityRepository implements Pagina
 
         $qb->andWhere("m.lastSendingComingSoonFeeEmailDate < :dateStarAuthorized")
             ->setParameter(":dateStarAuthorized", $dateStarAuthorized);
+
+        $qb->groupBy("m");
 
         return $qb->getQuery()->getArrayResult();
     }
@@ -194,7 +207,7 @@ class MemberSubscriptionFeeRepository extends EntityRepository implements Pagina
             ->join('msf.member', 'm')
         ;
 
-        $qb->where("msf.startDate between :startPeriod and :endPeriod")
+        $qb->where("msf.endDate between :startPeriod and :endPeriod")
             ->setParameter(":startPeriod", $startPeriod)
             ->setParameter(":endPeriod", $endPeriod);
 
@@ -206,17 +219,25 @@ class MemberSubscriptionFeeRepository extends EntityRepository implements Pagina
 
         $qb->setMaxResults($limit);
 
-        return $qb->getQuery()->getArrayResult();
+        $result = $qb->getQuery()->getArrayResult();
+
+        $array = array();
+
+        foreach($result as $item){
+            $array[] = $item['id'];
+        }
+
+        return $array;
     }
 
     public function getSoonFeeNewPaymentListByMemberIdList(\DateTime $startPeriod, \DateTime $endPeriod, array $memberIdList)
     {
         $qb = $this->createQueryBuilder("msf")
-                ->select("m.id")
+                ->select("m.id as id")
                 ->join('msf.member', 'm')
         ;
 
-        $qb->where("msf.startDate between :startPeriod and :endPeriod")
+        $qb->where("msf.endDate between :startPeriod and :endPeriod")
             ->setParameter(":startPeriod", $startPeriod)
             ->setParameter(":endPeriod", $endPeriod);
 

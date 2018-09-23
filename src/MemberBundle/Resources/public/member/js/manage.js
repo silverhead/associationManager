@@ -46,13 +46,14 @@ $(document).on('click', '.display_all_late_payment_member', function(){
 $(document).on('click', '#send_new_fee_coming_soon', function(){
     $.ajax({
         'type': 'post',
+        'dataType': 'json',
         'url' : Routing.generate('member_member_send_soon_fee_new_payment_mail'),
-        'success' : function()
+        'success' : function(data)
         {
             swal(
-                Translator.trans('app.common.sendingMailSuccessTitle'),
-                Translator.trans('app.common.sendingMailBody', data['nbMailSuccess']),
-                "error"
+                Translator.trans('member.email.sendingEndOfSubscriptionMailSuccessTitle'),
+                Translator.transChoice('member.email.sendingEndOfSubscriptionBody', data['nbMailsSent'], {'nbMailsSent' : data['nbMailsSent']}),
+                "success"
             );
         },
         'error': function()
@@ -66,7 +67,7 @@ $(document).on('click', '#send_new_fee_coming_soon', function(){
     });
 });
 
-$(document).on('click', '#send_new_late_payment_member', function(){
+$(document).on('click', '#send_late_payment_member', function(){
     $.ajax({
         'type': 'post',
         'dataType': 'json',
@@ -74,9 +75,9 @@ $(document).on('click', '#send_new_late_payment_member', function(){
         'success' : function(data)
         {
             swal(
-                Translator.trans('app.common.sendingMailSuccessTitle'),
-                Translator.trans('app.common.sendingMailBody', data['nbMailSuccess']),
-                "error"
+                Translator.trans('member.email.sendingLatePaymentMailSuccessTitle'),
+                Translator.transChoice('member.email.sendingLatePaymentBody', data['nbMailsSent'], {'nbMailsSent' : data['nbMailsSent']}),
+                "success"
             );
         },
         'error': function()

@@ -130,10 +130,7 @@ Trait PaginatorManagerTrait
             else if(in_array($operator, array('in', 'notin'))){
                 switch ($operator){
                     case 'in':
-
-                        dump($search);
-
-                        $qb->andWhere($property ." IN (':".implode("','", $search)."')");
+                        $qb->andWhere($property ." IN ('".implode("','", $search)."')");
                         break;
                     case 'not':
                         $qb->andWhere($property ." NOT IN (':".$pattern."')")->setParameter($pattern, implode("','", $search));

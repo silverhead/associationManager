@@ -66,12 +66,12 @@ class SendMailController extends Controller
 
             if (count($memberIdSendMailSuccessList) > 0 ){
                 $memberManager = $this->get('member.manager.member');
-                $memberManager->saveLastDateSendingMailForSoonFeeNewPayment($memberIdSendMailSuccessList);
+                $memberManager->saveLastDateSendingMailForLatePaymentMember($memberIdSendMailSuccessList);
             }
         }
 
         $array = array(
-            'nbMailSuccess' => count($memberIdSendMailSuccessList)
+            'nbMailsSent' => count($memberIdSendMailSuccessList)
         );
 
         return new Response(
@@ -89,6 +89,8 @@ class SendMailController extends Controller
      */
     public function sendMailSoonFeeNewPaymentAction()
     {
+        $translator = $this->get('translator');
+
         $settingManager = $this->get('app.manager.setting');
         $delay = $settingManager->getSettingValue('subscription.delay.new_fee_coming_soon_email_sending');
 
@@ -108,13 +110,19 @@ class SendMailController extends Controller
             'gender' => 'gender',
             'lastName' => 'lastName',
             'firstName' => 'firstName',
-            'subscriptionLabel' => 'label',
+            'subscriptionLabel' => 'subscriptionLabel',
             'startDate' => 'startDate',
             'endDate' => 'endDate',
             'totalCost' => 'cost'
         );
 
-        $sendMailManager->prepareData($placeholderArray, $subject, $body, 'email/base.html.twig');
+        $sendMailManager->prepareData(
+            $placeholderArray,
+            $subject,
+            $body,
+            'email/common.html.twig',
+            $translator->trans('app.common.dateFormat')
+        );
 
         $memberIdSendMailSuccessList = array();
 
@@ -128,11 +136,11 @@ class SendMailController extends Controller
 
         if (count($memberIdSendMailSuccessList) > 0 ){
             $memberManager = $this->get('member.manager.member');
-            $memberManager->saveLastDateSendingMailForLatePaymentMember($memberIdSendMailSuccessList);
+            $memberManager->saveLastDateSendingMailForSoonFeeNewPayment($memberIdSendMailSuccessList);
         }
 
         $array = array(
-            'nbMailSuccess' => count($memberIdSendMailSuccessList)
+            'nbMailsSent' => count($memberIdSendMailSuccessList)
         );
 
         return new Response(

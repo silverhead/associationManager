@@ -443,7 +443,7 @@ class User implements UserInterface
 
     /**
      * @param File $avatarFile
-     * @return Member
+     * @return User
      */
     public function setAvatarFile(?File $avatarFile = null): User
     {
@@ -466,7 +466,7 @@ class User implements UserInterface
 
     /**
      * @param \DateTime $createAt
-     * @return Member
+     * @return User
      */
     public function setCreateAt($createAt) : User
     {
