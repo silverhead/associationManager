@@ -3,20 +3,19 @@
 namespace MemberBundle\Form\Type;
 
 use MemberBundle\Entity\Member;
-use MemberBundle\Entity\MemberStatus;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use UserBundle\Form\Type\UserFormType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class MemberFormType extends UserFormType
 {
@@ -24,11 +23,8 @@ class MemberFormType extends UserFormType
     {
         parent::buildForm($builder, $options);
         $builder
-        ->add('avatarFile', VichFileType::class, [
+        ->add('avatarFile', FileType::class, [
             'required' => false,
-            'allow_delete' => false,
-            'download_uri' => false,
-            'download_label' => '...',
             'attr' => [
                 'data-current' => $options['currentAvatar']
             ]

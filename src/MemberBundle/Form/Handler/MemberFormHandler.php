@@ -15,7 +15,7 @@ class MemberFormHandler extends UserFormHandler
 
         parent::setForm($member, $profile);
 
-        $currentAvatar = '/images/avatars/user.png';
+        $currentAvatar = $member->getAvatarWebPath();
 
         $formType = MemberFormType::class;
         if($profile){

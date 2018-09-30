@@ -97,6 +97,10 @@ app:
                 cancel: Annuler
                 alt: Ajouter votre logo
                 clickToChange: Cliquer sur le logo pour le changer
+            userDefaultAvatar:
+                cancel: Annuler
+                alt: Ajouter un avatar par defaut pour les utilisateurs
+                clickToChange: Cliquer sur l'avatar pour le changer
             label:
                 associationName: Nom de l'association
                 contactEmail: E-mail de contact

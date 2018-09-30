@@ -2,22 +2,34 @@
 
 namespace UserBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
 /**
  * Class User
  * @package AppBundle\Entity
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @Vich\Uploadable
  */
 class User implements UserInterface
 {
+    /**
+     * @var string
+     */
+    const AVATAR_DEFAULT = 'default.png';
+    /**
+     * @var string
+     */
+    const AVATAR_DEFAULT_PATH = '/bundles/user/user/images/avatars';
+
+    /**
+     * @var string
+     */
+    const AVATAR_PATH = '/images/avatars';
+
     protected $discr = 'user';
 
     /**
@@ -109,11 +121,14 @@ class User implements UserInterface
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="member_avatar", fileNameProperty="avatar")
-     *
      * @var File
      */
     protected $avatarFile;
+
+    /**
+     * @var string
+     */
+    protected $avatarOld;
 
     /**
      *
@@ -134,10 +149,9 @@ class User implements UserInterface
      */
     protected $updatedAt;
 
-
     public function __construct()
     {
-        $this->avatar = 'user.png';
+        $this->avatar = self::AVATAR_DEFAULT;
     }
 
     /**
@@ -183,8 +197,6 @@ class User implements UserInterface
 
         return $this;
     }
-
-
 
     public function getRoles()
     {
@@ -413,7 +425,6 @@ class User implements UserInterface
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -432,11 +443,10 @@ class User implements UserInterface
         return $this;
     }
 
-
     /**
      * @return File
      */
-    public function getAvatarFile(): ?File
+    public function getAvatarFile(): ?UploadedFile
     {
         return $this->avatarFile;
     }
@@ -445,7 +455,7 @@ class User implements UserInterface
      * @param File $avatarFile
      * @return User
      */
-    public function setAvatarFile(?File $avatarFile = null): User
+    public function setAvatarFile(?UploadedFile $avatarFile = null): User
     {
         $this->avatarFile = $avatarFile;
 
@@ -454,6 +464,92 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getAvatarFile()) {
+            $this->avatarOld = $this->avatar;
+
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->avatar = $filename.'.'.$this->getAvatarFile()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getAvatarFile()) {
+            return;
+        }
+        $this->getAvatarFile()->move($this->getUploadRootDir(), $this->avatar);
+
+        if ('' !== $this->avatarOld && null !== $this->avatarOld) {
+            if ($this->avatarOld !== self::AVATAR_DEFAULT){
+                if ('default/userDefault' !== $this->avatarOld){
+                    if (is_file($this->getUploadRootDir().'/'.$this->avatarOld)){
+                        // delete the old avatar
+                        unlink($this->getUploadRootDir().'/'.$this->avatarOld);
+                        // clear the temp image path
+                        $this->avatarOld = null;
+                    }
+                }
+            }
+        }
+        $this->avatarFile = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
+    }
+
+    public function getAbsolutePath()
+    {
+        if (null === $this->avatar || '' === $this->avatar){
+            return null;
+        }
+        else{
+            return $this->getUploadRootDir().'/'.$this->avatar;
+        }
+    }
+
+    public function getAvatarWebPath()
+    {
+        if (null === $this->avatar || '' === $this->avatar){
+            return null;
+        }
+        else{
+            if (self::AVATAR_DEFAULT === $this->avatar){
+                return self::AVATAR_DEFAULT_PATH.'/'.$this->avatar;
+            }
+            else{
+                return $this->getUploadDir().'/'.$this->avatar;
+            }
+        }
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../web'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        return self::AVATAR_PATH;
     }
 
     /**

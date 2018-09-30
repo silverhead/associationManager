@@ -1,8 +1,8 @@
 $(function(){
     $('.date').inputmask('dd/mm/yyyy', { placeholder: '__/__/____' });
 
-    var $logoInput = $("#member_bundle_member_profile_form_type_avatarFile_file");
-    var logo = $logoInput.parents('.avatar-holder').data('current-avatar');
+    var $logoInput = $("#member_bundle_member_profile_form_type_avatarFile");
+    var logo = $logoInput.data('current');
 
     $logoInput.fileinput({
         overwriteInitial: true,

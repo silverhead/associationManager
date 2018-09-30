@@ -6,13 +6,9 @@ use AppBundle\Entity\FieldsList;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\DateTime;
 use UserBundle\Entity\User;
 use Symfony\Component\Intl\Intl;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
 /**
  * Class Member
  * @package AppBundle\Entity
@@ -131,13 +127,13 @@ class Member extends User
     protected $comment;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
     protected $lastSendingComingSoonFeeEmailDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
     protected $lastSendingLatePaymentEmailDate;
@@ -147,8 +143,6 @@ class Member extends User
      */
     public function __construct()
     {
-        parent::__construct();
-
         $this->subscriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->statusHistorical = new \Doctrine\Common\Collections\ArrayCollection();
         $this->status = new \Doctrine\Common\Collections\ArrayCollection();

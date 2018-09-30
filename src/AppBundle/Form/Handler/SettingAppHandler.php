@@ -13,6 +13,7 @@ use AppBundle\Form\Type\SettingAppFormType;
 use AppBundle\Manager\SettingManager;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class SettingAppHandler
@@ -50,9 +51,8 @@ class SettingAppHandler
     {
         $currentLogo = $this->settingManager->getSettingValue('app.setting.logo');
 
-
         if('' === $currentLogo){
-            $currentLogo= '/images/avatars/user.png';
+            $currentLogo= null;
         }
 
         $this->initAppSettingModel();
