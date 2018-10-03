@@ -1,0 +1,3 @@
+{% if member.phone != "" %}{{ 'member.member.edit.form.phone'|trans }} : <br /><a href="tel:{{ member.phone }}">{{ member.phone }}</a>{% endif %}
+{% if member.phone != "" and member.cellular != "" %}<br />{% endif %}
+{% if member.cellular != "" %}{{ 'member.member.edit.form.cellular'|trans }} : <br /><a href="tel:{{ member.cellular }}">{{ member.cellular }}</a>{% endif %}

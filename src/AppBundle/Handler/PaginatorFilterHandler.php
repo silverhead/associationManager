@@ -2,7 +2,7 @@
 
 namespace AppBundle\Handler;
 
-class PaginatorFormHandler
+class PaginatorFilterHandler
 {
     function __construct()
     {

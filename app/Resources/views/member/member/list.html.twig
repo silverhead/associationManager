@@ -1,33 +1,34 @@
+{{ form_start(filter) }}
 <div class="row">
     <div class="col-xs-8">
         {% if is_granted('MEMBER_MEMBER_CREATE') %}
         <a href="{{ path('member_edit') }}" class="btn bg-green waves-effect">{{ 'member.member.add'|trans }}</a>
         {% endif %}
     </div>
-    <div class="col-xs-4">
-        <div class="row">
-            <div class="col-md-8">
-                <input type="checkbox" class="display_all_new_fee_coming_soon bdr-amber filled-in chk-col-amber" {% if filter.new_fee_coming_soon == '1' %}checked="checked"{% endif %} name="display_all_new_fee_coming_soon" id="display_all_new_fee_coming_soon" value="1">
-                <label for="display_all_new_fee_coming_soon" data-placement="top" data-original-title="{{ 'member.member.list.action.display_all_new_fee_coming_soon'|trans }}">
-                    {{ 'member.member.list.legend.new_fee_coming_soon'|trans }}
-                </label>
-            </div>
-            <div class="col-md-3">
-                <button id="send_new_fee_coming_soon" class="send_new_fee_coming_soon btn bg-amber material-icons pull-right" data-placement="top" data-original-title="{{ 'member.member.list.action.send_email_new_fee_coming_soon'|trans }}">email</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <input type="checkbox" class="display_all_late_payment_member bdr-red filled-in chk-col-red" {% if filter.display_all_late_payment_member == '1' %}checked="checked"{% endif %} name="display_all_late_payment_member" id="display_all_late_payment_member">
-                <label for="display_all_late_payment_member" class="" value="1" data-placement="top" data-original-title="{{ 'member.member.list.action.display_all_late_payment_member'|trans }}">
-                    {{ 'member.member.list.legend.late_payment_member'|trans }}
-                </label>
-            </div>
-            <div class="col-md-3">
-                <button id="send_late_payment_member" class="send_late_payment_member btn bg-red material-icons pull-right" data-placement="bottom" data-original-title="{{ 'member.member.list.action.send_email_late_payment_member'|trans }}">email</button>
-            </div>
-        </div>
-    </div>
+    {#<div class="col-xs-4">#}
+        {#<div class="row">#}
+            {#<div class="col-md-8">#}
+                {#<input type="checkbox" class="display_all_new_fee_coming_soon bdr-amber filled-in chk-col-amber" {% if filter.new_fee_coming_soon == '1' %}checked="checked"{% endif %} name="display_all_new_fee_coming_soon" id="display_all_new_fee_coming_soon" value="1">#}
+                {#<label for="display_all_new_fee_coming_soon" data-placement="top" data-original-title="{{ 'member.member.list.action.display_all_new_fee_coming_soon'|trans }}">#}
+                    {#{{ 'member.member.list.legend.new_fee_coming_soon'|trans }}#}
+                {#</label>#}
+            {#</div>#}
+            {#<div class="col-md-3">#}
+                {#<button id="send_new_fee_coming_soon" class="send_new_fee_coming_soon btn bg-amber material-icons pull-right" data-placement="top" data-original-title="{{ 'member.member.list.action.send_email_new_fee_coming_soon'|trans }}">email</button>#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="row">#}
+            {#<div class="col-md-8">#}
+                {#<input type="checkbox" class="display_all_late_payment_member bdr-red filled-in chk-col-red" {% if filter.display_all_late_payment_member == '1' %}checked="checked"{% endif %} name="display_all_late_payment_member" id="display_all_late_payment_member">#}
+                {#<label for="display_all_late_payment_member" class="" value="1" data-placement="top" data-original-title="{{ 'member.member.list.action.display_all_late_payment_member'|trans }}">#}
+                    {#{{ 'member.member.list.legend.late_payment_member'|trans }}#}
+                {#</label>#}
+            {#</div>#}
+            {#<div class="col-md-3">#}
+                {#<button id="send_late_payment_member" class="send_late_payment_member btn bg-red material-icons pull-right" data-placement="bottom" data-original-title="{{ 'member.member.list.action.send_email_late_payment_member'|trans }}">email</button>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
     <div class="col-xs-offset-1 col-xs-3">
 
     </div>
@@ -60,19 +61,42 @@
     <div class="col-xs-12">
             <div class="body table-responsive">
             <form action="#">
-                <table class="table table-striped dataTable">
+                <table id="memberListTable" class="table table-striped dataTable">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th class="text-center">#</th>
                             {#<th>{{ 'member.member.list.table.picture'|trans }}</th>#}
                             <th style="width:15%" data-order-sortname="lastName" data-order-sort="{{ order.lastName }}" class="sortable">{{ 'member.member.list.table.lastName'|trans }}</th>
                             <th style="width:15%" data-order-sortname="firstName" data-order-sort="{{ order.firstName }}" class="sortable">{{ 'member.member.list.table.firstName'|trans }}</th>
                             <th style="width:15%" data-order-sortname="status" data-order-sort="{{ order.status }}" class="sortable">{{ 'member.member.list.table.status'|trans }}</th>
-                            <th>{{ 'member.member.list.table.phone'|trans }}</th>
+                            <th class="text-center">{{ 'member.member.list.table.phone'|trans }}</th>
                             <th style="width:15%"  data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.member.list.table.subscription'|trans }}</th>
                             <th style="width:10%" >{{ 'member.member.list.table.subscriptionDateEnd'|trans }}</th>
-                            <th style="width:2%" >{{ 'member.member.list.table.active'|trans }}</th>
-                            <th style="width:20%" >{{ 'app.common.table.action'|trans }}</th>
+                            <th style="width:2%" class="text-center" >{{ 'member.member.list.table.active'|trans }}</th>
+                            <th style="width:20%" class="text-center" >{{ 'app.common.table.action'|trans }}</th>
+                        </tr>
+                        <tr class="filter">
+                            <th>&nbsp;</th>
+                            <th class="form-group form-group-sm">
+                                {{ form_widget(filter.lastName) }}
+                            </th>
+                            <th class="form-group form-group-sm">
+                                {{ form_widget(filter.firstName) }}
+                            </th>
+                            <th class="form-group form-group-sm">
+                                {{ form_widget(filter.status) }}
+                            </th>
+                            <th>&nbsp;</th>
+                            <th class="form-group form-group-sm">
+                                {{ form_widget(filter.subscription) }}
+                            </th>
+                            <th></th>
+                            <th class="form-group form-group-sm">
+                                {{ form_widget(filter.active) }}
+                            </th>
+                            <th>
+                                <input type="submit" class="btn btn btn-success" value="{{ 'app.common.form.submit.filter'|trans }}">
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,15 +112,13 @@
                             <td>{{ member.lastName }}</td>
                             <td>{{ member.firstName }}</td>
                             <td>{% if member.getStatus()|length > 0 %}{{ member.getStatus()[0].status.label }}{% endif %}</td>
-                            <td>
-                                {% if member.phone != "" %}{{ 'member.member.edit.form.phone'|trans }} : <br /><a href="tel:{{ member.phone }}">{{ member.phone }}</a>{% endif %}
-                                {% if member.phone != "" and member.cellular != "" %}<br />{% endif %}
-                                {% if member.cellular != "" %}{{ 'member.member.edit.form.cellular'|trans }} : <br /><a href="tel:{{ member.phone }}">{{ member.phone }}</a>{% endif %}
+                            <td class="text-center">
+                                <a role="button" data-toggle="popover" data-placement="left" data-html="true" data-content="{% filter escape %}{% include ':member/member:phoneInfosBlock.html.twig' %}{% endfilter %}" class="popoverBtn btn btn-info material-icons">info</a>
                             </td>
                             <td>{% if member.subscriptions|length > 0 %}{{ member.subscriptions[0].subscription.label }} {% endif %}</td>
                             <td>{% if member.subscriptions|length > 0 %}{{ member.subscriptions[0].endDate|date('d/m/Y') }}{% endif %}</td>
-                            <td>{{ member.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
-                            <td>
+                            <td class="text-center">{{ member.isActive()? '<i class="material-icons text-success">done</i>':'<i class="material-icons text-danger">clear</i>' }}</td>
+                            <td class="text-center">
                                 {% if is_granted('MEMBER_MEMBER_VIEW') %}
                                 <a href="{{ path('member_view', {'id': member.id}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
                                 {% endif %}
@@ -121,4 +143,4 @@
         </div>
     </div>
 </div>
-
+{{ form_end(filter) }}

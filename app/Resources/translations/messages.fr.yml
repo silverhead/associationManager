@@ -27,6 +27,7 @@ app:
                 save: Enregistrer
                 saveAndLeave: Enregistrer et revenir sur la liste
                 saveAndStay: Enregistrer et rester
+                filter: filtrer
             choice: Choisir
             validation:
                 notBlank: Ce champ doit être renseigné !

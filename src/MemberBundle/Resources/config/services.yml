@@ -109,6 +109,9 @@ services:
     member.form.handler.member_email_setting:
         class: MemberBundle\Form\Handler\MemberEmailSettingHandler
         arguments: ['@form.factory', '@member.form.model.member_email_setting', '@app.manager.setting']
+    member.form.handler.member_list_filter:
+        class: MemberBundle\Form\Handler\MemberListFilterHandler
+        arguments: ['@form.factory']
     # CONTROLLER
     member.controller.status:
         class: MemberBundle\Controller\MemberStatusController

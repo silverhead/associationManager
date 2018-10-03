@@ -6,6 +6,7 @@ use AppBundle\QueryHelper\FilterQuery;
 use AppBundle\QueryHelper\OrderQuery;
 use MemberBundle\Entity\Member;
 use MemberBundle\Entity\MemberSubscriptionHistorical;
+use MemberBundle\Form\Model\MemberListFilterModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,6 +66,8 @@ class MemberController extends Controller
 
     public function memberList(Request $request, $anchor = null)
     {
+        $formFilterHandler = $this->get('member.form.handler.member_list_filter');
+        $formFilterHandler->setForm(new MemberListFilterModel());
 
         $memberManager = $this->get('member.manager.member');
         $memberManager->activateCache('memberList');
@@ -167,7 +170,8 @@ class MemberController extends Controller
             'order' => $ordersRequest,
             'filter' => $filter,
             'latePaymentmemberList' => $latePaymentmemberList,
-            'soonPaymentmemberList' => $soonPaymentmemberList
+            'soonPaymentmemberList' => $soonPaymentmemberList,
+            'filter' => $formFilterHandler->getForm()->createView()
         ));
     }
 

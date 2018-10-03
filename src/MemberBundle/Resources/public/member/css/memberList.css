@@ -1,0 +1,35 @@
+#memberListTable th{
+    padding: 10px;
+}
+
+#memberListTable th:nth-child(1){
+    width : 3%;
+}
+
+#memberListTable th:nth-child(2){
+    width : 15%;
+}
+
+#memberListTable th:nth-child(3){
+    width : 15%;
+}
+
+#memberListTable th:nth-child(4){
+    width : 15%;
+}
+
+#memberListTable th:nth-child(5){
+    width : 5%;
+}
+
+#memberListTable th:nth-child(6){
+    width : 15%;
+}
+#memberListTable th:nth-child(8){
+    width : 10%;
+}
+
+#memberListTable .filter *{
+    margin: 0;
+}
+
