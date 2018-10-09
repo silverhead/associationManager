@@ -26,6 +26,8 @@ member:
             legend:
                 new_fee_coming_soon: Arrive à échéance de cotisation
                 late_payment_member: En retard de paiement
+            filter:
+                all: Tous
         add: Ajouter un adhérent
         edit:
             title: Editer l'adhérent
@@ -70,9 +72,6 @@ member:
               expertise_placeholder: Vous pouvez selectionner plusieurs spécialités
               profession: Métier
               comment: Remarque
-        profile:
-            saveSuccessText: Votre profil a été enregistré !
-            title: Votre profil
         view:
             title: Fiche de {lastName} {firstName}
             subscriptionDate: Date d'adhésion
@@ -82,7 +81,8 @@ member:
             deleteQuestionText: La suppression du membre est définitf !
             deleteSuccessText: Le membre a été supprimé.
         profile:
-            title: Votre profils
+            title: Votre profil
+            saveSuccessText: Votre profil a été enregistré !
         setting:
             tab: Configuration
             form:

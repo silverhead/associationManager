@@ -43,6 +43,18 @@ $(document).on('click', '.display_all_late_payment_member', function(){
     reloadMemberList('list', '&display_all_late_payment_member=' + (checked == true?"1":"0"));
 });
 
+$(document).on('click', '#memberFilterBtn', function(event){
+    event.preventDefault();
+
+    var form = $(this).parents('form');
+
+    var data = form.serialize();
+
+    reloadMemberList('', data, 'post');
+
+    return false;
+});
+
 $(document).on('click', '#send_new_fee_coming_soon', function(){
     $.ajax({
         'type': 'post',
@@ -91,14 +103,19 @@ $(document).on('click', '#send_late_payment_member', function(){
     });
 });
 
-function reloadMemberList(action, paginatorOrders){
+function reloadMemberList(action, paginatorData, type){
     var $container =  $('#members');
-    
+
+    if (typeof (type) == 'undefined'){
+        type = 'get';
+    }
+
     $container.reloadlist({
         masterRoute: 'members_manager',
         remoteURL: Routing.generate('member_member_list_part', {'anchor': $container.data('anchor')}),
         action: action,
-        otherData: paginatorOrders,
+        otherData: paginatorData,
+        type: type,
         remoteSucessCallBack: function(){
 	        	$('.sortable').orderableList({
 	        		listToOrder: function(orders){

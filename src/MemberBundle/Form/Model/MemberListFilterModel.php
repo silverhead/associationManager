@@ -43,7 +43,7 @@ class MemberListFilterModel
     /**
      * @return string
      */
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
@@ -52,7 +52,7 @@ class MemberListFilterModel
      * @param string $lastName
      * @return MemberListFilterModel
      */
-    public function setLastName(string $lastName): MemberListFilterModel
+    public function setLastName(?string $lastName): MemberListFilterModel
     {
         $this->lastName = $lastName;
 
@@ -71,7 +71,7 @@ class MemberListFilterModel
      * @param string $firstName
      * @return MemberListFilterModel
      */
-    public function setFirstName(string $firstName): MemberListFilterModel
+    public function setFirstName(?string $firstName): MemberListFilterModel
     {
         $this->firstName = $firstName;
 
@@ -90,7 +90,7 @@ class MemberListFilterModel
      * @param MemberStatus $status
      * @return MemberListFilterModel
      */
-    public function setStatus(MemberStatus $status): MemberListFilterModel
+    public function setStatus(?MemberStatus $status): MemberListFilterModel
     {
         $this->status = $status;
 
@@ -109,7 +109,7 @@ class MemberListFilterModel
      * @param Subscription $subscription
      * @return MemberListFilterModel
      */
-    public function setSubscription(Subscription $subscription): MemberListFilterModel
+    public function setSubscription(?Subscription $subscription): MemberListFilterModel
     {
         $this->subscription = $subscription;
 
@@ -119,7 +119,7 @@ class MemberListFilterModel
     /**
      * @return bool
      */
-    public function isActive(): bool
+    public function isActive(): ?bool
     {
         return $this->active;
     }
@@ -128,7 +128,7 @@ class MemberListFilterModel
      * @param bool $active
      * @return MemberListFilterModel
      */
-    public function setActive(bool $active): MemberListFilterModel
+    public function setActive(?bool $active): MemberListFilterModel
     {
         $this->active = $active;
 

@@ -40,9 +40,13 @@ class MemberListFilterHandler
 
     public function process(Request $request)
     {
+        if('POST' !== $request->getMethod()){
+            return false;
+        }
+
         $this->form->handleRequest($request);
 
-        if($this->form->isSubmitted() && $this->form->isValid()){
+        if($this->form->isSubmitted()){ //&& $this->form->isValid()
             return true;
         }
 

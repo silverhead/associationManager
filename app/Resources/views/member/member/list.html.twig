@@ -84,18 +84,18 @@
                                 {{ form_widget(filter.firstName) }}
                             </th>
                             <th class="form-group form-group-sm">
-                                {{ form_widget(filter.status) }}
+                                {{ form_widget(filter.status, {'attr': {'title': 'member.member.list.filter.all'|trans}} ) }}
                             </th>
                             <th>&nbsp;</th>
                             <th class="form-group form-group-sm">
-                                {{ form_widget(filter.subscription) }}
+                                {{ form_widget(filter.subscription, {'attr': {'title': 'member.member.list.filter.all'|trans}} ) }}
                             </th>
                             <th></th>
                             <th class="form-group form-group-sm">
-                                {{ form_widget(filter.active) }}
+                                {{ form_widget(filter.active, {'attr': {'title': 'member.member.list.filter.all'|trans}} ) }}
                             </th>
                             <th>
-                                <input type="submit" class="btn btn btn-success" value="{{ 'app.common.form.submit.filter'|trans }}">
+                                <input type="submit" id="memberFilterBtn" class="btn btn btn-success" value="{{ 'app.common.form.submit.filter'|trans }}">
                             </th>
                         </tr>
                     </thead>
@@ -143,4 +143,5 @@
         </div>
     </div>
 </div>
+{{ form_rest(filter) }}
 {{ form_end(filter) }}

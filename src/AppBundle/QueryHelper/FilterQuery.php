@@ -6,6 +6,11 @@ namespace AppBundle\QueryHelper;
 class FilterQuery
 {
     const OPERATOR_IN = 'in';
+    const OPERATOR_NOT_IN = 'notin';
+    const OPERATOR_EQUAL = '=';
+    const OPERATOR_LIKE_LEFT = '%like';
+    const OPERATOR_LIKE_RIGHT = 'like%';
+    const OPERATOR_LIKE_BETWEEN = '%like%';
 
     /**
      * @var string

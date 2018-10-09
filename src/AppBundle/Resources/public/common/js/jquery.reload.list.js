@@ -9,7 +9,8 @@
             masterRoute: null,
             action: null,
             nbRowPerPage: null,
-            otherData: ""
+            otherData: "",
+            type: 'get'
         };
 
         var parameters = $.extend(defauts, options);
@@ -40,11 +41,15 @@
 
         var updateList = function()
         {
-        		var otherData = parameters.otherData;
-        	
+        	var otherData = parameters.otherData;
+
+        	if (otherData!="" && otherData.substr(0,1) != "&"){
+                otherData = "&" + otherData;
+            }
+
             $.ajax({
                 'url': parameters.remoteURL,
-                'type': 'GET',
+                'type': parameters.type,
                 'data': paginatorPageParamName+'='+getPageCount()+ (parameters.masterRoute == null?null:'&masterRoute='+parameters.masterRoute) + otherData,
                 'dataType': 'html',
                 'success': function(template){

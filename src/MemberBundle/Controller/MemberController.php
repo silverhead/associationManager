@@ -117,6 +117,32 @@ class MemberController extends Controller
             )
         ;
 
+
+//        $memberManager->addFilter();
+
+        if ($formFilterHandler->process($request)){
+
+            $data = $formFilterHandler->getData();
+
+            if ("" !== $data->getLastName()) {
+                $memberManager->addFilter(
+                    new FilterQuery('m.lastName', $data->getLastName(), FilterQuery::OPERATOR_LIKE_RIGHT)
+                );
+            }
+            if ("" !== $data->getFirstName()){
+                $memberManager->addFilter(
+                    new FilterQuery('m.firstName', $data->getFirstName(), FilterQuery::OPERATOR_LIKE_RIGHT)
+                );
+            }
+
+            if (null !== $data->isActive()){
+                $memberManager->addFilter(
+                    new FilterQuery('m.active', $data->isActive(), FilterQuery::OPERATOR_EQUAL)
+                );
+            }
+
+        }
+
         $now = new \DateTime();
         $delayDayMax = (clone $now)->add(new \DateInterval("P20D"));
 
