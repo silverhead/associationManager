@@ -4,6 +4,7 @@ namespace MemberBundle\Form\Type;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,11 +23,13 @@ class MemberListFilterFormType extends AbstractType
             ])
             ->add('status', EntityType::class, [
                 'class' => 'MemberBundle\Entity\MemberStatus',
+                'choice_value' => 'id',
                 'choice_label' => 'label',
                 'required' => false
             ])
             ->add('subscription', EntityType::class, [
                 'class' => 'SubscriptionBundle\Entity\Subscription',
+                'choice_value' => 'id',
                 'choice_label' => 'label',
                 'required' => false
             ])
@@ -36,6 +39,12 @@ class MemberListFilterFormType extends AbstractType
                     'app.common.form.boolean.no' => false
                 ],
                 'required' => false
+            ])
+            ->add('onlyLatePaymentMember', CheckboxType::class,[
+                'required' => false
+            ])
+            ->add('onlyNewFeeComingSoon', CheckboxType::class,[
+                    'required' => false
             ])
         ;
     }

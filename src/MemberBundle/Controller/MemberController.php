@@ -66,29 +66,66 @@ class MemberController extends Controller
 
     public function memberList(Request $request, $anchor = null)
     {
-        $formFilterHandler = $this->get('member.form.handler.member_list_filter');
-        $formFilterHandler->setForm(new MemberListFilterModel());
-
         $memberManager = $this->get('member.manager.member');
         $memberManager->activateCache('memberList');
 
-        $filtersRequest = array();
-        $filtersRequest['new_fee_coming_soon']   = $request->get('new_fee_coming_soon', '-1');
-        $filtersRequest['display_all_late_payment_member']  =$request->get('display_all_late_payment_member', '-1');
+        $ordersRequest = $this->getListOrder($memberManager, $request);
+        $formFilterHandler = $this->getlistFilterForm($memberManager, $request);
 
-        $filter = $this->get('session')->get('filter', array(
-            'new_fee_coming_soon' => '-1',
-            'display_all_late_payment_member' => '-1'
+        $members = $memberManager->paginatedList(
+            $request->query->getInt('pageMemberList', 1),
+            10,
+            'pageMemberList',
+            $anchor,
+            $request->get('master_route', 'members_manager')
+            );
+
+        // TODO : must be optimised
+        $membersIdList = array();
+        foreach($members as $member){
+            $membersIdList[] = $member->getId();
+        }
+
+        $feeManager = $this->get('member.manager.subscription_fee');
+
+        $this->defineTheLatePaymentMembers($feeManager, $membersIdList, $members);
+        $this->defineTheMembersHaveSoonPayment($feeManager, $membersIdList, $members);
+
+        return $this->renderView('member/member/list.html.twig', array(
+            'members' => $members,
+            'order' => $ordersRequest,
+            'filter' => $formFilterHandler->getForm()->createView()
         ));
+    }
 
-        if($filtersRequest['new_fee_coming_soon'] != '-1'){
-            $filter['new_fee_coming_soon'] = $filtersRequest['new_fee_coming_soon'];
+    private function defineTheLatePaymentMembers($feeManager, $membersIdList, $members)
+    {
+        $latePaymentFeeList = $feeManager->getLatePaymentFeeByMemberIdList($membersIdList);
+        $latePaymentmemberList = array_column($latePaymentFeeList, "id");
+        // TODO : must be optimised
+        foreach($members as $member){
+            if (in_array($member->getId(), $latePaymentmemberList)){
+                $member->setIsLatePayment(true);
+            }
         }
+    }
 
-        if($filtersRequest['display_all_late_payment_member'] != '-1'){
-            $filter['display_all_late_payment_member'] = $filtersRequest['display_all_late_payment_member'];
+    private function defineTheMembersHaveSoonPayment($feeManager, $membersIdList, $members)
+    {
+        $now = new \DateTime();
+        $delayDayMax = (clone $now)->add(new \DateInterval("P20D"));
+        $soonPaymentFeeList = $feeManager->getSoonFeeNewPaymentListByMemberIdList($now,$delayDayMax, $membersIdList);
+        $soonFeeMemberList = array_column($soonPaymentFeeList, "id");
+        // TODO : must be optimised
+        foreach($members as $member){
+            if (in_array($member->getId(), $soonFeeMemberList)){
+                $member->setHaveNewFeeComingSoon(true);
+            }
         }
+    }
 
+    private function getListOrder($memberManager, $request)
+    {
         $ordersRequest = $request->get('orders',  $memberManager->getArrayOrdersInCacheByKey(
             array(
                 "lastName" => "ASC",
@@ -117,88 +154,64 @@ class MemberController extends Controller
             )
         ;
 
+        return $ordersRequest;
+    }
 
-//        $memberManager->addFilter();
+    private function getlistFilterForm($memberManager, $request)
+    {
+        $filterModel = $this->get('session')->get('member_list_filter', new MemberListFilterModel());
+
+        $formFilterHandler = $this->get('member.form.handler.member_list_filter');
+        $formFilterHandler->setForm($filterModel);
 
         if ($formFilterHandler->process($request)){
-
-            $data = $formFilterHandler->getData();
-
-            if ("" !== $data->getLastName()) {
-                $memberManager->addFilter(
-                    new FilterQuery('m.lastName', $data->getLastName(), FilterQuery::OPERATOR_LIKE_RIGHT)
-                );
-            }
-            if ("" !== $data->getFirstName()){
-                $memberManager->addFilter(
-                    new FilterQuery('m.firstName', $data->getFirstName(), FilterQuery::OPERATOR_LIKE_RIGHT)
-                );
-            }
-
-            if (null !== $data->isActive()){
-                $memberManager->addFilter(
-                    new FilterQuery('m.active', $data->isActive(), FilterQuery::OPERATOR_EQUAL)
-                );
-            }
-
+            $filterModel = $formFilterHandler->getData();
+            $this->get('session')->set('member_list_filter', $filterModel);
         }
+
+        $memberManager
+            ->addFilter(
+                new FilterQuery('m.lastName', $filterModel->getLastName(), FilterQuery::OPERATOR_LIKE_RIGHT)
+            )
+            ->addFilter(
+                new FilterQuery('m.firstName', $filterModel->getFirstName(), FilterQuery::OPERATOR_LIKE_RIGHT)
+            )
+            ->addFilter(
+                new FilterQuery('mshStatus.id', null !== $filterModel->getStatus()?$filterModel->getStatus()->getId():"", FilterQuery::OPERATOR_EQUAL)
+            )
+            ->addFilter(
+                new FilterQuery('subscription.id', null !== $filterModel->getSubscription()?$filterModel->getSubscription()->getId():"", FilterQuery::OPERATOR_EQUAL)
+            )
+            ->addFilter(
+                new FilterQuery('m.active', null !== $filterModel->isActive()?$filterModel->isActive():null, FilterQuery::OPERATOR_EQUAL)
+            )
+        ;
 
         $now = new \DateTime();
         $delayDayMax = (clone $now)->add(new \DateInterval("P20D"));
-
         $feeManager = $this->get('member.manager.subscription_fee');
 
-        if ($filter['new_fee_coming_soon'] == '1'){
+        if ($filterModel->isOnlyNewFeeComingSoon()){
             $membersFeeIdList = $feeManager->getSoonFeeNewPaymentMemberIdList($now, $delayDayMax, 1000);
-
             if(count($membersFeeIdList) == 0){
                 $membersFeeIdList[] = 0;
             }
-
             $memberManager->addFilter(
                 new FilterQuery('m.id', $membersFeeIdList, FilterQuery::OPERATOR_IN)
             );
         }
 
-        if ($filter['display_all_late_payment_member'] == '1'){
+        if ($filterModel->isOnlyLatePaymentMember()){
             $membersFeeIdList = $feeManager->getLatePaymentFeeMemberIdList();
-
             if(count($membersFeeIdList) == 0){
                 $membersFeeIdList[] = 0;
             }
-
             $memberManager->addFilter(
                 new FilterQuery('m.id', $membersFeeIdList, FilterQuery::OPERATOR_IN)
             );
         }
 
-        $members = $memberManager->paginatedList(
-            $request->query->getInt('pageMemberList', 1),
-            10,
-            'pageMemberList',
-            $anchor,
-            $request->get('master_route', 'members_manager')
-            );
-
-        $membersIdList = array();
-        foreach($members as $member){
-            $membersIdList[] = $member->getId();
-        }
-
-        $latePaymentFeeList = $feeManager->getLatePaymentFeeByMemberIdList($membersIdList);
-        $latePaymentmemberList = array_column($latePaymentFeeList, "id");
-
-        $soonPaymentFeeList = $feeManager->getSoonFeeNewPaymentListByMemberIdList($now,$delayDayMax, $membersIdList);
-        $soonPaymentmemberList = array_column($soonPaymentFeeList, "id");
-
-        return $this->renderView('member/member/list.html.twig', array(
-            'members' => $members,
-            'order' => $ordersRequest,
-            'filter' => $filter,
-            'latePaymentmemberList' => $latePaymentmemberList,
-            'soonPaymentmemberList' => $soonPaymentmemberList,
-            'filter' => $formFilterHandler->getForm()->createView()
-        ));
+        return $formFilterHandler;
     }
 
     /**

@@ -139,6 +139,16 @@ class Member extends User
     protected $lastSendingLatePaymentEmailDate;
 
     /**
+     * @var bool
+     */
+    protected $isLatePayment;
+
+    /**
+     * @var bool
+     */
+    protected $haveNewFeeComingSoon;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -634,6 +644,44 @@ class Member extends User
     public function setLastSendingLatePaymentEmailDate($lastSendingLatePaymentEmailDate)
     {
         $this->lastSendingLatePaymentEmailDate = $lastSendingLatePaymentEmailDate;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLatePayment(): ?bool
+    {
+        return $this->isLatePayment;
+    }
+
+    /**
+     * @param bool $isLatePayment
+     * @return Member
+     */
+    public function setIsLatePayment(bool $isLatePayment): Member
+    {
+        $this->isLatePayment = $isLatePayment;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function haveNewFeeComingSoon(): ?bool
+    {
+        return $this->haveNewFeeComingSoon;
+    }
+
+    /**
+     * @param bool $haveNewFeeComingSoon
+     * @return Member
+     */
+    public function setHaveNewFeeComingSoon(bool $haveNewFeeComingSoon): Member
+    {
+        $this->haveNewFeeComingSoon = $haveNewFeeComingSoon;
 
         return $this;
     }

@@ -31,13 +31,27 @@ class MemberListFilterModel
     /**
      * @var bool
      */
+    private $onlyNewFeeComingSoon;
+
+    /**
+     * @var bool
+     */
+    private $onlyLatePaymentMember;
+
+    /**
+     * @var bool
+     */
     private $active;
 
     public function __construct()
     {
         $this->lastName = "";
-        $this->firsttName = "";
-        $this->active = false;
+        $this->firstName = "";
+        $this->subscription = new Subscription();
+        $this->status = new MemberStatus();
+        $this->active = true;
+        $this->onlyNewFeeComingSoon = false;
+        $this->onlyLatePaymentMember = false;
     }
 
     /**
@@ -131,6 +145,44 @@ class MemberListFilterModel
     public function setActive(?bool $active): MemberListFilterModel
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnlyNewFeeComingSoon(): bool
+    {
+        return $this->onlyNewFeeComingSoon;
+    }
+
+    /**
+     * @param bool $onlyNewFeeComingSoon
+     * @return MemberListFilterModel
+     */
+    public function setOnlyNewFeeComingSoon(bool $onlyNewFeeComingSoon): MemberListFilterModel
+    {
+        $this->onlyNewFeeComingSoon = $onlyNewFeeComingSoon;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnlyLatePaymentMember(): bool
+    {
+        return $this->onlyLatePaymentMember;
+    }
+
+    /**
+     * @param bool $onlyLatePaymentMember
+     * @return MemberListFilterModel
+     */
+    public function setOnlyLatePaymentMember(bool $onlyLatePaymentMember): MemberListFilterModel
+    {
+        $this->onlyLatePaymentMember = $onlyLatePaymentMember;
 
         return $this;
     }

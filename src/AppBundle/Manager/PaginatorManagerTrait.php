@@ -43,6 +43,10 @@ Trait PaginatorManagerTrait
 
     public function addFilter(FilterQuery $filterQuery, string $key = "")
     {
+        if (null === $filterQuery->getValue() || "" === $filterQuery->getValue()) {
+            return $this;
+        }
+
         if($this->filters == null){
             $this->filters = new ArrayCollection();
         }

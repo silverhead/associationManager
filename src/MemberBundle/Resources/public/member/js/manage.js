@@ -124,6 +124,8 @@ function reloadMemberList(action, paginatorData, type){
 	        	});
 
                 $('[data-original-title]').tooltip();
+
+                $('[data-toggle="popover"]').popover();
         },
         remoteErrorCallBack: function(){
         		swal(
