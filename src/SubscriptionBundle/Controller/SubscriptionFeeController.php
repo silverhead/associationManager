@@ -2,7 +2,10 @@
 
 namespace SubscriptionBundle\Controller;
 
+use AppBundle\QueryHelper\FilterQuery;
+use SubscriptionBundle\Form\Model\SubscriptionFeeListFilterModel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\QueryHelper\OrderQuery;
@@ -44,6 +47,8 @@ class SubscriptionFeeController extends Controller
             )
         ;
 
+        $form = $this->getlistFilterForm($managerSubFee, $request);
+
         $subscriptionFees = $managerSubFee->paginatedList($page, 20, $pageParamName);
 
         $pageH = $this->get('app.handler.page_historical');
@@ -57,7 +62,50 @@ class SubscriptionFeeController extends Controller
 
         return $this->render('subscription/subscription/fee/subscriptionFee.html.twig', array(
             'fees' => $subscriptionFees,
-            'order' => $ordersRequest
+            'order' => $ordersRequest,
+            'filterForm' => $form->createView()
         ));
+    }
+
+    private function getlistFilterForm($manager, $request): FormInterface
+    {
+        $filterModel = $this->get('session')->get('subscription_fee_list_filter', new SubscriptionFeeListFilterModel());
+
+        $formFilterHandler = $this->get('subscription.form.handler.subscription_fee_list_filter');
+        $formFilterHandler->setForm($filterModel);
+
+        if ($formFilterHandler->process($request)){
+            $filterModel = $formFilterHandler->getData();
+            $this->get('session')->set('subscription_fee_list_filter', $filterModel);
+        }
+
+        $fullName = $filterModel->getFullNameMember();
+
+        if ("" !== $fullName){
+            $fullNameArray = explode(" ", $fullName);
+            foreach ($fullNameArray as $i => $value){
+                $manager->addFilter(
+                    new FilterQuery(" ( mber.firstName LIKE :fullName".$i." OR mber.lastName LIKE :fullName".$i.") ", "%".$value."%", FilterQuery::OPERATOR_EXP),
+                    'fullName'.$i
+                );
+            }
+        }
+
+        $manager
+            ->addFilter(
+                new FilterQuery('sub.id', null !== $filterModel->getSubscription()?$filterModel->getSubscription()->getId():"", FilterQuery::OPERATOR_EQUAL)
+            )
+            ->addFilter(
+                new FilterQuery('memberSubscriptionFee.startDate', $filterModel->getStartDate(), FilterQuery::OPERATOR_SUPERIOR_OR_EQUAL)
+            )
+            ->addFilter(
+                new FilterQuery('memberSubscriptionFee.endDate', $filterModel->getEndDate(), FilterQuery::OPERATOR_INFERIOR_OR_EQUAL)
+            )
+            ->addFilter(
+                new FilterQuery('memberSubscriptionFee.paid', null !== $filterModel->isPaid()?$filterModel->isPaid():null, FilterQuery::OPERATOR_EQUAL)
+            )
+        ;
+
+        return $formFilterHandler->getForm();
     }
 }

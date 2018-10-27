@@ -1,32 +1,55 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="body table-responsive">
-            <form action="#">
-                <table class="table table-striped" id="tableFee">
+            {{ form_start(filterForm) }}
+                <table id="subscriptionFeeTable" class="table table-striped" id="tableFee">
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.subscriptionFee.list.header.subscription'|trans }}</th>
-                        <th data-order-sortname="fullName" data-order-sort="{{ order.fullName }}" class="sortable">{{ 'member.subscriptionFee.list.header.member'|trans }}</th>
-                        <th data-order-sortname="period" data-order-sort="{{ order.period }}" class="sortable">{{ 'member.subscriptionFee.list.header.period'|trans }}</th>
-                        <th>{{ 'member.subscriptionFee.list.header.cost'|trans }}</th>
-                        <th>{{ 'member.subscriptionFee.list.header.paymentDate'|trans }}</th>
-                        <th>{{ 'member.subscriptionFee.list.header.paid'|trans }}</th>
-                        {% if is_granted('MEMBER_SUBSCRIPTION_FEE_SAVE') %}
-                            <th>{{ 'app.common.table.action'|trans }}</th>
-                        {% endif %}
+                        <th style="width:15%" data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.subscriptionFee.list.header.subscription'|trans }}</th>
+                        <th style="width:30%" data-order-sortname="fullName" data-order-sort="{{ order.fullName }}" class="sortable">{{ 'member.subscriptionFee.list.header.member'|trans }}</th>
+                        <th style="width:20%" data-order-sortname="period" data-order-sort="{{ order.period }}" class="sortable">{{ 'member.subscriptionFee.list.header.period'|trans }}</th>
+                        <th style="width:10%">{{ 'member.subscriptionFee.list.header.cost'|trans }}</th>
+                        <th style="width:10%">{{ 'member.subscriptionFee.list.header.paymentDate'|trans }}</th>
+                        <th style="width:5%">{{ 'member.subscriptionFee.list.header.paid'|trans }}</th>
+                        <th style="width:10%">{{ 'app.common.table.action'|trans }}</th>
+                    </tr>
+                    <tr class="filter">
+                        <th></th>
+                        <th class="form-group form-group-sm">
+                            {{ form_widget(filterForm.subscription, {'attr': {'title': 'member.member.list.filter.all'|trans}}) }}
+                        </th>
+                        <th class="form-group form-group-sm">
+                            {{ form_widget(filterForm.fullNameMember) }}
+                        </th>
+                        <th>
+                            <div class="form-group form-group-sm">
+                                {{ form_widget(filterForm.startDate) }}
+                            </div>
+                            <div class="form-group form-group-sm">
+                                {{ form_widget(filterForm.endDate) }}
+                            </div>
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th class="form-group form-group-sm">
+                            {{ form_widget(filterForm.paid, {'attr': {'title': 'member.member.list.filter.all'|trans}}) }}
+                        </th>
+                        <th>
+                            <input type="submit" id="subscriptionFeeFilterBtn" class="btn btn btn-success" value="{{ 'app.common.form.submit.filter'|trans }}">
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for fee in fees %}
                         <tr data-row-fee="{{ fee.getId() }}">
-                            <td>{{ fee.getId() }}</td>
+                            <td class="text-center">{{ fee.getId() }}</td>
                             <td>{{ fee.getSubscription().getSubscription().getLabel() }}</td>
                             <td>{{ fee.getSubscription().getMember().getFullName() }}</td>
-                            <td>{{ fee.getStartDate()|date('d/m/Y') }} {{ 'app.common.to'|trans }} {{ fee.getEndDate()|date('d/m/Y') }}</td>
-                            <td>{{ fee.getCost()|number_format(2, ",", " ") }} €</td>
-                            <td>{% if fee.getPaymentDate() is not null %} {{ fee.getPaymentDate()|date('d/m/Y') }} {% endif %}</td>
-                            <td>
+                            <td class="text-center">{{ fee.getStartDate()|date('d/m/Y') }} {{ 'app.common.to'|trans }} {{ fee.getEndDate()|date('d/m/Y') }}</td>
+                            <td class="text-right">{{ fee.getCost()|number_format(2, ",", " ") }} €</td>
+                            <td class="text-center">{% if fee.getPaymentDate() is not null %} {{ fee.getPaymentDate()|date('d/m/Y') }} {% endif %}</td>
+                            <td class="text-center">
                                 {% include ':common:boolean.html.twig' with {'status': fee.getPaid()} %}
                             </td>
                             <td>
@@ -38,7 +61,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            </form>
+            {{ form_end(filterForm) }}
             <div class="pull-right">
                 {{ knp_pagination_render(fees) }}
                 {#{% include 'main/pagination.html.twig' %}#}

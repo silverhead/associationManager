@@ -34,8 +34,6 @@
         };
         
         var orderList = function(){
-	        	console.log(masterFieldName);	        		        	
-	        	
 	        	var sorting = "";
 	        	$('.' + parameters.className).each(function(){
 	        		var name = $(this).data(parameters.dataFieldName);

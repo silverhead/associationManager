@@ -59,7 +59,9 @@ services:
     subscription.form.handler.subscription:
         class: SubscriptionBundle\Form\Handler\SubscriptionFormHandler
         arguments: ['@form.factory']
-
+    subscription.form.handler.subscription_fee_list_filter:
+        class: SubscriptionBundle\Form\Handler\SubscriptionFeeListFilterHandler
+        arguments: ['@form.factory']
     # Twig extension
     subscription.twig_extension.subscription:
         class: SubscriptionBundle\Twig\SubscriptionExtension

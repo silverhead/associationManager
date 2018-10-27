@@ -1,0 +1,35 @@
+#subscriptionFeeTable th{
+    padding: 10px;
+}
+
+#subscriptionFeeTable th:nth-child(1){
+    width : 3%;
+}
+
+#subscriptionFeeTable th:nth-child(2){
+    width : 20%;
+}
+
+#subscriptionFeeTable th:nth-child(3){
+    width : 15%;
+}
+
+#subscriptionFeeTable th:nth-child(4){
+    width : 25%;
+}
+
+#subscriptionFeeTable th:nth-child(5){
+    width : 5%;
+}
+
+#subscriptionFeeTable th:nth-child(6){
+    width : 10%;
+}
+#subscriptionFeeTable th:nth-child(7){
+    width : 10%;
+}
+
+#subscriptionFeeTable .filter *{
+    margin: 0;
+}
+

@@ -12,6 +12,12 @@
     <script src="{{ asset("bundles/member/member/js/subscriptionFee.js") }}"></script>
 {% endblock %}
 
+{% block style %}
+    {{ parent() }}
+    <link href="{{ asset('plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/subscription/subscription/css/subscriptionFeeList.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <div class="row block-header">
     {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [

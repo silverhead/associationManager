@@ -49,8 +49,6 @@ function setSubformField(){
 
     $('#member_member_subscription_form_type_endDate').val(endDate);
 
-    //console.log(startDate);
-
     $('#member_member_subscription_form_type_cost').val( parseFloat(cost).toFixed(2));
 
     $('#member_member_subscription_form_type_subscriptionPaymentPeriodicity').find('option:selected').removeAttr('selected');

@@ -11,6 +11,11 @@ class FilterQuery
     const OPERATOR_LIKE_LEFT = '%like';
     const OPERATOR_LIKE_RIGHT = 'like%';
     const OPERATOR_LIKE_BETWEEN = '%like%';
+    const OPERATOR_EXP = 'expression';
+    const OPERATOR_SUPERIOR_OR_EQUAL = '>=';
+    const OPERATOR_INFERIOR_OR_EQUAL = '<=';
+    const OPERATOR_STRICT_SUPERIOR = '>';
+    const OPERATOR_STRICT_INFERIOR = '<';
 
     /**
      * @var string

@@ -39,7 +39,7 @@ class MemberController extends Controller
         $memberManager = $this->get('member.manager.member');
 
         $memberListTpl = $this->memberlist($request, "");
-        $statusListTpl = $this->get('member.controller.status')->listAction($request, "");
+        $statusListTpl = $this->get('member.controller.status')->listAction($request, "status");
         $settingTpl = $this->get('member.controller.setting')->settingAction($request);
         $settingEmailTpl = $this->get('member.controller.setting')->emailSettingAction($request);
 
@@ -193,6 +193,7 @@ class MemberController extends Controller
 
         if ($filterModel->isOnlyNewFeeComingSoon()){
             $membersFeeIdList = $feeManager->getSoonFeeNewPaymentMemberIdList($now, $delayDayMax, 1000);
+
             if(count($membersFeeIdList) == 0){
                 $membersFeeIdList[] = 0;
             }
@@ -320,8 +321,6 @@ class MemberController extends Controller
         $formHandler = $this->get('member.form.handler.member');
         $formHandler->setForm($entity);
 
-
-
         if($formHandler->process($request)){
             
             $entity = $formHandler->getData();
@@ -372,7 +371,6 @@ class MemberController extends Controller
         }
         
         $breadcrumbs[]  =  ['label' => $translator->trans('member.member.edit.title')];
-        
         
         return $this->render('member/member/edit.html.twig', [
             'menuSelect' => 'members_manager',

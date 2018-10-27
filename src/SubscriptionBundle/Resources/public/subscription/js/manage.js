@@ -17,7 +17,25 @@ $(function() {
             reloadSubscriptionsList();
         }
     });
+
+
+    $(document).on('click', '#subscriptionFeeFilterBtn', function(event){
+        event.preventDefault();
+
+        submitFilter($(this));
+    });
 });
+
+function submitFilter(formElement)
+{
+    var form = formElement.parents('form');
+    var data = form.serialize();
+    reloadSubscriptionsList(data, 'post');
+
+    return false;
+}
+
+
 
 function reloadSubscriptionsList()
 {
@@ -33,11 +51,17 @@ function reloadSubscriptionsList()
     });
 }
 
-function reloadSubscriptionFeesList()
+function reloadSubscriptionFeesList(data, type)
 {
+    if (typeof (type) == 'undefined'){
+        type = 'get';
+    }
+
     var $container =  $('#subscriptionsContainer');
     $container.reloadlist({
         masterRoute: 'members_manager',
+        otherData: paginatorData,
+        type: type,
         remoteURL: Routing.generate('subscription_subscription_list_part', {'anchor': $container.data('anchor')}),
         remoteErrorCallBack: swal(
             Translator.trans('app.common.errorTitle'),

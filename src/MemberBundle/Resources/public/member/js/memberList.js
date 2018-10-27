@@ -32,27 +32,19 @@ $(function(){
 });
 
 $(document).on('click', '.display_all_new_fee_coming_soon', function(){
-    var checked = $('#display_all_new_fee_coming_soon').is(':checked');
-
-    reloadMemberList('list', '&new_fee_coming_soon=' + (checked == true?"1":"0"));
+    $('.display_all_late_payment_member').attr('checked', false);
+    submitFilter($(this));
 });
 
 $(document).on('click', '.display_all_late_payment_member', function(){
-    var checked = $('#display_all_late_payment_member').is(':checked');
-
-    reloadMemberList('list', '&display_all_late_payment_member=' + (checked == true?"1":"0"));
+    $('.display_all_new_fee_coming_soon').attr('checked', false);
+    submitFilter($(this));
 });
 
 $(document).on('click', '#memberFilterBtn', function(event){
     event.preventDefault();
 
-    var form = $(this).parents('form');
-
-    var data = form.serialize();
-
-    reloadMemberList('', data, 'post');
-
-    return false;
+    submitFilter($(this));
 });
 
 $(document).on('click', '#send_new_fee_coming_soon', function(){
@@ -102,6 +94,15 @@ $(document).on('click', '#send_late_payment_member', function(){
         }
     });
 });
+
+function submitFilter(formElement)
+{
+    var form = formElement.parents('form');
+    var data = form.serialize();
+    reloadMemberList('', data, 'post');
+
+    return false;
+}
 
 function reloadMemberList(action, paginatorData, type){
     var $container =  $('#members');

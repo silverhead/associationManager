@@ -9,11 +9,6 @@
         <div class="row">
             <div class="col-md-8">
                 {{ form_row(filter.onlyNewFeeComingSoon, {'label': 'member.member.list.legend.new_fee_coming_soon'|trans, 'attr': {'class': 'display_all_new_fee_coming_soon bdr-amber filled-in chk-col-amber'} }) }}
-
-                {#<input type="checkbox" class="display_all_new_fee_coming_soon bdr-amber filled-in chk-col-amber" {% if filter.new_fee_coming_soon == '1' %}checked="checked"{% endif %} name="display_all_new_fee_coming_soon" id="display_all_new_fee_coming_soon" value="1">#}
-                {#<label for="display_all_new_fee_coming_soon" data-placement="top" data-original-title="{{ 'member.member.list.action.display_all_new_fee_coming_soon'|trans }}">#}
-                    {#{{ 'member.member.list.legend.new_fee_coming_soon'|trans }}#}
-                {#</label>#}
             </div>
             <div class="col-md-3">
                 <button id="send_new_fee_coming_soon" class="send_new_fee_coming_soon btn bg-amber material-icons pull-right" data-placement="top" data-original-title="{{ 'member.member.list.action.send_email_new_fee_coming_soon'|trans }}">email</button>
@@ -22,10 +17,6 @@
         <div class="row">
             <div class="col-md-8">
                 {{ form_row(filter.onlyLatePaymentMember, {'label': 'member.member.list.legend.late_payment_member'|trans, 'attr': {'class': 'display_all_late_payment_member bdr-red filled-in chk-col-red'} }) }}
-                {#<input type="checkbox" class="display_all_late_payment_member bdr-red filled-in chk-col-red" {% if filter.display_all_late_payment_member == '1' %}checked="checked"{% endif %} name="display_all_late_payment_member" id="display_all_late_payment_member">#}
-                {#<label for="display_all_late_payment_member" class="" value="1" data-placement="top" data-original-title="{{ 'member.member.list.action.display_all_late_payment_member'|trans }}">#}
-                    {#{{ 'member.member.list.legend.late_payment_member'|trans }}#}
-                {#</label>#}
             </div>
             <div class="col-md-3">
                 <button id="send_late_payment_member" class="send_late_payment_member btn bg-red material-icons pull-right" data-placement="bottom" data-original-title="{{ 'member.member.list.action.send_email_late_payment_member'|trans }}">email</button>
@@ -68,15 +59,14 @@
                     <thead>
                         <tr>
                             <th class="text-center">#</th>
-                            {#<th>{{ 'member.member.list.table.picture'|trans }}</th>#}
-                            <th style="width:15%" data-order-sortname="lastName" data-order-sort="{{ order.lastName }}" class="sortable">{{ 'member.member.list.table.lastName'|trans }}</th>
-                            <th style="width:15%" data-order-sortname="firstName" data-order-sort="{{ order.firstName }}" class="sortable">{{ 'member.member.list.table.firstName'|trans }}</th>
-                            <th style="width:15%" data-order-sortname="status" data-order-sort="{{ order.status }}" class="sortable">{{ 'member.member.list.table.status'|trans }}</th>
+                            <th data-order-sortname="lastName" data-order-sort="{{ order.lastName }}" class="sortable">{{ 'member.member.list.table.lastName'|trans }}</th>
+                            <th data-order-sortname="firstName" data-order-sort="{{ order.firstName }}" class="sortable">{{ 'member.member.list.table.firstName'|trans }}</th>
+                            <th data-order-sortname="status" data-order-sort="{{ order.status }}" class="sortable">{{ 'member.member.list.table.status'|trans }}</th>
                             <th class="text-center">{{ 'member.member.list.table.phone'|trans }}</th>
-                            <th style="width:15%"  data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.member.list.table.subscription'|trans }}</th>
-                            <th style="width:10%" >{{ 'member.member.list.table.subscriptionDateEnd'|trans }}</th>
-                            <th style="width:2%" class="text-center" >{{ 'member.member.list.table.active'|trans }}</th>
-                            <th style="width:20%" class="text-center" >{{ 'app.common.table.action'|trans }}</th>
+                            <th data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.member.list.table.subscription'|trans }}</th>
+                            <th>{{ 'member.member.list.table.subscriptionDateEnd'|trans }}</th>
+                            <th class="text-center" >{{ 'member.member.list.table.active'|trans }}</th>
+                            <th class="text-center" >{{ 'app.common.table.action'|trans }}</th>
                         </tr>
                         <tr class="filter">
                             <th>&nbsp;</th>
@@ -109,9 +99,6 @@
                                 {#<input type="checkbox" class="filled-in chk-col-blue" name="select[{{ member.id }}]" id="select_{{ member.id }}" value="{{ member.id }}">#}
                                 {#<label for="select_{{ member.id }}" value="{{ member.id }}"></label>#}
                             </td>
-                            {#<td>#}
-                                {#<img src="{{ asset('images/avatars/user.png') }}" class="img-circle">#}
-                            {#</td>#}
                             <td>{{ member.lastName }}</td>
                             <td>{{ member.firstName }}</td>
                             <td>{% if member.getStatus()|length > 0 %}{{ member.getStatus()[0].status.label }}{% endif %}</td>

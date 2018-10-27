@@ -85,7 +85,7 @@ Trait PaginatorManagerTrait
         $authorizedOperators = array(
             '=', '>', '<', '>=', '<=',
             '%like%', 'like%', '%like', '%notlike%', 'notlike%', '%notlike',
-            'in', 'notin'
+            'in', 'notin', 'expression'
         );
 
         $filters = $this->filters;
@@ -96,9 +96,10 @@ Trait PaginatorManagerTrait
         }
 
         foreach($filters as $key => $filter){
+
             if(!in_array($filter->getOperator(),  $authorizedOperators)){
                 throw new \Exception("the filter operator \”".$filter->getOperator()."\” is not recognized! Please
-                check the \”".$authorizedOperators."\" for use the correctly operator !");
+                check the operators authorized array for use the correctly operator !");
             }
 
             $property   = $filter->getEntityProperty();
@@ -106,7 +107,8 @@ Trait PaginatorManagerTrait
             $search     = $filter->getValue();
             $pattern    = $key;
 
-            if(!in_array($operator, array('in', 'notin', '%like', 'like%', '%like%', '%notlike', 'notlike%', '%notlike%'))){
+
+            if(!in_array($operator, array('in', 'notin', '%like', 'like%', '%like%', '%notlike', 'notlike%', '%notlike%', 'expression'))){
                 $qb->andWhere($property ." ".$operator." :".$pattern)->setParameter($pattern, $search);
             }
             else if(in_array($operator, array('%like', 'like%', '%like%', '%notlike', 'notlike%', '%notlike%'))){
@@ -140,6 +142,9 @@ Trait PaginatorManagerTrait
                         $qb->andWhere($property ." NOT IN (':".$pattern."')")->setParameter($pattern, implode("','", $search));
                         break;
                 }
+            }
+            else{
+                $qb->andWhere($property)->setParameter($pattern, $search);
             }
         }
 
