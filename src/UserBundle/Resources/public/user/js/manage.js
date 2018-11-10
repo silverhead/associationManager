@@ -18,13 +18,25 @@ $(document).on('click','.delUser', function(e){
     });
 });
 
-function reloadUserList(action, paginatorOrders){
+$(document).on('submit', '#userListFilter', function(){
+    event.preventDefault();
+
+    var form = $(this);
+    var data = form.serialize();
+    reloadUserList('', data, 'post');
+
+    return false;
+});
+
+
+function reloadUserList(action, paginatorOrders, type){
     var $container =  $('#users');
     
     $container.reloadlist({
         masterRoute: 'user_manager',
         remoteURL: Routing.generate('user_list_part', {'anchor': $container.data('anchor')}),
         action: action,
+        type: type,
         otherData: paginatorOrders,
         remoteSucessCallBack: function(){
 	        	$('.sortable').orderableList({

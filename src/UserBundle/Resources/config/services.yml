@@ -46,6 +46,9 @@ services:
     user.form.handler.user:
         class: UserBundle\Form\Handler\UserFormHandler
         arguments: ['@form.factory', '@service_container']
+    user.form.handler.user_list_filter:
+        class: UserBundle\Form\Handler\UserListFilterHandler
+        arguments: ['@form.factory', '@service_container']
     # Manager
     user.manager.group:
         class: UserBundle\Manager\UserGroupManager

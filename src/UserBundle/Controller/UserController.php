@@ -2,12 +2,14 @@
 
 namespace UserBundle\Controller;
 
+use AppBundle\QueryHelper\FilterQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\QueryHelper\OrderQuery;
 use Symfony\Component\HttpFoundation\Response;
+use UserBundle\Form\Model\UserListFilterModel;
 
 class UserController extends Controller
 {
@@ -58,6 +60,8 @@ class UserController extends Controller
             )
         ;
 
+        $formFilterHandler = $this->getlistFilterForm($userManager, $request);
+
         $results = $userManager->paginatedList(
             $page,
             self::ITEMS_PER_PAGE,
@@ -76,8 +80,39 @@ class UserController extends Controller
 
         return $this->render('/user/user/list.html.twig', array(
             'results' => $results,
-            'order' => $orders
+            'order' => $orders,
+            'filter' => $formFilterHandler->getForm()->createView()
         ));
+    }
+
+    private function getlistFilterForm($ListManager, $request)
+    {
+        $filterModel = $this->get('session')->get('user_list_filter', new UserListFilterModel());
+
+        $formFilterHandler = $this->get('user.form.handler.user_list_filter');
+        $formFilterHandler->setForm($filterModel);
+
+        if ($formFilterHandler->process($request)){
+            $filterModel = $formFilterHandler->getData();
+            $this->get('session')->set('user_list_filter', $filterModel);
+        }
+
+        $ListManager
+            ->addFilter(
+                new FilterQuery('u.username', $filterModel->getUsername(), FilterQuery::OPERATOR_LIKE_RIGHT)
+            )
+            ->addFilter(
+                new FilterQuery('u.email', $filterModel->getEmail(), FilterQuery::OPERATOR_LIKE_RIGHT)
+            )
+            ->addFilter(
+                new FilterQuery('g.id', null !== $filterModel->getGroup()?$filterModel->getGroup()->getId():"", FilterQuery::OPERATOR_EQUAL)
+            )
+            ->addFilter(
+                new FilterQuery('u.active', null !== $filterModel->isActive()?$filterModel->isActive():null, FilterQuery::OPERATOR_EQUAL)
+            )
+        ;
+
+        return $formFilterHandler;
     }
 
     /**

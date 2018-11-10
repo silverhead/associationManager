@@ -21,3 +21,4 @@
 --Vagrantfile
 /nbproject/
 /nbproject/private/
+/web/js/fos_js_routes.js

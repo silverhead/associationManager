@@ -34,6 +34,8 @@ app:
             boolean:
                 yes: Oui
                 no: Non
+        filter:
+            all: Tous
         status:
             enabled: Actif
             disabled: Non actif
@@ -153,6 +155,7 @@ user:
                 userName: Identifiant
                 email: E-mail
                 group: Groupe
+                active: Actif
         add:
             title: Ajouter un utilisateur
         profile:

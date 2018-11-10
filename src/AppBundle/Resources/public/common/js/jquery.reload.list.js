@@ -47,6 +47,10 @@
                 otherData = "&" + otherData;
             }
 
+            if (typeof (parameters.type) == 'undefined'){
+                parameters.type = 'get';
+            }
+
             $.ajax({
                 'url': parameters.remoteURL,
                 'type': parameters.type,

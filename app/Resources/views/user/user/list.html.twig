@@ -8,15 +8,34 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="body table-responsive">
-            <form action="#">
-                <table class="table table-striped orderable dataTable">
+            {{ form_start(filter, {'attr': {'id': 'userListFilter'}}) }}
+                <table id="userList" class="table table-striped orderable dataTable">
                     <thead>
                     <tr>
                         <th>#</th>
                         <th data-order-sortname="username" data-order-sort="{{ order.username }}" class="sortable">{{ 'user.user.list.table.userName'|trans }}</th>
                         <th data-order-sortname="email" data-order-sort="{{ order.email }}" class="sortable">{{ 'user.user.list.table.email'|trans }}</th>
                         <th data-order-sortname="group" data-order-sort="{{ order.group }}" class="sortable">{{ 'user.user.list.table.group'|trans }}</th>
+                        <th>{{ 'user.user.list.table.active'|trans }}</th>
                         <th>{{ 'app.common.table.action'|trans }}</th>
+                    </tr>
+                    <tr class="filter">
+                        <th>&nbsp;</th>
+                        <th class="form-group form-group-sm">
+                            {{ form_widget(filter.username) }}
+                        </th>
+                        <th class="form-group form-group-sm">
+                            {{ form_widget(filter.email) }}
+                        </th>
+                        <th class="form-group form-group-sm">
+                            {{ form_widget(filter.group, {'attr': {'title': 'app.common.filter.all'|trans}} ) }}
+                        </th>
+                        <th class="form-group form-group-sm">
+                            {{ form_widget(filter.active, {'attr': {'title': 'app.common.filter.all'|trans}} ) }}
+                        </th>
+                        <th>
+                            <input type="submit" id="userListFilterBtn" class="btn btn btn-success" value="{{ 'app.common.form.submit.filter'|trans }}">
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -26,6 +45,7 @@
                             <td>{{ user.userName }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.group.label }}</td>
+                            <td class="align-center">{% include 'common/boolean.html.twig' with {'status': user.active} %}</td>
                             <td>
                                 {% if is_granted('USER_USER_EDIT') %}
                                     <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning material-icons">edit</a>
@@ -38,7 +58,8 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            </form>
+            {{ form_rest(filter) }}
+            {{ form_end(filter) }}
             <div class="pull-right">
                 {{ knp_pagination_render(results) }}
                 {#{% include 'main/pagination.html.twig' %}#}
