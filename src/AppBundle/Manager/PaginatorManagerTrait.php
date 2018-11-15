@@ -222,12 +222,15 @@ Trait PaginatorManagerTrait
     {
         $qb = $this->getQueryList();
 
+        //dump($qb);
+
         /**
          * @var \Knp\Component\Pager\Pagination\PaginationInterface
          */
         $paginate = $this->paginator->paginate($qb, $page, $itemPerPage, [
             'pageParameterName' => $pageParameterName,
-            'anchor' => $anchor
+            'anchor' => $anchor,
+            'wrap-queries'=>true
         ]);
 
 

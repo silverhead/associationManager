@@ -132,8 +132,11 @@ class MemberController extends Controller
                 "firstName" => "ASC",
                 "status" => "",
                 "subscription" => "",
+                "subscriptionDateEnd" => "",
             )
         ));
+
+        //dump($ordersRequest);exit();
 
         $memberManager
             ->addOrder(
@@ -151,6 +154,10 @@ class MemberController extends Controller
             ->addOrder(
                 new OrderQuery("subscription.label" , $ordersRequest['subscription']),
                 'subscription'
+            )
+            ->addOrder(
+                new OrderQuery("subscriptions.endDate" , $ordersRequest['subscriptionDateEnd']),
+                'subscriptionDateEnd'
             )
         ;
 

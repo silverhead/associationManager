@@ -1,5 +1,5 @@
 $(function(){
-	$('#members .sortable').orderableList({
+	$('#memberListTable .sortable').orderableList({
 		listToOrder: function(orders){
 			reloadMemberList('order', orders);			
 		}		
@@ -120,7 +120,7 @@ function reloadMemberList(action, paginatorData, type){
         remoteSucessCallBack: function(){
 	        	$('.sortable').orderableList({
 	        		listToOrder: function(orders){
-	        			reloadMemberList('order', orders);			
+	        			reloadMemberList('order', orders);
 	        		}		
 	        	});
 

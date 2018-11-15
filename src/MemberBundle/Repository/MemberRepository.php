@@ -3,6 +3,7 @@
 namespace MemberBundle\Repository;
 
 use AppBundle\Repository\PaginatorRepositoryInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\Validator\Constraints\DateTime;
 use UserBundle\Repository\UserRepository;
 
@@ -19,13 +20,12 @@ class MemberRepository extends UserRepository implements PaginatorRepositoryInte
         $qb = $this->createQueryBuilder("m");
 
         $qb->select("m, msh, mshStatus, subscriptions, subscription, fees ")
-            ->leftJoin("m.statusHistorical","msh")
-            ->leftJoin("msh.status", "mshStatus")
+            ->leftJoin("m.statusHistorical","msh", Join::WITH, $qb->expr()->isNull("msh.endDate"))
+            ->leftJoin("msh.status", "mshStatus" )
             ->leftJoin("m.subscriptions", "subscriptions")
             ->leftJoin("subscriptions.subscription", "subscription")
             ->leftJoin("m.fees", "fees")
-            ->where($qb->expr()->isNull("msh.endDate"))
-            ->andWhere(
+            ->where(
                 $qb->expr()->orX(
                     $qb->expr()->isNull("subscriptions.id")
                 )->add($qb->expr()->in("subscriptions.id", $subquery ))

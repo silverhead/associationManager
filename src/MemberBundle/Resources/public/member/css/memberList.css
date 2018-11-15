@@ -7,11 +7,11 @@
 }
 
 #memberListTable th:nth-child(2){
-    width : 15%;
+    width : 12%;
 }
 
 #memberListTable th:nth-child(3){
-    width : 15%;
+    width : 12%;
 }
 
 #memberListTable th:nth-child(4){
@@ -23,10 +23,10 @@
 }
 
 #memberListTable th:nth-child(6){
-    width : 15%;
+    width : 12%;
 }
 #memberListTable th:nth-child(8){
-    width : 10%;
+    width : 8%;
 }
 
 #memberListTable .filter *{

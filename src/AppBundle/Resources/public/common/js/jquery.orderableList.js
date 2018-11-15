@@ -21,7 +21,7 @@
         var setSortingClass = function(){
 	        	$('.' + parameters.className).each(function(){
 	        		var name = $(this).data(parameters.dataFieldName);
-	        		var sort = $(this).data(parameters.dataSort);		
+	        		var sort = $(this).data(parameters.dataSort).toUpperCase();
 	        		
 	        		var classNameReg = /^sorting(_asc|_desc)?$/
 	        		

@@ -63,7 +63,7 @@
                             <th data-order-sortname="status" data-order-sort="{{ order.status }}" class="sortable">{{ 'member.member.list.table.status'|trans }}</th>
                             <th class="text-center">{{ 'member.member.list.table.phone'|trans }}</th>
                             <th data-order-sortname="subscription" data-order-sort="{{ order.subscription }}" class="sortable">{{ 'member.member.list.table.subscription'|trans }}</th>
-                            <th>{{ 'member.member.list.table.subscriptionDateEnd'|trans }}</th>
+                            <th data-order-sortname="subscriptionDateEnd" data-order-sort="{{ order.subscriptionDateEnd }}" class="sortable">{{ 'member.member.list.table.subscriptionDateEnd'|trans }}</th>
                             <th class="text-center" >{{ 'member.member.list.table.active'|trans }}</th>
                             <th class="text-center" >{{ 'app.common.table.action'|trans }}</th>
                         </tr>
@@ -86,7 +86,7 @@
                             <th class="form-group form-group-sm">
                                 {{ form_widget(filter.active, {'attr': {'title': 'member.member.list.filter.all'|trans}} ) }}
                             </th>
-                            <th>
+                            <th class="align-center">
                                 <input type="submit" id="memberFilterBtn" class="btn btn btn-success" value="{{ 'app.common.form.submit.filter'|trans }}">
                             </th>
                         </tr>
