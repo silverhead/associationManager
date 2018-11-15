@@ -19,7 +19,7 @@ class UserListFilterFormType extends AbstractType
             ->add('username', TextType::class, [
                 'required' => false
             ])
-            ->add('email', EmailType::class, [
+            ->add('email', TextType::class, [
                 'required' => false
             ])
             ->add('group', EntityType::class, [

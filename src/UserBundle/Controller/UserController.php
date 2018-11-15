@@ -99,10 +99,10 @@ class UserController extends Controller
 
         $ListManager
             ->addFilter(
-                new FilterQuery('u.username', $filterModel->getUsername(), FilterQuery::OPERATOR_LIKE_RIGHT)
+                new FilterQuery('u.username', $filterModel->getUsername(), FilterQuery::OPERATOR_LIKE_BETWEEN)
             )
             ->addFilter(
-                new FilterQuery('u.email', $filterModel->getEmail(), FilterQuery::OPERATOR_LIKE_RIGHT)
+                new FilterQuery('u.email', $filterModel->getEmail(), FilterQuery::OPERATOR_LIKE_BETWEEN)
             )
             ->addFilter(
                 new FilterQuery('g.id', null !== $filterModel->getGroup()?$filterModel->getGroup()->getId():"", FilterQuery::OPERATOR_EQUAL)
