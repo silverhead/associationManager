@@ -14,8 +14,10 @@ parameters:
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
+    mailer_port: ~
+    mailer_auth_mode: ~
+    sendermail: from email
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    sendermail: from email
