@@ -22,6 +22,8 @@ class SubscriptionFeeController extends Controller
 
         $managerSubFee = $this->get('member.manager.subscription_fee');
 
+        $managerSubFee->activateCache('subscriptionFeeList');
+
         $ordersRequest = $request->get('orders',  $managerSubFee->getArrayOrdersInCacheByKey(
             array(
                 "period" => "DESC",
