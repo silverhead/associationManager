@@ -32,9 +32,3 @@ monolog:
 swiftmailer:
     delivery_address: '%sendermail%'
     spool:     { type: memory }
-    transport: smtp
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    auth_mode: "%mailer_auth_mode%"
-    port:      "%mailer_port%"
