@@ -23,10 +23,16 @@ services:
         arguments: ['@service_container', '%masterCredentialVoterAppSettingMenu%']
         tags:
             - {name: security.voter}
+    # Form Model
+    app.form.model.email_setting:
+        class: AppBundle\Form\Model\EmailSettingModel
     # Form handler
     app.form.handler.dashboard_bundle_setting:
         class: AppBundle\Form\Handler\DashboardBundleFormHandler
         arguments: ['@form.factory', '@event_dispatcher']
+    app.form.handler.email_setting:
+        class: AppBundle\Form\Handler\EmailSettingHandler
+        arguments: ['@form.factory']
     # Manager
     app.manager.dashboard_bundle_setting:
         class: AppBundle\Manager\DashboardBundleSettingManager
