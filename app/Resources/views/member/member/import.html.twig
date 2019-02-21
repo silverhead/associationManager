@@ -1,0 +1,29 @@
+{% extends 'layoutLogin.html.twig' %}
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
+        <h2 class="col-xs-12">
+            <a href="{{ path('members_manager') }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
+            {{ 'member.member.import.title'|trans }}
+        </h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2">
+                            {{ form_widget(form.file) }}
+                        </div>
+                        <div class="col-md-3">
+                            <input type="submit" value="{{ 'member.member.import.importBtn'|trans }}" class="btn btn-success" />
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

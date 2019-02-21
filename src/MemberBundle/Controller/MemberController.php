@@ -6,7 +6,10 @@ use AppBundle\QueryHelper\FilterQuery;
 use AppBundle\QueryHelper\OrderQuery;
 use MemberBundle\Entity\Member;
 use MemberBundle\Entity\MemberSubscriptionHistorical;
+use MemberBundle\Form\Model\MemberImportModel;
 use MemberBundle\Form\Model\MemberListFilterModel;
+use MemberBundle\Form\Type\MemberImportFormType;
+use MemberBundle\Manager\MemberImportManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -453,6 +456,90 @@ class MemberController extends Controller
             'breadcrumbs' => $breadcrumbs,
             'menuSelect' => 'member_manager',
             'formSub' => $formHandler->getForm()->createView()
+        ]);
+    }
+
+    /**
+     * @Route("members/import", name="member_import")
+     */
+    public function importAction(Request $request)
+    {
+        $root = $this->getParameter('kernel.root_dir');
+
+        $pathImport = $root.DIRECTORY_SEPARATOR."web".DIRECTORY_SEPARATOR."import";
+
+        $translator = $this->get('translator');
+
+        $form = $this->createForm(MemberImportFormType::class, new MemberImportModel() );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $model = $form->getData();
+
+            $model->getFile()->move($pathImport, $model->getFile()->getFilename());
+            $pathFile = $pathImport.DIRECTORY_SEPARATOR.$model->getFile()->getFilename();
+
+
+            $memberImportManager = new MemberImportManager($translator, $this->get('validator'));
+
+            $memberImports = array();
+            if ($memberImportManager->import($pathFile)){
+                $memberImports = $memberImportManager->getData();
+            }
+            else{
+                $errorMessage = "";
+
+                dump($memberImportManager->getErrors());
+
+                foreach($memberImportManager->getErrors() as $error){
+                    $errorMessage .= $errorMessage!=''?'<br>':'';
+                    $errorMessage .= $error;
+                }
+
+                $this->addFlash('error', $errorMessage);
+
+            }
+
+//            $validator = $this->get('validator');
+//
+//            dump($validator->validate($memberImports[0]));
+
+//            $members = array();
+//
+//            $fp = fopen($pathFile, 'r');
+//            while (($data = fgetcsv($fp, 1000, ";")) !== FALSE) {
+//                $num = count($data);
+//                for ($c = 0; $c < $num; $c++) {
+//                    $members = array(
+//                        $data[0],
+//                        $data[1],
+//                    );
+//                }
+//            }
+//
+//            fclose($fp);
+//
+//            dump($members);
+        }
+
+        $breadcrumbs = [
+            [
+                'href' => $this->redirectToRoute('dashboard'),
+                'title' => $translator->trans('app.dashboard.callback'),
+                'label' => $translator->trans('app.dashboard.title')
+            ],
+            [
+                'href' =>  $this->generateUrl('members_manager').'#members',
+                'title' => $translator->trans('member.manager.tabMembers'),
+                'label' => $translator->trans('member.manager.tabMembers')
+            ],
+            ['label' => $translator->trans('member.member.import.title')]
+        ];
+
+        return $this->render('member/member/import.html.twig', [
+            'breadcrumbs' => $breadcrumbs,
+            'form' => $form->createView()
         ]);
     }
 }

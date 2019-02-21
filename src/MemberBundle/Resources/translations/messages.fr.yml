@@ -116,6 +116,10 @@ member:
                     end_date: Date de fin
                     total_cost: Montant total
                 saveSuccessText: Les configurations e-mails ont été enregistrées avec succès !
+        import:
+            title: Importation d'adhérents
+            importBtn: Importer
+            error: "Erreur à la ligne  %numLine%, colonne %numColumn% : %message%"
     security:
         credential:
             setting: Edition paramètres Adhérents
