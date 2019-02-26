@@ -2,9 +2,9 @@
 
 namespace MemberBundle\Manager;
 
-
 use AppBundle\Handler\ErrorHandlerInterface;
 use AppBundle\Handler\ErrorHandlerTrait;
+use AppBundle\Manager\SettingManager;
 use MemberBundle\Entity\MemberImport;
 
 use Symfony\Component\Translation\TranslatorInterface;
@@ -26,12 +26,17 @@ class MemberImportManager implements ErrorHandlerInterface
      * @var ValidatorInterface
      */
     private $validator;
+    /**
+     * @var SettingManager
+     */
+    private $settingManager;
 
 
-    public function __construct(TranslatorInterface $translator, ValidatorInterface $validator)
+    public function __construct(TranslatorInterface $translator, ValidatorInterface $validator, SettingManager $settingManager)
     {
         $this->translator = $translator;
         $this->validator = $validator;
+        $this->settingManager = $settingManager;
     }
 
     public function import(string $pathFile): bool
@@ -120,21 +125,27 @@ class MemberImportManager implements ErrorHandlerInterface
                     $memberImport->setAddress($value);
                     break;
                 case 9:
-                    $memberImport->setPhone($value);
+                    $memberImport->setOrganization($value);
                     break;
                 case 10:
-                    $memberImport->setCellular($value);
+                    $memberImport->setProfession($value);
                     break;
                 case 11:
-                    $memberImport->setStudyLevel($value);
+                    $memberImport->setPhone($value);
                     break;
                 case 12:
-                    $memberImport->setSpecialities($value);
+                    $memberImport->setCellular($value);
                     break;
                 case 13:
-                    $memberImport->setComment($value);
+                    $memberImport->setStudyLevel($value);
                     break;
                 case 14:
+                    $memberImport->setSpecialities($value);
+                    break;
+                case 15:
+                    $memberImport->setComment($value);
+                    break;
+                case 16:
                     $memberImport->setGroups($value);
                     break;
             }
@@ -165,5 +176,14 @@ class MemberImportManager implements ErrorHandlerInterface
         }
 
         return $controlFileOk;
+    }
+
+    private function controlDataCohesion()
+    {
+        $gendersList = $this->settingManager->getFormatedSettingValue('member.setting.gender');
+        $expertiseList = $this->settingManager->getFormatedSettingValue('member.setting.expertise');
+        $studyList = $this->settingManager->getFormatedSettingValue('member.setting.study');
+
+
     }
 }

@@ -138,6 +138,8 @@ app:
 
         credential:
             title: Droits paramètres application
+        validator:
+            in_array: Le "{{ string }}" n'est pas dans la liste {{ listName }}
     user:
         logout: Se déconnecter
         profile: Profil

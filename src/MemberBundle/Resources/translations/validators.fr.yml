@@ -1,0 +1,6 @@
+member:
+    import:
+        in_array:
+            gender: "\"%string%\" n'est pas dans la liste des genres"
+            study_level: "\"%string%\" n'est pas dans la liste des études"
+            specialities: "la spécialité \"%string%\" n'est pas dans la liste des spécialités"

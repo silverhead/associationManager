@@ -2,8 +2,8 @@
 
 namespace MemberBundle\Entity;
 
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraint as AppAssert;
 
 class MemberImport
 {
@@ -12,6 +12,7 @@ class MemberImport
     /**
      * @var string
      * @Assert\NotBlank()
+     * @AppAssert\AppSettingInArrayConstraint(listCode="member.setting.gender", message="member.import.in_array.gender")
      */
     private $gender;
 
@@ -73,26 +74,45 @@ class MemberImport
 
     /**
      * @var string
+     * @Assert\Length(max=255)
+     */
+    private $organization;
+
+    /**
+     * @var string
+     * @Assert\Length(max=255)
+     */
+    private $profession;
+
+    /**
+     * @var string
+     * @Assert\Length(max=30)
      */
     private $phone;
 
     /**
      * @var string
+     * @Assert\Length(max=30)
      */
     private $cellular;
 
     /**
      * @var string
+     * @Assert\Length(max=255)
+     * @AppAssert\AppSettingInArrayConstraint(listCode="member.setting.study", message="member.import.in_array.study_level")
      */
     private $studyLevel;
 
     /**
      * @var string
+     * @Assert\Length(max=255)
+     * @AppAssert\AppSettingInArrayConstraint(listCode="member.setting.expertise", multiple=true, message="member.import.in_array.specialities")
      */
     private $specialities;
 
     /**
      * @var string
+     * @Assert\Length(max=500)
      */
     private $comment;
 
@@ -119,12 +139,14 @@ class MemberImport
         'city' => 7,
         'zipCode' => 8,
         'address' => 9,
-        'phone' => 10,
-        'cellular' => 11,
-        'studyLevel' => 12,
-        'specialities' => 13,
-        'comment' => 14,
-        'groups' => 15
+        'organization' => 10,
+        'profession' => 11,
+        'phone' => 12,
+        'cellular' => 13,
+        'studyLevel' => 14,
+        'specialities' => 15,
+        'comment' => 16,
+        'groups' => 17
     );
 
     /**
@@ -294,6 +316,44 @@ class MemberImport
     public function setAddress(string $address): MemberImport
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrganization(): string
+    {
+        return $this->organization;
+    }
+
+    /**
+     * @param string $organization
+     * @return MemberImport
+     */
+    public function setOrganization(string $organization): MemberImport
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfession(): string
+    {
+        return $this->profession;
+    }
+
+    /**
+     * @param string $profession
+     * @return MemberImport
+     */
+    public function setProfession(string $profession): MemberImport
+    {
+        $this->profession = $profession;
 
         return $this;
     }

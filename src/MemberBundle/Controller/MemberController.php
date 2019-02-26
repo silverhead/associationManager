@@ -480,8 +480,9 @@ class MemberController extends Controller
             $model->getFile()->move($pathImport, $model->getFile()->getFilename());
             $pathFile = $pathImport.DIRECTORY_SEPARATOR.$model->getFile()->getFilename();
 
+            $settingManager = $this->get('app.manager.setting');
 
-            $memberImportManager = new MemberImportManager($translator, $this->get('validator'));
+            $memberImportManager = new MemberImportManager($translator, $this->get('validator'), $settingManager);
 
             $memberImports = array();
             if ($memberImportManager->import($pathFile)){
@@ -490,37 +491,13 @@ class MemberController extends Controller
             else{
                 $errorMessage = "";
 
-                dump($memberImportManager->getErrors());
-
                 foreach($memberImportManager->getErrors() as $error){
                     $errorMessage .= $errorMessage!=''?'<br>':'';
                     $errorMessage .= $error;
                 }
 
                 $this->addFlash('error', $errorMessage);
-
             }
-
-//            $validator = $this->get('validator');
-//
-//            dump($validator->validate($memberImports[0]));
-
-//            $members = array();
-//
-//            $fp = fopen($pathFile, 'r');
-//            while (($data = fgetcsv($fp, 1000, ";")) !== FALSE) {
-//                $num = count($data);
-//                for ($c = 0; $c < $num; $c++) {
-//                    $members = array(
-//                        $data[0],
-//                        $data[1],
-//                    );
-//                }
-//            }
-//
-//            fclose($fp);
-//
-//            dump($members);
         }
 
         $breadcrumbs = [
