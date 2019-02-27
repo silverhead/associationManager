@@ -135,6 +135,15 @@ member:
             deleteQuestionText: La suppression du statut est définitf !
             deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
             deleteSuccessText: Le statut %label% à bien été supprimé !
+    groups:
+        credential:
+            title: Adhérents (Groupes)
+        add:
+            title: Ajouter un groupe
+        list:
+            table:
+                label: Libellé
+                nbMembers: Nombre de membres
     subscription:
         title: Adhérents (Abonnements)
         endDate: "Date de fin :"

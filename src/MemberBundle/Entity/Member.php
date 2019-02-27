@@ -149,6 +149,12 @@ class Member extends User
     protected $haveNewFeeComingSoon;
 
     /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="MemberBundle\Entity\MemberGroup", mappedBy="members")
+     */
+    protected $memberGroups;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -684,5 +690,41 @@ class Member extends User
         $this->haveNewFeeComingSoon = $haveNewFeeComingSoon;
 
         return $this;
+    }
+
+    /**
+     * Add memberGroup.
+     *
+     * @param \MemberBundle\Entity\MemberGroup $memberGroup
+     *
+     * @return Member
+     */
+    public function addMemberGroup(\MemberBundle\Entity\MemberGroup $memberGroup)
+    {
+        $this->memberGroups[] = $memberGroup;
+
+        return $this;
+    }
+
+    /**
+     * Remove memberGroup.
+     *
+     * @param \MemberBundle\Entity\MemberGroup $memberGroup
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeMemberGroup(\MemberBundle\Entity\MemberGroup $memberGroup)
+    {
+        return $this->memberGroups->removeElement($memberGroup);
+    }
+
+    /**
+     * Get memberGroups.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMemberGroups()
+    {
+        return $this->memberGroups;
     }
 }

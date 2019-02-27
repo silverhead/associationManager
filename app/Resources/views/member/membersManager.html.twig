@@ -50,6 +50,9 @@
                         {% if is_granted('MEMBER_MEMBER_VIEW') %}
                             <li role="presentation" class="active"><a href="#members" data-toggle="tab">{{ 'member.manager.tabMembers'|trans }}</a></li>
                         {% endif %}
+                        {% if is_granted('MEMBER_GROUPS_VIEW') %}
+                            <li role="presentation"><a href="#groups" data-toggle="tab">{{ 'member.manager.tabGroups'|trans }}</a></li>
+                        {% endif %}
                         {% if is_granted('MEMBER_STATUS_VIEW') %}
                             <li role="presentation"><a href="#status" data-toggle="tab">{{ 'member.manager.tabStatus'|trans }}</a></li>
                         {% endif %}
@@ -67,11 +70,17 @@
                                 {#{{ render(controller('MemberBundle:Member:list', {'request': app.request, 'anchor': 'members'})) }}#}
                             </div>
                         {% endif %}
+                        {% if is_granted('MEMBER_GROUPS_VIEW') %}
+                            <div role="tabpanel" class="tab-pane fade" data-anchor="groups" id="groups">
+                                <div id="memberGroupsContainer" data-anchor="groups" data-page-parameter-name="pageTab5">
+                                    {{ groupsListTpl|raw }}
+                                </div>
+                            </div>
+                        {% endif %}
                         {% if is_granted('MEMBER_STATUS_VIEW') %}
                             <div role="tabpanel" class="tab-pane fade" data-anchor="status" id="status">
                                 <div id="memberStatusContainer" data-anchor="status" data-page-parameter-name="pageTab2">
                                     {{ statusListTpl|raw }}
-                                    {#{{ render(controller('MemberBundle:MemberStatus:list', {'request': app.request, 'anchor': 'status'})) }}#}
                                 </div>
                             </div>
                         {% endif %}

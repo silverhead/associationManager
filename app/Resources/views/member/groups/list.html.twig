@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-xs-12">
+        {% if is_granted('MEMBER_GROUPS_CREATE') %}
+            <a href="#" id="addGroup" class="btn bg-green waves-effect">{{ 'member.groups.add.title'|trans }}</a>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="body table-responsive">
+            <table id="membergroupsListTable" class="table table-striped dataTable">
+                <thead>
+                <tr>
+                    <th>{{ 'member.groups.list.table.label'|trans }}</th>
+                    <th>{{ 'member.groups.list.table.nbMembers'|trans }}</th>
+                    <th class="text-center" >{{ 'app.common.table.action'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for group in memberGroups %}
+                    <tr>
+                        <td>{{ group.label }}</td>
+                        <td>{{ group.nbMembers }}</td>
+                        <td class="text-center">
+                            {% if is_granted('MEMBER_GROUPS_VIEW') %}
+                                <a href="{{ path('member_view', {'id': member.id}) }}" class="btn btn-primary material-icons">remove_red_eye</a>
+                            {% endif %}
+                            {% if is_granted('MEMBER_GROUPS_EDIT') %}
+                                <a href="{{ path('member_edit', {'id': member.id}) }}" class="btn btn-warning material-icons">edit</a>
+                            {% endif %}
+                            {% if is_granted('MEMBER_GROUPS_DELETE') %}
+                            <a href="#" data-id="{{ group.id }}" class="btn btn-danger material-icons delMember">delete</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="9">{{ 'app.common.noData'|trans }}</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="pull-right">
+                {#{{ knp_pagination_render(memberGroups) }}#}
+            </div>
+        </div>
+    </div>
+</div>

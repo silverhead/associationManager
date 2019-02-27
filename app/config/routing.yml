@@ -1,3 +1,7 @@
+member_member_group:
+    resource: "@MemberBundle/Controller/MemberGroupController.php"
+    type:     annotation
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
