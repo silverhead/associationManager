@@ -48,7 +48,7 @@
                         swal(title, data.message, data.code);
                     },
                     'error': function(){
-                        swal(Translator.trans("app.common.errorTitle"), Translator.trans("app.common.errorUnknow"), "error");
+                        swal(Translator.trans("app.common.errorTitle"), Translator.trans("app.common.errorUnknown"), "error");
                     }
                 });
             });

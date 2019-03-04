@@ -17,7 +17,7 @@ function reloadPeriodicitiesList()
         remoteURL: Routing.generate('subscription_periodicity_list_part', {'anchor': $container.data('anchor')}),
         remoteErrorCallBack: swal(
             Translator.trans('app.common.errorTitle'),
-            Translator.trans('app.common.errorUnknow'),
+            Translator.trans('app.common.errorUnknown'),
             "error"
         )
     });

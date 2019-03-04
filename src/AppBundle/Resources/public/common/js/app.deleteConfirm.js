@@ -46,7 +46,7 @@
                             },
                             'error': function(){
                                 swal(Translator.trans('app.common.errorTitle'),
-                                    Translator.trans('app.common.errorUnknow'), "error");
+                                    Translator.trans('app.common.errorUnknown'), "error");
                             }
                         });
                     }
