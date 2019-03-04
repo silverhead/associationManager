@@ -18,7 +18,7 @@ function reloadUserGroupList(action){
         action: action,
         remoteErrorCallBack: swal(
             Translator.trans('app.common.errorTitle'),
-            Translator.trans('app.common.errorUnknow'),
+            Translator.trans('app.common.errorUnknown'),
             "error"
         )
     });

@@ -48,7 +48,7 @@ function reloadUserList(action, paginatorOrders, type){
         remoteErrorCallBack: function(){
         		swal(
 	            Translator.trans('app.common.errorTitle'),
-	            Translator.trans('app.common.errorUnknow'),
+	            Translator.trans('app.common.errorUnknown'),
 	            "error"
             );
         }

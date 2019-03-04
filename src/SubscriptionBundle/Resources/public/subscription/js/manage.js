@@ -45,7 +45,7 @@ function reloadSubscriptionsList()
         remoteURL: Routing.generate('subscription_subscription_list_part', {'anchor': $container.data('anchor')}),
         remoteErrorCallBack: swal(
             Translator.trans('app.common.errorTitle'),
-            Translator.trans('app.common.errorUnknow'),
+            Translator.trans('app.common.errorUnknown'),
             "error"
         )
     });
@@ -65,7 +65,7 @@ function reloadSubscriptionFeesList(data, type)
         remoteURL: Routing.generate('subscription_subscription_list_part', {'anchor': $container.data('anchor')}),
         remoteErrorCallBack: swal(
             Translator.trans('app.common.errorTitle'),
-            Translator.trans('app.common.errorUnknow'),
+            Translator.trans('app.common.errorUnknown'),
             "error"
         )
     });

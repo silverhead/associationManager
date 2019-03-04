@@ -43,7 +43,7 @@ $('#saveDashboardBundleBtn').on('click', function(){
             reloadDashBundlesList('edit');
         },
         'error': function(){
-            swal(Translator.trans("app.common.errorTitle"), Translator.trans("app.common.errorUnknow"), "error");
+            swal(Translator.trans("app.common.errorTitle"), Translator.trans("app.common.errorUnknown"), "error");
         }
     });
 });
@@ -71,7 +71,7 @@ function reloadDashBundlesList(action){
         remoteErrorCallBack: function(){
             swal(
                 Translator.trans('app.common.errorTitle'),
-                Translator.trans('app.common.errorUnknow'),
+                Translator.trans('app.common.errorUnknown'),
                 "error"
             );
         }
