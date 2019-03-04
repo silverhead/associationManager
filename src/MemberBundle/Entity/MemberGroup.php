@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class MemberGroup
  *
  * @ORM\Entity(repositoryClass="MemberBundle\Repository\MemberGroupRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class MemberGroup
 {
@@ -40,26 +41,20 @@ class MemberGroup
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     * @return MemberGroup
-     */
     public function setId(int $id): MemberGroup
     {
         $this->id = $id;
-
-        return $this;
     }
 
     /**
      * @return string
      */
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         return $this->label;
     }
@@ -78,7 +73,7 @@ class MemberGroup
     /**
      * @return int
      */
-    public function getNbMembers(): int
+    public function getNbMembers(): ?int
     {
         return $this->nbMembers;
     }
@@ -93,12 +88,15 @@ class MemberGroup
 
         return $this;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->members = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->nbMembers = $this->members->count();
     }
 
     /**
@@ -128,6 +126,17 @@ class MemberGroup
     }
 
     /**
+     * @param  $members
+     * @return MemberGroup
+     */
+    public function setMembers($members): MemberGroup
+    {
+        $this->members = $members;
+
+        return $this;
+    }
+
+    /**
      * Get members.
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -135,5 +144,14 @@ class MemberGroup
     public function getMembers()
     {
         return $this->members;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function countNbMembers()
+    {
+        $this->nbMembers = $this->members->count();
     }
 }

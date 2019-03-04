@@ -144,6 +144,14 @@ member:
             table:
                 label: Libellé
                 nbMembers: Nombre de membres
+        form:
+            label: Libellé
+            members: Adhérents liés au groupe
+            members_placeholder: Ajouter des adhérents au groupe
+        delete:
+            deleteQuestionText: Êtes-vous sûr de vouloir supprimer ce groupe ?
+            deleteErrorMissingText: Le groupe n'a pas été trouvé dans l'application !
+            deleteSuccessText: Le groupe "%group%" a bien été supprimé !
     subscription:
         title: Adhérents (Abonnements)
         endDate: "Date de fin :"

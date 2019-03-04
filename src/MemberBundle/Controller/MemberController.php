@@ -40,7 +40,7 @@ class MemberController extends Controller
 
         $memberListTpl = $this->memberlist($request, "");
         $statusListTpl = $this->get('member.controller.status')->listAction($request, "status");
-        $groupsListTpl = $this->get('member.controller.groups')->listAction($request, "groups");
+        $groupsListTpl = $this->get('member.controller.groups')->memberGroupList($request, "groups");
 
         $settingTpl = $this->get('member.controller.setting')->settingAction($request);
         $settingEmailTpl = $this->get('member.controller.setting')->emailSettingAction($request);

@@ -64,7 +64,7 @@ $(document).on('click', '#send_new_fee_coming_soon', function(){
         {
             swal(
                 Translator.trans('app.common.errorTitle'),
-                Translator.trans('app.common.errorUnknow'),
+                Translator.trans('app.common.errorUnknown'),
                 "error"
             );
         }
@@ -88,7 +88,7 @@ $(document).on('click', '#send_late_payment_member', function(){
         {
             swal(
                 Translator.trans('app.common.errorTitle'),
-                Translator.trans('app.common.errorUnknow'),
+                Translator.trans('app.common.errorUnknown'),
                 "error"
             );
         }
@@ -131,7 +131,7 @@ function reloadMemberList(action, paginatorData, type){
         remoteErrorCallBack: function(){
         		swal(
 	            Translator.trans('app.common.errorTitle'),
-	            Translator.trans('app.common.errorUnknow'),
+	            Translator.trans('app.common.errorUnknown'),
 	            "error"
             );
         }
