@@ -148,6 +148,8 @@ member:
             label: Libellé
             members: Adhérents liés au groupe
             members_placeholder: Ajouter des adhérents au groupe
+            success: Le groupe a été enregistré !
+            error: Erreur lors de l'enregistrement du groupe
         delete:
             deleteQuestionText: Êtes-vous sûr de vouloir supprimer ce groupe ?
             deleteErrorMissingText: Le groupe n'a pas été trouvé dans l'application !

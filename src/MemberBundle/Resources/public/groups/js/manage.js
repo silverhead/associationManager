@@ -1,9 +1,9 @@
-$('#addGroup').click(function(e){
+$(document).on('click', '.addGroup', function(e){
     e.preventDefault();
     displayMemberGroupEditModal(0);
 });
 
-$('.editGroup').click(function(e){
+$(document).on('click', '.editGroup', function(e){
 
     e.preventDefault();
 

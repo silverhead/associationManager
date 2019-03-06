@@ -31,15 +31,22 @@ class MemberGroupController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request,string $anchor = null)
     {
-        return new Response($this->memberGroupList($request));
+        return new Response($this->memberGroupList($request, $anchor));
     }
 
-    public function memberGroupList(Request $request)
+    public function memberGroupList(Request $request, $anchor)
     {
-        $em = $this->getDoctrine()->getManager();
-        $memberGroups = $em->getRepository('MemberBundle:MemberGroup')->findAll();
+        $memberGroupManager = $this->get('member.manager.group');
+
+        $memberGroups = $memberGroupManager->paginatedList(
+            $request->query->getInt('pageMemberGroup', 1),
+            5,
+            'pageMemberGroup',
+            $anchor,
+            $request->get('master_route', 'members_manager')
+        );
 
         return $this->renderView('member/groups/list.html.twig', array(
             'memberGroups' => $memberGroups,
@@ -96,7 +103,7 @@ class MemberGroupController extends Controller
 
         $data = array(
             'code' => 'error',
-            'message' => $translator->trans('member.group.form.error')
+            'message' => $translator->trans('member.groups.form.error')
         );
 
         $message = 'member.group.form.error';
@@ -110,7 +117,7 @@ class MemberGroupController extends Controller
 
             $data = array(
                 'code' => 'success',
-                'message' => $translator->trans('member.group.form.success')
+                'message' => $translator->trans('member.groups.form.success')
             );
         }
 

@@ -85,7 +85,9 @@ services:
     # MANAGER
     member.manager.member:
         class: MemberBundle\Manager\MemberMemberManager
-        #, subscriptionDateEnd: 'subscriptions.endDate'
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']
+    member.manager.group:
+        class: MemberBundle\Manager\MemberGroupManager
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']
     member.manager.status:
         class: MemberBundle\Manager\MemberStatusManager
