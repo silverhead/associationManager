@@ -42,7 +42,7 @@ class MemberGroupController extends Controller
 
         $memberGroups = $memberGroupManager->paginatedList(
             $request->query->getInt('pageMemberGroup', 1),
-            5,
+            10,
             'pageMemberGroup',
             $anchor,
             $request->get('master_route', 'members_manager')
@@ -60,10 +60,11 @@ class MemberGroupController extends Controller
      */
     public function editAction($id = null)
     {
-        $memberGroup = new MemberGroup();
+        $memberGroupManager = $this->get('member.manager.group');
+
+        $memberGroup = $memberGroupManager->getNewEntity();
         if ($id > 0){
-            $repo = $this->getDoctrine()->getRepository('MemberBundle:MemberGroup');
-            $memberGroup = $repo->find($id);
+            $memberGroup = $memberGroupManager->find($id);
         }
 
         $form = $this->createForm(MemberGroupFormType::class, $memberGroup);
@@ -89,13 +90,12 @@ class MemberGroupController extends Controller
 
         $this->denyAccessUnlessGranted('MEMBER_GROUPS_EDIT', null, $translator->trans('app.common.access_denied'));
 
-        $doctrine = $this->getDoctrine();
+        $memberGroupManager = $this->get('member.manager.group');
 
-        $repo = $this->getDoctrine()->getRepository('MemberBundle:MemberGroup');
-        $memberGroup = $repo->find($id);
+        $memberGroup = $memberGroupManager->find($id);
 
         if(null === $memberGroup){
-            $memberGroup = new MemberGroup();
+            $memberGroup = $memberGroupManager->getNewEntity();
         }
 
         $form = $this->createForm(MemberGroupFormType::class, $memberGroup);
@@ -106,19 +106,23 @@ class MemberGroupController extends Controller
             'message' => $translator->trans('member.groups.form.error')
         );
 
-        $message = 'member.group.form.error';
-
         if ($form->isSubmitted() && $form->isValid()){
             $memberGroup = $form->getData();
 
-            $em = $doctrine->getManager();
-            $em->persist($memberGroup);
-            $em->flush();
+            if ($memberGroupManager->save($memberGroup)){
+                $data = array(
+                    'code' => 'success',
+                    'message' => $translator->trans('member.groups.form.success')
+                );
+            }
+            else{
+                $messageError = join("<br />>", $memberGroupManager->getErrors());
 
-            $data = array(
-                'code' => 'success',
-                'message' => $translator->trans('member.groups.form.success')
-            );
+                $data = array(
+                    'code' => 'error',
+                    'message' => $translator->trans('member.groups.form.error') . ' : <br />'.$messageError
+                );
+            }
         }
 
         return new JsonResponse($data);
@@ -137,11 +141,9 @@ class MemberGroupController extends Controller
 
         $translator = $this->get('translator');
 
-        $doctrine = $this->getDoctrine();
+        $memberGroupManager = $this->get('member.manager.group');
 
-        $repo = $doctrine->getRepository('MemberBundle:MemberGroup');
-
-        $entity = $repo->find($id);
+        $entity = $memberGroupManager->find($id);
 
         if (null === $entity) {
             $array = [
@@ -156,10 +158,7 @@ class MemberGroupController extends Controller
             );
         }
 
-        try{
-            $doctrine->getManager()->remove($entity);
-            $doctrine->getManager()->flush();
-
+        if ($memberGroupManager->delete($entity)){
             $array = [
                 'code' => 'success',
                 'message' => $translator->trans(
@@ -168,13 +167,15 @@ class MemberGroupController extends Controller
                 ),
             ];
         }
-        catch (\Exception $ex){
+        else{
+            $messageError = join("<br />", $memberGroupManager->getErrors());
+
             $array = [
                 'code' => 'error',
                 'message' => $translator->trans(
                     'app.common.errorComming',
                     [
-                        '%error%' => '<br />'.$ex->getMessage(),
+                        '%error%' => '<br />'.$messageError,
                     ]
                 ),
             ];

@@ -94,6 +94,9 @@ function reloadMemberGroupList(action){
         masterRoute: 'members_manager',
         remoteURL: Routing.generate('member_groups_list_part', {'anchor': $container.data('anchor')}),
         action: action,
+        remoteSucessCallBack: function(){
+            $('[data-toggle="popover"]').popover();
+        },
         remoteErrorCallBack: swal(
             Translator.trans('app.common.errorTitle'),
             Translator.trans('app.common.errorUnknown'),
