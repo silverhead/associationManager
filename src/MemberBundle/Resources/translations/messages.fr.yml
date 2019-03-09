@@ -139,6 +139,25 @@ member:
             deleteQuestionText: La suppression du statut est définitf !
             deleteErrorMissingText: Le statut que vous voulez suprpimer n'a pas été trouvé !
             deleteSuccessText: Le statut %label% à bien été supprimé !
+    groups:
+        credential:
+            title: Adhérents (Groupes)
+        add:
+            title: Ajouter un groupe
+        list:
+            table:
+                label: Libellé
+                nbMembers: Nombre de membres
+        form:
+            label: Libellé
+            members: Adhérents liés au groupe
+            members_placeholder: Ajouter des adhérents au groupe
+            success: Le groupe a été enregistré !
+            error: Erreur lors de l'enregistrement du groupe
+        delete:
+            deleteQuestionText: Êtes-vous sûr de vouloir supprimer ce groupe ?
+            deleteErrorMissingText: Le groupe n'a pas été trouvé dans l'application !
+            deleteSuccessText: Le groupe "%group%" a bien été supprimé !
     subscription:
         title: Adhérents (Abonnements)
         endDate: "Date de fin :"

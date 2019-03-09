@@ -43,6 +43,8 @@ class MemberController extends Controller
 
         $memberListTpl = $this->memberlist($request, "");
         $statusListTpl = $this->get('member.controller.status')->listAction($request, "status");
+        $groupsListTpl = $this->get('member.controller.groups')->memberGroupList($request, "groups");
+
         $settingTpl = $this->get('member.controller.setting')->settingAction($request);
         $settingEmailTpl = $this->get('member.controller.setting')->emailSettingAction($request);
 
@@ -52,6 +54,7 @@ class MemberController extends Controller
             'nbTotalActiveMembers' => $memberManager->getMemberNb(true),
             'memberListTpl' => $memberListTpl,
             'statusListTpl' => $statusListTpl,
+            'groupsListTpl' => $groupsListTpl,
             'settingTpl' => $settingTpl,
             'settingEmailTpl' => $settingEmailTpl
         ));

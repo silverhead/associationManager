@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-md-12">
+        {{ form_row(form.label, {'label': 'member.groups.form.label'}) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        {{ form_row(form.members, {'label': 'member.groups.form.members', 'attr': {'title': 'member.groups.form.members_placeholder'|trans, 'class': 'form-control selectpicker', 'data-live-search':'true'}}) }}
+    </div>
+</div>
+{{ form_rest(form) }}

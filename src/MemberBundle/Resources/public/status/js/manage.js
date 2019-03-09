@@ -33,7 +33,6 @@ $(document).on('click', '.editStatus', function(e){
 
 $(document).on('click', '.delStatus', function(e) {
     e.preventDefault();
-    alert('test');
     $(this).deleteConfirm({
         'text': Translator.trans("member.status.delete.deleteQuestionText"),
         'route': 'member_status_delete',
@@ -51,7 +50,7 @@ function reloadMemberStatusList(action){
         action: action,
         remoteErrorCallBack: swal(
             Translator.trans('app.common.errorTitle'),
-            Translator.trans('app.common.errorUnknow'),
+            Translator.trans('app.common.errorUnknown'),
             "error"
         )
     });
