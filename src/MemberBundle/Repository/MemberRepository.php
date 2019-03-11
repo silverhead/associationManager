@@ -43,4 +43,17 @@ class MemberRepository extends UserRepository implements PaginatorRepositoryInte
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function countUniqueEmail(string $email, string $firstName, string $lastname)
+    {
+        $qb = $this->createQueryBuilder("m")->select("COUNT(m)");
+
+        $qb->where("m.email = :email")->setParameter("email", $email)
+            ->andWhere("(m.firstName <> :firstname or m.lastName <> :lastname)")
+            ->setParameter("firstname", $firstName)
+            ->setParameter("lastname", $lastname)
+        ;
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

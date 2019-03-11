@@ -4,3 +4,5 @@ member:
             gender: "\"%string%\" n'est pas dans la liste des genres"
             study_level: "\"%string%\" n'est pas dans la liste des études"
             specialities: "la spécialité \"%string%\" n'est pas dans la liste des spécialités"
+        group_exist: "Le groupe \"%string%\" n'a pas été trouvé !"
+        unique_email: "L'e-mail \"%string%\" existe déjà pour un autre membre !"

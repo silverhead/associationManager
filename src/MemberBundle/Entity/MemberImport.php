@@ -4,6 +4,7 @@ namespace MemberBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraint as AppAssert;
+use MemberBundle\Validator\Constraint as MemberAssert;
 
 class MemberImport
 {
@@ -35,6 +36,7 @@ class MemberImport
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
      * @Assert\Email()
+     * @MemberAssert\UniqueEmailConstraint(message="member.import.unique_email")
      */
     private $email;
 
@@ -118,6 +120,7 @@ class MemberImport
 
     /**
      * @var string
+     * @MemberAssert\GroupExistConstraint(message="member.import.group_exist")
      */
     private $groups;
 
