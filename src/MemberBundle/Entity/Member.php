@@ -150,7 +150,7 @@ class Member extends User
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="MemberBundle\Entity\MemberGroup", mappedBy="members")
+     * @ORM\ManyToMany(targetEntity="MemberBundle\Entity\MemberGroup", mappedBy="members", cascade={"persist", "remove"})
      */
     protected $memberGroups;
 
@@ -716,6 +716,18 @@ class Member extends User
     public function removeMemberGroup(\MemberBundle\Entity\MemberGroup $memberGroup)
     {
         return $this->memberGroups->removeElement($memberGroup);
+    }
+
+    /**
+     * Get memberGroups.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function setMemberGroups(\Doctrine\Common\Collections\Collection $memberGroups): Member
+    {
+        return $this->memberGroups = $memberGroups;
+
+        return $this;
     }
 
     /**

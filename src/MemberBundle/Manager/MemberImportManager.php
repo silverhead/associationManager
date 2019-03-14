@@ -5,8 +5,12 @@ namespace MemberBundle\Manager;
 use AppBundle\Handler\ErrorHandlerInterface;
 use AppBundle\Handler\ErrorHandlerTrait;
 use AppBundle\Manager\SettingManager;
+use Doctrine\ORM\EntityManager;
 use MemberBundle\Entity\MemberImport;
 
+use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -30,13 +34,23 @@ class MemberImportManager implements ErrorHandlerInterface
      * @var SettingManager
      */
     private $settingManager;
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
 
 
-    public function __construct(TranslatorInterface $translator, ValidatorInterface $validator, SettingManager $settingManager)
+    public function __construct(EntityManager $entityManager ,TranslatorInterface $translator, ValidatorInterface $validator, SettingManager $settingManager, UserPasswordEncoderInterface $encoder )
     {
         $this->translator = $translator;
         $this->validator = $validator;
         $this->settingManager = $settingManager;
+        $this->entityManager = $entityManager;
+        $this->encoder = $encoder;
     }
 
     public function import(string $pathFile): bool
@@ -49,6 +63,10 @@ class MemberImportManager implements ErrorHandlerInterface
 
         if (!$this->controlDataFile()){
             $importOK = false;
+        }
+
+        if ($importOK){
+            $this->recordData();
         }
 
         return $importOK;
@@ -88,7 +106,7 @@ class MemberImportManager implements ErrorHandlerInterface
         return $this->data;
     }
 
-    private function getDataLine($dataLine, $numLine)
+    private function getDataLine($dataLine, $numLine): MemberImport
     {
         $memberImport = new MemberImport();
 
@@ -178,12 +196,65 @@ class MemberImportManager implements ErrorHandlerInterface
         return $controlFileOk;
     }
 
-    private function controlDataCohesion()
+    private function recordData()
     {
-        $gendersList = $this->settingManager->getFormatedSettingValue('member.setting.gender');
-        $expertiseList = $this->settingManager->getFormatedSettingValue('member.setting.expertise');
-        $studyList = $this->settingManager->getFormatedSettingValue('member.setting.study');
+        try{
+            $repo = $this->entityManager->getRepository("MemberBundle:Member");
+            $repoMemberGroup = $this->entityManager->getRepository("MemberBundle:MemberGroup");
 
+            foreach ($this->data as $importDataLine){
+//                $importDataLine = new MemberImport();
+
+                $entity = $repo->findOneBy(array(
+                    'email' => $importDataLine->getEmail()
+                ));
+
+                $importDataLine->setState(MemberImport::STATE_UPDATED);
+                if (null === $entity){
+                    $importDataLine->setState(MemberImport::STATE_CREATED);
+
+                    $login = substr($entity->getFirstName(), 0,1);// first letter of first name
+                    $login .= preg_replace("/_- '/","",$entity->getLastName());// first letter of last name
+                    $login = strtolower(trim($login));
+                    $entity->setUsername($login);
+
+                    //unique key for generate password
+                    $entity->setSalt(uniqid());
+
+                    $plainPassword = preg_replace("/_- '/","", trim($importDataLine->getCity()));
+                    $plainPassword .= $importDataLine->getZipCode();
+                    $entity->setPassword($this->encoder->encodePassword(strtolower($plainPassword)));
+                }
+
+                $entity->setFirstName($importDataLine->getFirstName());
+                $entity->setLastName($importDataLine->getLastName());
+                $entity->setEmail($importDataLine->getEmail());
+                $entity->setBirthday($importDataLine->getBirthday());
+                $entity->setCountry($importDataLine->getCountryCode());
+                $entity->setCity($importDataLine->getCity());
+                $entity->setZipcode($importDataLine->getZipCode());
+                $entity->setAddress($importDataLine->getAddress());
+
+                $entity->setOrganization($importDataLine->getOrganization());
+                $entity->setProfession($importDataLine->getProfession());
+                $entity->setPhone($importDataLine->getPhone());
+                $entity->setCellular($importDataLine->getCellular());
+                $entity->setStudy($importDataLine->getStudyLevel());
+                $entity->setExpertise( explode(",", $importDataLine->getSpecialities()));
+                $entity->setComment( $importDataLine->getComment());
+
+                $memberGroupsLabels = explode($importDataLine->getGroups());
+                $memberGroups = $repoMemberGroup->findBy(array('label' => $memberGroupsLabels));
+                $entity->setMemberGroups($memberGroups);
+
+                $this->entityManager->persist($entity);
+                $this->entityManager->flush();
+            }
+        }
+        catch(\Exception $ex)
+        {
+            $this->addError($ex->getMessage());
+        }
 
     }
 }

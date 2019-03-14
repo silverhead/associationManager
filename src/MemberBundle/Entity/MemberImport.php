@@ -2,6 +2,7 @@
 
 namespace MemberBundle\Entity;
 
+use mysql_xdevapi\Exception;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraint as AppAssert;
 use MemberBundle\Validator\Constraint as MemberAssert;
@@ -9,6 +10,11 @@ use MemberBundle\Validator\Constraint as MemberAssert;
 class MemberImport
 {
     const MIN_COLUMN_LENGTH = 9;
+
+    const STATE_IGNORED = 0;
+    const STATE_CREATED = 1;
+    const STATE_UPDATED = 2;
+
 
     /**
      * @var string
@@ -128,6 +134,11 @@ class MemberImport
      * @var int
      */
     private $numLine;
+
+    /**
+     * @var int
+     */
+    private $state;
 
     /**
      * @var array
@@ -495,17 +506,30 @@ class MemberImport
     }
 
     /**
-     * @return array
+     * @return int
      */
-    public function getNumColumnByProperty(): array
+    public function getState(): int
     {
-        return $this->numColumnByProperty;
-
-        return $numColumnByProperty;
+        return $this->state;
     }
 
     /**
-     * @return array
+     * @param int $state
+     * @return MemberImport
+     */
+    public function setState(int $state): MemberImport
+    {
+        if (!in_array($state, array(self::STATE_CREATED, self::STATE_UPDATED, self::STATE_IGNORED))){
+            throw new \Exception("The state parameter can be only constants of this class STATE_CREATED, STATE_UPDATED or STATE_IGNORED!");
+        }
+
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return int
      */
     public function getNumColumnOfProperty(string $propertyName): string
     {

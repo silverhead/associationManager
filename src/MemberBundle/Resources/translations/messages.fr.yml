@@ -17,6 +17,19 @@ member:
                 subscription: Abonnement
                 subscriptionDateEnd: Fin de l'abo.
                 active: Actif
+                country: Pays
+                numLine: Ligne N°
+                gender: Genre
+                email: E-mail
+                city: Ville
+                address: Adresse
+                zipCode: CP
+                organization: Organisation
+                profession: Profession
+                studyLevel: Niveau d'étude
+                specialities: Spécialités
+                comment: Commentaire
+                groups: Groupes
             action:
                 send_email: Envoyer un e-mail
                 send_email_new_fee_coming_soon: Envoyer un e-mail de notification d'échéance de cotisation
