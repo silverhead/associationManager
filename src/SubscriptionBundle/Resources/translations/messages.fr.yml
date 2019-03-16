@@ -17,12 +17,13 @@ subscription:
                 duration: Durée (jour)
                 status: Statut
         edit:
+            code: Code d'importation
             label: Libellé
             cost: Coût
             duration: Durée
             periodicities: Rythme de paiement possible
             status: Statut
-            saveSucessText: Abonnement enregistré avec succès !
+            saveSuccessText: Abonnement enregistré avec succès !
         delete:
             deleteErrorMissingText: L'abonnement que vous voulez suprpimer n'a pas été trouvé !
             deleteSuccessText: L'abonnement %label% à bien été supprimé !
