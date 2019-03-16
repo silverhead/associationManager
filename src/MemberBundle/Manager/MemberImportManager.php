@@ -6,6 +6,7 @@ use AppBundle\Handler\ErrorHandlerInterface;
 use AppBundle\Handler\ErrorHandlerTrait;
 use AppBundle\Manager\SettingManager;
 use Doctrine\ORM\EntityManager;
+use MemberBundle\Entity\Member;
 use MemberBundle\Entity\MemberImport;
 
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
@@ -113,6 +114,9 @@ class MemberImportManager implements ErrorHandlerInterface
         $memberImport->setNumLine($numLine);
 
         foreach ($dataLine as $i => $value) {
+
+            $value = trim($value);
+
             switch ($i)
             {
                 case 0:
@@ -203,19 +207,21 @@ class MemberImportManager implements ErrorHandlerInterface
             $repoMemberGroup = $this->entityManager->getRepository("MemberBundle:MemberGroup");
 
             foreach ($this->data as $importDataLine){
-//                $importDataLine = new MemberImport();
-
                 $entity = $repo->findOneBy(array(
                     'email' => $importDataLine->getEmail()
                 ));
 
                 $importDataLine->setState(MemberImport::STATE_UPDATED);
+
                 if (null === $entity){
                     $importDataLine->setState(MemberImport::STATE_CREATED);
 
-                    $login = substr($entity->getFirstName(), 0,1);// first letter of first name
-                    $login .= preg_replace("/_- '/","",$entity->getLastName());// first letter of last name
+                    $login = substr($importDataLine->getFirstName(), 0,1);// first letter of first name
+                    $login .= preg_replace("/_- '/","",$importDataLine->getLastName());// first letter of last name
                     $login = strtolower(trim($login));
+
+                    $entity = new Member();
+
                     $entity->setUsername($login);
 
                     //unique key for generate password
@@ -223,13 +229,20 @@ class MemberImportManager implements ErrorHandlerInterface
 
                     $plainPassword = preg_replace("/_- '/","", trim($importDataLine->getCity()));
                     $plainPassword .= $importDataLine->getZipCode();
-                    $entity->setPassword($this->encoder->encodePassword(strtolower($plainPassword)));
-                }
+                    $entity->setPassword($this->encoder->encodePassword($entity, strtolower($plainPassword)));
 
+                    $entity->setCreateAt(new \DateTime());
+                }
+                $entity->setUpdatedAt(new \DateTime());
+
+                $entity->setGender($importDataLine->getGender());
                 $entity->setFirstName($importDataLine->getFirstName());
                 $entity->setLastName($importDataLine->getLastName());
                 $entity->setEmail($importDataLine->getEmail());
-                $entity->setBirthday($importDataLine->getBirthday());
+
+                $birthday = \DateTime::createFromFormat('Y-m-d', $importDataLine->getBirthday());
+                $entity->setBirthday($birthday);
+
                 $entity->setCountry($importDataLine->getCountryCode());
                 $entity->setCity($importDataLine->getCity());
                 $entity->setZipcode($importDataLine->getZipCode());
@@ -241,11 +254,14 @@ class MemberImportManager implements ErrorHandlerInterface
                 $entity->setCellular($importDataLine->getCellular());
                 $entity->setStudy($importDataLine->getStudyLevel());
                 $entity->setExpertise( explode(",", $importDataLine->getSpecialities()));
+
                 $entity->setComment( $importDataLine->getComment());
 
-                $memberGroupsLabels = explode($importDataLine->getGroups());
+                $memberGroupsLabels = explode(",", $importDataLine->getGroups());
                 $memberGroups = $repoMemberGroup->findBy(array('label' => $memberGroupsLabels));
-                $entity->setMemberGroups($memberGroups);
+                if (count($memberGroups) > 0 ){
+                    $entity->setMemberGroups($memberGroups);
+                }
 
                 $this->entityManager->persist($entity);
                 $this->entityManager->flush();

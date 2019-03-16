@@ -26,6 +26,7 @@ class MemberImportController  extends Controller
 
         $form->handleRequest($request);
 
+        $memberImports = array();
         if ($form->isSubmitted() && $form->isValid()){
             $model = $form->getData();
 
@@ -42,11 +43,11 @@ class MemberImportController  extends Controller
                 $this->get('security.password_encoder')
             );
 
-            $memberImports = array();
             if ($memberImportManager->import($pathFile)){
                 $memberImports = $memberImportManager->getData();
             }
-            else{
+
+            if (count($memberImportManager->getErrors()) > 0 ){
                 $errorMessage = "";
 
                 foreach($memberImportManager->getErrors() as $error){

@@ -48,7 +48,7 @@
                                 </thead>
                                 <tbody>
                                 {% for memberImport in memberImports %}
-                                    <tr class="{% if memberImport.state==constant('MemberBundle\\Entity\\MemberImport::STATE_CREATED') %}bg-success{% elseif memberImport.state==constant('MemberBundle\\Entity\\MemberImport::STATE_UPDATED') %}bg-warning{% endif %}">
+                                    <tr class="{% if memberImport.state==constant('MemberBundle\\Entity\\MemberImport::STATE_CREATED') %}bg-success{% elseif memberImport.state==constant('MemberBundle\\Entity\\MemberImport::STATE_UPDATED') %}bg-warning{% else %}bg-danger{% endif %}">
                                         <td>{{ memberImport.numLine }}</td>
                                         <td>{{ memberImport.gender }}</td>
                                         <td>{{ memberImport.lastName }}</td>

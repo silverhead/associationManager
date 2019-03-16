@@ -163,10 +163,15 @@ class MemberImport
         'groups' => 17
     );
 
+    public function __construct()
+    {
+        $this->state = self::STATE_IGNORED;
+    }
+
     /**
      * @return string
      */
-    public function getGender(): string
+    public function getGender(): ?string
     {
         return $this->gender;
     }
@@ -185,7 +190,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
@@ -204,7 +209,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
@@ -223,7 +228,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -242,7 +247,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getBirthday(): string
+    public function getBirthday(): ?string
     {
         return $this->birthday;
     }
@@ -261,7 +266,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getCountryCode(): string
+    public function getCountryCode(): ?string
     {
         return $this->countryCode;
     }
@@ -280,7 +285,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -299,7 +304,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getZipCode(): string
+    public function getZipCode(): ?string
     {
         return $this->zipCode;
     }
@@ -318,7 +323,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getAddress(): string
+    public function getAddress(): ?string
     {
         return $this->address;
     }
@@ -337,7 +342,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getOrganization(): string
+    public function getOrganization(): ?string
     {
         return $this->organization;
     }
@@ -356,7 +361,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getProfession(): string
+    public function getProfession(): ?string
     {
         return $this->profession;
     }
@@ -375,7 +380,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
@@ -394,7 +399,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getCellular(): string
+    public function getCellular(): ?string
     {
         return $this->cellular;
     }
@@ -413,7 +418,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getStudyLevel(): string
+    public function getStudyLevel(): ?string
     {
         return $this->studyLevel;
     }
@@ -432,7 +437,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getSpecialities(): string
+    public function getSpecialities(): ?string
     {
         return $this->specialities;
     }
@@ -451,7 +456,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getComment(): string
+    public function getComment(): ?string
     {
         return $this->comment;
     }
@@ -470,7 +475,7 @@ class MemberImport
     /**
      * @return string
      */
-    public function getGroups(): string
+    public function getGroups(): ?string
     {
         return $this->groups;
     }
@@ -489,7 +494,7 @@ class MemberImport
     /**
      * @return int
      */
-    public function getNumLine(): int
+    public function getNumLine(): ?int
     {
         return $this->numLine;
     }
@@ -508,7 +513,7 @@ class MemberImport
     /**
      * @return int
      */
-    public function getState(): int
+    public function getState(): ?int
     {
         return $this->state;
     }

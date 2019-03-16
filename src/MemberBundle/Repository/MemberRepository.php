@@ -49,7 +49,7 @@ class MemberRepository extends UserRepository implements PaginatorRepositoryInte
         $qb = $this->createQueryBuilder("m")->select("COUNT(m)");
 
         $qb->where("m.email = :email")->setParameter("email", $email)
-            ->andWhere("(m.firstName <> :firstname or m.lastName <> :lastname)")
+            ->andWhere("( UPPER(m.firstName) <> UPPER(:firstname) or UPPER(m.lastName) <> UPPER(:lastname))")
             ->setParameter("firstname", $firstName)
             ->setParameter("lastname", $lastname)
         ;
