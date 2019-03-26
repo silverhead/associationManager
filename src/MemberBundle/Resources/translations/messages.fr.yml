@@ -17,6 +17,19 @@ member:
                 subscription: Abonnement
                 subscriptionDateEnd: Fin de l'abo.
                 active: Actif
+                country: Pays
+                numLine: Ligne N°
+                gender: Genre
+                email: E-mail
+                city: Ville
+                address: Adresse
+                zipCode: CP
+                organization: Organisation
+                profession: Profession
+                studyLevel: Niveau d'étude
+                specialities: Spécialités
+                comment: Commentaire
+                groups: Groupes
             action:
                 send_email: Envoyer un e-mail
                 send_email_new_fee_coming_soon: Envoyer un e-mail de notification d'échéance de cotisation
@@ -116,6 +129,10 @@ member:
                     end_date: Date de fin
                     total_cost: Montant total
                 saveSuccessText: Les configurations e-mails ont été enregistrées avec succès !
+        import:
+            title: Importation d'adhérents
+            importBtn: Importer
+            error: "Erreur à la ligne  %numLine%, colonne %numColumn% : %message%"
     security:
         credential:
             setting: Edition paramètres Adhérents

@@ -12,4 +12,14 @@ class MemberGroupRepository extends EntityRepository implements PaginatorReposit
         return $this->createQueryBuilder("mg");
     }
 
+    public function countByLabels(array $labels)
+    {
+        $qb = $this->createQueryBuilder("mg")->select("COUNT(mg)");
+
+        foreach ($labels as $label) {
+            $qb->orWhere("mg.label = :label")->setParameter("label", $label);
+        }
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

@@ -1,0 +1,61 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/setting/email/js/emailSetting.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+            {
+                'href': path('dashboard'),
+                'title': 'app.dashboard.callback'|trans,
+                'label': 'app.dashboard.title'|trans
+            },
+            {
+                'label': 'app.setting.email.title'|trans
+            }
+        ] } %}
+        <h2 class="col-xs-12">
+            {{ 'app.setting.email.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(form, {'attr': { 'action': path('app_email_setting_save') }}) }}
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ form_row(form.emailType) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ form_row(form.subject) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ form_row(form.body) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {% include 'form/submitBtnSave.html.twig' %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

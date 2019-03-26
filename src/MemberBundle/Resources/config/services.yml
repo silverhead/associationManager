@@ -138,3 +138,14 @@ services:
     member.controller.setting:
         class: MemberBundle\Controller\MemberSettingController
         arguments: ['@service_container']
+    # Validator
+    member.validator.unique_email:
+        class: MemberBundle\Validator\UniqueEmailValidator
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - {name: validator.constraint_validator, alias: member.validator.import.unique_email}
+    member.validator.group_exist:
+        class: MemberBundle\Validator\GroupExistValidator
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - {name: validator.constraint_validator, alias: member.validator.import.group_exist}
