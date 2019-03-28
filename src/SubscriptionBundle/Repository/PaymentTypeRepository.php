@@ -12,4 +12,11 @@ class PaymentTypeRepository extends EntityRepository implements PaginatorReposit
         return $this->createQueryBuilder("p");
     }
 
+    public function countByCode(string $code): int
+    {
+        $qb = $this->createQueryBuilder("p")->select("COUNT(p)");
+        $qb->orWhere("p.code = :code")->setParameter("code", $code);
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
 }

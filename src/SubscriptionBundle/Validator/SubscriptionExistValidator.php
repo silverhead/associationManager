@@ -1,17 +1,13 @@
 <?php
 
-namespace MemberBundle\Validator;
+namespace SubscriptionBundle\Validator;
 
-use MemberBundle\Entity\MemberImport;
-use MemberBundle\Validator\Constraint\UniqueEmailConstraint;
+use SubscriptionBundle\Validator\constraint\SubscriptionExistConstraint;
 use Doctrine\ORM\EntityManager;
-use MemberBundle\Entity\Member;
-use MemberBundle\Validator\Entity\IsUniqueEmailEntity;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class UniqueEmailValidator extends ConstraintValidator
+class SubscriptionExistValidator extends ConstraintValidator
 {
     /**
      * @var EntityManager
@@ -25,8 +21,8 @@ class UniqueEmailValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint): bool
     {
-        if (!$constraint instanceof UniqueEmailConstraint){
-            throw new UnexpectedTypeException($constraint, UniqueEmailConstraint::class);
+        if (!$constraint instanceof SubscriptionExistConstraint){
+            throw new UnexpectedTypeException($constraint, SubscriptionExistConstraint::class);
         }
 
         // null or empty is managed by another constraint if necessary!
@@ -39,15 +35,9 @@ class UniqueEmailValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        $entity = $this->context->getRoot();
+        $count = $this->entityManager->getRepository("SubscriptionBundle:Subscription")->countByCode($value);
 
-        if (!$entity instanceof IsUniqueEmailEntity){
-            throw new UnexpectedTypeException($entity, MemberImport::class);
-        }
-
-        $countUniqueEmail = $this->entityManager->getRepository("MemberBundle:Member")->countUniqueEmail($value, $entity->getFirstName(), $entity->getLastName());
-
-        if ($countUniqueEmail > 0){
+        if (0 === $count){
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%string%', $value)
                 ->addViolation();
@@ -55,5 +45,4 @@ class UniqueEmailValidator extends ConstraintValidator
 
         return true;
     }
-
 }

@@ -56,4 +56,12 @@ class SubscriptionRepository extends EntityRepository implements PaginatorReposi
             ->getSingleScalarResult()
             ;
     }
+
+    public function countByCode(string $code): int
+    {
+        $qb = $this->createQueryBuilder("s")->select("COUNT(s)");
+        $qb->orWhere("s.code = :code")->setParameter("code", $code);
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
 }

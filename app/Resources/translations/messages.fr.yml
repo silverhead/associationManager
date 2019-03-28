@@ -41,6 +41,9 @@ app:
             disabled: Non actif
         table:
             action: Action
+        import:
+            notEnoughColumns: Le nombre de colonne obligatoire est manquant, %nbColumn% colonnes sont requis.
+            lineError: "Erreur à la ligne  %numLine%, colonne %numColumn% : %message%"
     security:
         login:
             title: Page de connection

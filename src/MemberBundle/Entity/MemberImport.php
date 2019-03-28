@@ -2,12 +2,12 @@
 
 namespace MemberBundle\Entity;
 
-use mysql_xdevapi\Exception;
+use MemberBundle\Validator\Entity\IsUniqueEmailEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraint as AppAssert;
 use MemberBundle\Validator\Constraint as MemberAssert;
 
-class MemberImport
+class MemberImport implements IsUniqueEmailEntity
 {
     const MIN_COLUMN_LENGTH = 9;
 
@@ -536,7 +536,7 @@ class MemberImport
     /**
      * @return int
      */
-    public function getNumColumnOfProperty(string $propertyName): string
+    public function getNumColumnByProperty(string $propertyName): string
     {
         if (!isset($this->numColumnByProperty[$propertyName])){
             throw new \Exception('Not number found for the propertyName "'.$propertyName.'"');

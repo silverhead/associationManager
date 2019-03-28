@@ -28,8 +28,26 @@ subscription:
             deleteErrorMissingText: L'abonnement que vous voulez suprpimer n'a pas été trouvé !
             deleteSuccessText: L'abonnement %label% à bien été supprimé !
             deleteQuestionText: La suppression de l'abonnement de paiement est définitf !
+    fee:
+        import:
+            btn: Importer des cotisations
+            launchBtn: Importer
+            title: Importation des cotisations
+            table:
+                numLine: N° ligne
+                lastName: Nom
+                firstName: Prénom
+                email: E-mail
+                subscriptionCode: Code abonnement
+                amount: Montant
+                startDate: Date de début
+                endDate: Date de fin
+                paymentCode: Code payement
+                paymentDate: Date de payement
+                comment: Remarque
         credential:
             title: Droits gestion des abonnements
+
     periodicity:
         add: Ajouter une périodicité de paiement
         edit:

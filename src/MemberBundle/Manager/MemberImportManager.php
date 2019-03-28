@@ -2,112 +2,48 @@
 
 namespace MemberBundle\Manager;
 
-use AppBundle\Handler\ErrorHandlerInterface;
-use AppBundle\Handler\ErrorHandlerTrait;
+use AppBundle\Manager\ImportManagerBase;
 use AppBundle\Manager\SettingManager;
 use Doctrine\ORM\EntityManager;
 use MemberBundle\Entity\Member;
 use MemberBundle\Entity\MemberImport;
 
-use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class MemberImportManager implements ErrorHandlerInterface
+class MemberImportManager extends ImportManagerBase
 {
-    use ErrorHandlerTrait;
-
-    /**
-     * @var array
-     */
-    private $data = array();
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
     /**
      * @var SettingManager
      */
     private $settingManager;
+
     /**
      * @var EntityManager
      */
     private $entityManager;
+
     /**
      * @var UserPasswordEncoderInterface
      */
     private $encoder;
 
-
     public function __construct(EntityManager $entityManager ,TranslatorInterface $translator, ValidatorInterface $validator, SettingManager $settingManager, UserPasswordEncoderInterface $encoder )
     {
-        $this->translator = $translator;
-        $this->validator = $validator;
+        parent::__construct($translator, $validator);
+
         $this->settingManager = $settingManager;
         $this->entityManager = $entityManager;
         $this->encoder = $encoder;
     }
 
-    public function import(string $pathFile): bool
+    protected function getMinColumnLength(): int
     {
-        $importOK = true;
-
-        if (!$this->readFile($pathFile)){
-            $importOK = false;
-        }
-
-        if (!$this->controlDataFile()){
-            $importOK = false;
-        }
-
-        if ($importOK){
-            $this->recordData();
-        }
-
-        return $importOK;
+        return MemberImport::MIN_COLUMN_LENGTH;
     }
 
-    private function readFile(string $pathFile): bool
-    {
-        $readingOk = true;
-
-        try{
-            $fp = fopen($pathFile, 'r');
-            $numLine = 1;
-            while (($data = fgetcsv($fp, 10000, ";")) !== FALSE) {
-                $num = count($data);
-
-                if ($num < MemberImport::MIN_COLUMN_LENGTH){
-                    $this->addError($this->translator->trans('member.member.import.error.notEnoughColumns', array('%numLine%' => $numLine))) ;
-                    $readingOk = false;
-                    continue;
-                }
-
-                $this->data[] = $this->getDataLine($data, $numLine);
-
-                $numLine++;
-            }
-            fclose($fp);
-        }
-        catch (\Exception $e){
-            $this->addError($e->getMessage()) ;
-        }
-
-        return $readingOk;
-    }
-
-    public function getData(): array
-    {
-        return $this->data;
-    }
-
-    private function getDataLine($dataLine, $numLine): MemberImport
+    protected function getDataLine(array $dataLine, int $numLine): MemberImport
     {
         $memberImport = new MemberImport();
 
@@ -174,33 +110,9 @@ class MemberImportManager implements ErrorHandlerInterface
         }
 
         return $memberImport;
-
     }
 
-    private function controlDataFile(): bool
-    {
-        $controlFileOk = true;
-
-        foreach ($this->data as $importDataLine){
-
-            $errors = $this->validator->validate($importDataLine);
-
-            foreach($errors as $error){
-                $this->addError($this->translator->trans(
-                    'member.member.import.error', [
-                    '%numLine%' => $importDataLine->getNumLine(),
-                    '%numColumn%' => $importDataLine->getNumColumnOfProperty($error->getPropertyPath()),
-                    '%message%' => $error->getMessage()
-                ]));
-
-                $controlFileOk = false;
-            }
-        }
-
-        return $controlFileOk;
-    }
-
-    private function recordData()
+    protected function recordData()
     {
         try{
             $repo = $this->entityManager->getRepository("MemberBundle:Member");
@@ -260,7 +172,10 @@ class MemberImportManager implements ErrorHandlerInterface
                 $memberGroupsLabels = explode(",", $importDataLine->getGroups());
                 $memberGroups = $repoMemberGroup->findBy(array('label' => $memberGroupsLabels));
                 if (count($memberGroups) > 0 ){
-                    $entity->setMemberGroups($memberGroups);
+                    $entity->removeAllMemberGroup();
+                    foreach ($memberGroups as $memberGroup){
+                        $entity->addMemberGroup($memberGroup);
+                    }
                 }
 
                 $this->entityManager->persist($entity);
@@ -271,6 +186,5 @@ class MemberImportManager implements ErrorHandlerInterface
         {
             $this->addError($ex->getMessage());
         }
-
     }
 }

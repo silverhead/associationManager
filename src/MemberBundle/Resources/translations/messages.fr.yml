@@ -136,6 +136,7 @@ member:
     security:
         credential:
             setting: Edition paramètres Adhérents
+            import: Importer
     status:
         credential:
             title: Adhérents (statuts)
