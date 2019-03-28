@@ -113,6 +113,8 @@ class SubscriptionFeeImport implements IsUniqueEmailEntity
     public function __construct()
     {
         $this->state = self::STATE_IGNORED;
+
+        $this->comment = "";
     }
 
 

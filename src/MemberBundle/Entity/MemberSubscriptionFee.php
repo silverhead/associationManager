@@ -4,11 +4,13 @@ namespace MemberBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use SubscriptionBundle\Entity\SubscriptionPaymentType;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * Class MemberSubscriptionFee
  * @package MemberBundle\Entity
  * @ORM\Entity(repositoryClass="MemberBundle\Repository\MemberSubscriptionFeeRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class MemberSubscriptionFee
 {
@@ -22,7 +24,7 @@ class MemberSubscriptionFee
 
     /**
      * @var Member
-     * @ORM\ManyToOne(targetEntity="MemberBundle\Entity\Member", inversedBy="fees")
+     * @ORM\ManyToOne(targetEntity="MemberBundle\Entity\Member", inversedBy="fees", cascade={"persist", "refresh"})
      */
     private $member;
 
@@ -80,7 +82,7 @@ class MemberSubscriptionFee
 
         $this->cost = 0;
 
-        $this->paymentDate = new \DateTime();
+        $this->paymentDate = null;
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime();
     }
@@ -277,8 +279,24 @@ class MemberSubscriptionFee
     /**
      * @param string $note
      */
-    public function setNote(string $note): void
+    public function setNote(string $note = null): MemberSubscriptionFee
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PreFlush()
+     */
+    public function activeMember()
+    {
+        if (null === $this->member) {
+            return;
+        }
+
+        if ($this->endDate >= new \DateTime() && $this->paid){
+            $this->member->setActive(true);
+        }
     }
 }
