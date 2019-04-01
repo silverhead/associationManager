@@ -30,7 +30,7 @@
                             {% if is_granted('MEMBER_SUBSCRIPTION_FEE_SAVE') %}
                             <td>
                                 <a href="#" data-toggle="popover" data-placement="left" data-content="{{ fee.note }}" class="popoverBtn btn {% if fee.note == "" %}btn-default{% else %}btn-info{% endif %} material-icons">info</a>
-                                <a href="#" data-subscription-label="{{ fee.getSubscription().getSubscription().getLabel() }}" data-id="{{ fee.getId() }}" class="editFee btn btn-warning material-icons">euro_symbol</a>
+                                <a href="#" data-subscription-label="{{ fee.getSubscription().getSubscription().getLabel() }}" data-id="{{ fee.getId() }}" class="editFee btn btn-warning material-icons">edit</a>
                             </td>
                             {% endif %}
                         </tr>

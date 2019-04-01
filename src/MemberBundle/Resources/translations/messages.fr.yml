@@ -175,7 +175,7 @@ member:
     subscription:
         title: Adhérents (Abonnements)
         endDate: "Date de fin :"
-        extend: Créer un nouvel abonnement
+        extend: Nouveau abonnement
         viewFees: Voir les cotisations liés
         edit:
             title: Créer un nouvel abonnement

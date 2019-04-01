@@ -1,4 +1,9 @@
 services:
+    # EVENT SUBSCRIBER
+    member.notification.subscriber:
+        class: MemberBundle\EventSubscriber\MemberNotificationSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
     # EVENT LISTENER
     member.groups.credential.event:
         class: AppBundle\EventListener\AppCredentialEventListener
@@ -97,7 +102,7 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']
     member.manager.subscription_fee:
         class: MemberBundle\Manager\MemberSubscriptionFeeManager
-        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session']
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator', '@session', '@event_dispatcher']
     member.manager.send_mail_late_payment:
          class: MemberBundle\Manager\SendMailLatePaymentManager
          arguments: ['@app.manager.send_mail']

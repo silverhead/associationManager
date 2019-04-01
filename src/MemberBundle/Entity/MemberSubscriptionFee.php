@@ -285,18 +285,4 @@ class MemberSubscriptionFee
 
         return $this;
     }
-
-    /**
-     * @ORM\PreFlush()
-     */
-    public function activeMember()
-    {
-        if (null === $this->member) {
-            return;
-        }
-
-        if ($this->endDate >= new \DateTime() && $this->paid){
-            $this->member->setActive(true);
-        }
-    }
 }

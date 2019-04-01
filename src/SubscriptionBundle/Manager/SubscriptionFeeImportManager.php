@@ -161,9 +161,10 @@ class SubscriptionFeeImportManager extends ImportManagerBase
 
             $memberSubscriptionFee->setNote($importDataLine->getComment());
 
-            $this->entityManager->persist($member);
             $this->entityManager->persist($memberSubscription);
             $this->entityManager->persist($memberSubscriptionFee);
+            $this->entityManager->persist($member);
+
             $this->entityManager->flush();
         }
     }

@@ -6,6 +6,7 @@ subscription:
         tabPaymentTYpes: Mode de payement
     subscription:
         addBtn: Ajouter un abonnement
+        renewBtn: Renouveller
         list:
             title: Gestion des abonnements
             callback: Retour gestion des abonnements
