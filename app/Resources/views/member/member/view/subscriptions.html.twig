@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="header bg-blue-grey">
                     <h2>
-                        <a href="#" class="pull-right btn bg-green waves-effect">{{ 'subscription.subscription.renewBtn'|trans }}</a>
+                        <a href="#" class="renewBtn pull-right btn bg-green waves-effect">{{ 'subscription.subscription.renewBtn'|trans }}</a>
                         {{ subscription.subscription.label }} <small></small>
                     </h2>
                 </div>
@@ -50,3 +50,18 @@
     </div>
 {% endfor %}
 {% include ':member/member/subscriptionHistorical:createModal.html.twig' with {'form' : form} %}
+<div class="modal fade" id="renewSubscriptionFeeModal" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center" id="editSubscriptionFeeLabel">{{ 'member.subscriptionFee.edit.title'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="submit" id="saveFeeBtn" class="btn btn-link waves-effect">{{ 'app.common.form.submit.save'|trans }}</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">{{ 'app.common.cancelBtn'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

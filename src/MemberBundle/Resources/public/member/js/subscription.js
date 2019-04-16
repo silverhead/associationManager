@@ -62,3 +62,19 @@ function setSubformField(){
     $('#member_member_subscription_form_type_subscriptionPaymentPeriodicity').selectpicker('refresh');
 }
 
+$('.renewBtn').on('click', function(e){
+    e.preventDefault();
+
+    var id  = 0;//$(this).data('id');
+    //var subscriptionLabel = $(this).data('subscription-label');
+    var urlEdit = Routing.generate('member_subscription_renew', {'id': id});
+
+    var title = Translator.trans('member.subscriptionFee.edit.title');
+    //title = title.replace('%subscription%', subscriptionLabel);
+
+    //$('#editSubscriptionFeeLabel').text(title);
+
+    $('#renewSubscriptionModal .modal-body').load(urlEdit,function(){
+        $('#renewSubscriptionModal').modal({show:true});
+    });
+});

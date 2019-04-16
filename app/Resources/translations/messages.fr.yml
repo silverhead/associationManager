@@ -56,6 +56,7 @@ app:
             forgottenPassword: Mot de passe oublié ?
             error:
                 authenticateFail: Erreur d'authentification, veuillez vérifier vos identifiants !
+                no_active: Erreur d'authentification, votre compte est désactivé !
         forgotPassword:
             title: Mot de passe oublié ?
             text: >

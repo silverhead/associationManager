@@ -16,7 +16,7 @@ class MemberNotificationSubscriber implements EventSubscriber
     {
         return [
             Events::postPersist,
-            Events::postUpdate,
+            Events::postUpdate
         ];
     }
 
@@ -34,7 +34,6 @@ class MemberNotificationSubscriber implements EventSubscriber
     {
         $entity = $args->getObject();
 
-        // perhaps you only want to act on some "Product" entity
         if ($entity instanceof MemberSubscriptionFee) {
             if (null === $entity->getMember()) {
                 return;

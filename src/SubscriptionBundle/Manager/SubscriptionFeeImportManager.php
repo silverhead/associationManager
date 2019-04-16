@@ -92,6 +92,9 @@ class SubscriptionFeeImportManager extends ImportManagerBase
         $repoPaymentType = $this->entityManager->getRepository("SubscriptionBundle:SubscriptionPaymentType");
 
         foreach ($this->data as $importDataLine) {
+            $startDate = \Datetime::createFromFormat('Y-m-d', $importDataLine->getStartDate());
+            $endDate = \Datetime::createFromFormat('Y-m-d', $importDataLine->getEndDate());
+
             $member = $repoMember->findOneBy(
                 array(
                     'email' => $importDataLine->getEmail()
@@ -114,18 +117,10 @@ class SubscriptionFeeImportManager extends ImportManagerBase
                 $memberSubscription->setMember($member);
                 $memberSubscription->setSubscription($subscription);
                 $memberSubscription->setCost($subscription->getCost());
-            }
-
-            $startDate = \Datetime::createFromFormat('Y-m-d', $importDataLine->getStartDate());
-
-            if (null === $memberSubscription->getStartDate() || $memberSubscription->getStartDate() > $startDate){
                 $memberSubscription->setStartDate($startDate);
-            }
-
-            $endDate = \Datetime::createFromFormat('Y-m-d', $importDataLine->getEndDate());
-
-            if (null === $memberSubscription->getEndDate() || $memberSubscription->getEndDate() < $startDate){
                 $memberSubscription->setEndDate($endDate);
+
+                $this->entityManager->persist($memberSubscription);
             }
 
             $memberSubscriptionFee = $repoMemberSubscriptionFee->findOneBy(array(
@@ -161,9 +156,7 @@ class SubscriptionFeeImportManager extends ImportManagerBase
 
             $memberSubscriptionFee->setNote($importDataLine->getComment());
 
-            $this->entityManager->persist($memberSubscription);
             $this->entityManager->persist($memberSubscriptionFee);
-            $this->entityManager->persist($member);
 
             $this->entityManager->flush();
         }

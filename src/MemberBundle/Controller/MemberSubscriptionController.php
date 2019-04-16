@@ -180,6 +180,14 @@ class MemberSubscriptionController extends Controller
         );
     }
 
+    /**
+     * @route("member/subscription/renew/{memberId}/{subscriptionId}", name="member_subscription_renew", options= {"expose" = true})
+     */
+    public function renewFeeAction(Request $request, $memberId, $subscriptionId)
+    {
+        return $this->renderView('subscription/subscription/fee/editModal.html.twig');
+    }
+
 //    /**
 //     * @route("member/subscription/sendLatePaymentMail/{id}", name="member_subscription_send_late_payment_mail", requirements={"id": "\d+"}, options= {"expose" = true})
 //     */
