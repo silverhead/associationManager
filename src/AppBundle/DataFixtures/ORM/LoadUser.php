@@ -1,11 +1,12 @@
 <?php
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\User;
+use UserBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use UserBundle\Entity\UserGroup;
 
 class LoadUserData implements FixtureInterface, ContainerAwareInterface
 {
@@ -23,6 +24,13 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         $encoder = $this->container->get('security.password_encoder');
+
+        $userGroup = new UserGroup();
+        $userGroup->setActive(true)
+            ->setLabel('Administrateurs')
+        ;
+
+        $manager->persist($userGroup);
 
         $users = $this->getUsers();
 
@@ -51,6 +59,10 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
                 ->setSalt(
                     uniqid()
                 )
+                ->setActive(true)
+                ->setCreateAt(new \DateTime())
+                ->setUpdatedAt(new \DateTime())
+                ->setGroup($userGroup)
             ;
 
             $user->setPassword(
@@ -68,21 +80,13 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
     {
         return [
             (object) [
-                'username' => 'pin.nicolas',
-                'email' => 'pin.nicolas@free.fr',
-                'password' => 'test123',
-                'firstName' => 'Nicolas',
-                'lastName' => 'PIN',
+                'username' => 'admin',
+                'email' => 'your.email@you.com',
+                'password' => 'admin123',
+                'firstName' => 'No first name',
+                'lastName' => 'No last name',
                 'roles' => ['ROLE_ADMIN']
-            ],
-            (object) [
-                'username' => 'test1',
-                'email' => 'test@test.fr',
-                'password' => 'test123',
-                'firstName' => 'test1',
-                'lastName' => 'test',
-                'roles' => ['ROLE_USER']
-            ],
+            ]
         ];
     }
 }
