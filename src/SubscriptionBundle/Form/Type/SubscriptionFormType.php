@@ -19,6 +19,7 @@ class SubscriptionFormType extends AbstractType
             ->add('label', TextType::class)
             ->add('cost', NumberType::class)
             ->add('duration', IntegerType::class)
+            ->add('code', TextType::class)
             ->add('periodicities', EntityType::class, [
                 'class' => 'SubscriptionBundle\Entity\SubscriptionPaymentPeriodicity',
                 'choice_label' => 'label',

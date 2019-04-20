@@ -50,3 +50,9 @@ services:
     app.handler.page_historical:
         class: AppBundle\Handler\PageHistoricalHandler
         arguments: ['@session', 'page_historical']
+    # Validator
+    app.validator.app_setting.in_array:
+        class: AppBundle\Validator\AppSettingInArrayValidator
+        arguments: ['@app.manager.setting']
+        tags:
+            - {name: validator.constraint_validator, alias: app.validator.app_setting.in_array}
