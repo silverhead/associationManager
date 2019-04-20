@@ -3,6 +3,7 @@ app:
         appName: Association manager
         appSlogan: Gérer votre association
     common:
+        devise: €
         dateFormat: d/m/Y
         dateHourFormat: d/m/Y H:i
         hourFormat: d/m/Y H:i

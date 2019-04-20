@@ -73,7 +73,6 @@ class DashboardManagerController extends Controller
 
         $dashboardBundleManger = $this->get('app.manager.dashboard_bundle_setting');
 
-
         if($id > 0){
             $dashboardBundleSetting =  $dashboardBundleManger->find($id);
         }

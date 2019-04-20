@@ -17,7 +17,7 @@ services:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     subscription.dashboard.bundle.event:
         class: AppBundle\EventListener\AppDashboardBundleEventListener
-        arguments: ['subscription.dashboard.tableTitleTop10', '%subscription.dashboard.tableTitleTop10%']
+        arguments: ['subscription.dashboard.totalFeeAmountCard', '%subscription.dashboard.totalFeeAmountCard%']
         tags:
             - { name: kernel.event_listener, event: app.dashboard.bundle.event, method: onProvideBundle }
     # VOTER

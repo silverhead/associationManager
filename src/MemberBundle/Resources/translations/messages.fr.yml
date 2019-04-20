@@ -172,6 +172,9 @@ member:
             create: Créer un nouvel abonnement
     subscriptionFee:
         tabContributionHistorical: Historique des cotisations
+        totalFeePaid: Total des cotisations payés
+        totalFeeLate: Total des cotisations en retard
+        totalFeeNotYetPaid: Total des cotisations non encore payés
         list:
             header:
                 cost: Montant

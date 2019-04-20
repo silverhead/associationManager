@@ -44,9 +44,18 @@ class SubscriptionController extends Controller
         $subscriptionManager = $this->get('subscription.manager.subscription');
         $totalSubscriberMembers = $subscriptionManager->getCountAllSubscriberMembers();
 
+        $memberFeeRepo = $this->getDoctrine()->getRepository("MemberBundle:MemberSubscriptionFee");
+
+        $totalFeePaidForDay = $memberFeeRepo->getTotalFeeForDates(new \DateTime(), null, true);
+        $totalFeeNotPaidForDay = $memberFeeRepo->getTotalFeeForDates(new \DateTime(), null, false);
+        $totalFeeNotYetPaid = $memberFeeRepo->getTotalFeeForDates(null, new \DateTime(), false);
+
         return $this->render('subscription/subscriptionManager.html.twig', array(
             'menuSelect' => 'subscription_manager',
-            'totalMember' => $totalSubscriberMembers
+            'totalMember' => $totalSubscriberMembers,
+            'totalFeePaidForDay' => $totalFeePaidForDay,
+            'totalFeeNotPaidForDay' => $totalFeeNotPaidForDay,
+            'totalFeeNotYetPaid' => $totalFeeNotYetPaid
         ));
     }
 

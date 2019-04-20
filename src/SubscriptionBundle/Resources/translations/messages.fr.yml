@@ -61,3 +61,7 @@ subscription:
             title: Droits gestion des types d'abonnement
     dashboard:
         tableTitleTop10: Top 10 abonnement
+        totalFeeAmountCard: Total des cotisations
+        totalFeePaidForDay: Total des cotisations payés
+        totalFeeNotPaidForDay: Total des cotisations non payés
+        totalFeeNotYetPaid: Total des cotisations non encore payés

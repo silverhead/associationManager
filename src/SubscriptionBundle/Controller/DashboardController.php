@@ -20,16 +20,20 @@ class DashboardController extends Controller
         else{
             throw new \Exception("The action \"".$actionName."\" not exist in the class \”".self::class."\“!");
         }
-
     }
 
-    public function totalSubscribersListAction()
+    public function totalFeeAmountAction()
     {
-        $subscriptionFeeManager = $this->get('member.manager.subscription_fee');
-        $totalPayedFee = $subscriptionFeeManager->getTotalPaidFee();
+        $memberFeeRepo = $this->getDoctrine()->getRepository("MemberBundle:MemberSubscriptionFee");
+
+        $totalFeePaidForDay = $memberFeeRepo->getTotalFeeForDates(new \DateTime(), null, true);
+        $totalFeeNotPaidForDay = $memberFeeRepo->getTotalFeeForDates(new \DateTime(), null, false);
+        $totalFeeNotYetPaid = $memberFeeRepo->getTotalFeeForDates(null, new \DateTime(), false);
 
         return $this->renderView(':subscription/subscription/dashboard:totalSubscribersList.html.twig', array(
-            'totalPayedFee' => $totalPayedFee
+            'totalFeePaidForDay' => $totalFeePaidForDay,
+            'totalFeeNotPaidForDay' => $totalFeeNotPaidForDay,
+            'totalFeeNotYetPaid' => $totalFeeNotYetPaid
         ));
     }
 }
