@@ -85,6 +85,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
                 'password' => 'admin123',
                 'firstName' => 'No first name',
                 'lastName' => 'No last name',
+                'avatar' => 'bundles/user/images/avatars/default.png',
                 'roles' => ['ROLE_ADMIN']
             ]
         ];

@@ -22,6 +22,7 @@ app:
         returnBtn: Retour
         editBtn: Modifier
         addBtn: Ajouter
+        notAuthorizedPage: Accès non autorisé !
         to: à
         form:
             submit:
