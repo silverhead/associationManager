@@ -1,0 +1,79 @@
+{% extends 'layoutLogin.html.twig' %}
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
+        <h2 class="col-xs-12">
+            <a href="{{ path('members_manager') }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
+            {{ 'member.member.import.title'|trans }}
+        </h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2">
+                            {{ form_widget(form.file) }}
+                        </div>
+                        <div class="col-md-3">
+                            <input type="submit" value="{{ 'member.member.import.importBtn'|trans }}" class="btn btn-success" />
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+                    {% if memberImports|length > 0 %}
+                    <div class="row">
+                        <div class="col-md-12" style="overflow-x: auto">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'member.member.list.table.numLine'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.gender'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.lastName'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.firstName'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.email'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.country'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.city'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.zipCode'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.address'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.organization'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.profession'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.phone'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.studyLevel'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.specialities'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.comment'|trans }}</th>
+                                        <th>{{ 'member.member.list.table.groups'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for memberImport in memberImports %}
+                                    <tr class="{% if memberImport.state==constant('MemberBundle\\Entity\\MemberImport::STATE_CREATED') %}bg-success{% elseif memberImport.state==constant('MemberBundle\\Entity\\MemberImport::STATE_UPDATED') %}bg-warning{% else %}bg-danger{% endif %}">
+                                        <td>{{ memberImport.numLine }}</td>
+                                        <td>{{ memberImport.gender }}</td>
+                                        <td>{{ memberImport.lastName }}</td>
+                                        <td>{{ memberImport.firstName }}</td>
+                                        <td>{{ memberImport.email }}</td>
+                                        <td>{{ memberImport.countryCode }}</td>
+                                        <td>{{ memberImport.city }}</td>
+                                        <td>{{ memberImport.zipCode }}</td>
+                                        <td>{{ memberImport.address }}</td>
+                                        <td>{{ memberImport.organization }}</td>
+                                        <td>{{ memberImport.profession }}</td>
+                                        <td>{{ memberImport.phone }}</td>
+                                        <td>{{ memberImport.cellular }}</td>
+                                        <td>{{ memberImport.specialities }}</td>
+                                        <td>{{ memberImport.comment }}</td>
+                                        <td>{{ memberImport.groups }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -22,6 +22,7 @@ app:
         returnBtn: Retour
         editBtn: Modifier
         addBtn: Ajouter
+        notAuthorizedPage: Accès non autorisé !
         to: à
         form:
             submit:
@@ -42,6 +43,9 @@ app:
             disabled: Non actif
         table:
             action: Action
+        import:
+            notEnoughColumns: Le nombre de colonne obligatoire est manquant, %nbColumn% colonnes sont requis.
+            lineError: "Erreur à la ligne  %numLine%, colonne %numColumn% : %message%"
     security:
         login:
             title: Page de connection
@@ -139,6 +143,8 @@ app:
 
         credential:
             title: Droits paramètres application
+        validator:
+            in_array: Le "{{ string }}" n'est pas dans la liste {{ listName }}
     user:
         logout: Se déconnecter
         profile: Profil

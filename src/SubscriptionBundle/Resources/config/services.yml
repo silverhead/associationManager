@@ -84,3 +84,14 @@ services:
     subscription.controller.dashboard:
         class: SubscriptionBundle\Controller\DashboardController
         arguments: ['@service_container']
+    # Validator
+    subscription.validator.subscription_exist:
+        class: SubscriptionBundle\Validator\SubscriptionExistValidator
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - {name: validator.constraint_validator, alias: subscription_fee.validator.import.subscription_exist}
+    subscription.validator.payment_exist:
+        class: SubscriptionBundle\Validator\PaymentTypeExistValidator
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - {name: validator.constraint_validator, alias: subscription_fee.validator.import.payment_exist}

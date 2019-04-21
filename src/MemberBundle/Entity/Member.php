@@ -40,7 +40,7 @@ class Member extends User
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberSubscriptionFee", mappedBy="member", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="MemberBundle\Entity\MemberSubscriptionFee", mappedBy="member", cascade={"persist", "refresh", "remove"})
      * @ORM\OrderBy({"id" = "DESC"})
      */
     protected $fees;
@@ -150,7 +150,7 @@ class Member extends User
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="MemberBundle\Entity\MemberGroup", mappedBy="members")
+     * @ORM\ManyToMany(targetEntity="MemberBundle\Entity\MemberGroup", mappedBy="members", cascade={"persist", "refresh", "remove"})
      */
     protected $memberGroups;
 
@@ -701,6 +701,8 @@ class Member extends User
      */
     public function addMemberGroup(\MemberBundle\Entity\MemberGroup $memberGroup)
     {
+        $memberGroup->addMember($this);
+
         $this->memberGroups[] = $memberGroup;
 
         return $this;
@@ -715,7 +717,20 @@ class Member extends User
      */
     public function removeMemberGroup(\MemberBundle\Entity\MemberGroup $memberGroup)
     {
+        $memberGroup->removeMember($this);
         return $this->memberGroups->removeElement($memberGroup);
+    }
+
+    /**
+     * Get memberGroups.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function setMemberGroups(\Doctrine\Common\Collections\Collection $memberGroups): Member
+    {
+        $this->memberGroups = $memberGroups;
+
+        return $this;
     }
 
     /**
@@ -726,5 +741,14 @@ class Member extends User
     public function getMemberGroups()
     {
         return $this->memberGroups;
+    }
+
+    public function removeAllMemberGroup()
+    {
+        foreach ($this->memberGroups as $memberGroup){
+            $memberGroup->removeMember($this);
+        }
+
+        $this->memberGroups->clear();
     }
 }
