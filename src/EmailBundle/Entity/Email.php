@@ -7,16 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Email
  * @package EmailBundle\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="EmailBundle\Repository\EmailRepository")
  */
 class Email
 {
-    public const STATUS_DRAFT = 0;
-    public const STATUS_NOT_SEND = 1;
-    public const STATUS_SENT = 2;
+    public const STATUS_UNKNOWN = 0;
+    public const STATUS_DRAFT = 1;
+    public const STATUS_NOT_SEND = 2;
+    public const STATUS_SENT = 3;
+    public const STATUS_AUTOMATIC = 4;
 
     /**
      * @var integer
+     * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -58,23 +61,17 @@ class Email
      */
     private $automatic;
 
+    public function __construct()
+    {
+        $this->updatedDate = new \DateTime();
+    }
+
     /**
      * @return int
      */
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     * @return Email
-     */
-    public function setId(int $id): Email
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -189,5 +186,15 @@ class Email
         $this->automatic = $automatic;
 
         return $this;
+    }
+
+    /**
+     * Get automatic.
+     *
+     * @return bool
+     */
+    public function getAutomatic()
+    {
+        return $this->automatic;
     }
 }

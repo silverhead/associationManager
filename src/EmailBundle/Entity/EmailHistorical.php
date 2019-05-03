@@ -10,7 +10,7 @@ use UserBundle\Entity\User;
 /**
  * Class EmailHistorical
  * @package EmailBundle\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="EmailBundle\Repository\EmailHistoricalRepository")
  */
 class EmailHistorical
 {
@@ -18,7 +18,7 @@ class EmailHistorical
      * @var integer
      * @ORM\Id()
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="auto")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -58,17 +58,6 @@ class EmailHistorical
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     * @return EmailHistorical
-     */
-    public function setId(int $id): EmailHistorical
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**

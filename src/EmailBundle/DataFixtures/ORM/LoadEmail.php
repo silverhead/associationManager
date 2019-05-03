@@ -6,7 +6,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use EmailBundle\Entity\Email;
-use EmailBundle\Entity\EmailHistorical;
 
 class LoadUEmailData implements FixtureInterface, ContainerAwareInterface
 {
@@ -25,10 +24,16 @@ class LoadUEmailData implements FixtureInterface, ContainerAwareInterface
     {
         $encoder = $this->container->get('security.password_encoder');
 
-        $emails = $this->getEmail();
+        $emails = $this->getEmails();
 
         foreach ($emails as $fakeEmail){
             $email = new Email();
+            $email->setLabel($fakeEmail->label);
+            $email->setSubject($fakeEmail->subject);
+            $email->setBody($fakeEmail->body);
+            $email->setAutomatic($fakeEmail->automatic);
+            $email->setStatus(Email::STATUS_AUTOMATIC);
+
 
             $manager->persist($email);
         }
