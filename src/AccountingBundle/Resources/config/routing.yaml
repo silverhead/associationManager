@@ -1,0 +1,4 @@
+accounting_homepage:
+    path: /accountingjournal/{annee}
+    defaults: {_controller: AccountingBundle:Accounting:index }
+

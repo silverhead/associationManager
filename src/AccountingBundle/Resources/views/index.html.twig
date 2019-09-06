@@ -1,0 +1,66 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %} 
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+        {
+            'href': path('dashboard'),
+            'title': 'app.dashboard.callback'|trans,
+            'label': 'app.dashboard.title'|trans
+        },
+        {
+            'label': 'accounting.synthesis.title'|trans
+        }
+        ] } %}
+
+        <h2 class="col-xs-12">
+            {{ 'accounting.synthesis.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body table-responsive">
+                    {% for accounting in data %}
+                        <section id="accounting_{{ accounting.getId() }}">
+                            <div class="row">
+                                <h3 style="/*margin-left:100px;*/">{{ accounting.getLabel() }}</h3>
+                            </div>
+                            <table class="table table-striped orderable dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Référence</th>
+                                        <th>Débit</th>
+                                        <th>Crédit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for entry in accounting.getEntries()|slice(0, 3) %}
+                                        <tr>
+                                            <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
+                                            <td>{{ entry.getReference() }}</td>
+                                            <td>
+                                                {% if entry.getAmount() < 0 %}
+                                                    {% set value = entry.getAmount() * -1 %}
+                                                    {{ value }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if entry.getAmount() >= 0 %}
+                                                    {{ entry.getAmount() }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </section>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
