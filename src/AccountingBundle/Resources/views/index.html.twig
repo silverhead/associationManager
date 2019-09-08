@@ -25,15 +25,15 @@
                     {% for accounting in data %}
                         <section id="accounting_{{ accounting.getId() }}">
                             <div class="row">
-                                <h3 style="/*margin-left:100px;*/">{{ accounting.getLabel() }}</h3>
+                                <h3><a href="/accounting/account/{{ accounting.getId() }}">{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getLastSolde().getFormattedAmount() }}</a></h3>
                             </div>
                             <table class="table table-striped orderable dataTable">
                                 <thead>
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Référence</th>
-                                        <th>Débit</th>
-                                        <th>Crédit</th>
+                                        <th>{{ 'accounting.common.date'|trans }}</th>
+                                        <th>{{ 'accounting.common.reference'|trans }}</th>
+                                        <th>{{ 'accounting.common.outcome'|trans }}</th>
+                                        <th>{{ 'accounting.common.income'|trans }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,15 +41,14 @@
                                         <tr>
                                             <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
                                             <td>{{ entry.getReference() }}</td>
-                                            <td>
+                                            <td class="number" style="text-align: right;">
                                                 {% if entry.getAmount() < 0 %}
-                                                    {% set value = entry.getAmount() * -1 %}
-                                                    {{ value }}
+                                                    {{ entry.getFormattedAmount() }}
                                                 {% endif %}
                                             </td>
-                                            <td>
+                                            <td class="number" style="text-align: right;">
                                                 {% if entry.getAmount() >= 0 %}
-                                                    {{ entry.getAmount() }}
+                                                    {{ entry.getFormattedAmount() }}
                                                 {% endif %}
                                             </td>
                                         </tr>

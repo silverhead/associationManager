@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use AccountingBundle\Entity\Entry;
 
-class EntryManager implements PaginatorManagerInterface
+class AccountingManager implements PaginatorManagerInterface
 {
     use EntityManagerTrait,
         PaginatorManagerTrait,
@@ -26,7 +26,7 @@ class EntryManager implements PaginatorManagerInterface
      */
     private $paginator;
 
-    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator )
+    public function __construct(EntityManager $entityManager, PaginatorInterface $paginator)
     {
         $this->entityManager = $entityManager;
         $this->paginator = $paginator;
@@ -39,14 +39,21 @@ class EntryManager implements PaginatorManagerInterface
 
     public function getRepository()
     {
-        return $this->entityManager->getRepository("AccountingBundle:Entry");
+        return $this->entityManager->getRepository("AccountingBundle:");
     }
     
-    public function getEntriesByAccountForDashboard()
+    public function getEntriesByAccountForSynthesis()
     {
         $accountableAccountRepo = $this->entityManager->getRepository("AccountingBundle:AccountableAccount");
         $accountableAccounts = $accountableAccountRepo->findAll();
 
         return $accountableAccounts;
+    }
+    
+    public function getEntriesForAccount($accountId) {
+        $accountableAccountRepo = $this->entityManager->getRepository("AccountingBundle:AccountableAccount");
+        $accountableAccount = $accountableAccountRepo->findAll($accountId);
+
+        return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
     }
 }

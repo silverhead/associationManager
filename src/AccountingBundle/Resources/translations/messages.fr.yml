@@ -1,6 +1,15 @@
 ## YAML Template.
 ---
 accounting:
+    common:
+        date: Date
+        reference: Référence
+        outcome: Débit
+        income: Crédit
+        real_solde: Solde réel
+        prev_solde: Solde prévisionnel
     synthesis:
         title: Synthèse des comptes
-        
+    account:
+        title: Liste des opérations
+    

@@ -24,16 +24,30 @@ class AccountingController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request, $anchor = null)
+    public function indexAction(Request $request)
     {   
-        $data = array();
-        $entryManager = $this->get('accounting.manager.entry');
-        //error_log($entryManager);
-        $data = $entryManager->getEntriesByAccountForDashboard();
+        $entries = array();
+        $soldes = array();
+        $accountingManager = $this->get('accounting.manager.accounting');
+        
+        $entriesOfAccounts = $accountingManager->getEntriesByAccountForSynthesis();
 
         return $this->render('@Accounting/index.html.twig', array(
-            'data' => $data
+            'data' => $entriesOfAccounts
         ));
-        //return $this->render('/accounting/index.html.twig', array());
+    }
+    
+    /**
+     * @Route("/accounting/account/{id}", name="accounting_account_id", options = { "expose" = true })
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function account(Request $request, $id = null) {
+        $accountingManager = $this->get('accounting.manager.accounting');
+        $entriesOfAccount = $accountingManager->getEntriesForAccount($id);
+        //var_dump($entriesOfAccount);
+        return $this->render('@Accounting/account.html.twig', array(
+            'accounting' => $entriesOfAccount
+        ));
     }
 }

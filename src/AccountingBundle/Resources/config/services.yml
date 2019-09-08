@@ -1,5 +1,5 @@
 services:
-    accounting.manager.entry:
-        class: AccountingBundle\Manager\EntryManager
+    accounting.manager.accounting:
+        class: AccountingBundle\Manager\AccountingManager
         autowire: true
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']

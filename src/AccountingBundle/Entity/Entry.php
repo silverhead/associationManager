@@ -171,7 +171,14 @@ class Entry
     {
         return $this->amount;
     }
-
+    /**
+     * @return string
+     */
+    public function getFormattedAmount()
+    {
+        return number_format($this->amount/100, 2, ',', ' ');
+    }
+    
     /**
      * @param int $amount
      * @return Entry

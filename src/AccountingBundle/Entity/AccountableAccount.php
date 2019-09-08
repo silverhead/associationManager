@@ -47,9 +47,27 @@ class AccountableAccount {
      */
     protected $entries;
     
+    /**
+     *
+     * @var int
+     */
+    protected $realSolde;
+    
+    /**
+     *
+     * @var int
+     */
+    protected $prevSolde;
+    
+    /**
+     * @var \ArrayObject|Solde
+     * @ORM\OneToMany(targetEntity="AccountingBundle\Entity\Solde", fetch="EAGER", mappedBy="accountableAccount")
+     */
+    protected $soldes;
     
     public function __construct() {
         $this->entries = new ArrayCollection();
+        $this->soldes = new ArrayCollection();
     }
     
     /**
@@ -118,4 +136,30 @@ class AccountableAccount {
     public function getEntries(): PersistentCollection {
         return $this->entries;
     }
+    
+    /**
+     * 
+     * @return PersistentCollection|null
+     */
+    public function getSoldes(): PersistentCollection {
+        return $this->soldes;
+    }
+    
+    public function getLastSolde($isPrev = false) {
+        if (is_array($this->soldes)) {
+            echo "OUI"; exit;
+        }
+        $arraySoldes = $this->soldes->getValues();
+        usort($arraySoldes, function ($object1, $object2) { 
+            return $object1->getDate() > $object2->getDate(); 
+        });
+        $soldeToReturn = null;
+        foreach ($arraySoldes as $solde) {
+            if ($solde->getIsPrev() == $isPrev) {
+                $soldeToReturn = $solde;
+                break;
+            }
+        }
+        return $soldeToReturn;
+    } 
 }

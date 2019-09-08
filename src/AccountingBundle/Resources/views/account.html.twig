@@ -1,0 +1,61 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %} 
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+        {
+            'href': path('dashboard'),
+            'title': 'app.dashboard.callback'|trans,
+            'label': 'app.dashboard.title'|trans
+        },
+        {
+            'label': 'accounting.account.title'|trans
+        }
+        ] } %}
+
+        <h2 class="col-xs-12">
+            {{ 'accounting.account.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body table-responsive">
+                    <div class="row">
+                        <h3>{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getLastSolde().getFormattedAmount() }}</h3>
+                    </div>
+                    <table class="table table-striped orderable dataTable">
+                        <thead>
+                            <tr>
+                                <th>{{ 'accounting.common.date'|trans }}</th>
+                                <th>{{ 'accounting.common.reference'|trans }}</th>
+                                <th>{{ 'accounting.common.outcome'|trans }}</th>
+                                <th>{{ 'accounting.common.income'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in accounting.getEntries() %}
+                                <tr>
+                                    <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
+                                    <td>{{ entry.getReference() }}</td>
+                                    <td class="number" style="text-align: right;">
+                                        {% if entry.getAmount() < 0 %}
+                                            {{ entry.getFormattedAmount() }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="number" style="text-align: right;">
+                                        {% if entry.getAmount() >= 0 %}
+                                            {{ entry.getFormattedAmount() }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -44,15 +44,37 @@ class AccountableAccountRepository extends EntityRepository implements Paginator
         return $qb->getQuery()->getSingleScalarResult();
     }
     
-    public function findAll() {
-        $qb = $this->createQueryBuilder('a')
-            ->select('a, e')
-            //->from('\AccountingBundle\Entity\AccountableAccount', 'a')
-            ->innerJoin('a.entries', 'e')
-            ->orderBy('e.accountingDate', 'DESC');
+    public function findAll($id = null) {
+        if ($id != null) {
+            $qb = $this->createQueryBuilder('a')
+                ->select('a, e')
+                //->from('\AccountingBundle\Entity\AccountableAccount', 'a')
+                ->innerJoin('a.entries', 'e')
+                //->innerJoin('a.soldes', 's')
+                ->where("a.id = :id")
+                ->setParameter("id", $id)
+                ->addOrderBy('a.label', 'ASC')
+                ->addOrderBy('e.accountingDate', 'DESC');
+        } else {
+            $qb = $this->createQueryBuilder('a')
+                ->select('a, e')
+                //->from('\AccountingBundle\Entity\AccountableAccount', 'a')
+                ->innerJoin('a.entries', 'e')
+                ->addOrderBy('a.label', 'ASC')
+                ->addOrderBy('e.accountingDate', 'DESC');
+        }
         
         return $qb->getQuery()
             ->getResult();
     }
     
+    public function findSoldes() {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a, s')
+            ->innerJoin('a.soldes', 's')
+            ->orderBy('s.updatedAt', 'DESC');
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
 }

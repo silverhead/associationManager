@@ -29,20 +29,26 @@ class Solde {
      * @var int
      * @ORM\Column(type="integer", nullable=false)
      */
-    protected $amountReal;
+    protected $amount;
     
     /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=false)
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $amountPrev;
+    protected $isPrev;
     
     /**
      * @var AccountableAccount
-     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="entries", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="soldes", fetch="EAGER")
      * ORM\JoinColumn(name="accountable_account_id", referencedColumnName="id")
      */
     protected $accountableAccount;
+    
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    protected $updatedAt;
     
     /**
      * @return int
@@ -54,7 +60,7 @@ class Solde {
 
     /**
      * @param int $id
-     * @return Entry
+     * @return Solde
      */
     public function setId($id)
     {
@@ -66,37 +72,37 @@ class Solde {
     /**
      * @return \DateTime
      */
-    public function getValueDate()
+    public function getDate()
     {
-        return $this->valueDate;
+        return $this->date;
     }
 
     /**
      * @param \DateTime $valueDate
-     * @return Entry
+     * @return Solde
      */
-    public function setValueDate($valueDate)
+    public function setDate($date)
     {
-        $this->valueDate = $valueDate;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * @return int
+     * @return \DateTime
      */
-    public function getAmountPrev()
+    public function getUpdatedAt()
     {
-        return $this->amountPrev;
+        return $this->updatedAt;
     }
 
     /**
-     * @param int $amountPrev
+     * @param \DateTime $updatedAt
      * @return Solde
      */
-    public function setAmountPrev($amountPrev)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->amountPrev = $amountPrev;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -104,18 +110,44 @@ class Solde {
     /**
      * @return int
      */
-    public function getAmountReal()
+    public function getAmount()
     {
-        return $this->amountReal;
+        return $this->amount;
+    }
+    /**
+     * @return string
+     */
+    public function getFormattedAmount()
+    {
+        return number_format($this->amount/100, 2, ',', ' ');
+    }
+    
+    /**
+     * @param int $amountPrev
+     * @return Solde
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function getIsPrev()
+    {
+        return $this->isPrev;
     }
 
     /**
-     * @param int $amountReal
+     * @param bool $isPrev
      * @return Solde
      */
-    public function setAmountReal($amountReal)
+    public function setIsPrev($isPrev)
     {
-        $this->amountReal = $amountReal;
+        $this->isPrev = $isPrev;
 
         return $this;
     }
