@@ -1,0 +1,85 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
+        <h2 class="col-xs-12">
+            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
+            {{ 'accounting.account.edit.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(formEntry) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(formEntry., {
+                                'label': 'accounting.account.edit.form.group'|trans
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(forEntry.active, {'label': 'accounting.account.edit.form.active'|trans}) }}
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(formEntry.firstName, {
+                                'label': 'accounting.account.edit.form.firstName'|trans,
+                                'attr': {
+                                    'placeholder': 'accounting.account.edit.form.firstName'|trans
+                                }
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(formEntry.lastName, {
+                                'label': 'accounting.account.edit.form.lastName'|trans,
+                                'attr': {
+                                    'placeholder': 'accounting.account.edit.form.lastName'|trans
+                                }
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(forEntry.username, {
+                                'label': 'accounting.account.edit.form.username'|trans,
+                                'attr': {
+                                    'placeholder': 'accounting.account.edit.form.username'|trans
+                                }
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(formEntry.email, {
+                                'label': 'accounting.account.edit.form.email'|trans,
+                                'attr': {
+                                    'placeholder': 'accounting.account.edit.form.email'|trans
+                                }
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {#  '<small>'~ 'accounting.account.edit.form.passwordHelp'|trans ~'</small>' #}
+                            {{ form_row(formEntry.plainPassword.first, {
+                                'label': 'accounting.account.edit.form.password'|trans
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(formEntry.plainPassword.second) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
+                        </div>
+                    </div>
+
+                    {{ form_end(formEntry) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
