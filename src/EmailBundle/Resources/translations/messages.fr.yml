@@ -1,0 +1,6 @@
+email:
+    system_email:
+        list:
+            title: Liste des e-mails système
+            label: Libellé
+            bundle_label: Type

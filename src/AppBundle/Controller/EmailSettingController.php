@@ -14,9 +14,6 @@ use Symfony\Component\Serializer\Serializer;
 
 class EmailSettingController extends Controller
 {
-    /**
-     * @Route("setting/email/{id}",name="app_email_setting", defaults={"id"=0})
-     */
     public function indexAction(int $id)
     {
         $model = new EmailSettingModel();
