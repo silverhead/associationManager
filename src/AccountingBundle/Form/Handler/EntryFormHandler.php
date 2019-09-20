@@ -66,9 +66,14 @@ class EntryFormHandler
         return false;
     }
 
-    public function getData() {
+    public function getData($accountableAccount) {
         $form = $this->form;
-
+        
+        //$this->entity->setAccountableAccount($accountableAccount);
+        $this->entity->setActive(true);
+        $this->entity->setUpdatedAt(new \DateTime());
+        
+        
         return $this->entity;
     }
 }

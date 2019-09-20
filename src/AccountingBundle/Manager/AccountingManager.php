@@ -56,5 +56,4 @@ class AccountingManager implements PaginatorManagerInterface
 
         return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
     }
-    
 }

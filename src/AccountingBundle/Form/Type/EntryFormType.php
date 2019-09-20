@@ -20,7 +20,7 @@ class EntryFormType extends AbstractType
             ->add('accountingDate', DateType::class)
             ->add('valueDate', DateType::class)
             ->add('amount', MoneyType::class)
-            ->add('accountableAccountId', HiddenType::class)
+            //->add('accountableAccountId', HiddenType::class)
         ;
     }
 

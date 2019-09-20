@@ -61,11 +61,13 @@ class AccountingController extends Controller
         $formHandler = $this->get('accounting.form.entry');
         
         if ($id != null) {
-            $entity = $accountingManager->getEntriesForAccount($id);
+            $entity = $accountingManager->getEntryById($id);
         } else {
             $entity = new Entry();
             if ($accountId != null) {
-                $entity->setAccountableAccountId($accountId);
+                $accountableAccount = $accountingManager->getEntriesForAccount($accountId);
+                $entity->setAccountableAccount($accountableAccount);
+                //$entity->setAccountableAccountId($accountId);
             }
         }
 
@@ -73,9 +75,10 @@ class AccountingController extends Controller
         
         if ($formHandler->process($request)) {
             $translator = $this->get('translator');
-            $entity = $formHandler->getData();
+            $entity = $formHandler->getData($accountableAccount);
+            
             //var_dump($entity);exit;
-
+            
             if ($accountingManager->save($entity)) {
                 $this->addFlash('success', $translator->trans('accounting.account.edit.saveSuccessText'));
 

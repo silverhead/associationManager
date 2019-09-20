@@ -63,10 +63,10 @@ class Entry
     protected $project;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=false)
+     * var int
+     * ORM\Column(type="integer", name="accountable_account_id", nullable=false)
      */
-    protected $accountableAccountId;
+    //protected $accountableAccountId;
     
     /**
      * @var AccountableAccount
@@ -265,22 +265,23 @@ class Entry
     
     /**
      * 
-     * @return Integer
+     * return Integer
      */
+    /*
     public function getAccountableAccountId() {
         return $this->accountableAccountId;
-    }
+    }*/
     
     /**
-     * @param int $accountableAccountId
-     * @return Entry
-     */
+     * param int $accountableAccountId
+     * return Entry
+    /*
     public function setAccountableAccountId($accountableAccountId): Entry
     {
         $this->accountableAccountId = $accountableAccountId;
         
         return $this;
-    }
+    }*/
     
     /**
      * 
@@ -288,5 +289,16 @@ class Entry
      */
     public function getAccountableAccount():?AccountableAccount {
         return $this->accountableAccount;
+    }
+    
+    /**
+     * 
+     * @param \AccountingBundle\Entity\AccountableAccount $accountableAccount
+     * @return \AccountingBundle\Entity\Entry
+     */
+    public function setAccountableAccount(AccountableAccount $accountableAccount): Entry {
+        $this->accountableAccount = $accountableAccount;
+        
+        return $this;
     }
 }
