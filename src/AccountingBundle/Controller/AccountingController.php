@@ -6,10 +6,9 @@ use AppBundle\QueryHelper\FilterQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use AppBundle\QueryHelper\OrderQuery;
 use Symfony\Component\HttpFoundation\Response;
-use AccountingBundle\Form\Model\AccountingListFilterModel;
+use AccountingBundle\Entity\Entry;
 
 class AccountingController extends Controller
 {
@@ -48,6 +47,66 @@ class AccountingController extends Controller
         //var_dump($entriesOfAccount);
         return $this->render('@Accounting/account.html.twig', array(
             'accounting' => $entriesOfAccount
+        ));
+    }
+    
+    /**
+     * @Route("/accounting/account/{accountId}/entry/add", name="accounting_account_entry_add")
+     * @Route("/accounting/account/{accountId}/entry/edit/{id}", name="accounting_account_entry_edit", options = { "expose" = true })
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function entryeditAction(Request $request, $accountId, $id = null) {
+        $accountingManager = $this->get('accounting.manager.accounting');
+        $formHandler = $this->get('accounting.form.entry');
+        
+        if ($id != null) {
+            $entity = $accountingManager->getEntriesForAccount($id);
+        } else {
+            $entity = new Entry();
+            if ($accountId != null) {
+                $entity->setAccountableAccountId($accountId);
+            }
+        }
+
+        $formHandler->setForm($entity);
+        
+        if ($formHandler->process($request)) {
+            $translator = $this->get('translator');
+            $entity = $formHandler->getData();
+            //var_dump($entity);exit;
+
+            if ($accountingManager->save($entity)) {
+                $this->addFlash('success', $translator->trans('accounting.account.edit.saveSuccessText'));
+
+                if ($request->get('save_and_leave', null) !== null) {
+                    //if ($callBackUrl !== null) {
+                    //    return $this->redirect($callBackUrl);
+                    //}
+
+                    //return $this->redirect(
+                    //    $this->generateUrl('user_manager').'#users'
+                    //);
+                }
+
+                if ($request->get('save_and_stay', null) !== null) {
+                    return $this->redirectToRoute('user_edit', [
+                        'id' => $entity->getId()
+                    ]);
+                }
+            }
+
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.errorComming', [
+                    '%error%' => '<br />' . implode('<br />', $accountingManager->getErrors())
+            ]));
+        }
+        
+        
+        //var_dump($entriesOfAccount);
+        return $this->render('@Accounting/edit_account.html.twig', array(
+            'formEntry' =>  $formHandler->getForm()->createView(),
         ));
     }
 }

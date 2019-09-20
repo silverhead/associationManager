@@ -3,3 +3,7 @@ services:
         class: AccountingBundle\Manager\AccountingManager
         autowire: true
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    accounting.form.entry:
+        class: AccountingBundle\Form\Handler\EntryFormHandler
+        arguments: ['@form.factory', '@service_container']
+        

@@ -42,7 +42,7 @@ class Entry
      * @var int
      * @ORM\Column(type="integer", nullable=false)
      */
-    protected $amount;
+        protected $amount;
 
     /**
      * @var Entry
@@ -129,7 +129,7 @@ class Entry
     /**
      * @return \DateTime
      */
-    public function getAccountingDate(): \DateTime
+    public function getAccountingDate()//: \DateTime
     {
         return $this->accountingDate;
     }
@@ -138,7 +138,7 @@ class Entry
      * @param \DateTime $accountingDate
      * @return Entry
      */
-    public function setAccountingDate(\DateTime $accountingDate): Entry
+    public function setAccountingDate(\DateTime $accountingDate = null): Entry
     {
         $this->accountingDate = $accountingDate;
 
@@ -269,6 +269,17 @@ class Entry
      */
     public function getAccountableAccountId() {
         return $this->accountableAccountId;
+    }
+    
+    /**
+     * @param int $accountableAccountId
+     * @return Entry
+     */
+    public function setAccountableAccountId($accountableAccountId): Entry
+    {
+        $this->accountableAccountId = $accountableAccountId;
+        
+        return $this;
     }
     
     /**

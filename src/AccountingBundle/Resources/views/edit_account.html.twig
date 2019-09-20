@@ -2,9 +2,9 @@
 
 {% block content %}
     <div class="row block-header">
-        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
+        <!-- {  include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } } -->
         <h2 class="col-xs-12">
-            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
+            <!-- <a href="{ callBackUrl }" class="btn bg-grey waves-effect">{ 'app.common.returnBtn'|trans }</a> -->&nbsp;
             {{ 'accounting.account.edit.title'|trans }}
         </h2>
     </div>
@@ -14,63 +14,36 @@
             <div class="card">
                 <div class="body">
                     {{ form_start(formEntry) }}
+                    {{ form_row(formEntry.accountableAccountId) }}
                     <div class="row">
                         <div class="col-md-6">
-                            {{ form_row(formEntry., {
-                                'label': 'accounting.account.edit.form.group'|trans
+                            {{ form_row(formEntry.reference, {
+                                'label': 'accounting.account.edit.form.reference'|trans
                             }) }}
                         </div>
                         <div class="col-md-6">
-                            {{ form_row(forEntry.active, {'label': 'accounting.account.edit.form.active'|trans}) }}
+                            {{ form_row(formEntry.accountingDate, {'label': 'accounting.account.edit.form.accounting_date'|trans}) }}
                         </div>
                     </div>                    
                     <div class="row">
                         <div class="col-md-6">
-                            {{ form_row(formEntry.firstName, {
-                                'label': 'accounting.account.edit.form.firstName'|trans,
+                            {{ form_row(formEntry.valueDate, {
+                                'label': 'accounting.account.edit.form.valueDate'|trans,
                                 'attr': {
-                                    'placeholder': 'accounting.account.edit.form.firstName'|trans
+                                    'placeholder': 'accounting.account.edit.form.valueDate'|trans
                                 }
                             }) }}
                         </div>
                         <div class="col-md-6">
-                            {{ form_row(formEntry.lastName, {
-                                'label': 'accounting.account.edit.form.lastName'|trans,
+                            {{ form_row(formEntry.amount, {
+                                'label': 'accounting.account.edit.form.amount'|trans,
                                 'attr': {
-                                    'placeholder': 'accounting.account.edit.form.lastName'|trans
-                                }
-                            }) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ form_row(forEntry.username, {
-                                'label': 'accounting.account.edit.form.username'|trans,
-                                'attr': {
-                                    'placeholder': 'accounting.account.edit.form.username'|trans
-                                }
-                            }) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(formEntry.email, {
-                                'label': 'accounting.account.edit.form.email'|trans,
-                                'attr': {
-                                    'placeholder': 'accounting.account.edit.form.email'|trans
+                                    'placeholder': 'accounting.account.edit.form.amount'|trans
                                 }
                             }) }}
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            {#  '<small>'~ 'accounting.account.edit.form.passwordHelp'|trans ~'</small>' #}
-                            {{ form_row(formEntry.plainPassword.first, {
-                                'label': 'accounting.account.edit.form.password'|trans
-                            }) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(formEntry.plainPassword.second) }}
-                        </div>
-                    </div>
+                    
                     <div class="row">
                         <div class="col-md-12 text-center">
                             {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
