@@ -151,14 +151,16 @@ class AccountableAccount {
         }
         $arraySoldes = $this->soldes->getValues();
         usort($arraySoldes, function ($object1, $object2) { 
-            return $object1->getDate() > $object2->getDate(); 
+            return $object1->getDate() < $object2->getDate(); 
         });
         $soldeToReturn = null;
         foreach ($arraySoldes as $solde) {
             if ($solde->getIsPrev() == $isPrev) {
                 $soldeToReturn = $solde;
-                break;
+            } else {
+                $soldeToReturn = $solde;
             }
+            break;
         }
         return $soldeToReturn;
     } 

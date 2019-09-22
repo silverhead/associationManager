@@ -263,6 +263,10 @@ class Entry
         return $this;
     }
     
+    public function getIsPrev() {
+        return $this->accountingDate == null;
+    }
+    
     /**
      * 
      * return Integer

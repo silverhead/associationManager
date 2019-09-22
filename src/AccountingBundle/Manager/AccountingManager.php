@@ -9,6 +9,7 @@ use AppBundle\Handler\ErrorHandlerTrait;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use AccountingBundle\Entity\Entry;
+use AccountingBundle\Entity\Solde;
 
 class AccountingManager implements PaginatorManagerInterface
 {
@@ -55,5 +56,26 @@ class AccountingManager implements PaginatorManagerInterface
         $accountableAccount = $accountableAccountRepo->findAll($accountId);
 
         return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
+    }
+    /**
+     * override
+     */
+    public function saveEntryAndupdateSolde(Entry $entity) {        
+        $soldeRepo = $this->entityManager->getRepository("AccountingBundle:Solde");
+        $lastSolde = $soldeRepo->findLastSoldeForAccountableAccount($entity->getAccountableAccount());
+        $dateNewSolde = $entity->getIsPrev() ? $entity->getValueDate() : $entity->getAccountingDate();
+
+        $newSolde = new Solde();
+        $newSolde->setDate($dateNewSolde);
+        $newSolde->setAmount($lastSolde->getAmount() + $entity->getAmount());
+        $newSolde->setIsPrev($entity->getIsPrev());
+        $newSolde->setUpdatedAt(new \DateTime());
+        $newSolde->setAccountableAccount($entity->getAccountableAccount());
+        
+        $this->entityManager->persist($entity);
+        $this->entityManager->persist($newSolde);
+        $this->entityManager->flush();
+
+        return true;
     }
 }

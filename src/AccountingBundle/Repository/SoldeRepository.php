@@ -34,4 +34,15 @@ class SoldeRepository extends EntityRepository implements PaginatorRepositoryInt
             ->getResult();
     }
     
+    public function findLastSoldeForAccountableAccount($accountableAccount) {
+        $qb = $this->createQueryBuilder("s");
+        $qb->setMaxResults(1);
+        
+        $qb->select("s")
+            ->where("s.accountableAccount = :accountableAccount")
+                ->setParameter("accountableAccount", $accountableAccount)
+            ->orderBy("s.date", "DESC");
+        
+        return $qb->getQuery()->getSingleResult();
+    }
 }

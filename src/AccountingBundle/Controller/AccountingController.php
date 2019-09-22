@@ -79,7 +79,7 @@ class AccountingController extends Controller
             
             //var_dump($entity);exit;
             
-            if ($accountingManager->save($entity)) {
+            if ($accountingManager->saveEntryAndupdateSolde($entity)) {
                 $this->addFlash('success', $translator->trans('accounting.account.edit.saveSuccessText'));
 
                 if ($request->get('save_and_leave', null) !== null) {

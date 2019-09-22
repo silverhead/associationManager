@@ -158,4 +158,15 @@ class Solde {
     public function getAccountableAccount():?AccountableAccount {
         return $this->accountableAccount;
     }
+    
+    /**
+     * 
+     * @param \AccountingBundle\Entity\AccountableAccount $accountableAccount
+     * @return \AccountingBundle\Entity\Solde
+     */
+    public function setAccountableAccount(AccountableAccount $accountableAccount): Solde {
+        $this->accountableAccount = $accountableAccount;
+        
+        return $this;
+    }
 }
