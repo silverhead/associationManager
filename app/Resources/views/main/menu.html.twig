@@ -24,29 +24,45 @@
                 </a>
             </li>
         {% endif %}
+        {% if is_granted('EMAIL_EMAILING_MANAGER_MENU') %}
+            <li  class="{% if menuSelect == 'emailing_list' %}active{% endif %}">
+                <a href="{{ path('email_emailing_list') }}" class=" waves-effect waves-block">
+                    <i class="material-icons">email</i>
+                    <span>{{ 'email.emailing.menu_manager'|trans }}</span>
+                </a>
+            </li>
+        {% endif %}
         {% if is_granted('APP_MASTER_SETTING_MENU') %}
             <li class="header">{{ 'menu.application'|trans }}</li>
-            {% if is_granted('APP_SETTING_VIEW') %}
-                <li  class="{% if menuSelect == 'setting_manager' %}active{% endif %}">
-                    <a href="{{ path('setting_manager') }}" class=" waves-effect waves-block">
-                        <i class="material-icons">settings</i>
-                        <span>{{ 'menu.setting'|trans }}</span>
+            {% if is_granted('USER_MANAGER_MENU') %}
+                <li  class="{% if menuSelect == 'user_manager' %}active{% endif %}">
+                    <a href="{{ path('user_manager') }}" class=" waves-effect waves-block">
+                        <i class="material-icons">group</i>
+                        <span>{{ 'menu.user'|trans }}</span>
                     </a>
                 </li>
             {% endif %}
-            {#{% if is_granted('APP_SETTING_VIEW') %}#}
+            {% if is_granted('APP_SETTING_VIEW') %}
                 <li  class="{% if menuSelect == 'dashboard_manager' %}active{% endif %}">
                     <a href="{{ path('dashboard_manager') }}" class=" waves-effect waves-block">
                         <i class="material-icons">extension</i>
                         <span>{{ 'dashboard.menu.manager'|trans }}</span>
                     </a>
                 </li>
-            {#{% endif %}            #}
-            {% if is_granted('USER_MANAGER_MENU') %}
-                <li  class="{% if menuSelect == 'user_manager' %}active{% endif %}">
-                    <a href="{{ path('user_manager') }}" class=" waves-effect waves-block">
-                        <i class="material-icons">group</i>
-                        <span>{{ 'menu.user'|trans }}</span>
+            {% endif %}
+            {% if is_granted('EMAIL_SYSTEM_EMAIL_MANAGER_MENU') %}
+                <li  class="{% if menuSelect == 'system_email_list' %}active{% endif %}">
+                    <a href="{{ path('app_email_setting') }}" class=" waves-effect waves-block">
+                        <i class="material-icons">mail_outline</i>
+                        <span>{{ 'email.system_email.menu_manager'|trans }}</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted('APP_SETTING_VIEW') %}
+                <li  class="{% if menuSelect == 'setting_manager' %}active{% endif %}">
+                    <a href="{{ path('setting_manager') }}" class=" waves-effect waves-block">
+                        <i class="material-icons">settings</i>
+                        <span>{{ 'menu.setting'|trans }}</span>
                     </a>
                 </li>
             {% endif %}

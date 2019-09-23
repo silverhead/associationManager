@@ -59,7 +59,7 @@ class Email
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $automatic;
+    private $system;
 
     public function __construct()
     {
@@ -172,18 +172,18 @@ class Email
     /**
      * @return bool
      */
-    public function isAutomatic(): bool
+    public function isSystem(): bool
     {
-        return $this->automatic;
+        return $this->system;
     }
 
     /**
-     * @param bool $automatic
+     * @param bool $system
      * @return Email
      */
-    public function setAutomatic(bool $automatic): Email
+    public function setSystem(bool $system): Email
     {
-        $this->automatic = $automatic;
+        $this->system = $system;
 
         return $this;
     }
@@ -193,8 +193,8 @@ class Email
      *
      * @return bool
      */
-    public function getAutomatic()
+    public function getSystem()
     {
-        return $this->automatic;
+        return $this->system;
     }
 }

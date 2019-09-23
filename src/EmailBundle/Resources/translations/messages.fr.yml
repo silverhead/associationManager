@@ -1,6 +1,16 @@
 email:
     system_email:
+        menu_manager: Paramètres e-mails système
+        credential:
+            title: Droit configuration e-mails système
         list:
             title: Liste des e-mails système
             label: Libellé
             bundle_label: Type
+    emailing:
+        menu_manager: E-mailing
+        credential:
+            title: Droit configuration e-mailing
+        list:
+            title: Liste des e-mails
+            label: Libellé

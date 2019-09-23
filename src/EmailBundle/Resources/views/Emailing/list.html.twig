@@ -1,0 +1,88 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block javascript %}
+{{ parent() }}
+{% endblock %}
+
+{% block style %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+            {
+                'href': path('dashboard'),
+                'title': 'app.dashboard.callback'|trans,
+                'label': 'app.dashboard.title'|trans
+            },
+            {
+                'label': 'email.emailing.list.title'|trans
+            }
+        ] } %}
+
+        <h2 class="col-xs-12">
+            {{ 'email.emailing.list.title'|trans }}
+        </h2>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body table-responsive">
+                    <table id="emailTableList" class="table table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th>{{ 'email.emailing.list.label'|trans }}</th>
+                            <th>{{ 'email.emailing.list.bundle_label'|trans }}</th>
+                            <th class="text-center" >{{ 'app.common.table.action'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Bienvenue</td>
+                            <td>Inscription</td>
+                            <td>
+                                <a href="#" class="btn btn-primary material-icons">send</a>
+                                <a href="#" class="btn btn-warning material-icons">edit</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Mot de passe perdu</td>
+                            <td>Sécurité</td>
+                            <td>
+                                <a href="#" class="btn btn-primary material-icons">send</a>
+                                <a href="#" class="btn btn-warning material-icons">edit</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Fin d'abonnement/cotisation</td>
+                            <td>Abonnement</td>
+                            <td>
+                                <a href="#" class="btn btn-primary material-icons">send</a>
+                                <a href="#" class="btn btn-warning material-icons">edit</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Retard de cotisation</td>
+                            <td>Abonnement</td>
+                            <td>
+                                <a href="#" class="btn btn-primary material-icons">send</a>
+                                <a href="#" class="btn btn-warning material-icons">edit</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="pull-right">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

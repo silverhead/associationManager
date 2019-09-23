@@ -1,0 +1,4 @@
+imports:
+    - {resource: credentials.yml}
+#    - {resource: dashboard.yml}
+    - {resource: services.yml}

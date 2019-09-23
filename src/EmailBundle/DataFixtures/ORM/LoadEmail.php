@@ -31,7 +31,7 @@ class LoadUEmailData implements FixtureInterface, ContainerAwareInterface
             $email->setLabel($fakeEmail->label);
             $email->setSubject($fakeEmail->subject);
             $email->setBody($fakeEmail->body);
-            $email->setAutomatic($fakeEmail->automatic);
+            $email->setSystem($fakeEmail->automatic);
             $email->setStatus(Email::STATUS_AUTOMATIC);
 
 

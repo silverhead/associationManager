@@ -1,0 +1,42 @@
+services:
+    # EVENT LISTENER
+    email.system_email.credential.event:
+        class: AppBundle\EventListener\AppCredentialEventListener
+        arguments: ['%credentialVoterEmailSystemEmail%', 'email.system_email.credential.title']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    email.emailing.credential.event:
+        class: AppBundle\EventListener\AppCredentialEventListener
+        arguments: ['%credentialVoterEmailEmailing%', 'email.emailing.credential.title']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    # VOTER
+    email.system_email.voter:
+        class: AppBundle\Security\AppVoter
+        autowire: true
+        arguments: ['%credentialVoterEmailSystemEmail%']
+        tags:
+            - {name: security.voter}
+    email.emailing.voter:
+        class: AppBundle\Security\AppVoter
+        autowire: true
+        arguments: ['%credentialVoterEmailEmailing%']
+        tags:
+            - {name: security.voter}
+    email.emailing.menu.voter:
+        class: AppBundle\Security\AppMenuVoter
+        autowire: true
+        arguments: ['%credentialVoterEmailMenu%', '%masterCredentialMenuEmailEmailing%']
+        tags:
+            - {name: security.voter}
+    email.system_email.menu.voter:
+        class: AppBundle\Security\AppMenuVoter
+        autowire: true
+        arguments: ['%credentialVoterEmailSystemEmailMenu%', '%masterCredentialMenuEmailSystemEmail%']
+        tags:
+            - {name: security.voter}
+    # MANAGER
+    # FORM MODEL
+    # FORM HANDLER
+    # CONTROLLER
+    # Validator
