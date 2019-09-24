@@ -14,3 +14,4 @@ email:
         list:
             title: Liste des e-mails
             label: Libellé
+            status: Statut

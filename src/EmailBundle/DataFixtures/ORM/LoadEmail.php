@@ -3,9 +3,9 @@ namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use EmailBundle\Entity\EmailSystem;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use EmailBundle\Entity\Email;
 
 class LoadUEmailData implements FixtureInterface, ContainerAwareInterface
 {
@@ -27,13 +27,12 @@ class LoadUEmailData implements FixtureInterface, ContainerAwareInterface
         $emails = $this->getEmails();
 
         foreach ($emails as $fakeEmail){
-            $email = new Email();
+            $email = new EmailSystem();
             $email->setLabel($fakeEmail->label);
             $email->setSubject($fakeEmail->subject);
             $email->setBody($fakeEmail->body);
-            $email->setSystem($fakeEmail->automatic);
-            $email->setStatus(Email::STATUS_AUTOMATIC);
-
+            $email->setCode($fakeEmail->code);
+            $email->setBundleLabel($fakeEmail->bundleLabel);
 
             $manager->persist($email);
         }
@@ -48,7 +47,9 @@ class LoadUEmailData implements FixtureInterface, ContainerAwareInterface
                 'label' => 'E-mail de bienvenue',
                 'subject' => "{associationName} : Bienvenue dans notre association",
                 'body' => "<p>Bonjour {lastName} {firstName},<br /> <br /> Merci de rejoindre notre association.<br /> <br /> A bient&ocirc;t dans votre FabLab.<br /> <br /> Cordialement,<br /> <br /> L'&eacute;quipe de {associationName}</p>",
-                'automatic' => true
+                'bundleLabel' => "Inscription",
+                'code' => "SUBCRIPTION_WELCOME"
+
             ),
             (object) array(
                 'label' => 'E-mail Mot de passe perdu',
@@ -61,13 +62,15 @@ class LoadUEmailData implements FixtureInterface, ContainerAwareInterface
                         et suivre les instructions de la page qui va s'afficher.<br/>
                         <br/>
                         Cordialement,",
-                'automatic' => true
+                'bundleLabel' => "Sécurité",
+                'code' => "SECURITY_LOST_PASSWORD"
             ),
             (object) array(
                 'label' => 'E-mail de confirmation de souscription à un abonnement',
                 'subject' => "{associationName} : Confirmation inscription \"{subscriptionLabel}\"",
                 'body' => "<p>Bonjour {lastName} {firstName},<br /> <br /> Merci pour votre abonnement &agrave; \"{subscriptionLabel}\".<br /> <br /> Votre abonnement commence le {startDate} et fini le {endDate} pour un co&ucirc;t de {totalCost} &euro;.<br /> <br /> A bient&ocirc;t dans votre FabLab.<br /> <br /> Cordialement,<br /> <br /> L'&eacute;quipe de {associationName}</p>",
-                'automatic' => true
+                'bundleLabel' => "Abonnement",
+                'code' => "SUBSCRIPTION_CONFIRM"
             ),
             (object) array(
                 'label' => 'E-mail de notification de nouvelle échéance de cotisation',
@@ -76,26 +79,18 @@ class LoadUEmailData implements FixtureInterface, ContainerAwareInterface
 <p>Une nouvelle cotisation est pr&eacute;vu le {startDateNewFee}, vous pouvez r&eacute;gler votre nouvelle cotisation &agrave; tout moment avant son &eacute;ch&eacute;ance.</p>
 <p>Si ce n'est pas le cas, votre compte sera d&eacute;sactiv&eacute; et vous ne pourez plus b&eacute;n&eacute;ficier de nos service.</p>
 <p>Cordialement,<br /> <br /> L'&eacute;quipe de {associationName}</p>",
-                'automatic' => true
+                'bundleLabel' => "Abonnement",
+                'code' => "SUBSCRIPTION_NEW_FEE_COMING"
             ),
             (object) array(
-                'label' => 'E-mail de notification de nouvelle échéance de cotisation',
+                'label' => "E-mail de notification de retard d'échéance de cotisation",
                 'subject' => "{associationName} : Notification retard de paiement \"{subscriptionLabel}\"",
                 'body' => "<<p>Bonjour {lastName} {firstName},<br /> <br />Votre cotisation pour l'abonnement \"{subscriptionLabel}\" arrive &agrave; &eacute;ch&eacute;ance (le {endDate}).</p>
 <p>Une nouvelle cotisation est pr&eacute;vu le {startDateNewFee}, vous pouvez r&eacute;gler votre nouvelle cotisation &agrave; tout moment avant son &eacute;ch&eacute;ance.</p>
 <p>Si ce n'est pas le cas, votre compte sera d&eacute;sactiv&eacute; et vous ne pourez plus b&eacute;n&eacute;ficier de nos service.</p>
 <p>Cordialement,<br /> <br /> L'&eacute;quipe de {associationName}</p>",
-                'automatic' => true
-            ),
-            (object) array(
-                'label' => 'E-mail de notification de nouvelle échéance de cotisation',
-                'subject' => "{associationName} : Notification retard de paiement \"{subscriptionLabel}\"",
-                'body' => "<p>Bonjour {lastName} {firstName},</p>
-<p>Vous recevez cet e-mail car notre logiciel a d&eacute;tect&eacute; que vous &ecirc;tes en retard de paiement pour l'abonnement suivant :&nbsp; \"{subscriptionLabel}\".</p>
-<p>Veuillez r&eacute;gulariser votre situation au plus vite, sinon nous serons dans l'obligation de vous d&eacute;sincrire de notre association et vous ne pourrez plus pr&eacute;tendre aux services que nous vous proposons.</p>
-<p>&nbsp;Cordialement,</p>
-<p>L'&eacute;quipe de {associationName}</p>",
-                'automatic' => true
+                'bundleLabel' => "Abonnement",
+                'code' => "SUBSCRIPTION_LATE_FEE_PAYMENT"
             )
         ];
     }

@@ -8,15 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Email
  * @package EmailBundle\Entity
  * @ORM\Entity(repositoryClass="EmailBundle\Repository\EmailRepository")
+ * @ORM\Table(name="email_email")
  */
 class Email
 {
-    public const STATUS_UNKNOWN = 0;
-    public const STATUS_DRAFT = 1;
-    public const STATUS_NOT_SEND = 2;
-    public const STATUS_SENT = 3;
-    public const STATUS_AUTOMATIC = 4;
-
     /**
      * @var integer
      * @ORM\Id()
@@ -44,22 +39,10 @@ class Email
     private $body;
 
     /**
-     * @var integer
-     * @ORM\Column(type="integer")
-     */
-    private $status;
-
-    /**
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
     private $updatedDate;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    private $system;
 
     public function __construct()
     {
@@ -132,25 +115,6 @@ class Email
     }
 
     /**
-     * @return int
-     */
-    public function getStatus(): int
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param int $status
-     * @return Email
-     */
-    public function setStatus(int $status): Email
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getUpdatedDate(): \DateTime
@@ -167,34 +131,5 @@ class Email
         $this->updatedDate = $updatedDate;
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSystem(): bool
-    {
-        return $this->system;
-    }
-
-    /**
-     * @param bool $system
-     * @return Email
-     */
-    public function setSystem(bool $system): Email
-    {
-        $this->system = $system;
-
-        return $this;
-    }
-
-    /**
-     * Get automatic.
-     *
-     * @return bool
-     */
-    public function getSystem()
-    {
-        return $this->system;
     }
 }
