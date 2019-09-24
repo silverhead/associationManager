@@ -51,10 +51,10 @@ class Entry
     protected $entryParent;
     
     /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=true)
+     * var int
+     * ORM\Column(type="integer", nullable=true)
      */
-    protected $projectId;
+    //protected $projectId;
 
     /**
      * @var Project
@@ -62,12 +62,6 @@ class Entry
      */
     protected $project;
 
-    /**
-     * var int
-     * ORM\Column(type="integer", name="accountable_account_id", nullable=false)
-     */
-    //protected $accountableAccountId;
-    
     /**
      * @var AccountableAccount
      * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="entries", fetch="EAGER")
@@ -199,15 +193,16 @@ class Entry
     }
 
     /**
-     * @return Project
+     * 
+     * @return \AccountingBundle\Entity\Project|null
      */
-    public function getProject()
+    public function getProject():?Project
     {
         return $this->project;
     }
 
     /**
-     * @param Project $project
+     * @param \AccountingBundle\Entity\Project $project
      * @return Entry
      */
     public function setProject($project)
@@ -263,35 +258,17 @@ class Entry
         return $this;
     }
     
-    public function getIsPrev() {
+    public function getIsPrev()
+    {
         return $this->accountingDate == null;
     }
-    
-    /**
-     * 
-     * return Integer
-     */
-    /*
-    public function getAccountableAccountId() {
-        return $this->accountableAccountId;
-    }*/
-    
-    /**
-     * param int $accountableAccountId
-     * return Entry
-    /*
-    public function setAccountableAccountId($accountableAccountId): Entry
-    {
-        $this->accountableAccountId = $accountableAccountId;
         
-        return $this;
-    }*/
-    
     /**
      * 
      * @return \AccountingBundle\Entity\AccountableAccount|null
      */
-    public function getAccountableAccount():?AccountableAccount {
+    public function getAccountableAccount():?AccountableAccount
+    {
         return $this->accountableAccount;
     }
     
@@ -300,7 +277,8 @@ class Entry
      * @param \AccountingBundle\Entity\AccountableAccount $accountableAccount
      * @return \AccountingBundle\Entity\Entry
      */
-    public function setAccountableAccount(AccountableAccount $accountableAccount): Entry {
+    public function setAccountableAccount(AccountableAccount $accountableAccount): Entry
+    {
         $this->accountableAccount = $accountableAccount;
         
         return $this;

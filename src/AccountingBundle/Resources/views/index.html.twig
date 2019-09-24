@@ -30,7 +30,8 @@
                             <table class="table table-striped orderable dataTable">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: center;">{{ 'accounting.common.date'|trans }}</th>
+                                        <th style="text-align: center;width:80px;">{{ 'accounting.common.date_value'|trans }}</th>
+                                        <th style="text-align: center;width:80px;">{{ 'accounting.common.date_accounting'|trans }}</th>
                                         <th style="text-align: center;">{{ 'accounting.common.reference'|trans }}</th>
                                         <th style="text-align: center;width:60px;">{{ 'accounting.common.outcome'|trans }}</th>
                                         <th style="text-align: center;width:60px;">{{ 'accounting.common.income'|trans }}</th>
@@ -39,6 +40,7 @@
                                 <tbody>
                                     {% for entry in accounting.getEntries()|slice(0, 3) %}
                                         <tr>
+                                            <td>{{ entry.getValueDate()|date('d/m/Y') }}</td>
                                             <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
                                             <td>{{ entry.getReference() }}</td>
                                             <td class="number" style="text-align: right;">

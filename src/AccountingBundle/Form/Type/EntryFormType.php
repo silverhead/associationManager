@@ -17,8 +17,12 @@ class EntryFormType extends AbstractType
     {
         $builder
             ->add('reference', TextType::class)
-            ->add('accountingDate', DateType::class)
-            ->add('valueDate', DateType::class)
+            ->add('accountingDate', DateType::class, array(
+                'widget' => 'single_text'
+            ))
+            ->add('valueDate', DateType::class, array(
+                'widget' => 'single_text'
+            ))
             ->add('amount', MoneyType::class)
             //->add('accountableAccountId', HiddenType::class)
         ;

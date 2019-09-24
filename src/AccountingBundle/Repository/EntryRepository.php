@@ -31,7 +31,8 @@ class EntryRepository extends EntityRepository implements PaginatorRepositoryInt
         return $qb;
     }
     
-    public function countEntry(bool $onlyActive = false) {
+    public function countEntry(bool $onlyActive = false)
+    {
         $qb = $this->createQueryBuilder("j")->select("COUNT(j)");
 
         if ($onlyActive) {
@@ -41,10 +42,24 @@ class EntryRepository extends EntityRepository implements PaginatorRepositoryInt
         return $qb->getQuery()->getSingleScalarResult();
     }
     
-    public function findAll() {
+    public function findAll()
+    {
         return $this->createQueryBuilder("e")
             ->getQuery()
             ->getResult();
     }
     
+    public function findById($entryId)
+    {
+        /*
+        $qb = $this->createQueryBuilder("e");
+        $qb->select("e")
+            //->innerJoin('e.accountableAccount', 'a')
+            ->where("e.id = :id")
+                ->setParameter("id", $entryId);
+        
+        return $qb->getQuery()->getSingleResult();
+        */
+        return $this->findOneBy(array('id' => $entryId));
+    }
 }

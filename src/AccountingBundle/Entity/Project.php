@@ -2,6 +2,8 @@
 
 namespace AccountingBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,8 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Project
 {
-    //protected $discr = 'project';
-
     /**
      * @var int
      * @ORM\Id()
@@ -40,9 +40,15 @@ class Project
      */
     protected $updatedAt;
 
+    /**
+     * @var \ArrayObject|Entry
+     * @ORM\OneToMany(targetEntity="AccountingBundle\Entity\Entry", fetch="EAGER", mappedBy="project")
+     */
+    protected $entries;
+    
     public function __construct()
     {
-        
+        $this->entries = new ArrayCollection();
     }
 
     /**
@@ -127,5 +133,14 @@ class Project
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+    
+    /**
+     * 
+     * @return PersistentCollection|null
+     */
+    public function getEntries():?PersistentCollection
+    {
+        return $this->entries;
     }
 }

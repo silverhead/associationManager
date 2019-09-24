@@ -3,6 +3,8 @@
 accounting:
     common:
         date: Date
+        date_value: Date de valeur
+        date_accounting: Date d'opération
         reference: Référence
         outcome: Débit
         income: Crédit
@@ -10,6 +12,15 @@ accounting:
         prev_solde: Solde prévisionnel
     synthesis:
         title: Synthèse des comptes
+        callback: Retour à la synthèse des comptes
     account:
         title: Liste des opérations
+        edit:
+            title: Editer une opération
+            saveSuccessText: L'opération a été sauvegardée
+            form:
+                reference: Référence
+                amount: Montant
+                accounting_date: Date d'opération
+                value_date: Date de valeur
     

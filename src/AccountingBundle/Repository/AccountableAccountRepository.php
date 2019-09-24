@@ -48,20 +48,21 @@ class AccountableAccountRepository extends EntityRepository implements Paginator
         if ($id != null) {
             $qb = $this->createQueryBuilder('a')
                 ->select('a, e')
-                //->from('\AccountingBundle\Entity\AccountableAccount', 'a')
                 ->innerJoin('a.entries', 'e')
-                //->innerJoin('a.soldes', 's')
                 ->where("a.id = :id")
                 ->setParameter("id", $id)
                 ->addOrderBy('a.label', 'ASC')
-                ->addOrderBy('e.accountingDate', 'DESC');
+                ->addOrderBy('e.accountingDate', 'DESC')
+                ->addOrderBy('e.valueDate', 'DESC')
+                ;
         } else {
             $qb = $this->createQueryBuilder('a')
                 ->select('a, e')
-                //->from('\AccountingBundle\Entity\AccountableAccount', 'a')
                 ->innerJoin('a.entries', 'e')
                 ->addOrderBy('a.label', 'ASC')
-                ->addOrderBy('e.accountingDate', 'DESC');
+                ->addOrderBy('e.accountingDate', 'DESC')
+                ->addOrderBy('e.valueDate', 'DESC')
+                ;
         }
         
         return $qb->getQuery()

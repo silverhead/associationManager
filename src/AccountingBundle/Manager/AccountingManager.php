@@ -57,6 +57,12 @@ class AccountingManager implements PaginatorManagerInterface
 
         return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
     }
+    
+    public function getEntryById($entryId) {
+        $entryRepo = $this->entityManager->getRepository("AccountingBundle:Entry");
+        return $entryRepo->findById($entryId);
+    }
+    
     /**
      * override
      */

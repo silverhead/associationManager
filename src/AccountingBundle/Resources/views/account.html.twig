@@ -8,6 +8,11 @@
             'title': 'app.dashboard.callback'|trans,
             'label': 'app.dashboard.title'|trans
         },
+{
+            'href': path('accounting_index'),
+            'title': 'accounting.synthesis.callback'|trans,
+            'label': 'accounting.synthesis.title'|trans
+        },
         {
             'label': 'accounting.account.title'|trans
         }
@@ -23,7 +28,7 @@
             <div class="card">
                 <div class="body table-responsive">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-9">
                             <h3>{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getLastSolde().getFormattedAmount() }}</h3>
                         </div>
                         <div class="col-md-3">
@@ -33,7 +38,8 @@
                     <table class="table table-striped orderable dataTable">
                         <thead>
                             <tr>
-                                <th style="text-align: center;">{{ 'accounting.common.date'|trans }}</th>
+                                <th style="text-align: center;width:80px;">{{ 'accounting.common.date_value'|trans }}</th>
+                                <th style="text-align: center;width:80px;">{{ 'accounting.common.date_accounting'|trans }}</th>
                                 <th style="text-align: center;">{{ 'accounting.common.reference'|trans }}</th>
                                 <th style="text-align: center;width:60px;">{{ 'accounting.common.outcome'|trans }}</th>
                                 <th style="text-align: center;width:60px;">{{ 'accounting.common.income'|trans }}</th>
@@ -42,6 +48,7 @@
                         <tbody>
                             {% for entry in accounting.getEntries() %}
                                 <tr>
+                                    <td>{{ entry.getValueDate()|date('d/m/Y') }}</td>
                                     <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
                                     <td>{{ entry.getReference() }}</td>
                                     <td class="number" style="text-align: right;">

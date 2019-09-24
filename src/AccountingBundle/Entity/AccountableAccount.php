@@ -146,9 +146,6 @@ class AccountableAccount {
     }
     
     public function getLastSolde($isPrev = false) {
-        if (is_array($this->soldes)) {
-            echo "OUI"; exit;
-        }
         $arraySoldes = $this->soldes->getValues();
         usort($arraySoldes, function ($object1, $object2) { 
             return $object1->getDate() < $object2->getDate(); 

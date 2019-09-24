@@ -4,6 +4,7 @@ namespace AccountingBundle\Controller;
 
 use AppBundle\QueryHelper\FilterQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\QueryHelper\OrderQuery;
@@ -64,13 +65,16 @@ class AccountingController extends Controller
             $entity = $accountingManager->getEntryById($id);
         } else {
             $entity = new Entry();
-            if ($accountId != null) {
-                $accountableAccount = $accountingManager->getEntriesForAccount($accountId);
-                $entity->setAccountableAccount($accountableAccount);
-                //$entity->setAccountableAccountId($accountId);
-            }
         }
-
+        if ($accountId != null) {
+            $accountableAccount = $accountingManager->getEntriesForAccount($accountId);
+            $entity->setAccountableAccount($accountableAccount);
+        }
+        
+        $pageH = $this->get('app.handler.page_historical');
+        $callBackUrl = $this->get('router')->generate('accounting_account_id', array('accountId' => $accountId));
+        $translator = $this->get('translator');
+        
         $formHandler->setForm($entity);
         
         if ($formHandler->process($request)) {
@@ -83,18 +87,19 @@ class AccountingController extends Controller
                 $this->addFlash('success', $translator->trans('accounting.account.edit.saveSuccessText'));
 
                 if ($request->get('save_and_leave', null) !== null) {
-                    //if ($callBackUrl !== null) {
-                    //    return $this->redirect($callBackUrl);
-                    //}
+                    if ($callBackUrl !== null) {
+                        return $this->redirect($callBackUrl);
+                    }
 
-                    //return $this->redirect(
-                    //    $this->generateUrl('user_manager').'#users'
-                    //);
+                    return $this->redirect(
+                        $this->get('router')->generate('accounting_index', array('accountId' => $entity->getAccountableAccount()->getId()))
+                    );
                 }
 
                 if ($request->get('save_and_stay', null) !== null) {
-                    return $this->redirectToRoute('user_edit', [
-                        'id' => $entity->getId()
+                    return $this->redirectToRoute('accounting_account_entry_edit', [
+                        'id' => $entity->getId(),
+                        'accountId' => $entity->getAccountableAccount()->getId()
                     ]);
                 }
             }
@@ -105,11 +110,30 @@ class AccountingController extends Controller
                     '%error%' => '<br />' . implode('<br />', $accountingManager->getErrors())
             ]));
         }
+        $breadcrumbs = [
+            [
+                'href' => $this->redirectToRoute('accounting_index'),
+                'title' => $translator->trans('accounting.synthesis.callback'),
+                'label' => $translator->trans('accounting.synthesis.title')
+            ]
+        ];
         
+        if ($callBackUrl != null) {
+            $breadcrumbs[] = [
+                'href' => $callBackUrl,
+                'title' => $translator->trans('accounting.account.title'),
+                'label' => $translator->trans('accounting.account.title')
+            ];
+        }
         
-        //var_dump($entriesOfAccount);
+        $breadcrumbs[] = [
+            'label' => $translator->trans('accounting.account.edit.title')
+        ];
+
         return $this->render('@Accounting/edit_account.html.twig', array(
             'formEntry' =>  $formHandler->getForm()->createView(),
+            'breadcrumbs' => $breadcrumbs,
+            'callBackUrl' => $callBackUrl
         ));
     }
 }

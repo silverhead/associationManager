@@ -2,9 +2,9 @@
 
 {% block content %}
     <div class="row block-header">
-        <!-- {  include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } } -->
+        {% include 'main/breadcrumb.html.twig' with { 'breadcrumbs': breadcrumbs } %}
         <h2 class="col-xs-12">
-            <!-- <a href="{ callBackUrl }" class="btn bg-grey waves-effect">{ 'app.common.returnBtn'|trans }</a> -->&nbsp;
+            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
             {{ 'accounting.account.edit.title'|trans }}
         </h2>
     </div>
@@ -14,7 +14,6 @@
             <div class="card">
                 <div class="body">
                     {{ form_start(formEntry) }}
-                    <!--  form_row(formEntry.accountableAccountId) -->
                     <div class="row">
                         <div class="col-md-6">
                             {{ form_row(formEntry.reference, {
@@ -22,23 +21,28 @@
                             }) }}
                         </div>
                         <div class="col-md-6">
-                            {{ form_row(formEntry.accountingDate, {'label': 'accounting.account.edit.form.accounting_date'|trans}) }}
+                            {{ form_row(formEntry.amount, {
+                                'label': 'accounting.account.edit.form.amount'|trans
+                            }) }}
                         </div>
                     </div>                    
                     <div class="row">
                         <div class="col-md-6">
                             {{ form_row(formEntry.valueDate, {
-                                'label': 'accounting.account.edit.form.valueDate'|trans,
+                                'label': 'accounting.account.edit.form.value_date'|trans,
+                                
                                 'attr': {
-                                    'placeholder': 'accounting.account.edit.form.valueDate'|trans
+                                    'placeholder': 'accounting.account.edit.form.value_date'|trans,
+                                    'class': 'form-control input-inline datetimepicker'
                                 }
                             }) }}
                         </div>
                         <div class="col-md-6">
-                            {{ form_row(formEntry.amount, {
-                                'label': 'accounting.account.edit.form.amount'|trans,
+                            {{ form_row(formEntry.accountingDate, {
+                                'label': 'accounting.account.edit.form.accounting_date'|trans,
+                                
                                 'attr': {
-                                    'placeholder': 'accounting.account.edit.form.amount'|trans
+                                    'placeholder': 'accounting.account.edit.form.accounting_date'|trans
                                 }
                             }) }}
                         </div>
