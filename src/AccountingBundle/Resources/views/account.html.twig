@@ -29,42 +29,72 @@
                 <div class="body table-responsive">
                     <div class="row">
                         <div class="col-md-9">
-                            <h3>{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getLastSolde().getFormattedAmount() }}</h3>
+                            <h3>{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getCalculatedLastSolde().getFormattedAmount() }}</h3>
                         </div>
                         <div class="col-md-3">
                             <a href="/accounting/account/{{ accounting.getId() }}/entry/add">Ajout</a>
                         </div>
                     </div>
-                    <table class="table table-striped orderable dataTable">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center;width:80px;">{{ 'accounting.common.date_value'|trans }}</th>
-                                <th style="text-align: center;width:80px;">{{ 'accounting.common.date_accounting'|trans }}</th>
-                                <th style="text-align: center;">{{ 'accounting.common.reference'|trans }}</th>
-                                <th style="text-align: center;width:60px;">{{ 'accounting.common.outcome'|trans }}</th>
-                                <th style="text-align: center;width:60px;">{{ 'accounting.common.income'|trans }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for entry in accounting.getEntries() %}
+                    {% if accounting.getEntries()|length > 0 and accounting.getSoldes()|length > 0 %}
+                        <table class="table table-striped orderable dataTable">
+                            <thead>
                                 <tr>
-                                    <td>{{ entry.getValueDate()|date('d/m/Y') }}</td>
-                                    <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
-                                    <td>{{ entry.getReference() }}</td>
-                                    <td class="number" style="text-align: right;">
-                                        {% if entry.getAmount() < 0 %}
-                                            {{ entry.getFormattedAmount() }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="number" style="text-align: right;">
-                                        {% if entry.getAmount() >= 0 %}
-                                            {{ entry.getFormattedAmount() }}
-                                        {% endif %}
-                                    </td>
+                                    <th style="text-align: center;width:80px;">{{ 'accounting.common.date_value'|trans }}</th>
+                                    <th style="text-align: center;width:80px;">{{ 'accounting.common.date_accounting'|trans }}</th>
+                                    <th style="text-align: center;">{{ 'accounting.common.reference'|trans }}</th>
+                                    <th style="text-align: center;width:60px;">{{ 'accounting.common.outcome'|trans }}</th>
+                                    <th style="text-align: center;width:60px;">{{ 'accounting.common.income'|trans }}</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for entry in accounting.getEntries() %}
+                                    <tr>
+                                        <td>{{ entry.getValueDate()|date('d/m/Y') }}</td>
+                                        <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
+                                        <td>{{ entry.getReference() }}</td>
+                                        <td class="number" style="text-align: right;">
+                                            {% if entry.getAmount() < 0 %}
+                                                {{ entry.getFormattedAmount() }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="number" style="text-align: right;">
+                                            {% if entry.getAmount() >= 0 %}
+                                                {{ entry.getFormattedAmount() }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        {{ form_start(formSolde) }}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form_row(formSolde.amount, {
+                                        'label': 'accounting.account.solde.edit.form.amount'|trans
+                                    }) }}
+                                </div>
+                            </div>                    
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form_row(formSolde.date, {
+                                        'label': 'accounting.account.solde.edit.form.date'|trans,
+
+                                        'attr': {
+                                            'placeholder': 'accounting.account.solde.edit.form.date'|trans,
+                                            'class': 'form-control input-inline datetimepicker'
+                                        }
+                                    }) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
+                                </div>
+                            </div>
+                        {{ form_end(formSolde) }}
+                    {% endif %}
                 </div>
             </div>
         </div>

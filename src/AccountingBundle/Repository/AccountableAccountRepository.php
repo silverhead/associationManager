@@ -34,7 +34,8 @@ class AccountableAccountRepository extends EntityRepository implements Paginator
         return $qb;
     }
     
-    public function countAccountableAccount(bool $onlyActive = false) {
+    public function countAccountableAccount(bool $onlyActive = false)
+    {
         $qb = $this->createQueryBuilder("j")->select("COUNT(j)");
 
         if ($onlyActive) {
@@ -44,17 +45,31 @@ class AccountableAccountRepository extends EntityRepository implements Paginator
         return $qb->getQuery()->getSingleScalarResult();
     }
     
-    public function findAll($id = null) {
+    public function findAll($id = null, $date = null) {
         if ($id != null) {
-            $qb = $this->createQueryBuilder('a')
-                ->select('a, e')
-                ->innerJoin('a.entries', 'e')
-                ->where("a.id = :id")
-                ->setParameter("id", $id)
-                ->addOrderBy('a.label', 'ASC')
-                ->addOrderBy('e.accountingDate', 'DESC')
-                ->addOrderBy('e.valueDate', 'DESC')
-                ;
+            if ($date != null) {
+                $qb = $this->createQueryBuilder('a')
+                    ->select('a, e')
+                    ->innerJoin('a.entries', 'e')
+                    ->where("a.id = :id")
+                    ->andWhere("e.accountingDate = :accountingDate")
+                        ->setParameter("id", $id)
+                        ->setParameter("accountingDate", $date)
+                    ->addOrderBy('a.label', 'ASC')
+                    ->addOrderBy('e.accountingDate', 'DESC')
+                    ->addOrderBy('e.valueDate', 'DESC')
+                    ;
+            } else {
+                $qb = $this->createQueryBuilder('a')
+                   ->select('a, e')
+                   ->innerJoin('a.entries', 'e')
+                    ->where("a.id = :id")
+                        ->setParameter("id", $id)
+                   ->addOrderBy('a.label', 'ASC')
+                   ->addOrderBy('e.accountingDate', 'DESC')
+                   ->addOrderBy('e.valueDate', 'DESC')
+                   ;
+            }
         } else {
             $qb = $this->createQueryBuilder('a')
                 ->select('a, e')

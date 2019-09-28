@@ -6,4 +6,6 @@ services:
     accounting.form.entry:
         class: AccountingBundle\Form\Handler\EntryFormHandler
         arguments: ['@form.factory', '@service_container']
-        
+    accounting.form.solde:
+        class: AccountingBundle\Form\Handler\SoldeFormHandler
+        arguments: ['@form.factory', '@service_container']

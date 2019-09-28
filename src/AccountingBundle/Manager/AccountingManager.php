@@ -58,6 +58,13 @@ class AccountingManager implements PaginatorManagerInterface
         return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
     }
     
+    public function getEntriesForAccountAndDate($accountId, $date) {
+        $accountableAccountRepo = $this->entityManager->getRepository("AccountingBundle:AccountableAccount");
+        $accountableAccount = $accountableAccountRepo->findAll($accountId, $date);
+
+        return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
+    }
+    
     public function getEntryById($entryId) {
         $entryRepo = $this->entityManager->getRepository("AccountingBundle:Entry");
         return $entryRepo->findById($entryId);
@@ -66,22 +73,17 @@ class AccountingManager implements PaginatorManagerInterface
     /**
      * override
      */
-    public function saveEntryAndupdateSolde(Entry $entity) {        
-        $soldeRepo = $this->entityManager->getRepository("AccountingBundle:Solde");
-        $lastSolde = $soldeRepo->findLastSoldeForAccountableAccount($entity->getAccountableAccount());
-        $dateNewSolde = $entity->getIsPrev() ? $entity->getValueDate() : $entity->getAccountingDate();
-
-        $newSolde = new Solde();
-        $newSolde->setDate($dateNewSolde);
-        $newSolde->setAmount($lastSolde->getAmount() + $entity->getAmount());
-        $newSolde->setIsPrev($entity->getIsPrev());
-        $newSolde->setUpdatedAt(new \DateTime());
-        $newSolde->setAccountableAccount($entity->getAccountableAccount());
-        
+    public function saveEntry(Entry $entity) {        
         $this->entityManager->persist($entity);
-        $this->entityManager->persist($newSolde);
         $this->entityManager->flush();
 
+        return true;
+    }
+    
+    public function saveSolde(Solde $entity) {
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+        
         return true;
     }
 }

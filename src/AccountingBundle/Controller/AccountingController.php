@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\QueryHelper\OrderQuery;
 use Symfony\Component\HttpFoundation\Response;
 use AccountingBundle\Entity\Entry;
+use AccountingBundle\Entity\Solde;
 
 class AccountingController extends Controller
 {
@@ -45,9 +46,49 @@ class AccountingController extends Controller
     public function account(Request $request, $id = null) {
         $accountingManager = $this->get('accounting.manager.accounting');
         $entriesOfAccount = $accountingManager->getEntriesForAccount($id);
-        //var_dump($entriesOfAccount);
+        $formHandler = null;
+        $callBackUrl = $this->generateUrl('accounting_account_id', ['id' => $id]);
+        $translator = $this->get('translator');
+        
+        if ($entriesOfAccount->getSoldes() == null || count($entriesOfAccount->getSoldes()) == 0) {
+            $entity = new Solde();
+            $formHandler = $this->get('accounting.form.solde');
+            $formHandler->setForm($entity);
+        
+            if ($formHandler->process($request)) {
+                $entity = $formHandler->getData($entriesOfAccount);
+                if ($accountingManager->saveSolde($entity)) {
+                    $this->addFlash('success', $translator->trans('accounting.account.solde.edit.saveSuccessText'));
+
+                    if ($request->get('save_and_leave', null) !== null) {
+                        if ($callBackUrl !== null) {
+                            return $this->redirect($callBackUrl);
+                        }
+
+                        return $this->redirect(
+                            $this->get('router')->generate('accounting_index', array('accountId' => $entity->getAccountableAccount()->getId()))
+                        );
+                    }
+
+                    if ($request->get('save_and_stay', null) !== null) {
+                        return $this->redirectToRoute('accounting_account_id', [
+                            'id' => $id
+                        ]);
+                    }
+                }
+
+                $this->addFlash(
+                    'error',
+                    $translator->trans('app.common.errorComming', [
+                        '%error%' => '<br />' . implode('<br />', $accountingManager->getErrors())
+                ]));
+            }
+        }
+        
         return $this->render('@Accounting/account.html.twig', array(
-            'accounting' => $entriesOfAccount
+            'accounting' => $entriesOfAccount,
+            'formSolde' =>  $formHandler != null ? $formHandler->getForm()->createView() : null,
+            'callBackUrl' => $callBackUrl
         ));
     }
     
@@ -72,18 +113,17 @@ class AccountingController extends Controller
         }
         
         $pageH = $this->get('app.handler.page_historical');
-        $callBackUrl = $this->get('router')->generate('accounting_account_id', array('accountId' => $accountId));
+        $callBackUrl = $this->generateUrl('accounting_account_id', ['id' => $accountId], );
         $translator = $this->get('translator');
         
         $formHandler->setForm($entity);
         
         if ($formHandler->process($request)) {
-            $translator = $this->get('translator');
             $entity = $formHandler->getData($accountableAccount);
             
             //var_dump($entity);exit;
             
-            if ($accountingManager->saveEntryAndupdateSolde($entity)) {
+            if ($accountingManager->saveEntry($entity)) {
                 $this->addFlash('success', $translator->trans('accounting.account.edit.saveSuccessText'));
 
                 if ($request->get('save_and_leave', null) !== null) {

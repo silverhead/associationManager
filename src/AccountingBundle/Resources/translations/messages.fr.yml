@@ -23,4 +23,10 @@ accounting:
                 amount: Montant
                 accounting_date: Date d'opération
                 value_date: Date de valeur
+        solde:
+            edit:
+                saveSuccessText: Le solde a été sauvegardé
+                form:
+                    amount: Montant
+                    date: Date
     

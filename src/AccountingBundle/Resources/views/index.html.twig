@@ -25,7 +25,12 @@
                     {% for accounting in data %}
                         <section id="accounting_{{ accounting.getId() }}">
                             <div class="row">
-                                <h3><a href="/accounting/account/{{ accounting.getId() }}">{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getLastSolde().getFormattedAmount() }}</a></h3>
+                                <h3>
+                                    <a href="/accounting/account/{{ accounting.getId() }}">
+                                        {{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} :
+                                        {{ accounting.getCalculatedLastSolde().getFormattedAmount() }} 
+                                    </a>
+                                </h3>
                             </div>
                             <table class="table table-striped orderable dataTable">
                                 <thead>

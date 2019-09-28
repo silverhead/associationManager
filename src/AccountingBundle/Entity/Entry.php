@@ -170,7 +170,7 @@ class Entry
      */
     public function getFormattedAmount()
     {
-        return number_format($this->amount/100, 2, ',', ' ');
+        return $this->amount != null ? number_format($this->amount/100, 2, ',', ' ') : '---';
     }
     
     /**

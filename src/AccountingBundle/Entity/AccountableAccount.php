@@ -147,18 +147,35 @@ class AccountableAccount {
     
     public function getLastSolde($isPrev = false) {
         $arraySoldes = $this->soldes->getValues();
-        usort($arraySoldes, function ($object1, $object2) { 
-            return $object1->getDate() < $object2->getDate(); 
-        });
-        $soldeToReturn = null;
-        foreach ($arraySoldes as $solde) {
-            if ($solde->getIsPrev() == $isPrev) {
-                $soldeToReturn = $solde;
-            } else {
-                $soldeToReturn = $solde;
+        if (count($arraySoldes) > 0) {
+            usort($arraySoldes, function ($object1, $object2) { 
+                return $object1->getDate() < $object2->getDate(); 
+            });
+            $soldeToReturn = null;
+            foreach ($arraySoldes as $solde) {
+                if ($solde->getIsPrev() == $isPrev) {
+                    $soldeToReturn = $solde;
+                } else {
+                    $soldeToReturn = $solde;
+                }
+                break;
             }
-            break;
-        }
+        } else {
+            $soldeToReturn = new Solde();
+        } 
+        
         return $soldeToReturn;
-    } 
+    }
+    
+    public function getCalculatedLastSolde() {
+        $solde = $this->getLastSolde(false);
+        $amountOfEntries = 0;
+        foreach ($this->getEntries() as $entry) {
+            if ($entry->getAccountingDate() > $solde->getDate()) {
+                $amountOfEntries += $entry->getAmount();
+            }
+        }
+        $solde->setAmount($solde->getAmount() + $amountOfEntries);
+        return $solde;
+    }
 }

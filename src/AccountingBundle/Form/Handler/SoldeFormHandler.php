@@ -3,13 +3,13 @@
 namespace AccountingBundle\Form\Handler;
 
 use Symfony\Component\DependencyInjection\Container;
-use AccountingBundle\Entity\Entry;
-use AccountingBundle\Form\Type\EntryFormType;
+use AccountingBundle\Entity\Solde;
+use AccountingBundle\Form\Type\SoldeFormType;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-class EntryFormHandler
+class SoldeFormHandler
 {
     /**
      * @var FormFactory
@@ -27,7 +27,7 @@ class EntryFormHandler
     protected $form;
 
     /**
-     * @var Entry
+     * @var Solde
      */
     protected $entity;
 
@@ -42,10 +42,10 @@ class EntryFormHandler
         $this->container = $container;
     }
 
-    public function setForm(Entry $entry) {
-        $this->entity = $entry;
+    public function setForm(Solde $solde) {
+        $this->entity = $solde;
 
-        $this->form = $this->formFactory->create(EntryFormType::class, $entry);
+        $this->form = $this->formFactory->create(SoldeFormType::class, $solde);
     }
 
     public function getForm() {
@@ -66,11 +66,11 @@ class EntryFormHandler
         return false;
     }
 
-    public function getData() {
+    public function getData($accountableAccount) {
         $form = $this->form;
         
-        //$this->entity->setAccountableAccount($accountableAccount);
-        $this->entity->setActive(true);
+        $this->entity->setAccountableAccount($accountableAccount);
+        $this->entity->setIsPrev(false);
         $this->entity->setUpdatedAt(new \DateTime());
         
         

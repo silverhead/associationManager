@@ -45,4 +45,23 @@ class SoldeRepository extends EntityRepository implements PaginatorRepositoryInt
         
         return $qb->getQuery()->getSingleResult();
     }
+    
+    public function findOneByDateAndAccountableAccount($date, $accountableAccount) {
+        /*
+        $qb = $this->createQueryBuilder("s");
+        
+        $qb->select("s")
+            ->where("s.accountableAccount = :accountableAccount")
+            ->where("s.date = :date")
+                ->setParameter("accountableAccount", $accountableAccount)
+                ->setParameter("date", $date)
+            ->orderBy("s.date", "DESC");
+        
+        return $qb->getQuery()->getResult();
+        */
+        return $this->findOneBy(array(
+            'date' => $date,
+            'accountableAccount' => $accountableAccount
+        ));
+    }
 }
