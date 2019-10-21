@@ -1,6 +1,8 @@
 <?php
 
-namespace EmailBundle\Repository;
+namespace EmailSystemBundle\Repository;
+
+use EmailBundle\Repository\EmailRepository;
 
 /**
  *

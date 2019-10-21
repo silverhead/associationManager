@@ -22,7 +22,8 @@ class AppKernel extends Kernel
             new SubscriptionBundle\SubscriptionBundle(),
             new MemberBundle\MemberBundle(),
             new UserBundle\UserBundle(),
-            new EmailBundle\EmailBundle()
+            new EmailBundle\EmailBundle(),
+            new EmailSystemBundle\EmailSystemBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

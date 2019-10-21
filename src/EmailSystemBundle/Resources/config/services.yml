@@ -1,25 +1,28 @@
 services:
     # EVENT LISTENER
-    email.emailing.credential.event:
+    email_system.email_system.credential.event:
         class: AppBundle\EventListener\AppCredentialEventListener
-        arguments: ['%credentialVoterEmailEmailing%', 'email.emailing.credential.title']
+        arguments: ['%credentialVoterEmailSystemEmail%', 'email.system_email.credential.title']
         tags:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     # VOTER
-    email.emailing.voter:
+    email_system.email_system.voter:
         class: AppBundle\Security\AppVoter
         autowire: true
-        arguments: ['%credentialVoterEmailEmailing%']
+        arguments: ['%credentialVoterEmailSystemEmail%']
         tags:
             - {name: security.voter}
-    email.emailing.menu.voter:
+    email_system.email_system.menu.voter:
         class: AppBundle\Security\AppMenuVoter
         autowire: true
-        arguments: ['%credentialVoterEmailMenu%', '%masterCredentialMenuEmailEmailing%']
+        arguments: ['%credentialVoterEmailSystemEmail%', '%masterCredentialMenuEmailSystemEmail%']
         tags:
             - {name: security.voter}
     # MANAGER
     # FORM MODEL
     # FORM HANDLER
+    email_system.form.handler.email_system:
+        class: EmailSystemBundle\Form\Handler\EmailSystemFormHandler
+        arguments: ['@form.factory']
     # CONTROLLER
     # Validator

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package EmailBundle\Entity
  * @ORM\Entity(repositoryClass="EmailBundle\Repository\EmailRepository")
  * @ORM\Table(name="email_email")
+ * @ORM\InheritanceType("JOINED")
  */
 class Email
 {
@@ -36,7 +37,13 @@ class Email
      * @var string
      * @ORM\Column(type="text")
      */
-    private $body;
+    private $bodyHtml;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text")
+     */
+    private $bodyText;
 
     /**
      * @var \DateTime
@@ -98,18 +105,37 @@ class Email
     /**
      * @return string
      */
-    public function getBody(): string
+    public function getBodyHtml(): string
     {
-        return $this->body;
+        return $this->bodyHtml;
     }
 
     /**
-     * @param string $body
+     * @param string $bodyHtml
      * @return Email
      */
-    public function setBody(string $body): Email
+    public function setBodyHtml(string $bodyHtml): Email
     {
-        $this->body = $body;
+        $this->bodyHtml = $bodyHtml;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBodyText(): string
+    {
+        return $this->bodyText;
+    }
+
+    /**
+     * @param string $bodyText
+     * @return Email
+     */
+    public function setBodyText(string $bodyText): Email
+    {
+        $this->bodyText = $bodyText;
 
         return $this;
     }

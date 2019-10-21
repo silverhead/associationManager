@@ -1,15 +1,16 @@
 <?php
 
-
-namespace EmailBundle\Entity;
+namespace EmailSystemBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use EmailBundle\Entity\Email;
 
 /**
  * Class Email
- * @package EmailBundle\Entity
- * @ORM\Entity(repositoryClass="EmailBundle\Repository\EmailSystemRepository")
+ * @package EmailSystemBundle\Entity
+ * @ORM\Entity(repositoryClass="EmailSystemBundle\Repository\EmailSystemRepository")
  * @ORM\Table(name="email_system")
+ *
  */
 class EmailSystem extends Email
 {

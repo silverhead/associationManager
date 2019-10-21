@@ -14,8 +14,8 @@ subscription:
 user:
     resource: "@UserBundle/Controller/"
     type:     annotation
-email:
-    resource: "@EmailBundle/Controller/"
+email_system:
+    resource: "@EmailSystemBundle/Controller/"
     type:     annotation
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
