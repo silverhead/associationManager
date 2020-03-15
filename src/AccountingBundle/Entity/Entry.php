@@ -42,8 +42,14 @@ class Entry
      * @var int
      * @ORM\Column(type="integer", nullable=false)
      */
-        protected $amount;
+    protected $amount;
 
+    /**
+     * @var Exercise
+     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Exercise", inversedBy="entries", fetch="EXTRA_LAZY")
+     */
+    protected $exercise;
+    
     /**
      * @var Entry
      * @ORM\OneToOne(targetEntity="AccountingBundle\Entity\Entry", fetch="EAGER")
@@ -280,6 +286,27 @@ class Entry
     public function setAccountableAccount(AccountableAccount $accountableAccount): Entry
     {
         $this->accountableAccount = $accountableAccount;
+        
+        return $this;
+    }
+    
+    /**
+     * 
+     * @return \AccountingBundle\Entity\Exercise|null
+     */
+    public function getExercise():?Exercise
+    {
+        return $this->exercise;
+    }
+    
+    /**
+     * 
+     * @param \AccountingBundle\Entity\Exercise $exercise
+     * @return \AccountingBundle\Entity\Entry
+     */
+    public function setExercise(Exercise $exercise): Exercise
+    {
+        $this->exercise = $exercise;
         
         return $this;
     }

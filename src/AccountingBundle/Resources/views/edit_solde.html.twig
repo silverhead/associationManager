@@ -1,0 +1,80 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with { 'breadcrumbs': breadcrumbs } %}
+        <h2 class="col-xs-12">
+            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
+            {{ 'accounting.account.solde.edit.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(formSolde) }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(formSolde.date, {
+                                    'label': 'accounting.account.solde.edit.form.date'|trans,
+
+                                    'attr': {
+                                        'placeholder': 'accounting.account.solde.edit.form.date'|trans,
+                                        'class': 'form-control input-inline datetimepicker'
+                                    }
+                                }) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(formSolde.amount, {
+                                    'label': 'accounting.account.solde.edit.form.amount'|trans
+                                }) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
+                            </div>
+                        </div>
+                    {{ form_end(formSolde) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body table-responsive">
+                    {% if accountableAccount.getSoldes()|length > 0 %}
+                        <table class="table table-striped orderable dataTable">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center;width:80px;">{{ 'accounting.common.date_value'|trans }}</th>
+                                    <th style="text-align: center;width:60px;">{{ 'accounting.common.outcome'|trans }}</th>
+                                    <th style="text-align: center;width:60px;">{{ 'accounting.common.income'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for solde in accountableAccount.getSoldes() %}
+                                    <tr>
+                                        <td>{{ solde.getDate()|date('d/m/Y') }}</td>
+                                        <td class="number" style="text-align: right;">
+                                            {% if solde.getAmount() < 0 %}
+                                                {{ solde.getFormattedAmount() }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="number" style="text-align: right;">
+                                            {% if solde.getAmount() >= 0 %}
+                                                {{ solde.getFormattedAmount() }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

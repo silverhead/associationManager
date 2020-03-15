@@ -32,40 +32,30 @@
                             <h3>{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getCalculatedLastSolde().getFormattedAmount() }}</h3>
                         </div>
                         <div class="col-md-3">
-                            <a href="/accounting/account/{{ accounting.getId() }}/entry/add">Ajout opération</a>
-                            <a href="/accounting/account/{{ accounting.getId() }}/soldes">Soldes</a>
-                            <select id="account_{{ accounting.getId() }}_exercise" name="account_{{ accounting.getId() }}_exercise">
-                                {% for exercise in exerciseList %}
-                                    <option value="{{ exercise.getId() }}">{{ exercise.getDateStart()|date('d/m/Y') }} - {{ exercise.getDateEnd()|date('d/m/Y') }}</option>
-                                {% endfor %}
-                            </select>
+                            <a href="/accounting/account/{{ accounting.getId() }}/solde/add">Ajout solde</a>
                         </div>
                     </div>
-                    {% if accounting.getEntries()|length > 0 and accounting.getSoldes()|length > 0 %}
+                    {% if accounting.getSoldes()|length > 0 %}
                         <table class="table table-striped orderable dataTable">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;width:80px;">{{ 'accounting.common.date_value'|trans }}</th>
-                                    <th style="text-align: center;width:80px;">{{ 'accounting.common.date_accounting'|trans }}</th>
-                                    <th style="text-align: center;">{{ 'accounting.common.reference'|trans }}</th>
                                     <th style="text-align: center;width:60px;">{{ 'accounting.common.outcome'|trans }}</th>
                                     <th style="text-align: center;width:60px;">{{ 'accounting.common.income'|trans }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for entry in accounting.getEntries() %}
+                                {% for solde in accounting.getSoldes() %}
                                     <tr>
-                                        <td>{{ entry.getValueDate()|date('d/m/Y') }}</td>
-                                        <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
-                                        <td>{{ entry.getReference() }}</td>
+                                        <td>{{ solde.getDate()|date('d/m/Y') }}</td>
                                         <td class="number" style="text-align: right;">
-                                            {% if entry.getAmount() < 0 %}
-                                                {{ entry.getFormattedAmount() }}
+                                            {% if solde.getAmount() < 0 %}
+                                                {{ solde.getFormattedAmount() }}
                                             {% endif %}
                                         </td>
                                         <td class="number" style="text-align: right;">
-                                            {% if entry.getAmount() >= 0 %}
-                                                {{ entry.getFormattedAmount() }}
+                                            {% if solde.getAmount() >= 0 %}
+                                                {{ solde.getFormattedAmount() }}
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -74,6 +64,25 @@
                         </table>
                     {% else %}
                         {{ form_start(formSolde) }}
+                            <!-- <div class="row">
+                                <div class="col-md-6">
+                                    {{ form_row(formSolde.financialYear, {
+                                        'label': 'accounting.account.solde.edit.form.financial_year'|trans,
+
+                                        'attr': {
+                                            'placeholder': 'accounting.account.solde.edit.form.financial_year'|trans,
+                                        }
+                                    }) }}
+                                </div>
+                            </div>
+                            -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form_row(formSolde.amount, {
+                                        'label': 'accounting.account.solde.edit.form.amount'|trans
+                                    }) }}
+                                </div>
+                            </div>                    
                             <div class="row">
                                 <div class="col-md-6">
                                     {{ form_row(formSolde.date, {
@@ -85,13 +94,8 @@
                                         }
                                     }) }}
                                 </div>
-                                <div class="col-md-6">
-                                    {{ form_row(formSolde.amount, {
-                                        'label': 'accounting.account.solde.edit.form.amount'|trans
-                                    }) }}
-                                </div>
-                            </div>                    
-                            
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
@@ -103,5 +107,4 @@
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

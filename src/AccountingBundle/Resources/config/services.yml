@@ -8,4 +8,7 @@ services:
         arguments: ['@form.factory', '@service_container']
     accounting.form.solde:
         class: AccountingBundle\Form\Handler\SoldeFormHandler
-        arguments: ['@form.factory', '@service_container']
+        arguments: ['@form.factory', '@accounting.manager.accounting']
+    accounting.form.exercise:
+        class: AccountingBundle\Form\Handler\ExerciseFormHandler
+        arguments: ['@form.factory', '@accounting.manager.accounting']

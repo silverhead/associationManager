@@ -34,6 +34,20 @@ class SoldeRepository extends EntityRepository implements PaginatorRepositoryInt
             ->getResult();
     }
     
+    public function findByAccountableAccount($accountableAccount, $dateDebut, $dateFin) {
+        $qb = $this->createQueryBuilder("s");
+        
+        $qb->select("s")
+            ->where("s.accountableAccount = :accountableAccount")
+            ->andWhere("s.date between :dateDebut and :dateFin")
+                ->setParameter("accountableAccount", $accountableAccount)
+                ->setParameter("dateDebut", $dateDebut)
+                ->setParameter("dateFin", $dateFin)
+            ->orderBy("s.date", "DESC");
+        
+        return $qb->getQuery()->getResult();
+    }
+    
     public function findLastSoldeForAccountableAccount($accountableAccount) {
         $qb = $this->createQueryBuilder("s");
         $qb->setMaxResults(1);
@@ -48,7 +62,7 @@ class SoldeRepository extends EntityRepository implements PaginatorRepositoryInt
     
     public function findOneByDateAndAccountableAccount($date, $accountableAccount) {
         /*
-        $qb = $this->createQueryBuilder("s");
+        $qb = $ccccc
         
         $qb->select("s")
             ->where("s.accountableAccount = :accountableAccount")
@@ -63,5 +77,17 @@ class SoldeRepository extends EntityRepository implements PaginatorRepositoryInt
             'date' => $date,
             'accountableAccount' => $accountableAccount
         ));
+    }
+    
+    public function findById($soldeId)
+    {
+        //return $this->findOneBy(array('id' => $soldeId));
+        $qb = $this->createQueryBuilder("s");
+        $qb->select("s")
+            ->where("s.id = :soldeId")
+                ->setParameter("soldeId", $soldeId);
+        return $qb
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -36,7 +36,7 @@ class AccountableAccount {
     
     /**
      * @var Journal
-     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Journal", fetch="EAGER", inversedBy="entries")
+     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Journal", fetch="LAZY", inversedBy="entries")
      * ORM\JoinColumn(name="journal_id", referencedColumnName="id")
      */
     protected $journal;
@@ -64,7 +64,7 @@ class AccountableAccount {
      * @ORM\OneToMany(targetEntity="AccountingBundle\Entity\Solde", fetch="EAGER", mappedBy="accountableAccount")
      */
     protected $soldes;
-    
+        
     public function __construct() {
         $this->entries = new ArrayCollection();
         $this->soldes = new ArrayCollection();

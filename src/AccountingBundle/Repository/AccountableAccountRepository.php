@@ -44,17 +44,30 @@ class AccountableAccountRepository extends EntityRepository implements Paginator
 
         return $qb->getQuery()->getSingleScalarResult();
     }
-    
-    public function findAll($id = null, $date = null) {
+
+    public function findAll($id = null, $dateDebut = null, $dateFin = null) {
         if ($id != null) {
-            if ($date != null) {
+            if ($dateDebut != null && $dateFin == null) {
                 $qb = $this->createQueryBuilder('a')
                     ->select('a, e')
                     ->innerJoin('a.entries', 'e')
                     ->where("a.id = :id")
                     ->andWhere("e.accountingDate = :accountingDate")
                         ->setParameter("id", $id)
-                        ->setParameter("accountingDate", $date)
+                        ->setParameter("accountingDate", $dateDebut)
+                    ->addOrderBy('a.label', 'ASC')
+                    ->addOrderBy('e.accountingDate', 'DESC')
+                    ->addOrderBy('e.valueDate', 'DESC')
+                    ;
+            } else if ($dateDebut != null && $dateFin != null) {
+                $qb = $this->createQueryBuilder('a')
+                    ->select('a, e')
+                    ->innerJoin('a.entries', 'e')
+                    ->where("a.id = :id")
+                    ->andWhere("e.accountingDate between :dateDebut and :dateFin")
+                        ->setParameter("id", $id)
+                        ->setParameter("dateDebut", $dateDebut)
+                        ->setParameter("dateFin", $dateFin)
                     ->addOrderBy('a.label', 'ASC')
                     ->addOrderBy('e.accountingDate', 'DESC')
                     ->addOrderBy('e.valueDate', 'DESC')

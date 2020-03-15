@@ -39,7 +39,7 @@ class Solde {
     
     /**
      * @var AccountableAccount
-     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="soldes", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="soldes", fetch="EXTRA_LAZY")
      * ORM\JoinColumn(name="accountable_account_id", referencedColumnName="id")
      */
     protected $accountableAccount;
@@ -78,7 +78,7 @@ class Solde {
     }
 
     /**
-     * @param \DateTime $valueDate
+     * @param \DateTime $date
      * @return Solde
      */
     public function setDate($date)
@@ -155,12 +155,12 @@ class Solde {
     /**
      * @return \AccountingBundle\Entity\AccountableAccount|null
      */
-    public function getAccountableAccount():?AccountableAccount {
+    public function getAccountableAccount():?AccountableAccount
+    {
         return $this->accountableAccount;
     }
     
     /**
-     * 
      * @param \AccountingBundle\Entity\AccountableAccount $accountableAccount
      * @return \AccountingBundle\Entity\Solde
      */

@@ -2,12 +2,12 @@
 
 namespace AccountingBundle\Form\Handler;
 
-use Symfony\Component\DependencyInjection\Container;
 use AccountingBundle\Entity\Solde;
 use AccountingBundle\Form\Type\SoldeFormType;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use AccountingBundle\Manager\AccountingManager;
 
 class SoldeFormHandler
 {
@@ -17,9 +17,9 @@ class SoldeFormHandler
     protected $formFactory;
 
     /**
-     * @var Container
+     * @var AccoutingManager
      */
-    protected $container;
+    protected $manager;
 
     /**
      * @var \Symfony\Component\Form\FormInterface
@@ -32,20 +32,22 @@ class SoldeFormHandler
     protected $entity;
 
     /**
-     * AccountFormHandler constructor.
+     * AccountFormHandler constructor
      * @param FormFactory $formFactory
-     * @param $container
+     * @param $manager
      */
-    public function __construct(FormFactory $formFactory, Container $container) {
+    public function __construct(FormFactory $formFactory, AccountingManager $manager) {
         $this->formFactory = $formFactory;
-
-        $this->container = $container;
+        $this->manager = $manager;
     }
 
-    public function setForm(Solde $solde) {
+    public function setForm(Solde $solde, $id) {
         $this->entity = $solde;
 
-        $this->form = $this->formFactory->create(SoldeFormType::class, $solde);
+        //$accountableAccount = $this->manager->getSoldesForAccount($id);
+        $this->form = $this->formFactory->create(SoldeFormType::class, $solde, array(
+            //'accountableAccount' => $accountableAccount
+        ));
     }
 
     public function getForm() {
@@ -72,7 +74,6 @@ class SoldeFormHandler
         $this->entity->setAccountableAccount($accountableAccount);
         $this->entity->setIsPrev(false);
         $this->entity->setUpdatedAt(new \DateTime());
-        
         
         return $this->entity;
     }

@@ -27,6 +27,7 @@ accounting:
             edit:
                 saveSuccessText: Le solde a été sauvegardé
                 form:
+                    financial_year: Exercice
                     amount: Montant
                     date: Date
     
