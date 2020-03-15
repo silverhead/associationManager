@@ -22,6 +22,11 @@
         <div class="col-xs-12">
             <div class="card">
                 <div class="body table-responsive">
+                    <section>
+                        <div class="row">
+                            <h3>{{ 'accounting.common.sum_of_balance'|trans }} : {{ sumOfBalance }}</h3>
+                        </div>
+                    </section>
                     {% for accounting in data %}
                         <section id="accounting_{{ accounting.getId() }}">
                             <div class="row">

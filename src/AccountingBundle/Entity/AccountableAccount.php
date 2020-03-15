@@ -36,7 +36,7 @@ class AccountableAccount {
     
     /**
      * @var Journal
-     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Journal", fetch="LAZY", inversedBy="entries")
+     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Journal", fetch="EXTRA_LAZY", inversedBy="entries")
      * ORM\JoinColumn(name="journal_id", referencedColumnName="id")
      */
     protected $journal;
@@ -143,6 +143,15 @@ class AccountableAccount {
      */
     public function getSoldes(): PersistentCollection {
         return $this->soldes;
+    }
+    public function getSoldesSortedByDate() {
+        $arraySoldes = $this->soldes->getValues();
+        if (count($arraySoldes) > 0) {
+            usort($arraySoldes, function ($object1, $object2) { 
+                return $object1->getDate() < $object2->getDate(); 
+            });
+        }
+        return $arraySoldes;
     }
     
     public function getLastSolde($isPrev = false) {

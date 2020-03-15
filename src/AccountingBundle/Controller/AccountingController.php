@@ -32,9 +32,13 @@ class AccountingController extends Controller
         $accountingManager = $this->get('accounting.manager.accounting');
         
         $entriesOfAccounts = $accountingManager->getEntriesByAccountForSynthesis();
-
+        $sumOfBalance = 0;
+        foreach ($entriesOfAccounts as $account) {
+            $sumOfBalance += $account->getCalculatedLastSolde()->getAmount();
+        }
         return $this->render('@Accounting/index.html.twig', array(
-            'data' => $entriesOfAccounts
+            'data' => $entriesOfAccounts,
+            'sumOfBalance' => number_format($sumOfBalance/100, 2, ',', ' ')
         ));
     }
     
@@ -255,7 +259,7 @@ class AccountingController extends Controller
         }
         
         $breadcrumbs[] = [
-            'label' => $translator->trans('accounting.account.edit.title')
+            'label' => $translator->trans('accounting.account.solde.edit.title')
         ];
 
         return $this->render('@Accounting/edit_solde.html.twig', array(

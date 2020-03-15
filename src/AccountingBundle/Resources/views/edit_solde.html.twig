@@ -55,7 +55,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for solde in accountableAccount.getSoldes() %}
+                                {% for solde in accountableAccount.getSoldesSortedByDate() %}
                                     <tr>
                                         <td>{{ solde.getDate()|date('d/m/Y') }}</td>
                                         <td class="number" style="text-align: right;">

@@ -100,6 +100,8 @@ class AccountingManager implements PaginatorManagerInterface
         $dateFin = $dateFin != null ? $dateFin : date("Y-m-d"); 
         $accountableAccount = $accountableAccountRepo->findAll($accountId, $dateDebut, $dateFin);
 
+        //var_dump($accountableAccount);exit();
+        
         return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
     }
 

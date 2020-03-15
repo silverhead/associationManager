@@ -10,6 +10,7 @@ accounting:
         income: Crédit
         real_solde: Solde réel
         prev_solde: Solde prévisionnel
+        sum_of_balance: Solde réel total
     synthesis:
         title: Synthèse des comptes
         callback: Retour à la synthèse des comptes
@@ -25,9 +26,9 @@ accounting:
                 value_date: Date de valeur
         solde:
             edit:
+                title: Editer des soldes
                 saveSuccessText: Le solde a été sauvegardé
                 form:
-                    financial_year: Exercice
                     amount: Montant
                     date: Date
     

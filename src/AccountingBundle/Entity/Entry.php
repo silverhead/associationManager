@@ -64,7 +64,7 @@ class Entry
 
     /**
      * @var Project
-     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Project", inversedBy="entries", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Project", inversedBy="entries", fetch="EXTRA_LAZY")
      */
     protected $project;
 

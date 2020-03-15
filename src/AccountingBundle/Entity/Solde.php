@@ -39,7 +39,7 @@ class Solde {
     
     /**
      * @var AccountableAccount
-     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="soldes", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="soldes", fetch="EAGER")
      * ORM\JoinColumn(name="accountable_account_id", referencedColumnName="id")
      */
     protected $accountableAccount;
