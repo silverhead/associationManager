@@ -22,44 +22,48 @@ class ExerciseRepository extends EntityRepository implements PaginatorRepository
         return $qb;
     }
     
-    public function countEntry(bool $onlyActive = false) {
+    public function countExercise(bool $onlyActive = false) {
         $qb = $this->createQueryBuilder("s")->select("COUNT(s)");
 
         return $qb->getQuery()->getSingleScalarResult();
     }
     
     public function findAll() {
-        return $this->createQueryBuilder("e")
-            ->getQuery()
-            ->getResult();
-    }
-    
-    public function findByPeriode($dateDebut, $dateFin) {
         $qb = $this->createQueryBuilder("e");
         
         $qb->select("e")
-            ->Where("e.dateStart between :dateDebut and :dateFin")
-                ->OrWhere("e.dateEnd between :dateDebut and :dateFin")
-                ->setParameter("dateDebut", $dateDebut)
-                ->setParameter("dateFin", $dateFin)
+//            ->Where("e.dateStart between :dateDebut and :dateFin")
+//                ->OrWhere("e.dateEnd between :dateDebut and :dateFin")
+//                ->setParameter("dateDebut", $dateDebut)
+//                ->setParameter("dateFin", $dateFin)
             ->orderBy("e.dateStart", "DESC");
         
         return $qb->getQuery()->getResult();
     }
     
-    public function findLastExercise() {
+    public function findFisrt() {
         $qb = $this->createQueryBuilder("e");
         $qb->setMaxResults(1);
         
         $qb->select("e")
-            ->orderBy("e.date", "DESC");
+            ->orderBy("e.dateStart", "ASC");
         
         return $qb->getQuery()->getSingleResult();
     }
     
-    public function findOneByDate($date) {
+    public function findLast() {
+        $qb = $this->createQueryBuilder("e");
+        $qb->setMaxResults(1);
+        
+        $qb->select("e")
+            ->orderBy("e.dateStart", "DESC");
+        
+        return $qb->getQuery()->getSingleResult();
+    }
+    
+    public function findOneByDateStart($dateStart) {
         return $this->findOneBy(array(
-            'date' => $date
+            'dateStart' => $dateStart
         ));
     }
 }

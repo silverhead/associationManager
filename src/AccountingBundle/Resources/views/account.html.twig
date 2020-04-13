@@ -1,107 +1,113 @@
 {% extends 'layoutLogin.html.twig' %}
 
 {% block content %} 
-    <div class="row block-header">
-        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
-        {
-            'href': path('dashboard'),
-            'title': 'app.dashboard.callback'|trans,
-            'label': 'app.dashboard.title'|trans
-        },
+<div class="row block-header">
+    {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+    {
+        'href': path('dashboard'),
+        'title': 'app.dashboard.callback'|trans,
+        'label': 'app.dashboard.title'|trans
+    },
 {
-            'href': path('accounting_index'),
-            'title': 'accounting.synthesis.callback'|trans,
-            'label': 'accounting.synthesis.title'|trans
-        },
-        {
-            'label': 'accounting.account.title'|trans
-        }
-        ] } %}
+        'href': path('accounting_index'),
+        'title': 'accounting.synthesis.callback'|trans,
+        'label': 'accounting.synthesis.title'|trans
+    },
+    {
+        'label': 'accounting.account.title'|trans
+    }
+    ] } %}
 
-        <h2 class="col-xs-12">
-            {{ 'accounting.account.title'|trans }}
-        </h2>
-    </div>
-    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="card">
-                <div class="body table-responsive">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <h3>{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getCalculatedLastSolde().getFormattedAmount() }}</h3>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="/accounting/account/{{ accounting.getId() }}/entry/add">Ajout opération</a>
-                            <a href="/accounting/account/{{ accounting.getId() }}/soldes">Soldes</a>
-                            <select id="account_{{ accounting.getId() }}_exercise" name="account_{{ accounting.getId() }}_exercise">
-                                {% for exercise in exerciseList %}
-                                    <option value="{{ exercise.getId() }}">{{ exercise.getDateStart()|date('d/m/Y') }} - {{ exercise.getDateEnd()|date('d/m/Y') }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+    <h2 class="col-xs-12">
+        {{ 'accounting.account.title'|trans }}
+    </h2>
+</div>
+{% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card">
+            <div class="body table-responsive">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h3>{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getCalculatedLastSolde().getFormattedAmount() }}</h3>
                     </div>
-                    {% if accounting.getEntries()|length > 0 and accounting.getSoldes()|length > 0 %}
-                        <table class="table table-striped orderable dataTable">
-                            <thead>
-                                <tr>
-                                    <th style="text-align: center;width:80px;">{{ 'accounting.common.date_value'|trans }}</th>
-                                    <th style="text-align: center;width:80px;">{{ 'accounting.common.date_accounting'|trans }}</th>
-                                    <th style="text-align: center;">{{ 'accounting.common.reference'|trans }}</th>
-                                    <th style="text-align: center;width:60px;">{{ 'accounting.common.outcome'|trans }}</th>
-                                    <th style="text-align: center;width:60px;">{{ 'accounting.common.income'|trans }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for entry in accounting.getEntries() %}
-                                    <tr>
-                                        <td>{{ entry.getValueDate()|date('d/m/Y') }}</td>
-                                        <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
-                                        <td>{{ entry.getReference() }}</td>
-                                        <td class="number" style="text-align: right;">
-                                            {% if entry.getAmount() < 0 %}
-                                                {{ entry.getFormattedAmount() }}
-                                            {% endif %}
-                                        </td>
-                                        <td class="number" style="text-align: right;">
-                                            {% if entry.getAmount() >= 0 %}
-                                                {{ entry.getFormattedAmount() }}
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    {% else %}
-                        {{ form_start(formSolde) }}
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {{ form_row(formSolde.date, {
-                                        'label': 'accounting.account.solde.edit.form.date'|trans,
-
-                                        'attr': {
-                                            'placeholder': 'accounting.account.solde.edit.form.date'|trans,
-                                            'class': 'form-control input-inline datetimepicker'
-                                        }
-                                    }) }}
-                                </div>
-                                <div class="col-md-6">
-                                    {{ form_row(formSolde.amount, {
-                                        'label': 'accounting.account.solde.edit.form.amount'|trans
-                                    }) }}
-                                </div>
-                            </div>                    
-                            
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
-                                </div>
-                            </div>
-                        {{ form_end(formSolde) }}
-                    {% endif %}
+                    <div class="col-md-3">
+                        <a href="/accounting/account/{{ accounting.getId() }}/entry/add">Ajout opération</a>
+                        <a href="/accounting/account/{{ accounting.getId() }}/soldes">Soldes</a>
+                        <select id="exerciseSelect" name="account_{{ accounting.getId() }}_exercise">
+                            {% for exercise in exerciseList %}
+                                <option value="{{ exercise.getId() }}" data-urlexercise="/accounting/account/{{ accounting.getId() }}/{{ exercise.getDateStart()|date('Y-m-d') }}/{{ exercise.getDateEnd()|date('Y-m-d') }}">
+                                    {{ exercise.getDateStart()|date('d/m/Y') }} - {{ exercise.getDateEnd()|date('d/m/Y') }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
+                {% if accounting.getEntries()|length > 0 and accounting.getSoldes()|length > 0 %}
+                    <table class="table table-striped orderable dataTable">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;width:80px;">{{ 'accounting.common.date_value'|trans }}</th>
+                                <th style="text-align: center;width:80px;">{{ 'accounting.common.date_accounting'|trans }}</th>
+                                <th style="text-align: center;">{{ 'accounting.common.reference'|trans }}</th>
+                                <th style="text-align: center;width:60px;">{{ 'accounting.common.outcome'|trans }}</th>
+                                <th style="text-align: center;width:60px;">{{ 'accounting.common.income'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in accounting.getEntries() %}
+                                <tr>
+                                    <td>{{ entry.getValueDate()|date('d/m/Y') }}</td>
+                                    <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
+                                    <td>{{ entry.getReference() }}</td>
+                                    <td class="number" style="text-align: right;">
+                                        {% if entry.getAmount() < 0 %}
+                                            {{ entry.getFormattedAmount() }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="number" style="text-align: right;">
+                                        {% if entry.getAmount() >= 0 %}
+                                            {{ entry.getFormattedAmount() }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    {{ form_start(formSolde) }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(formSolde.date, {
+                                    'label': 'accounting.account.solde.edit.form.date'|trans,
+
+                                    'attr': {
+                                        'placeholder': 'accounting.account.solde.edit.form.date'|trans,
+                                        'class': 'form-control input-inline datetimepicker'
+                                    }
+                                }) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(formSolde.amount, {
+                                    'label': 'accounting.account.solde.edit.form.amount'|trans
+                                }) }}
+                            </div>
+                        </div>                    
+
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
+                            </div>
+                        </div>
+                    {{ form_end(formSolde) }}
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('bundles/accounting/js/account.js') }}"></script>    
+{% endblock  %}

@@ -11,6 +11,7 @@ use AppBundle\QueryHelper\OrderQuery;
 use Symfony\Component\HttpFoundation\Response;
 use AccountingBundle\Entity\Entry;
 use AccountingBundle\Entity\Solde;
+use AccountingBundle\Entity\Exercise;
 
 /**
  * Description of ExerciseController
@@ -20,43 +21,43 @@ use AccountingBundle\Entity\Solde;
 class ExerciseController extends Controller {
     const ITEMS_PER_PAGE = 4;
     const PAGE_PARAMETER_NAME = 'pageTab3';
-
-    private $_em;
-    private $_exerciseRepo;
     
     /**
-     * @Route("/accounting/exercises/", name="accounting_exercises_index", options = { "expose" = true })
+     * @Route("/exercise/", name="exercise_index", options = { "expose" = true })
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {   
+        $exerciseManager = $this->get('accounting.manager.exercise');
+        
         $exercises = array();
-       
-        $exercises = $accountingManager->getExercises();
+        $exercises = $exerciseManager->getExerciseList();
 
-        return $this->render('@Accounting/exercises.html.twig', array(
+        return $this->render('@Accounting/index_exercise.html.twig', array(
             'data' => $exercises
         ));
     }
     
     /**
-     * @Route("/accounting/exercise/{id}", name="accounting_exercise_id", options = { "expose" = true })
+     * @Route("/exercise/exercise/add", name="exercices_exercise_add", options = { "expose" = true })
+     * @Route("/exercise/exercise/{id}", name="exercices_exercise_id", options = { "expose" = true })
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function exercise(Request $request, $id = null) {
         $formHandler = null;
-        $callBackUrl = $this->generateUrl('accounting_exercise_id', ['id' => $id]);
+        $callBackUrl = $this->generateUrl('exercise_index', []);
         $translator = $this->get('translator');
+        $exerciseManager = $this->get('accounting.manager.exercise');
         
         $entity = new Exercise();
         $formHandler = $this->get('accounting.form.exercise');
         $formHandler->setForm($entity, $id);
 
         if ($formHandler->process($request)) {
-            $entity = $formHandler->getData($exercise);
-            if ($accountingManager->saveExercise($entity)) {
+            $entity = $formHandler->getData($entity);
+            if ($exerciseManager->saveExercise($entity)) {
                 $this->addFlash('success', $translator->trans('accounting.exercise.edit.saveSuccessText'));
 
                 if ($request->get('save_and_leave', null) !== null) {
@@ -65,12 +66,12 @@ class ExerciseController extends Controller {
                     }
 
                     return $this->redirect(
-                        $this->get('router')->generate('accounting_index', array('exerciseId' => $entity->getId()))
+                        $this->get('router')->generate('exercise_index', array('exerciseId' => $entity->getId()))
                     );
                 }
 
                 if ($request->get('save_and_stay', null) !== null) {
-                    return $this->redirectToRoute('accounting_exercise_id', [
+                    return $this->redirectToRoute('exercices_exercise_id', [
                         'id' => $id
                     ]);
                 }
@@ -79,12 +80,34 @@ class ExerciseController extends Controller {
             $this->addFlash(
                 'error',
                 $translator->trans('app.common.errorComming', [
-                    '%error%' => '<br />' . implode('<br />', $accountingManager->getErrors())
+                    '%error%' => '<br />' . implode('<br />', $exerciseManager->getErrors())
             ]));
         }
         
+        $breadcrumbs = [
+            [
+                'href' => $this->redirectToRoute('accounting_index'),
+                'title' => $translator->trans('accounting.synthesis.callback'),
+                'label' => $translator->trans('accounting.synthesis.title')
+            ]
+        ];
+        
+        if ($callBackUrl != null || $callBackUrl != "") {
+            $breadcrumbs[] = [
+                'href' => $callBackUrl,
+                'title' => $translator->trans('accounting.exercise.title'),
+                'label' => $translator->trans('accounting.exercise.title')
+            ];
+        }
+        
+        $breadcrumbs[] = [
+            'label' => $translator->trans('accounting.exercise.edit.title')
+        ];
+        
         return $this->render('@Accounting/exercise.html.twig', array(
-            'callBackUrl' => $callBackUrl
+            'formExercise' =>  $formHandler->getForm()->createView(),
+            'callBackUrl' => $callBackUrl,
+            'breadcrumbs' => $breadcrumbs,
         ));
     }
 }

@@ -45,24 +45,6 @@ class Entry
     protected $amount;
 
     /**
-     * @var Exercise
-     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Exercise", inversedBy="entries", fetch="EXTRA_LAZY")
-     */
-    protected $exercise;
-    
-    /**
-     * @var Entry
-     * @ORM\OneToOne(targetEntity="AccountingBundle\Entity\Entry", fetch="EAGER")
-     */
-    protected $entryParent;
-    
-    /**
-     * var int
-     * ORM\Column(type="integer", nullable=true)
-     */
-    //protected $projectId;
-
-    /**
      * @var Project
      * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Project", inversedBy="entries", fetch="EXTRA_LAZY")
      */
@@ -70,7 +52,7 @@ class Entry
 
     /**
      * @var AccountableAccount
-     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="entries", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="entries", fetch="EXTRA_LAZY")
      */
     protected $accountableAccount;
     
@@ -286,27 +268,6 @@ class Entry
     public function setAccountableAccount(AccountableAccount $accountableAccount): Entry
     {
         $this->accountableAccount = $accountableAccount;
-        
-        return $this;
-    }
-    
-    /**
-     * 
-     * @return \AccountingBundle\Entity\Exercise|null
-     */
-    public function getExercise():?Exercise
-    {
-        return $this->exercise;
-    }
-    
-    /**
-     * 
-     * @param \AccountingBundle\Entity\Exercise $exercise
-     * @return \AccountingBundle\Entity\Entry
-     */
-    public function setExercise(Exercise $exercise): Exercise
-    {
-        $this->exercise = $exercise;
         
         return $this;
     }

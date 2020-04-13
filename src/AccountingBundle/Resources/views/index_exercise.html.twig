@@ -1,0 +1,57 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %} 
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
+        {
+            'href': path('dashboard'),
+            'title': 'app.dashboard.callback'|trans,
+            'label': 'app.dashboard.title'|trans
+        },
+        {
+            'label': 'exercise.list.title'|trans
+        }
+        ] } %}
+
+        <h2 class="col-xs-12">
+            {{ 'exercise.list.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body table-responsive">
+                    <section>
+                        <div class="row">
+                            <h3>{{ 'exercise.list'|trans }}</h3>
+                        </div>
+                    </section>
+                    <table class="table table-striped orderable dataTable">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;width:60px;"></th>
+                                <th style="text-align: center;width:80px;">{{ 'accounting.common.date_start'|trans }}</th>
+                                <th style="text-align: center;width:80px;">{{ 'accounting.common.date_end'|trans }}</th>
+                                <th style="text-align: left;">{{ 'accounting.common.reference'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for exercise in data %}
+                                <tr>
+                                    <td class="checkbox" style="text-align:center;">
+                                        <input type="checkbox" name="" value="" />
+                                    </td>
+                                    <td>{{ exercise.getDateStart()|date('d/m/Y') }}</td>
+                                    <td>{{ exercise.getDateEnd()|date('d/m/Y') }}</td>
+                                    <td>{{ exercise.getReference() }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

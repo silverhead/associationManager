@@ -64,7 +64,7 @@ class Exercise {
      * @param int $id
      * @return Entry
      */
-    public function setId($id)
+    public function setId($id): Exercise
     {
         $this->id = $id;
 
@@ -83,7 +83,7 @@ class Exercise {
      * @param string $reference
      * @return Entry
      */
-    public function setReference($reference)
+    public function setReference($reference): Exercise
     {
         $this->reference = $reference;
 
@@ -141,7 +141,7 @@ class Exercise {
      * @param mixed $active
      * @return Entry
      */
-    public function setActive($active)
+    public function setActive($active): Exercise
     {
         $this->active = $active;
 
@@ -168,7 +168,7 @@ class Exercise {
      * @param \DateTime $updatedAt
      * @return Entry
      */
-    public function setUpdatedAt(\DateTime $updatedAt): Entry
+    public function setUpdatedAt(\DateTime $updatedAt): Exercise
     {
         $this->updatedAt = $updatedAt;
 
@@ -179,7 +179,7 @@ class Exercise {
      * 
      * @return PersistentCollection|null
      */
-    public function getEntries(): PersistentCollection {
-        return $this->entries;
-    }
+//    public function getEntries(): PersistentCollection {
+//        return $this->entries;
+//    }
 }

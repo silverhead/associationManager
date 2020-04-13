@@ -36,7 +36,7 @@ class AccountableAccount {
     
     /**
      * @var Journal
-     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Journal", fetch="EXTRA_LAZY", inversedBy="entries")
+     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\Journal", fetch="EAGER", inversedBy="entries")
      * ORM\JoinColumn(name="journal_id", referencedColumnName="id")
      */
     protected $journal;

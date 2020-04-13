@@ -49,6 +49,22 @@ class EntryRepository extends EntityRepository implements PaginatorRepositoryInt
             ->getResult();
     }
     
+    public function findEntriesForAccountId($accountId, $dateStart, $dateEnd) {
+        $qb = $this->createQueryBuilder("e")
+                ->select("e")
+                ->where("e.accountableAccount = :accountId")
+                    ->andWhere("e.accountingDate between :dateStart and :dateEnd")
+                        ->setParameter("accountId", $accountId)
+                        ->setParameter("dateStart", $dateStart)
+                        ->setParameter("dateEnd", $dateEnd)
+                ->addOrderBy('e.accountingDate', 'DESC')
+                ->addOrderBy('e.reference', 'ASC')
+                ->addOrderBy('e.id', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+    
     public function findById($entryId)
     {
         /*

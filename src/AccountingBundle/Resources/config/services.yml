@@ -3,6 +3,10 @@ services:
         class: AccountingBundle\Manager\AccountingManager
         autowire: true
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    accounting.manager.exercise:
+        class: AccountingBundle\Manager\ExerciseManager
+        autowire: true
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     accounting.form.entry:
         class: AccountingBundle\Form\Handler\EntryFormHandler
         arguments: ['@form.factory', '@service_container']
@@ -11,4 +15,4 @@ services:
         arguments: ['@form.factory', '@accounting.manager.accounting']
     accounting.form.exercise:
         class: AccountingBundle\Form\Handler\ExerciseFormHandler
-        arguments: ['@form.factory', '@accounting.manager.accounting']
+        arguments: ['@form.factory', '@accounting.manager.exercise']

@@ -1,0 +1,58 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with { 'breadcrumbs': breadcrumbs } %}
+        <h2 class="col-xs-12">
+            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
+            {{ 'accounting.account.edit.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(formExercise) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(formExercise.reference, {
+                                'label': 'accounting.exercise.edit.form.reference'|trans
+                            }) }}
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(formExercise.dateStart, {
+                                'label': 'accounting.exercise.edit.form.date_start'|trans,
+                                
+                                'attr': {
+                                    'placeholder': 'accounting.exercise.edit.form.date_start'|trans,
+                                    'class': 'form-control input-inline datetimepicker'
+                                }
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(formExercise.dateEnd, {
+                                'label': 'accounting.exercise.edit.form.date_end'|trans,
+                                
+                                'attr': {
+                                    'placeholder': 'accounting.exercise.edit.form.date_end'|trans,
+                                    'class': 'form-control input-inline datetimepicker'
+                                }
+                            }) }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
+                        </div>
+                    </div>
+
+                    {{ form_end(formExercise) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

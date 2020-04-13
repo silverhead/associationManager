@@ -45,54 +45,43 @@ class AccountableAccountRepository extends EntityRepository implements Paginator
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function findAll($id = null, $dateDebut = null, $dateFin = null) {
-        if ($id != null) {
-            if ($dateDebut != null && $dateFin == null) {
-                $qb = $this->createQueryBuilder('a')
-                    ->select('a, e')
-                    ->innerJoin('a.entries', 'e')
-                    ->where("a.id = :id")
-                    ->andWhere("e.accountingDate = :accountingDate")
-                        ->setParameter("id", $id)
-                        ->setParameter("accountingDate", $dateDebut)
-                    ->addOrderBy('a.label', 'ASC')
-                    ->addOrderBy('e.accountingDate', 'DESC')
-                    ->addOrderBy('e.valueDate', 'DESC')
-                    ;
-            } else if ($dateDebut != null && $dateFin != null) {
-                $qb = $this->createQueryBuilder('a')
-                    ->select('a, e')
-                    ->innerJoin('a.entries', 'e')
-                    ->where("a.id = :id")
-                    ->andWhere("e.accountingDate between :dateDebut and :dateFin")
-                        ->setParameter("id", $id)
-                        ->setParameter("dateDebut", $dateDebut)
-                        ->setParameter("dateFin", $dateFin)
-                    ->addOrderBy('a.label', 'ASC')
-                    ->addOrderBy('e.accountingDate', 'DESC')
-                    ->addOrderBy('e.valueDate', 'DESC')
-                    ;
-            } else {
-                $qb = $this->createQueryBuilder('a')
-                   ->select('a, e')
-                   ->innerJoin('a.entries', 'e')
-                    ->where("a.id = :id")
-                        ->setParameter("id", $id)
-                   ->addOrderBy('a.label', 'ASC')
-                   ->addOrderBy('e.accountingDate', 'DESC')
-                   ->addOrderBy('e.valueDate', 'DESC')
-                   ;
-            }
-        } else {
-            $qb = $this->createQueryBuilder('a')
-                ->select('a, e')
-                ->innerJoin('a.entries', 'e')
-                ->addOrderBy('a.label', 'ASC')
-                ->addOrderBy('e.accountingDate', 'DESC')
-                ->addOrderBy('e.valueDate', 'DESC')
-                ;
-        }
-        
+    public function findOne($id) {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->leftJoin('a.entries', 'e')
+            ->addOrderBy('a.label', 'ASC')
+            ->addOrderBy('e.accountingDate', 'DESC')
+            ->addOrderBy('e.valueDate', 'DESC')
+        ;
+        return $qb->getQuery()->getResult();
+    }
+    
+    public function findAllAccount() {
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->select('a')
+            ->leftJoin('a.entries', 'e')
+            ->addOrderBy('a.label', 'ASC')
+        ;
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function findAccountWithEntries($id, $dateDebut, $dateFin) {
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->select('a')
+            ->innerJoin('a.entries', 'e')
+            ->where("a.id = :id")
+            ->andWhere("e.accountingDate between :dateDebut and :dateFin")
+//            ->andWhere("e.valueDate between :dateDebut and :dateFin")
+                ->setParameter("id", $id)
+                ->setParameter("dateDebut", $dateDebut)
+                ->setParameter("dateFin", $dateFin)
+            ->addOrderBy('a.label', 'ASC')
+            ->addOrderBy('e.accountingDate', 'DESC')
+            ->addOrderBy('e.valueDate', 'DESC')
+        ;
         return $qb->getQuery()
             ->getResult();
     }

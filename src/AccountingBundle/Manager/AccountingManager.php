@@ -21,12 +21,15 @@ class AccountingManager implements PaginatorManagerInterface
      * @var EntityManager
      */
     private $entityManager;
+    
+    private $dateStart;
+    private $dateEnd;
 
     /**
      * @var PaginatorInterface
      */
     private $paginator;
-
+    
     public function __construct(EntityManager $entityManager, PaginatorInterface $paginator)
     {
         $this->entityManager = $entityManager;
@@ -40,28 +43,40 @@ class AccountingManager implements PaginatorManagerInterface
 
     public function getRepository()
     {
-        return $this->entityManager->getRepository("AccountingBundle:");
+        return $this->entityManager->getRepository("AccountingBundle:AccountableAccount");
+    }
+    
+    public function getAccountableAccount($accountId) {
+        $accountableAccountRepo = $this->getRepository();
+        return $accountableAccountRepo->findOne($accountId);
     }
     
     public function getEntriesByAccountForSynthesis()
     {
-        $accountableAccountRepo = $this->entityManager->getRepository("AccountingBundle:AccountableAccount");
-        $accountableAccounts = $accountableAccountRepo->findAll();
+        $accountableAccountRepo = $this->getRepository();
+        $accountableAccounts = $accountableAccountRepo->findAllAccount();
 
         return $accountableAccounts;
     }
     
-    public function getEntriesForAccount($accountId, $dateDebut=null, $dateFin=null) {
-        $accountableAccountRepo = $this->entityManager->getRepository("AccountingBundle:AccountableAccount");
-        $dateDebut = $dateDebut != null ? $dateDebut : date("Y-m-d", 0);
-        $dateFin = $dateFin != null ? $dateFin : date("Y-m-d"); 
-        $accountableAccount = $accountableAccountRepo->findAll($accountId, $dateDebut, $dateFin);
+    public function getAccountWithEntries($accountId, $dateDebut=null, $dateFin=null) {
+        //$entryRepo = $this->entityManager->getRepository("AccountingBundle:Entry");
+        $accountableAccountRepo = $this->getRepository();
+        $dateDebut = $this->getDateStart($dateDebut);
+        $dateFin = $this->getDateEnd($dateFin);     
+        //$entries = $entryRepo->findEntriesForAccountId($accountableAccount->getId(), $dateDebut, $dateFin);
 
+        $accountableAccount = $accountableAccountRepo->findAccountWithEntries($accountId, $dateDebut, $dateFin);
+        //$accountableAccount->populateEntries($entries);
+        //return $accountableAccount;
+        if ($accountableAccount == null) {
+            $accountableAccount = $accountableAccountRepo->findOne($accountId);
+        }
         return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
     }
     
     public function getEntriesForAccountAndDate($accountId, $date) {
-        $accountableAccountRepo = $this->entityManager->getRepository("AccountingBundle:AccountableAccount");
+        $accountableAccountRepo = $this->getRepository();
         $accountableAccount = $accountableAccountRepo->findAll($accountId, $date);
 
         return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
@@ -95,23 +110,47 @@ class AccountingManager implements PaginatorManagerInterface
     }
 
     public function getSoldesForAccount($accountId, $dateDebut=null, $dateFin=null) {
-        $accountableAccountRepo = $this->entityManager->getRepository("AccountingBundle:AccountableAccount");
-        $dateDebut = $dateDebut != null ? $dateDebut : date("Y-m-d", 0);
-        $dateFin = $dateFin != null ? $dateFin : date("Y-m-d"); 
+        $accountableAccountRepo = $this->getRepository();
+        $dateDebut = $this->getDateStart($dateDebut);
+        $dateFin = $this->getDateEnd($dateFin);
         $accountableAccount = $accountableAccountRepo->findAll($accountId, $dateDebut, $dateFin);
 
         //var_dump($accountableAccount);exit();
         
         return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
     }
-
-    public function getExerciseList($dateDebut, $dateFin)
-    {
-        $exerciseRepo = $this->entityManager->getRepository("AccountingBundle:Exercise");
-        $dateDebut = $dateDebut != null ? $dateDebut : date("Y-m-d", 0);
-        $dateFin = $dateFin != null ? $dateFin : date("Y-m-d");       
-        $exerciseList = $exerciseRepo->findByPeriode($dateDebut, $dateFin);
-        
-        return $exerciseList;
+    
+    private function getDateStart($dateStart) {
+        $dateToReturn = $dateStart;
+        if ($dateStart == null) {
+            if ($this->dateStart == null) {
+                $exerciseRepo = $this->entityManager->getRepository("AccountingBundle:Exercise");
+                $lastExercise = $exerciseRepo->findLast();
+                if ($lastExercise == null) {
+                    $this->dateStart = date("Y-m-d", 0);
+                } else {
+                    $this->dateStart = $lastExercise->getDateStart();
+                }
+            }
+            $dateToReturn = $this->dateStart;
+        }
+        return $dateToReturn;
+    }
+    
+    private function getDateEnd($dateEnd) {
+        $dateToReturn = $dateEnd;
+        if ($dateEnd == null) {
+            if ($this->dateEnd == null) {
+                $exerciseRepo = $this->entityManager->getRepository("AccountingBundle:Exercise");
+                $lastExercise = $exerciseRepo->findLast();
+                if ($lastExercise == null) {
+                    $this->dateEnd = date("Y-m-d");
+                } else {
+                    $this->dateEnd = $lastExercise->getDateEnd();
+                }
+            }
+            $dateToReturn = $this->dateEnd;
+        }
+        return $dateToReturn;
     }
 }

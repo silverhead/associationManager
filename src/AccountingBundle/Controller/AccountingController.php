@@ -43,61 +43,82 @@ class AccountingController extends Controller
     }
     
     /**
-     * @Route("/accounting/account/{id}", name="accounting_account_id", options = { "expose" = true })
+     * @Route("/accounting/account/{id}/{dateStart}/{dateEnd}", name="accounting_account_id", options = { "expose" = true })
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function account(Request $request, $id = null) {
+    public function account(Request $request, $id = null, $dateStart = null, $dateEnd = null) {
         $accountingManager = $this->get('accounting.manager.accounting');
-        $entriesOfAccount = $accountingManager->getEntriesForAccount($id, null, null);
+        $exerciseManager = $this->get('accounting.manager.exercise');
+        
+        $exerciseList = $exerciseManager->getExerciseList();
+        $dateDebut = $dateStart;
+        $dateFin = $dateEnd;
+        if ($dateDebut == null) {
+            $lastExercise = $exerciseManager->getLastExercise();
+            $dateDebut = $lastExercise->getDateStart();
+            $dateFin = $lastExercise->getDateEnd();
+        }
+        
+        $entriesOfAccount = $accountingManager->getAccountWithEntries($id, $dateDebut, $dateFin);
+        
         $formHandler = null;
         $callBackUrl = $this->generateUrl('accounting_account_id', ['id' => $id]);
         $translator = $this->get('translator');
         
-        if ($entriesOfAccount->getSoldes() == null || count($entriesOfAccount->getSoldes()) == 0) {
-            $entity = new Solde();
-            $formHandler = $this->get('accounting.form.solde');
-            $formHandler->setForm($entity, $id);
-        
-            if ($formHandler->process($request)) {
-                $entity = $formHandler->getData($entriesOfAccount);
-                if ($accountingManager->saveSolde($entity)) {
-                    $this->addFlash('success', $translator->trans('accounting.account.solde.edit.saveSuccessText'));
+        if ($entriesOfAccount != null) {
+            if ($entriesOfAccount->getSoldes() == null || count($entriesOfAccount->getSoldes()) == 0) {
+                $entity = new Solde();
+                $formHandler = $this->get('accounting.form.solde');
+                $formHandler->setForm($entity, $id);
 
-                    if ($request->get('save_and_leave', null) !== null) {
-                        if ($callBackUrl !== null) {
-                            return $this->redirect($callBackUrl);
+                if ($formHandler->process($request)) {
+                    $entity = $formHandler->getData($entriesOfAccount);
+                    if ($accountingManager->saveSolde($entity)) {
+                        $this->addFlash('success', $translator->trans('accounting.account.solde.edit.saveSuccessText'));
+
+                        if ($request->get('save_and_leave', null) !== null) {
+                            if ($callBackUrl !== null) {
+                                return $this->redirect($callBackUrl);
+                            }
+
+                            return $this->redirect(
+                                $this->get('router')->generate('accounting_index', array('accountId' => $entity->getAccountableAccount()->getId()))
+                            );
                         }
 
-                        return $this->redirect(
-                            $this->get('router')->generate('accounting_index', array('accountId' => $entity->getAccountableAccount()->getId()))
-                        );
+                        if ($request->get('save_and_stay', null) !== null) {
+                            return $this->redirectToRoute('accounting_account_id', [
+                                'id' => $id
+                            ]);
+                        }
                     }
 
-                    if ($request->get('save_and_stay', null) !== null) {
-                        return $this->redirectToRoute('accounting_account_id', [
-                            'id' => $id
-                        ]);
-                    }
+                    $this->addFlash(
+                        'error',
+                        $translator->trans('app.common.errorComming', [
+                            '%error%' => '<br />' . implode('<br />', $accountingManager->getErrors())
+                    ]));
                 }
-
-                $this->addFlash(
-                    'error',
-                    $translator->trans('app.common.errorComming', [
-                        '%error%' => '<br />' . implode('<br />', $accountingManager->getErrors())
-                ]));
             }
-        }
-        $dateDebut = $request->get('dateDebut');
-        $dateDebut = $request->get('dateFin');
-        $exerciseList = $accountingManager->getExerciseList(null, null);
-
-        return $this->render('@Accounting/account.html.twig', array(
-            'accounting' => $entriesOfAccount,
-            'formSolde' =>  $formHandler != null ? $formHandler->getForm()->createView() : null,
-	    'exerciseList' => $exerciseList,
-            'callBackUrl' => $callBackUrl
-        ));
+            return $this->render('@Accounting/account.html.twig', array(
+                'accounting' => $entriesOfAccount,
+                'formSolde' =>  $formHandler != null ? $formHandler->getForm()->createView() : null,
+                'exerciseList' => $exerciseList,
+                'callBackUrl' => $callBackUrl
+            ));
+            
+        } else {
+//            return $this->redirectToRoute('accounting_account_entry_add', [
+//                'accountId' => $id
+//            ]);
+            
+            $response = $this->forward('AccountingBundle\Controller\AccountingController::entryeditAction', [
+                'request'  => $request,
+                'accountId' => $id,
+            ]);
+            return $response;
+        }   
     }
     
     /**
@@ -116,8 +137,8 @@ class AccountingController extends Controller
             $entity = new Entry();
         }
         if ($accountId != null) {
-            $accountableAccount = $accountingManager->getEntriesForAccount($accountId);
-            $entity->setAccountableAccount($accountableAccount);
+            $accountableAccount = $accountingManager->getAccountableAccount($accountId);
+            $entity->setAccountableAccount($accountableAccount[0]);
         }
         
         $pageH = $this->get('app.handler.page_historical');
