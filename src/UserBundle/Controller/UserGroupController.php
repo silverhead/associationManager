@@ -45,6 +45,7 @@ class UserGroupController extends Controller
         );
 
         return $this->render('/user/group/groupsList.html.twig', array(
+            'menuSelect' => 'user_manager',
             'results' => $results
         ));
     }
@@ -129,6 +130,7 @@ class UserGroupController extends Controller
 
 
         return $this->render('/user/group/edit.html.twig', array(
+            'menuSelect' => 'user_manager',
             'formUserGroup' =>  $formHandler->getForm()->createView(),
             'breadcrumbs' => $breadcrumbs,
             'callBackUrl' => $callBackUrl

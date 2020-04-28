@@ -32,6 +32,7 @@ class DashboardManagerController extends Controller
         }
 
         return $this->render(":dashboard:dashboardManager.html.twig", array(
+            'menuSelect' => 'dashboard_manager',
             'bundles' => $this->list()
         ));
     }
