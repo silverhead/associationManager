@@ -49,6 +49,7 @@ class AccountingController extends Controller
             $sumOfBalance += $account->getCalculatedLastSolde()->getAmount();
         }
         return $this->render('@Accounting/index.html.twig', array(
+            'menuSelect' => 'accounting_manager',
             'data' => $entriesOfAccounts,
             'sumOfBalance' => number_format($sumOfBalance/100, 2, ',', ' ')
         ));
@@ -129,6 +130,7 @@ class AccountingController extends Controller
                 }
             }
             return $this->render('@Accounting/account.html.twig', array(
+                'menuSelect' => 'accounting_manager',
                 'accounting' => $entriesOfAccount,
                 'formSolde' =>  $formHandler != null ? $formHandler->getForm()->createView() : null,
                 'exerciseList' => $exerciseList,
@@ -239,6 +241,7 @@ class AccountingController extends Controller
         ];
 
         return $this->render('@Accounting/edit_account.html.twig', array(
+            'menuSelect' => 'accounting_manager',
             'formEntry' =>  $formHandler->getForm()->createView(),
             'breadcrumbs' => $breadcrumbs,
             'callBackUrl' => $callBackUrl
@@ -335,6 +338,7 @@ class AccountingController extends Controller
         ];
 
         return $this->render('@Accounting/edit_solde.html.twig', array(
+            'menuSelect' => 'accounting_manager',
             'formSolde' =>  $formHandler->getForm()->createView(),
             'accountableAccount' => $accountableAccount,
             'breadcrumbs' => $breadcrumbs,
@@ -433,6 +437,7 @@ class AccountingController extends Controller
         ];
 
         return $this->render('@Accounting/edit_solde.html.twig', array(
+            'menuSelect' => 'accounting_manager',
             'formSolde' =>  $formHandler->getForm()->createView(),
             'accountableAccount' => $accountableAccount, //$accountingManager->getSoldesForAccount($accountId),
             'breadcrumbs' => $breadcrumbs,
