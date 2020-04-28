@@ -31,7 +31,7 @@
                         <section id="accounting_{{ accounting.getId() }}">
                             <div class="row">
                                 <h3>
-                                    <a href="/accounting/account/{{ accounting.getId() }}">
+                                    <a href="{{ path('accounting_account_id', {'id':accounting.getId()}) }}">
                                         {{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} :
                                         {{ accounting.getCalculatedLastSolde().getFormattedAmount() }} 
                                     </a>

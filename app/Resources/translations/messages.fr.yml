@@ -8,6 +8,7 @@ app:
         hourFormat: d/m/Y H:i
         noData: Pas données
         nc: n.c.
+        notAuthorizedPage: Accès non autorisé
         errorUnknown: Erreur inconnu, veuillez contacter l'administrateur de l'application !
         errorComming: Une erreur est intervenue ! %error%
         errorTitle: Une erreur est intervenue !

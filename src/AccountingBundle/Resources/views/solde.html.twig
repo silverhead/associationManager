@@ -32,7 +32,7 @@
                             <h3>{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getCalculatedLastSolde().getFormattedAmount() }}</h3>
                         </div>
                         <div class="col-md-3">
-                            <a href="/accounting/account/{{ accounting.getId() }}/solde/add">Ajout solde</a>
+                            <a href="{{ path('accounting_account_solde_add', {'accountId': accounting.getId() }) }}" class="btn btn-success">{{ 'accounting.account.add_balance_btn'|trans }}</a>
                         </div>
                     </div>
                     {% if accounting.getSoldes()|length > 0 %}

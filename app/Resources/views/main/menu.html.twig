@@ -24,6 +24,14 @@
                 </a>
             </li>
         {% endif %}
+        {% if is_granted('ACCOUNTING_VIEW') %}
+            <li class="{% if menuSelect == 'accounting_manager' %}active{% endif %}">
+                <a href="{{ path('accounting_index') }}" class=" waves-effect waves-block">
+                    <i class="material-icons">attach_money</i>
+                    <span>{{ 'menu.accounting'|trans }}</span>
+                </a>
+            </li>
+        {% endif %}
         {% if is_granted('APP_MASTER_SETTING_MENU') %}
             <li class="header">{{ 'menu.application'|trans }}</li>
             {% if is_granted('APP_SETTING_VIEW') %}

@@ -1,6 +1,0 @@
-accounting_index:
-    path: /accounting/
-    defaults: {_controller: AccountingBundle:Accounting:index }
-exercise_index:
-    path: /exercise/
-    defaults: {_controller: AccountingBundle:Exercise:index }

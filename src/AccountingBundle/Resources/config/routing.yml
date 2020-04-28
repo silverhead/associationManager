@@ -1,0 +1,3 @@
+accounting:
+    resource: "@AccountingBundle/Controller/"
+    type:     annotation

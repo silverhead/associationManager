@@ -14,6 +14,9 @@ subscription:
 user:
     resource: "@UserBundle/Controller/"
     type:     annotation
+accounting:
+    resource: "@AccountingBundle/Controller/"
+    type:     annotation
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
 fos_js_routing:
