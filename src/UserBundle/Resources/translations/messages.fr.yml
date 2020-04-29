@@ -1,0 +1,52 @@
+user:
+    manager:
+        tabUsers: Utilisateurs
+        tabUserGroups: Groupes
+    user:
+        list:
+            title: Gestion utilisateurs
+            table:
+                userName: Identifiant
+                email: E-mail
+                group: Groupe
+                active: Actif
+        add:
+            title: Ajouter un utilisateur
+        profile:
+            title: Votre profil
+            saveSuccessText: Votre profil a été enregistré !
+        edit:
+            title: Modifier un utilisateur
+            form:
+                group: Groupe
+                active: Actif
+                firstName: Prénom
+                lastName: Nom
+                username: Identifiant
+                email: E-mail
+                password: Mot de passe
+                password_confirmation: Mot de passe (Vérification)
+                passwordHelp: Le mot de passe doit contenir une majuscule, des chiffres et des caractères spéciaux (!@$%^&*-)
+        credential:
+            title: Droits gestion utilisateurs
+    group:
+        credential:
+            title: Utilisateurs (Groupes)
+        title: Groupes
+        list:
+            table:
+                labelCol: Libellé
+                nbMembersCol: Nb d'utilisateurs
+        add:
+            title: Ajouter un groupe
+        edit:
+            title: Modifier le groupe
+            saveSuccessText: Le groupe enregistré avec succès !
+            label: Libellé
+            active: Actif
+            generalTitle: Général
+            credentialTitle: Autorisations
+        delete:
+            deleteQuestionText: La suppression du groupe est définitf !
+            deleteErrorMissingText: Le groupe que vous voulez suprpimer n'a pas été trouvé !
+            deleteSuccessText: Le groupe %label% à bien été supprimé !

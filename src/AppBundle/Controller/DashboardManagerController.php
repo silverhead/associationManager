@@ -32,6 +32,7 @@ class DashboardManagerController extends Controller
         }
 
         return $this->render(":dashboard:dashboardManager.html.twig", array(
+            'menuSelect' => 'dashboard_manager',
             'bundles' => $this->list()
         ));
     }
@@ -72,7 +73,6 @@ class DashboardManagerController extends Controller
         }
 
         $dashboardBundleManger = $this->get('app.manager.dashboard_bundle_setting');
-
 
         if($id > 0){
             $dashboardBundleSetting =  $dashboardBundleManger->find($id);

@@ -1,9 +1,20 @@
 {{ form_start(filter) }}
 <div class="row">
     <div class="col-xs-8">
-        {% if is_granted('MEMBER_MEMBER_CREATE') %}
-        <a href="{{ path('member_edit') }}" class="btn bg-green waves-effect">{{ 'member.member.add'|trans }}</a>
-        {% endif %}
+        <div class="row">
+            <div class="col-xs-12">
+                {% if is_granted('MEMBER_MEMBER_CREATE') %}
+                    <a href="{{ path('member_edit') }}" class="btn bg-green waves-effect">{{ 'member.member.add'|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                {% if is_granted('MEMBER_MEMBER_IMPORT') %}
+                    <a href="{{ path('member_import') }}" class="btn bg-blue-grey waves-effect">{{ 'member.member.import.importBtn'|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
     <div class="col-xs-4">
         <div class="row">

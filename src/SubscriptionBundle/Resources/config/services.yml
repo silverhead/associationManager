@@ -1,5 +1,10 @@
 services:
     # EVENT LISTENER
+    subscription.configure_menu_listener:
+        class: SubscriptionBundle\EventListener\ConfigureMenuListener
+        arguments: ['@translator', '@security.authorization_checker']
+        tags:
+            - { name: kernel.event_listener, event: app.menu_configure, method: onMenuConfigure }
     subscription.subscription.credential.event:
         class: AppBundle\EventListener\AppCredentialEventListener
         arguments: ['%credentialVoterSubscriptionSubscription%', 'subscription.subscription.credential.title']
@@ -17,7 +22,7 @@ services:
             - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
     subscription.dashboard.bundle.event:
         class: AppBundle\EventListener\AppDashboardBundleEventListener
-        arguments: ['subscription.dashboard.tableTitleTop10', '%subscription.dashboard.tableTitleTop10%']
+        arguments: ['subscription.dashboard.totalFeeAmountCard', '%subscription.dashboard.totalFeeAmountCard%']
         tags:
             - { name: kernel.event_listener, event: app.dashboard.bundle.event, method: onProvideBundle }
     # VOTER
@@ -84,3 +89,14 @@ services:
     subscription.controller.dashboard:
         class: SubscriptionBundle\Controller\DashboardController
         arguments: ['@service_container']
+    # Validator
+    subscription.validator.subscription_exist:
+        class: SubscriptionBundle\Validator\SubscriptionExistValidator
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - {name: validator.constraint_validator, alias: subscription_fee.validator.import.subscription_exist}
+    subscription.validator.payment_exist:
+        class: SubscriptionBundle\Validator\PaymentTypeExistValidator
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - {name: validator.constraint_validator, alias: subscription_fee.validator.import.payment_exist}

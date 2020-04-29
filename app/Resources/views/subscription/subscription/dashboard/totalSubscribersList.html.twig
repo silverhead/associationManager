@@ -1,30 +1,27 @@
-<div class="info-box bg-orange hover-expand-effect">
+<div class="info-box bg-green hover-expand-effect">
     <div class="icon">
-        <i class="material-icons">cached</i>
+        <i class="material-icons">euro_symbol</i>
     </div>
     <div class="content">
-        <div class="text">Total cotisation</div>
-        <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">{{ totalPayedFee|number_format(2, ",") }} €</div>
+        <div class="text">{{ 'subscription.dashboard.totalFeePaidForDay'|trans }}</div>
+        <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">{{ totalFeePaidForDay|number_format(2, ",", " ") }} €</div>
     </div>
 </div>
-
-<div class="card">
-    <div class="header">
-        <h2>Taux types d'abonnement</h2>
-        {#<ul class="header-dropdown m-r--5">#}
-        {#<li class="dropdown">#}
-        {#<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#}
-        {#<i class="material-icons">more_vert</i>#}
-        {#</a>#}
-        {#<ul class="dropdown-menu pull-right">#}
-        {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>#}
-        {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>#}
-        {#<li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>#}
-        {#</ul>#}
-        {#</li>#}
-        {#</ul>#}
+<div class="info-box bg-red hover-expand-effect">
+    <div class="icon">
+        <i class="material-icons">euro_symbol</i>
     </div>
-    <div class="body">
-        <div id="abo_chart" class="graph"></div>
+    <div class="content">
+        <div class="text">{{ 'subscription.dashboard.totalFeeNotPaidForDay'|trans }}</div>
+        <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">{{ totalFeeNotPaidForDay|number_format(2, ",", " ") }} €</div>
+    </div>
+</div>
+<div class="info-box bg-orange hover-expand-effect">
+    <div class="icon">
+        <i class="material-icons">euro_symbol</i>
+    </div>
+    <div class="content">
+        <div class="text">{{ 'subscription.dashboard.totalFeeNotYetPaid'|trans }}</div>
+        <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">{{ totalFeeNotYetPaid|number_format(2, ",", " ") }} €</div>
     </div>
 </div>

@@ -39,9 +39,17 @@
             <div class="card">
                 <div class="body">
                     {{ form_start(formSubscription) }}
-                    {#<form action="" class="form-horizontal">#}
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                {{ form_row(formSubscription.code, {
+                                    'label': 'subscription.subscription.edit.code'|trans,
+                                    'attr': {
+                                        'placeholder': 'subscription.subscription.edit.code'|trans,
+                                        'title': 'subscription.subscription.edit.code'|trans
+                                    }
+                                }) }}
+                            </div>
+                            <div class="col-md-4">
                                 {{ form_row(formSubscription.label, {
                                     'label': 'subscription.subscription.edit.label'|trans,
                                     'attr': {
@@ -50,7 +58,7 @@
                                     }
                                 }) }}
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 {{ form_row(formSubscription.periodicities, {
                                     'label': 'subscription.subscription.edit.periodicities'|trans,
                                     'attr': {
@@ -73,17 +81,6 @@
                                         'placeholder': 'subscription.subscription.edit.cost'|trans
                                     }
                                 }) }}
-                                {#<div class="form-group">#}
-                                    {#<label class="col-sm-12">Coût</label>#}
-                                    {#<div class="input-group">#}
-                                        {#<span class="input-group-addon">#}
-                                            {#<i class="material-icons">euro_symbol</i>#}
-                                        {#</span>#}
-                                        {#<div class="form-line">#}
-                                            {#<input type="text" value="{{ abonnement.cout }}" title="Coût" class="form-control money-euro text-right" placeholder="Coût">#}
-                                        {#</div>#}
-                                    {#</div>#}
-                                {#</div>#}
                             </div>
                             <div class="col-md-4">
                                 {{ form_row(formSubscription.duration, {
@@ -96,29 +93,9 @@
                                         'placeholder': 'subscription.subscription.edit.duration'|trans
                                     }
                                 }) }}
-                                {#<div class="form-group">#}
-                                    {#<label class="col-sm-12">Durée</label>#}
-                                    {#<div class="input-group">#}
-                                        {#<span class="input-group-addon">#}
-                                            {#<i class="material-icons">date_range</i>#}
-                                        {#</span>#}
-                                        {#<div class="form-line">#}
-                                            {#<input type="text" value="{{ abonnement.duree }}" title="Durée" class="form-control day-duration" placeholder="Durée (en jours)">#}
-                                        {#</div>#}
-                                    {#</div>#}
-                                {#</div>#}
                             </div>
                             <div class="col-md-4">
                                 {{ form_row(formSubscription.active, {'label': 'subscription.subscription.edit.status'|trans}) }}
-                                {#<div class="form-group">#}
-                                    {#<label class="col-sm-12">Statut</label>#}
-                                    {#<div class="col-sm-12" style="padding: 0;">#}
-                                        {#<select class="form-control selectpicker" id="" title="Statut">#}
-                                            {#<option value="1" {% if 1 == abonnement.statut  %}selected{% endif %}>Actif</option>#}
-                                            {#<option value="0" {% if 0 == abonnement.statut  %}selected{% endif %}>Non actif</option>#}
-                                        {#</select>#}
-                                    {#</div>#}
-                                {#</div>#}
                             </div>
                         </div>
                         <div class="row">
