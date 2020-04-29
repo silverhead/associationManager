@@ -1,5 +1,10 @@
 services:
     # EVENT LISTENER
+    subscription.configure_menu_listener:
+        class: SubscriptionBundle\EventListener\ConfigureMenuListener
+        arguments: ['@translator', '@security.authorization_checker']
+        tags:
+            - { name: kernel.event_listener, event: app.menu_configure, method: onMenuConfigure }
     subscription.subscription.credential.event:
         class: AppBundle\EventListener\AppCredentialEventListener
         arguments: ['%credentialVoterSubscriptionSubscription%', 'subscription.subscription.credential.title']
