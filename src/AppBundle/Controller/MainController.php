@@ -15,10 +15,9 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        // replace this example code with whatever you need
-        return $this->render('main/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-        ]);
+        return $this->redirect(
+            $this->generateUrl('dashboard')
+        );
     }
 
     /**
