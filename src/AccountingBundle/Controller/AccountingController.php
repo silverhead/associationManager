@@ -31,14 +31,21 @@ class AccountingController extends Controller
         $soldes = array();
         $accountingManager = $this->get('accounting.manager.accounting');
         
-        $entriesOfAccounts = $accountingManager->getEntriesByAccountForSynthesis();
+        $exerciseManager = $this->get('accounting.manager.exercise');
+        $exerciseList = $exerciseManager->getExerciseList();
+        
+        $lastExercise = $exerciseManager->getLastExercise();
+        $dateStart = $lastExercise->getDateStart();
+        $dateEnd = $lastExercise->getDateEnd();
+        $entriesOfAccounts = $accountingManager->getEntriesByAccountForSynthesis($dateStart, $dateEnd);
         $sumOfBalance = 0;
         foreach ($entriesOfAccounts as $account) {
             $sumOfBalance += $account->getCalculatedLastSolde()->getAmount();
         }
         return $this->render('@Accounting/index.html.twig', array(
             'data' => $entriesOfAccounts,
-            'sumOfBalance' => number_format($sumOfBalance/100, 2, ',', ' ')
+            'sumOfBalance' => number_format($sumOfBalance/100, 2, ',', ' '),
+            'exerciseList' => $exerciseList
         ));
     }
     

@@ -56,12 +56,16 @@ class AccountableAccountRepository extends EntityRepository implements Paginator
         return $qb->getQuery()->getResult();
     }
     
-    public function findAllAccount() {
+    public function findAllAccount($dateStart, $dateEnd) {
         $qb = $this->createQueryBuilder('a');
         $qb
             ->select('a')
             ->leftJoin('a.entries', 'e')
+            ->where("e.accountingDate between :dateStart and :dateEnd")
+                ->setParameter("dateStart", $dateStart)
+                ->setParameter("dateEnd", $dateEnd)
             ->addOrderBy('a.label', 'ASC')
+                ->addOrderBy('e.accountingDate', 'DESC')
         ;
         return $qb->getQuery()
             ->getResult();

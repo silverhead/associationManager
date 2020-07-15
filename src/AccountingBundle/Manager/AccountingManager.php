@@ -51,10 +51,13 @@ class AccountingManager implements PaginatorManagerInterface
         return $accountableAccountRepo->findOne($accountId);
     }
     
-    public function getEntriesByAccountForSynthesis()
+    public function getEntriesByAccountForSynthesis($dateStart=null, $dateEnd=null)
     {
+        $dateStart = $this->getDateStart($dateStart);
+        $dateEnd = $this->getDateEnd($dateEnd); 
+        
         $accountableAccountRepo = $this->getRepository();
-        $accountableAccounts = $accountableAccountRepo->findAllAccount();
+        $accountableAccounts = $accountableAccountRepo->findAllAccount($dateStart, $dateEnd);
 
         return $accountableAccounts;
     }
