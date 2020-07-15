@@ -32,7 +32,12 @@
     ] } %}
     <h2 class="col-xs-12">
         {{ 'subscription.subscription.list.title'|trans }}
-        <span class="pull-right"><b>{{ 'subscription.subscription.list.totalActiveMember'|trans }} :</b> {{ totalMember }}</span>
+        <ul class="list-unstyled pull-right">
+            <li><b>{{ 'subscription.subscription.list.totalActiveMember'|trans }} :</b> {{ totalMember }}</li>
+            <li class="text-success"><b>{{ 'member.subscriptionFee.totalFeePaid'|trans }} :</b> {{ totalFeePaidForDay|number_format(2,',', ' ') }}{{ 'app.common.devise'|trans }}</li>
+            <li class="text-danger"><b>{{ 'member.subscriptionFee.totalFeeLate'|trans }} :</b> {{ totalFeeNotPaidForDay|number_format(2,',', ' ') }}{{ 'app.common.devise'|trans }}</li>
+            <li class="text-warning"><b>{{ 'member.subscriptionFee.totalFeeNotYetPaid'|trans }} :</b> {{ totalFeeNotYetPaid|number_format(2,',', ' ') }}{{ 'app.common.devise'|trans }}</li>
+        </ul>
     </h2>
 </div>
 {% include ':main/flashMessage:flashMessageBlock.html.twig' %}

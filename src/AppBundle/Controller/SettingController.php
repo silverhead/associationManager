@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SettingController extends Controller
 {
     /**
-     * @Route("/setting_manager", name="setting_manager")
+     * @Route("/setting/application", name="setting_manager")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function ManagerAction(Request $request)

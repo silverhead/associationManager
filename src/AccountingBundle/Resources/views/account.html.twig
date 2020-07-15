@@ -32,11 +32,11 @@
                         <h3>{{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} : {{ accounting.getCalculatedLastSolde().getFormattedAmount() }}</h3>
                     </div>
                     <div class="col-md-3">
-                        <a href="/accounting/account/{{ accounting.getId() }}/entry/add">Ajout opération</a>
-                        <a href="/accounting/account/{{ accounting.getId() }}/soldes">Soldes</a>
+                        <a href="{{ path('accounting_account_entry_add', {'accountId':  accounting.getId()}) }}" class="btn btn-success">{{'accounting.account.add_operation_btn'|trans}}</a>
+                        <a href="{{ path('accounting_account_soldes', {'accountId': accounting.getId() }) }}" class="btn btn-info">{{'accounting.account.balance_btn'|trans}}</a>
                         <select id="exerciseSelect" name="account_{{ accounting.getId() }}_exercise">
                             {% for exercise in exerciseList %}
-                                <option value="{{ exercise.getId() }}" data-urlexercise="/accounting/account/{{ accounting.getId() }}/{{ exercise.getDateStart()|date('Y-m-d') }}/{{ exercise.getDateEnd()|date('Y-m-d') }}">
+                                <option value="{{ exercise.getId() }}" data-urlexercise="{{ path('accounting_account_id', {'dateStart': exercise.getDateStart()|date('Y-m-d'), 'dateEnd': exercise.getDateEnd()|date('Y-m-d'), 'id': accounting.getId() }) }}">
                                     {{ exercise.getDateStart()|date('d/m/Y') }} - {{ exercise.getDateEnd()|date('d/m/Y') }}
                                 </option>
                             {% endfor %}

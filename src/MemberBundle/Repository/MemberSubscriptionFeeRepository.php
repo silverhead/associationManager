@@ -32,6 +32,22 @@ class MemberSubscriptionFeeRepository extends EntityRepository implements Pagina
         return $qb->getQuery() ->getSingleScalarResult();
     }
 
+    public function getTotalFeeForDates(\DateTime $startDate = null, \DateTime $endDate = null, bool $paid = true):? float
+    {
+        $qb = $this->createQueryBuilder("msf")
+            ->select("SUM(msf.cost) as totalFee")
+            ->where("msf.paid = :paid")->setParameter("paid", $paid);
+
+        if(null !== $startDate){
+            $qb->andWhere("msf.startDate <= :startDate")->setParameter("startDate", $startDate);
+        }
+        if(null !== $endDate){
+            $qb->andWhere("msf.endDate >= :endDate")->setParameter("endDate", $endDate);
+        }
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function getLatePaymentFeeMemberList($limit = 10, $orders = array())
     {
         $qb = $this->createQueryBuilder("msf")

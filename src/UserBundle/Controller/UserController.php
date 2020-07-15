@@ -22,7 +22,9 @@ class UserController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('user/manager.html.twig', array());
+        return $this->render('user/manager.html.twig', array(
+            'menuSelect' => 'user_manager'
+        ));
     }
 
     /**
@@ -79,6 +81,7 @@ class UserController extends Controller
         );
 
         return $this->render('/user/user/list.html.twig', array(
+            'menuSelect' => 'user_manager',
             'results' => $results,
             'order' => $orders,
             'filter' => $formFilterHandler->getForm()->createView()
@@ -173,6 +176,7 @@ class UserController extends Controller
         ];
 
         return $this->render('/user/user/profile.html.twig', array(
+            'menuSelect' => 'user_manager',
             'formUser' =>  $formHandler->getForm()->createView(),
             'breadcrumbs' => $breadcrumbs,
         ));
@@ -254,6 +258,7 @@ class UserController extends Controller
 
 
         return $this->render('/user/user/edit.html.twig', array(
+            'menuSelect' => 'user_manager',
             'formUser' =>  $formHandler->getForm()->createView(),
             'breadcrumbs' => $breadcrumbs,
             'callBackUrl' => $callBackUrl

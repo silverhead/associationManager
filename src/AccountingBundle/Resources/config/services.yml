@@ -16,3 +16,27 @@ services:
     accounting.form.exercise:
         class: AccountingBundle\Form\Handler\ExerciseFormHandler
         arguments: ['@form.factory', '@accounting.manager.exercise']
+    # EVENT LISTENER
+    accounting.configure_menu_listener:
+        class: AccountingBundle\EventListener\ConfigureMenuListener
+        arguments: ['@translator', '@security.authorization_checker']
+        tags:
+            - { name: kernel.event_listener, event: app.menu_configure, method: onMenuConfigure }
+    accounting.account.credential.event:
+        class: AppBundle\EventListener\AppCredentialEventListener
+        arguments: ['%credentialVoterAccounting%', 'accounting.security.credential.title']
+        tags:
+            - { name: kernel.event_listener, event: app.security.credential.event, method: onProvideCredential }
+    # VOTER
+    accounting_voter:
+        class: AppBundle\Security\appVoter
+        autowire: true
+        arguments: ['%credentialVoterAccounting%']
+        tags:
+            - {name: security.voter}
+    accounting_menu_voter:
+        class: AppBundle\Security\AppVoter
+        autowire: true
+        arguments: ['%credentialVoterAccountingMenu%']
+        tags:
+            - {name: security.voter}

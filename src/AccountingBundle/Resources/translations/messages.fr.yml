@@ -16,6 +16,9 @@ accounting:
         callback: Retour à la synthèse des comptes
     account:
         title: Liste des opérations
+        add_operation_btn: Ajout opération
+        balance_btn: Solde
+        add_balance_btn: Ajout solde
         edit:
             title: Editer une opération
             saveSuccessText: L'opération a été sauvegardée
@@ -31,4 +34,8 @@ accounting:
                 form:
                     amount: Montant
                     date: Date
-    
+    security:
+        credential:
+            title: Droit comptabilité
+menu:
+    accounting: Comptabilité

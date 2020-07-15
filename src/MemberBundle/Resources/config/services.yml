@@ -1,5 +1,10 @@
 services:
     # EVENT LISTENER
+    member.configure_menu_listener:
+        class: MemberBundle\EventListener\ConfigureMenuListener
+        arguments: ['@translator', '@security.authorization_checker']
+        tags:
+            - { name: kernel.event_listener, event: app.menu_configure, method: onMenuConfigure }
     member.groups.credential.event:
         class: AppBundle\EventListener\AppCredentialEventListener
         arguments: ['%credentialVoterMemberGroups%', 'member.groups.credential.title']
@@ -138,3 +143,14 @@ services:
     member.controller.setting:
         class: MemberBundle\Controller\MemberSettingController
         arguments: ['@service_container']
+    # Validator
+    member.validator.unique_email:
+        class: MemberBundle\Validator\UniqueEmailValidator
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - {name: validator.constraint_validator, alias: member.validator.import.unique_email}
+    member.validator.group_exist:
+        class: MemberBundle\Validator\GroupExistValidator
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - {name: validator.constraint_validator, alias: member.validator.import.group_exist}

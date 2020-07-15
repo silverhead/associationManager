@@ -3,11 +3,13 @@ app:
         appName: Association manager
         appSlogan: Gérer votre association
     common:
+        devise: €
         dateFormat: d/m/Y
         dateHourFormat: d/m/Y H:i
         hourFormat: d/m/Y H:i
         noData: Pas données
         nc: n.c.
+        notAuthorizedPage: Accès non autorisé
         errorUnknown: Erreur inconnu, veuillez contacter l'administrateur de l'application !
         errorComming: Une erreur est intervenue ! %error%
         errorTitle: Une erreur est intervenue !
@@ -21,6 +23,7 @@ app:
         returnBtn: Retour
         editBtn: Modifier
         addBtn: Ajouter
+        notAuthorizedPage: Accès non autorisé !
         to: à
         form:
             submit:
@@ -41,6 +44,9 @@ app:
             disabled: Non actif
         table:
             action: Action
+        import:
+            notEnoughColumns: Le nombre de colonne obligatoire est manquant, %nbColumn% colonnes sont requis.
+            lineError: "Erreur à la ligne  %numLine%, colonne %numColumn% : %message%"
     security:
         login:
             title: Page de connection
@@ -138,64 +144,14 @@ app:
 
         credential:
             title: Droits paramètres application
+        validator:
+            in_array: Le "{{ string }}" n'est pas dans la liste {{ listName }}
     user:
         logout: Se déconnecter
         profile: Profil
         profileRouteNotFound: User profile route not found for %discr%
     email:
         end_body: Ce message vous a été envoyé automatiquement par %appName%
-user:
-    manager:
-        tabUsers: Utilisateurs
-        tabUserGroups: Groupes
-    user:
-        list:
-            title: Gestion utilisateurs
-            table:
-                userName: Identifiant
-                email: E-mail
-                group: Groupe
-                active: Actif
-        add:
-            title: Ajouter un utilisateur
-        profile:
-            title: Votre profil
-            saveSuccessText: Votre profil a été enregistré !
-        edit:
-            title: Modifier un utilisateur
-            form:
-                group: Groupe
-                active: Actif
-                firstName: Prénom
-                lastName: Nom
-                username: Identifiant
-                email: E-mail
-                password: Mot de passe
-                password_confirmation: Mot de passe (Vérification)
-                passwordHelp: Le mot de passe doit contenir une majuscule, des chiffres et des caractères spéciaux (!@$%^&*-)
-        credential:
-            title: Droits gestion utilisateurs
-    group:
-        credential:
-            title: Utilisateurs (Groupes)
-        title: Groupes
-        list:
-            table:
-                labelCol: Libellé
-                nbMembersCol: Nb d'utilisateurs
-        add:
-            title: Ajouter un groupe
-        edit:
-            title: Modifier le groupe
-            saveSuccessText: Le groupe enregistré avec succès !
-            label: Libellé
-            active: Actif
-            generalTitle: Général
-            credentialTitle: Autorisations
-        delete:
-            deleteQuestionText: La suppression du groupe est définitf !
-            deleteErrorMissingText: Le groupe que vous voulez suprpimer n'a pas été trouvé !
-            deleteSuccessText: Le groupe %label% à bien été supprimé !
 menu:
     dashboard: Tableau de bord
     member: Adhérents

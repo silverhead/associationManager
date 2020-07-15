@@ -1,5 +1,10 @@
 services:
     # EVENT LISTENER
+    user.configure_setting_menu_listener:
+        class: UserBundle\EventListener\ConfigureSettingMenuListener
+        arguments: ['@translator', '@security.authorization_checker']
+        tags:
+            - { name: kernel.event_listener, event: app.setting_menu_configure, method: onMenuConfigure }
     user_group_credential_event:
         class: UserBundle\EventListener\UserGroupCredentialEventListener
         arguments: ['%credentialVoterUserGroup%', 'user.group.credential.title']

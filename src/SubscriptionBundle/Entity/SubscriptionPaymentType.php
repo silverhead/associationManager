@@ -21,6 +21,12 @@ class SubscriptionPaymentType
 
     /**
      * @var string
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $code;
+
+    /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     private $label;
@@ -33,6 +39,25 @@ class SubscriptionPaymentType
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     * @return SubscriptionPaymentType
+     */
+    public function setCode(string $code): SubscriptionPaymentType
+    {
+        $this->code = $code;
+
+        return $this;
     }
 
     /**

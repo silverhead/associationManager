@@ -1,4 +1,22 @@
 services:
+    # MENU
+    app.main_builder:
+        class: AppBundle\Menu\MainBuilder
+        arguments: ["@knp_menu.factory"]
+    app.configure_menu_listener:
+        class: AppBundle\EventListener\ConfigureMenuListener
+        arguments: ['@translator']
+        tags:
+            - { name: kernel.event_listener, event: app.menu_configure, method: onMenuConfigure }
+    app.setting_builder:
+        class: AppBundle\Menu\SettingBuilder
+        arguments: ["@knp_menu.factory"]
+    app.configure_setting_menu_listener:
+        class: AppBundle\EventListener\ConfigureSettingMenuListener
+        arguments: ['@translator', '@security.authorization_checker']
+        tags:
+            - { name: kernel.event_listener, event: app.setting_menu_configure, method: onMenuConfigure }
+
     # EVENT LISTENER
     app.setting.credential.event:
         class: AppBundle\EventListener\AppCredentialEventListener
@@ -23,10 +41,16 @@ services:
         arguments: ['@service_container', '%masterCredentialVoterAppSettingMenu%']
         tags:
             - {name: security.voter}
+    # Form Model
+    app.form.model.email_setting:
+        class: AppBundle\Form\Model\EmailSettingModel
     # Form handler
     app.form.handler.dashboard_bundle_setting:
         class: AppBundle\Form\Handler\DashboardBundleFormHandler
         arguments: ['@form.factory', '@event_dispatcher']
+    app.form.handler.email_setting:
+        class: AppBundle\Form\Handler\EmailSettingHandler
+        arguments: ['@form.factory']
     # Manager
     app.manager.dashboard_bundle_setting:
         class: AppBundle\Manager\DashboardBundleSettingManager

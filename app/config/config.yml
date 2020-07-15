@@ -6,6 +6,7 @@ imports:
     - { resource: ../../src/SubscriptionBundle/Resources/config/config.yml }
     - { resource: ../../src/MemberBundle/Resources/config/config.yml }
     - { resource: ../../src/UserBundle/Resources/config/config.yml }
+    - { resource: ../../src/AccountingBundle/Resources/config/config.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -95,3 +96,12 @@ knp_paginator:
     template:
         pagination: :main:pagination.html.twig     # sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+knp_menu:
+    # use "twig: false" to disable the Twig extension and the TwigRenderer
+    twig:
+        template: main/mainMenu.html.twig
+    #  if true, enables the helper for PHP templates
+    templating: false
+    # the renderer to use, list is also available by default
+    default_renderer: twig

@@ -13,11 +13,11 @@ class ExerciseRepository extends EntityRepository implements PaginatorRepository
         $qb->select("m ")
             ->leftJoin("m.statusHistorical","msh", Join::WITH, $qb->expr()->isNull("msh.endDate"))
             ->leftJoin("m.fees", "fees")
-            ->where(
-                $qb->expr()->orX(
-                    $qb->expr()->isNull("subscriptions.id")
-                )->add($qb->expr()->in("subscriptions.id", $subquery ))
-            )
+//            ->where(
+//                $qb->expr()->orX(
+//                    $qb->expr()->isNull("subscriptions.id")
+//                )->add($qb->expr()->in("subscriptions.id", $subquery ))
+//            )
             ;
         return $qb;
     }
@@ -47,18 +47,21 @@ class ExerciseRepository extends EntityRepository implements PaginatorRepository
         
         $qb->select("e")
             ->orderBy("e.dateStart", "ASC");
-        
-        return $qb->getQuery()->getSingleResult();
+
+        $result = $qb->getQuery()->getResult();
+        return count($result) > 0? $result[0]: null;
     }
     
-    public function findLast() {
+    public function findLast()
+    {
         $qb = $this->createQueryBuilder("e");
         $qb->setMaxResults(1);
         
         $qb->select("e")
             ->orderBy("e.dateStart", "DESC");
-        
-        return $qb->getQuery()->getSingleResult();
+
+        $result = $qb->getQuery()->getResult();
+        return count($result) > 0? $result[0]: null;
     }
     
     public function findOneByDateStart($dateStart) {

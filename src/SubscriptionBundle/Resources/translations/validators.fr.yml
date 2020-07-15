@@ -1,0 +1,6 @@
+subscription:
+    fee:
+        import:
+            error:
+                subscription_not_found: Code d'abonnement "%string%" non trouvé !
+                payment_not_found: Code type de payement "%string%" non trouvé !

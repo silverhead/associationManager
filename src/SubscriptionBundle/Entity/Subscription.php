@@ -58,6 +58,11 @@ class Subscription
      */
     private $active;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $code;
 
     /**
      * Constructor
@@ -162,8 +167,24 @@ class Subscription
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
 
+    /**
+     * @param string $code
+     * @return Subscription
+     */
+    public function setCode(string $code): Subscription
+    {
+        $this->code = $code;
 
+        return $this;
+    }
 
     /**
      * Add periodicity

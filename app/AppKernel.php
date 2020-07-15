@@ -22,6 +22,8 @@ class AppKernel extends Kernel
             new SubscriptionBundle\SubscriptionBundle(),
             new MemberBundle\MemberBundle(),
             new UserBundle\UserBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new AccountingBundle\AccountingBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
