@@ -33,7 +33,7 @@
         "friendsofsymfony/jsrouting-bundle": "1.6.*",
         "knplabs/knp-paginator-bundle": "^2.5",
         "symfony/serializer": "3.*",
-        "knplabs/knp-menu-bundle": "3.1.x-dev"
+        "knplabs/knp-menu-bundle": "^3.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "3.*",
