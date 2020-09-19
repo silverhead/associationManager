@@ -60,6 +60,10 @@ class MemberGroupController extends Controller
      */
     public function editAction($id = null)
     {
+        $translator = $this->get('translator');
+
+        $this->denyAccessUnlessGranted('MEMBER_GROUPS_EDIT', null, $translator->trans('app.common.access_denied'));
+
         $memberGroupManager = $this->get('member.manager.group');
 
         $memberGroup = $memberGroupManager->getNewEntity();
@@ -140,6 +144,8 @@ class MemberGroupController extends Controller
         }
 
         $translator = $this->get('translator');
+
+        $this->denyAccessUnlessGranted('MEMBER_GROUPS_DELETE', null, $translator->trans('app.common.access_denied'));
 
         $memberGroupManager = $this->get('member.manager.group');
 
