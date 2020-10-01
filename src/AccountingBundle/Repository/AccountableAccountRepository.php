@@ -57,23 +57,22 @@ class AccountableAccountRepository extends EntityRepository implements Paginator
     }
     
     public function findAllAccount($dateStart, $dateEnd) {
-        $qb = $this->createQueryBuilder('a');
-        $qb
+        $qb = $this->createQueryBuilder('a')
             ->select('a')
-            ->leftJoin('a.entries', 'e')
-            ->where("e.accountingDate between :dateStart and :dateEnd")
+            ->leftJoin('a.exercises', 'e')
+            ->where("e.dateStart = :dateStart")
+            ->andWhere("e.dateEnd = :dateEnd")
                 ->setParameter("dateStart", $dateStart)
                 ->setParameter("dateEnd", $dateEnd)
-            ->addOrderBy('a.label', 'ASC')
-                ->addOrderBy('e.accountingDate', 'DESC')
+            ->addOrderBy('e.dateEnd', 'ASC')
+                ->addOrderBy('a.label', 'ASC')
         ;
         return $qb->getQuery()
             ->getResult();
     }
     
     public function findAccountWithEntries($id, $dateDebut, $dateFin) {
-        $qb = $this->createQueryBuilder('a');
-        $qb
+        $qb = $this->createQueryBuilder('a')
             ->select('a')
             ->innerJoin('a.entries', 'e')
             ->where("a.id = :id")

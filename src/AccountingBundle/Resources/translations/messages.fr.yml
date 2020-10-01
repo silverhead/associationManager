@@ -11,6 +11,11 @@ accounting:
         real_solde: Solde réel
         prev_solde: Solde prévisionnel
         sum_of_balance: Solde réel total
+        date_start: Date de début
+        date_end: Date de fin
+        add: Ajouter
+        delete : Supprimer
+        modify: Modifier
     synthesis:
         title: Synthèse des comptes
         callback: Retour à la synthèse des comptes
@@ -34,6 +39,16 @@ accounting:
                 form:
                     amount: Montant
                     date: Date
+    exercise:
+        list:
+            title: Liste des exercices
+        create: Créer un exercice
+        edit:
+            saveSuccessText: L'exercice a été enregistré avec succès
+            form:
+                reference: Libellé de l'exercice
+                date_start: Date de début
+                date_end: Date de fin
     security:
         credential:
             title: Droit comptabilité

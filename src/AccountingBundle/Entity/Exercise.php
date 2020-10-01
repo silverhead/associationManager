@@ -39,6 +39,12 @@ class Exercise {
     protected $reference;
     
     /**
+     * @var AccountableAccount
+     * @ORM\ManyToMany(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="exercises", fetch="EXTRA_LAZY")
+     */
+    protected $accountableAccount;
+    
+    /**
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */

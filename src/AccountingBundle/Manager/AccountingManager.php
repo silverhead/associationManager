@@ -98,6 +98,11 @@ class AccountingManager implements PaginatorManagerInterface
     /**
      * override
      */
+    public function saveAccountableAccount(AccountableAccount $entity) {
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+    }
+    
     public function saveEntry(Entry $entity) {        
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
