@@ -22,6 +22,20 @@ class UserController extends Controller
      */
     public function indexAction()
     {
+        $translator = $this->get('translator');
+
+        if(
+            (!$this->isGranted("USER_USER_VIEW"))
+        ){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
         return $this->render('user/manager.html.twig', array(
             'menuSelect' => 'user_manager'
         ));
@@ -190,6 +204,22 @@ class UserController extends Controller
      */
     public function editAction(Request $request, $id = null)
     {
+        $translator = $this->get('translator');
+
+        if(
+            (!$this->isGranted("USER_USER_EDIT") && $id > 0 )
+            ||
+            (!$this->isGranted("USER_USER_CREATE") && $id == 0)
+        ){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
         $manager = $this->get('user.manager.user');
         $formHandler = $this->get('user.form.handler.user');
 
@@ -200,8 +230,6 @@ class UserController extends Controller
 
         $pageH = $this->get('app.handler.page_historical');
         $callBackUrl = $pageH->getCallbackUrl('user_edit');
-
-        $translator = $this->get('translator');
 
         $formHandler->setForm($entity);
 
@@ -235,7 +263,6 @@ class UserController extends Controller
                 ]));
         }
 
-
         $breadcrumbs = [
             [
                 'href' => $this->redirectToRoute('dashboard'),
@@ -255,7 +282,6 @@ class UserController extends Controller
         $breadcrumbs[] = [
             'label' => $translator->trans('user.user.edit.title')
         ];
-
 
         return $this->render('/user/user/edit.html.twig', array(
             'menuSelect' => 'user_manager',

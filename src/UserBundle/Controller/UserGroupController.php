@@ -57,6 +57,20 @@ class UserGroupController extends Controller
      */
     public function editAction(Request $request, $id = null)
     {
+        $translator = $this->get('translator');
+
+        if(
+        (!$this->isGranted("USER_GROUP_EDIT") && !$this->isGranted("USER_GROUP_CREATE"))
+        ){
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
         $manager = $this->get('user.manager.group');
         $formHandler = $this->get('user.form.handler.group');
 
@@ -67,8 +81,6 @@ class UserGroupController extends Controller
 
         $pageH = $this->get('app.handler.page_historical');
         $callBackUrl = $pageH->getCallbackUrl('user_group_edit');
-
-        $translator = $this->get('translator');
 
         $formHandler->setForm($entity);
 
@@ -147,6 +159,9 @@ class UserGroupController extends Controller
         }
 
         $translator = $this->get('translator');
+
+        $this->denyAccessUnlessGranted('USER_GROUP_DELETE', null, $translator->trans('app.common.access_denied'));
+
         $userGroupManager = $this->get('user.manager.group');
 
         $entity = $userGroupManager->find($id);

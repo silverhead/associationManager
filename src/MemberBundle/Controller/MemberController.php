@@ -303,10 +303,19 @@ class MemberController extends Controller
             $this->addFlash(
                 'error',
                 $translator->trans('app.common.notAuthorizedPage'));
-            
-                return $this->redirect(
-                    $this->generateUrl('members_manager').'#members'
+
+                if(!$this->isGranted("MEMBER_MEMBER_VIEW")){
+                    return $this->redirect(
+                        $this->generateUrl('members_manager').'#members'
                     );
+                }
+                else{
+                    return $this->redirect(
+                        $this->generateUrl('dashboard')
+                    );
+                }
+
+
         }
         
         $manager = $this->get('member.manager.member');
