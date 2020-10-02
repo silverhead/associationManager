@@ -1,5 +1,9 @@
 {% extends 'layoutLogin.html.twig' %}
-
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('bundles/app/common/js/jquery.reload.list.js') }}"></script>
+<script src="{{ asset('bundles/user/group/js/edit.js') }}"></script>
+{% endblock  %}
 {% block content %}
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs } %}
@@ -35,6 +39,10 @@
                     </div>
                     <div class="row">
                         <h3 class="col-md-12">{{ 'user.group.edit.credentialTitle'|trans }}</h3>
+                        <div class="col-md-12">
+                            <input type="checkbox" value="1" class="filled-in" id="check-all">
+                            <label for="">{{ 'user.group.edit.checkAll'|trans }}</label>
+                        </div>
                         <div class="col-md-12 groupedCheckboxList">
                             {{ form_widget(formUserGroup.credentials) }}
                         </div>

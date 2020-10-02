@@ -150,6 +150,7 @@
 {%- endblock %}
 
 {%- block choice_widget_expanded -%}
+    {% set inputAttr = attr|merge({class: (attr.class|default('') ~ ' filled-in')|trim}) %}
 <ul {{ block('widget_container_attributes') }}>
     {% for name, choices in form.vars.choices %}
         <li>
@@ -160,7 +161,7 @@
                     <li>
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">
-                                {{ form_widget(form[key], {'attr': {'class': 'filled-in'}}) }}
+                                {{ form_widget(form[key], {'attr': {'class':  inputAttr.class}}) }}
                                 {{ form_label(form[key]) }}
                             </span>
                         </div>

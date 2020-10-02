@@ -23,7 +23,13 @@ class UserGroupFormType extends AbstractType
             ->add('credentials', ChoiceType::class, [
                 'choices' => $options['credentialsList']->getCredentialsList(),
                 "multiple" => true,
-                "expanded" => true
+                "expanded" => true,
+                "choice_attr" => array(
+                    "class" => "credential_check"
+                ),
+                "attr" => array(
+                    "class" => "credential_check"
+                )
             ])
         ;
     }
