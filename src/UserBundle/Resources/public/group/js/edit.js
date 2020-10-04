@@ -1,11 +1,9 @@
-$(document).on('click','check-all', function(e){
-    e.preventDefault();
-    alert('test');
-    if(this.checked){
-        $('.credential_check').checked = true;
-    }
-    else{
-        $('.credential_check').checked = false;
-    }
+$(function(){
+    $('#checkAllCredential').click(function(){
+        $('.credential_check').not(this).prop('checked', $('#checkAllCredential').prop('checked'));
+    });
 
+    if($('input.credential_check:checked').length == $('input.credential_check').length){
+        $('#checkAllCredential').prop('checked', 'checked');
+    }
 });

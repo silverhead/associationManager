@@ -151,33 +151,33 @@
 
 {%- block choice_widget_expanded -%}
     {% set inputAttr = attr|merge({class: (attr.class|default('') ~ ' filled-in')|trim}) %}
-<ul {{ block('widget_container_attributes') }}>
-    {% for name, choices in form.vars.choices %}
-        <li>
-        {% if choices is iterable  %}
-            <h4>{{ choice_translation_domain is same as(false) ? name : name|trans({}, choice_translation_domain) }}</h4>
-            <ul>
-                {% for key,choice in choices %}
-                    <li>
-                        <div class="input-group input-group-lg">
+    <ul {{ block('widget_container_attributes') }}>
+        {% for name, choices in form.vars.choices %}
+            <li>
+                {% if choices is iterable  %}
+                    <h4>{{ choice_translation_domain is same as(false) ? name : name|trans({}, choice_translation_domain) }}</h4>
+                    <ul>
+                        {% for key,choice in choices %}
+                            <li>
+                                <div class="input-group input-group-lg">
                             <span class="input-group-addon">
                                 {{ form_widget(form[key], {'attr': {'class':  inputAttr.class}}) }}
                                 {{ form_label(form[key]) }}
                             </span>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
 
-        {% else %}
+                {% else %}
 
-            {{- form_widget(form[name]) -}}
-            {{- form_label(form[name], null, {translation_domain: choice_translation_domain}) -}}
+                    {{- form_widget(form[name]) -}}
+                    {{- form_label(form[name], null, {translation_domain: choice_translation_domain}) -}}
 
-        {% endif %}
-        </li>
-    {% endfor %}
-</ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 {%- endblock choice_widget_expanded -%}
 
 {% block checkbox_widget -%}

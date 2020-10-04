@@ -12,6 +12,8 @@ class UserGroupFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $credentialsList = $options['credentialsList']->getCredentialsList();
+
         $builder
             ->add('label', TextType::class)
             ->add('active', ChoiceType::class, array(

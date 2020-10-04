@@ -46,6 +46,7 @@ user:
             active: Actif
             generalTitle: Général
             credentialTitle: Autorisations
+            checkAll: Tous autorisés
         delete:
             deleteQuestionText: La suppression du groupe est définitf !
             deleteErrorMissingText: Le groupe que vous voulez suprpimer n'a pas été trouvé !
