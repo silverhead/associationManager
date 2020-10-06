@@ -11,6 +11,7 @@ use AppBundle\QueryHelper\OrderQuery;
 use Symfony\Component\HttpFoundation\Response;
 use AccountingBundle\Entity\Entry;
 use AccountingBundle\Entity\Solde;
+use AccountingBundle\Entity\AccountableAccount;
 
 class AccountingController extends Controller
 {
@@ -43,7 +44,15 @@ class AccountingController extends Controller
         $soldes = array();
         $accountingManager = $this->get('accounting.manager.accounting');
         
-        $entriesOfAccounts = $accountingManager->getEntriesByAccountForSynthesis();
+        $exerciseManager = $this->get('accounting.manager.exercise');
+        $exerciseList = $exerciseManager->getExerciseList();
+        
+        $lastExercise = $exerciseManager->getLastExercise();
+        
+        $dateStart = ($lastExercise != null) ? $lastExercise->getDateStart() : date();
+        $dateEnd =  $lastExercise != null ? $lastExercise->getDateEnd() : date();
+        $entriesOfAccounts = $accountingManager->getEntriesByAccountForSynthesis($dateStart, $dateEnd);
+
         $sumOfBalance = 0;
         foreach ($entriesOfAccounts as $account) {
             $sumOfBalance += $account->getCalculatedLastSolde()->getAmount();
@@ -51,7 +60,103 @@ class AccountingController extends Controller
         return $this->render('@Accounting/index.html.twig', array(
             'menuSelect' => 'accounting_manager',
             'data' => $entriesOfAccounts,
-            'sumOfBalance' => number_format($sumOfBalance/100, 2, ',', ' ')
+            'sumOfBalance' => number_format($sumOfBalance/100, 2, ',', ' '),
+            'exerciseList' => (count($exerciseList) > 0 ? $exerciseList : array())
+        ));
+    }
+
+    /**
+     * @Route("/accounting/account/add/", name="accounting_account_add")
+     * @Route("/accounting/account/edit/{accountId}", name="accounting_account_edit")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function accounteditAction(Request $request, $accountId = null) {
+        $translator = $this->get('translator');
+
+        if (!$this->isGranted("ACCOUNTING_VIEW")) {
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
+        $accountingManager = $this->get('accounting.manager.accounting');
+        $formHandler = $this->get('accounting.form.solde');
+        
+        if ($accountId != null) {
+            $entity = $accountingManager->getAccountById($accountId);
+        } else {
+            $entity = new AccountableAccount();
+        }
+        
+        $pageH = $this->get('app.handler.page_historical');
+        $callBackUrl = $this->generateUrl('accounting_index', []);
+        $translator = $this->get('translator');
+        
+        $formHandler = $this->get('accounting.form.account');
+        $formHandler->setForm($entity, $accountId);
+        
+        if ($formHandler->process($request)) {
+            $entity = $formHandler->getData($accountableAccount);
+            
+            //var_dump($entity);exit;
+            
+            if ($accountingManager->saveAccountableAccount($entity)) {
+                $this->addFlash('success', $translator->trans('accounting.account.edit.saveSuccessText'));
+
+                if ($request->get('save_and_leave', null) !== null) {
+                    if ($callBackUrl !== null) {
+                        return $this->redirect($callBackUrl);
+                    }
+
+                    return $this->redirect(
+                        $this->get('router')->generate('accounting_index', array())
+                    );
+                }
+
+                if ($request->get('save_and_stay', null) !== null) {
+                    return $this->redirectToRoute('accounting_account_id', [
+                        'accountId' => $entity->getId()
+                    ]);
+                }
+            }
+
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.errorComming', [
+                    '%error%' => '<br />' . implode('<br />', $accountingManager->getErrors())
+            ]));
+        }
+        $breadcrumbs = [
+            [
+                'href' => $this->redirectToRoute('accounting_index'),
+                'title' => $translator->trans('accounting.synthesis.callback'),
+                'label' => $translator->trans('accounting.synthesis.title')
+            ]
+        ];
+        
+        if ($callBackUrl != null) {
+            $breadcrumbs[] = [
+                'href' => $callBackUrl,
+                'title' => $translator->trans('accounting.account.title'),
+                'label' => $translator->trans('accounting.account.title')
+            ];
+        }
+        
+        $breadcrumbs[] = [
+            'label' => $translator->trans('accounting.account.edit.title')
+        ];
+
+        return $this->render('@Accounting/edit_solde.html.twig', array(
+            'menuSelect' => 'accounting_manager',
+            'formSolde' =>  $formHandler->getForm()->createView(),
+            'accountableAccount' => $accountableAccount,
+            'breadcrumbs' => $breadcrumbs,
+            'callBackUrl' => $callBackUrl
         ));
     }
     
@@ -60,10 +165,10 @@ class AccountingController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function account(Request $request, $id = null, $dateStart = null, $dateEnd = null) {
+    public function accountAction(Request $request, $id = null, $dateStart = null, $dateEnd = null) {
         $translator = $this->get('translator');
 
-        if(!$this->isGranted("ACCOUNTING_VIEW")){
+        if (!$this->isGranted("ACCOUNTING_VIEW")) {
             $this->addFlash(
                 'error',
                 $translator->trans('app.common.notAuthorizedPage'));
@@ -82,14 +187,14 @@ class AccountingController extends Controller
         if ($dateDebut == null) {
             $lastExercise = $exerciseManager->getLastExercise();
 
-            if ($lastExercise != null){
+            if ($lastExercise != null) {
                 $dateDebut = $lastExercise->getDateStart();
                 $dateFin = $lastExercise->getDateEnd();
             }
         }
         
         $entriesOfAccount = $accountingManager->getAccountWithEntries($id, $dateDebut, $dateFin);
-        
+        var_dump($entriesOfAccount);exit();
         $formHandler = null;
         $callBackUrl = $this->generateUrl('accounting_account_id', ['id' => $id]);
         $translator = $this->get('translator');

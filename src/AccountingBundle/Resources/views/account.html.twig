@@ -34,13 +34,19 @@
                     <div class="col-md-3">
                         <a href="{{ path('accounting_account_entry_add', {'accountId':  accounting.getId()}) }}" class="btn btn-success">{{'accounting.account.add_operation_btn'|trans}}</a>
                         <a href="{{ path('accounting_account_soldes', {'accountId': accounting.getId() }) }}" class="btn btn-info">{{'accounting.account.balance_btn'|trans}}</a>
-                        <select id="exerciseSelect" name="account_{{ accounting.getId() }}_exercise">
-                            {% for exercise in exerciseList %}
-                                <option value="{{ exercise.getId() }}" data-urlexercise="{{ path('accounting_account_id', {'dateStart': exercise.getDateStart()|date('Y-m-d'), 'dateEnd': exercise.getDateEnd()|date('Y-m-d'), 'id': accounting.getId() }) }}">
-                                    {{ exercise.getDateStart()|date('d/m/Y') }} - {{ exercise.getDateEnd()|date('d/m/Y') }}
-                                </option>
-                            {% endfor %}
-                        </select>
+                        {% if exerciseList|length > 0 %}
+                            <select id="exerciseSelect" name="account_{{ accounting.getId() }}_exercise">
+                                {% for exercise in exerciseList %}
+                                    <option value="{{ exercise.getId() }}" data-urlexercise="{{ path('accounting_account_id', {'dateStart': exercise.getDateStart()|date('Y-m-d'), 'dateEnd': exercise.getDateEnd()|date('Y-m-d'), 'id': accounting.getId() }) }}">
+                                        {{ exercise.getDateStart()|date('d/m/Y') }} - {{ exercise.getDateEnd()|date('d/m/Y') }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <a href="{{ path('exercise_index') }}">
+                                {{ accounting.exercise.create }}
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
                 {% if accounting.getEntries()|length > 0 and accounting.getSoldes()|length > 0 %}

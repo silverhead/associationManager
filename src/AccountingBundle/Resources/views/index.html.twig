@@ -12,10 +12,27 @@
             'label': 'accounting.synthesis.title'|trans
         }
         ] } %}
-
-        <h2 class="col-xs-12">
-            {{ 'accounting.synthesis.title'|trans }}
-        </h2>
+        <div class="col-xs-12">
+            <div class="col-xs-8">
+                <h2>
+                    {{ 'accounting.synthesis.title'|trans }}
+                </h2>
+            </div>
+            {% if exerciseList|length > 0 %}
+                <a href="{{ path('accounting_account_id') }}">{{ 'accounting.common.add'|trans }}</a>
+                <select class="col-xs-4" id="exerciseSelect" name="account_exercise">
+                    {% for exercise in exerciseList %}
+                        <option value="{{ exercise.getId() }}" data-urlexercise="/exercise/{{ exercise.getDateStart()|date('Y-m-d') }}/{{ exercise.getDateEnd()|date('Y-m-d') }}">
+                            {{ exercise.getDateStart()|date('d/m/Y') }} - {{ exercise.getDateEnd()|date('d/m/Y') }}
+                        </option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <a href="{{ path('exercise_index') }}">
+                    {{ 'accounting.exercise.create'|trans }}
+                </a>
+            {% endif %}
+        </div>
     </div>
     {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
     <div class="row">

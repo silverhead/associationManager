@@ -69,6 +69,7 @@ class SecurityController extends Controller
             $this->addFlash('success',
                 $translator->trans('app.security.forgotPassword.sendMailText')
             );
+            
             $askPasswordManager->sendAskNewPasswordMail($user);
         }
 

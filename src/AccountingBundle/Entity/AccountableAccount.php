@@ -48,6 +48,12 @@ class AccountableAccount {
     protected $entries;
     
     /**
+     * @var \ArrayObject|Exercise
+     * @ORM\ManyToMany(targetEntity="AccountingBundle\Entity\Exercise", fetch="EAGER", mappedBy="accountableAccount")
+     */
+    protected $exercises;
+    
+    /**
      *
      * @var int
      */
@@ -135,6 +141,14 @@ class AccountableAccount {
      */
     public function getEntries(): PersistentCollection {
         return $this->entries;
+    }
+    
+    /**
+     * 
+     * @return PersistentCollection|null
+     */
+    public function getExercises(): PersistentCollection {
+        return $this->exercises;
     }
     
     /**

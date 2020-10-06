@@ -9,12 +9,12 @@
             'label': 'app.dashboard.title'|trans
         },
         {
-            'label': 'exercise.list.title'|trans
+            'label': 'accounting.exercise.list.title'|trans
         }
         ] } %}
 
         <h2 class="col-xs-12">
-            {{ 'exercise.list.title'|trans }}
+            {{ 'accounting.exercise.list.title'|trans }}
         </h2>
     </div>
     {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
@@ -24,7 +24,8 @@
                 <div class="body table-responsive">
                     <section>
                         <div class="row">
-                            <h3>{{ 'exercise.list'|trans }}</h3>
+                            <h3>{{ 'accounting.exercise.list.title'|trans }}</h3>
+                            <a href="{{ path('exercices_exercise_add') }}">{{ 'accounting.common.add'|trans }}</a>
                         </div>
                     </section>
                     <table class="table table-striped orderable dataTable">
