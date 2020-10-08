@@ -1,5 +1,11 @@
 {% extends 'layoutLogin.html.twig' %}
 
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset("bundles/accounting/js/account.js") }}"></script>
+{% endblock %}
+
+
 {% block content %} 
     <div class="row block-header">
         {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
@@ -19,8 +25,9 @@
                 </h2>
             </div>
             {% if exerciseList|length > 0 %}
-                <a href="{{ path('accounting_account_id') }}">{{ 'accounting.common.add'|trans }}</a>
+                <a href="{{ path('accounting_account_id') }}" class="btn bg-green waves-effect">{{ 'accounting.common.add'|trans }}</a>
                 <select class="col-xs-4" id="exerciseSelect" name="account_exercise">
+                    <option></option>
                     {% for exercise in exerciseList %}
                         <option value="{{ exercise.getId() }}" data-urlexercise="/exercise/{{ exercise.getDateStart()|date('Y-m-d') }}/{{ exercise.getDateEnd()|date('Y-m-d') }}">
                             {{ exercise.getDateStart()|date('d/m/Y') }} - {{ exercise.getDateEnd()|date('d/m/Y') }}
@@ -28,7 +35,7 @@
                     {% endfor %}
                 </select>
             {% else %}
-                <a href="{{ path('exercise_index') }}">
+                <a href="{{ path('exercise_index') }}" class="btn btn-primary">
                     {{ 'accounting.exercise.create'|trans }}
                 </a>
             {% endif %}

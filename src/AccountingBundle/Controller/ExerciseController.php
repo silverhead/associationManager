@@ -30,8 +30,7 @@ class ExerciseController extends Controller {
     public function indexAction(Request $request)
     {   
         $exerciseManager = $this->get('accounting.manager.exercise');
-        
-        $exercises = array();
+
         $exercises = $exerciseManager->getExerciseList();
 
         return $this->render('@Accounting/index_exercise.html.twig', array(
@@ -52,11 +51,15 @@ class ExerciseController extends Controller {
         $exerciseManager = $this->get('accounting.manager.exercise');
         
         $entity = new Exercise();
+        if ($id > 0){
+            $entity = $exerciseManager->find($id);
+        }
+
         $formHandler = $this->get('accounting.form.exercise');
-        $formHandler->setForm($entity, $id);
+        $formHandler->setForm($entity);
 
         if ($formHandler->process($request)) {
-            $entity = $formHandler->getData($entity);
+            $entity = $formHandler->getData();
             if ($exerciseManager->saveExercise($entity)) {
                 $this->addFlash('success', $translator->trans('accounting.exercise.edit.saveSuccessText'));
 

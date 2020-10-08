@@ -24,8 +24,10 @@
                 <div class="body table-responsive">
                     <section>
                         <div class="row">
-                            <h3>{{ 'accounting.exercise.list.title'|trans }}</h3>
-                            <a href="{{ path('exercices_exercise_add') }}">{{ 'accounting.common.add'|trans }}</a>
+                            <h3 class="col-ms-9">{{ 'accounting.exercise.list.title'|trans }}</h3>
+                            <p class="col-ms-3">
+                                <a href="{{ path('exercices_exercise_add') }}" class="btn bg-green waves-effect">{{ 'accounting.common.add'|trans }}</a>
+                            </p>
                         </div>
                     </section>
                     <table class="table table-striped orderable dataTable">
@@ -35,6 +37,7 @@
                                 <th style="text-align: center;width:80px;">{{ 'accounting.common.date_start'|trans }}</th>
                                 <th style="text-align: center;width:80px;">{{ 'accounting.common.date_end'|trans }}</th>
                                 <th style="text-align: left;">{{ 'accounting.common.reference'|trans }}</th>
+                                <th style="text-align: left;">{{ 'app.common.table.action '|trans }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +49,7 @@
                                     <td>{{ exercise.getDateStart()|date('d/m/Y') }}</td>
                                     <td>{{ exercise.getDateEnd()|date('d/m/Y') }}</td>
                                     <td>{{ exercise.getReference() }}</td>
+                                    <td><a href="{{ path('exercices_exercise_id', {'id':exercise.getId()}) }}" class="btn btn-warning"><i class="material-icons">edit</i></a></td>
                                 </tr>
                             {% endfor %}
                         </tbody>

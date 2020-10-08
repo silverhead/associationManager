@@ -2,6 +2,7 @@
 
 namespace AccountingBundle\Form\Handler;
 
+use AccountingBundle\Entity\AccountableAccount;
 use Symfony\Component\DependencyInjection\Container;
 use AccountingBundle\Entity\Entry;
 use AccountingBundle\Form\Type\EntryFormType;
@@ -66,13 +67,12 @@ class EntryFormHandler
         return false;
     }
 
-    public function getData() {
-        $form = $this->form;
+    public function getData(AccountableAccount $account){
+        //$form = $this->form;
         
-        //$this->entity->setAccountableAccount($accountableAccount);
+        $this->entity->setAccountableAccount($account);
         $this->entity->setActive(true);
         $this->entity->setUpdatedAt(new \DateTime());
-        
         
         return $this->entity;
     }

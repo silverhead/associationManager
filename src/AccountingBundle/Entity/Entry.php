@@ -52,7 +52,7 @@ class Entry
 
     /**
      * @var AccountableAccount
-     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="entries", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="AccountingBundle\Entity\AccountableAccount", inversedBy="entries", fetch="EXTRA_LAZY", cascade={"persist"})
      */
     protected $accountableAccount;
     

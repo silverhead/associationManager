@@ -1,6 +1,6 @@
 {% extends 'layoutLogin.html.twig' %}
 
-{% block content %} 
+{% block content %}
 <div class="row block-header">
     {% include 'main/breadcrumb.html.twig' with {'breadcrumbs': [
     {
@@ -43,7 +43,7 @@
                                 {% endfor %}
                             </select>
                         {% else %}
-                            <a href="{{ path('exercise_index') }}">
+                            <a href="{{ path('exercise_index') }}" class="btn btn-primary">
                                 {{ accounting.exercise.create }}
                             </a>
                         {% endif %}
@@ -115,5 +115,5 @@
 
 {% block javascript %}
 {{ parent() }}
-<script src="{{ asset('bundles/accounting/js/account.js') }}"></script>    
+<script src="{{ asset('bundles/accounting/js/account.js') }}"></script>
 {% endblock  %}

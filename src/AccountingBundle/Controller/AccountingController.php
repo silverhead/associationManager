@@ -49,8 +49,8 @@ class AccountingController extends Controller
         
         $lastExercise = $exerciseManager->getLastExercise();
         
-        $dateStart = ($lastExercise != null) ? $lastExercise->getDateStart() : date();
-        $dateEnd =  $lastExercise != null ? $lastExercise->getDateEnd() : date();
+        $dateStart = ($lastExercise != null) ? $lastExercise->getDateStart() : new \DateTime();
+        $dateEnd =  $lastExercise != null ? $lastExercise->getDateEnd() : new \DateTime();
         $entriesOfAccounts = $accountingManager->getEntriesByAccountForSynthesis($dateStart, $dateEnd);
 
         $sumOfBalance = 0;
@@ -194,7 +194,6 @@ class AccountingController extends Controller
         }
         
         $entriesOfAccount = $accountingManager->getAccountWithEntries($id, $dateDebut, $dateFin);
-        var_dump($entriesOfAccount);exit();
         $formHandler = null;
         $callBackUrl = $this->generateUrl('accounting_account_id', ['id' => $id]);
         $translator = $this->get('translator');
@@ -282,6 +281,10 @@ class AccountingController extends Controller
         } else {
             $entity = new Entry();
         }
+
+        $accountableAccount = new AccountableAccount();
+        $accountableAccount->setCode('BA');
+        $accountableAccount->setLabel("Test");
         if ($accountId != null) {
             $accountableAccount = $accountingManager->getAccountableAccount($accountId);
             $entity->setAccountableAccount($accountableAccount[0]);
@@ -295,9 +298,7 @@ class AccountingController extends Controller
         
         if ($formHandler->process($request)) {
             $entity = $formHandler->getData($accountableAccount);
-            
-            //var_dump($entity);exit;
-            
+
             if ($accountingManager->saveEntry($entity)) {
                 $this->addFlash('success', $translator->trans('accounting.account.edit.saveSuccessText'));
 
