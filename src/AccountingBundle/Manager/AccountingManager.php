@@ -48,7 +48,8 @@ class AccountingManager implements PaginatorManagerInterface
     
     public function getAccountableAccount($accountId) {
         $accountableAccountRepo = $this->getRepository();
-        return $accountableAccountRepo->findOne($accountId);
+        $accountableAccount = $accountableAccountRepo->findOne($accountId);
+        return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
     }
     
     public function getEntriesByAccountForSynthesis($dateStart=null, $dateEnd=null)
@@ -62,20 +63,21 @@ class AccountingManager implements PaginatorManagerInterface
         return $accountableAccounts;
     }
     
-    public function getAccountWithEntries($accountId, $dateDebut=null, $dateFin=null) {
-        //$entryRepo = $this->entityManager->getRepository("AccountingBundle:Entry");
+    public function getAccountWithEntriesByAccountId($accountId, $dateDebut=null, $dateFin=null) {
+        $entryRepo = $this->entityManager->getRepository("AccountingBundle:Entry");
         $accountableAccountRepo = $this->getRepository();
         $dateDebut = $this->getDateStart($dateDebut);
         $dateFin = $this->getDateEnd($dateFin);     
-        //$entries = $entryRepo->findEntriesForAccountId($accountableAccount->getId(), $dateDebut, $dateFin);
-
+        
         $accountableAccount = $accountableAccountRepo->findAccountWithEntries($accountId, $dateDebut, $dateFin);
-        //$accountableAccount->populateEntries($entries);
-        //return $accountableAccount;
-        if ($accountableAccount == null) {
-            $accountableAccount = $accountableAccountRepo->findOne($accountId);
+        var_dump($accountableAccount);die;
+        if (count($accountableAccount) == 1) {
+            $accountableAccount = $accountableAccount[0];
+            $entries = $entryRepo->findEntriesForAccountId($accountableAccount->getId(), $dateDebut, $dateFin);
+            $accountableAccount->populateEntries($entries);
+            return $accountableAccount;
         }
-        return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
+        return null;
     }
     
     public function getEntriesForAccountAndDate($accountId, $date) {

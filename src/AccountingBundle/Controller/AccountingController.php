@@ -193,17 +193,20 @@ class AccountingController extends Controller
             }
         }
         
-        $entriesOfAccount = $accountingManager->getAccountWithEntries($id, $dateDebut, $dateFin);
+        $entriesOfAccount = $accountingManager->getAccountWithEntriesByAccountId($id, $dateDebut, $dateFin);
         $formHandler = null;
         $callBackUrl = $this->generateUrl('accounting_account_id', ['id' => $id]);
         $translator = $this->get('translator');
         
         if ($entriesOfAccount != null) {
-            if ($entriesOfAccount->getSoldes() == null || count($entriesOfAccount->getSoldes()) == 0) {
+            var_dump("avant");
+            if ($entriesOfAccount->getEntries() == null /*|| count($entriesOfAccount->getSoldes()) == 0*/) {
+                var_dump("test");die;
                 $entity = new Solde();
                 $formHandler = $this->get('accounting.form.solde');
                 $formHandler->setForm($entity, $id);
 
+                
                 if ($formHandler->process($request)) {
                     $entity = $formHandler->getData($entriesOfAccount);
                     if ($accountingManager->saveSolde($entity)) {
@@ -287,7 +290,7 @@ class AccountingController extends Controller
         $accountableAccount->setLabel("Test");
         if ($accountId != null) {
             $accountableAccount = $accountingManager->getAccountableAccount($accountId);
-            $entity->setAccountableAccount($accountableAccount[0]);
+            $entity->setAccountableAccount($accountableAccount);
         }
         
         $pageH = $this->get('app.handler.page_historical');

@@ -74,7 +74,8 @@ class AccountableAccountRepository extends EntityRepository implements Paginator
     public function findAccountWithEntries($id, $dateDebut, $dateFin) {
         $qb = $this->createQueryBuilder('a')
             ->select('a')
-            ->innerJoin('a.entries', 'e')
+            ->leftJoin('a.entries', 'e')
+            ->leftJoin('a.soldes', 's')
             ->where("a.id = :id")
             ->andWhere("e.accountingDate between :dateDebut and :dateFin")
 //            ->andWhere("e.valueDate between :dateDebut and :dateFin")
