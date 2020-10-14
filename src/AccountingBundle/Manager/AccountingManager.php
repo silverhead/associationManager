@@ -70,7 +70,7 @@ class AccountingManager implements PaginatorManagerInterface
         $dateFin = $this->getDateEnd($dateFin);     
         
         $accountableAccount = $accountableAccountRepo->findAccountWithEntries($accountId, $dateDebut, $dateFin);
-        var_dump($accountableAccount);die;
+        //var_dump($accountableAccount);die;
         if (count($accountableAccount) == 1) {
             $accountableAccount = $accountableAccount[0];
             $entries = $entryRepo->findEntriesForAccountId($accountableAccount->getId(), $dateDebut, $dateFin);

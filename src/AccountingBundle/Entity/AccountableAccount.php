@@ -2,8 +2,9 @@
 
 namespace AccountingBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\PersistentCollection;
+//use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,13 +43,13 @@ class AccountableAccount {
     protected $journal;
     
     /**
-     * @var \ArrayObject|Entry
+     * @var \ArrayCollection|Entry
      * @ORM\OneToMany(targetEntity="AccountingBundle\Entity\Entry", fetch="EAGER", mappedBy="accountableAccount")
      */
     protected $entries;
     
     /**
-     * @var \ArrayObject|Exercise
+     * @var \ArrayCollection|Exercise
      * @ORM\ManyToMany(targetEntity="AccountingBundle\Entity\Exercise", fetch="EAGER", mappedBy="accountableAccount")
      */
     protected $exercises;
@@ -66,7 +67,7 @@ class AccountableAccount {
     protected $prevSolde;
     
     /**
-     * @var \ArrayObject|Solde
+     * @var \Collection|Solde
      * @ORM\OneToMany(targetEntity="AccountingBundle\Entity\Solde", fetch="EAGER", mappedBy="accountableAccount")
      */
     protected $soldes;
@@ -136,26 +137,36 @@ class AccountableAccount {
     }
     
     /**
-     * 
-     * @return PersistentCollection|null
+     * @param Collection $entries
+     * @return AccountableAccount 
      */
-    public function getEntries(): PersistentCollection {
-        return $this->entries;
+    public function populateEntries($entries) {
+        $this->entries = $entries;
+        
+        return $this;
     }
     
     /**
      * 
-     * @return PersistentCollection|null
+     * @return ArrayCollection|null
      */
-    public function getExercises(): PersistentCollection {
+    public function getEntries(): ArrayCollection {
+        return new ArrayCollection($this->entries);
+    }
+    
+    /**
+     * 
+     * @return Collection|null
+     */
+    public function getExercises(): Collection {
         return $this->exercises;
     }
     
     /**
      * 
-     * @return PersistentCollection|null
+     * @return Collection|null
      */
-    public function getSoldes(): PersistentCollection {
+    public function getSoldes(): Collection {
         return $this->soldes;
     }
     public function getSoldesSortedByDate() {

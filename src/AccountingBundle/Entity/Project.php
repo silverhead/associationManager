@@ -2,8 +2,9 @@
 
 namespace AccountingBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\PersistentCollection;
+//use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -137,9 +138,9 @@ class Project
     
     /**
      * 
-     * @return PersistentCollection|null
+     * @return Collection|null
      */
-    public function getEntries():?PersistentCollection
+    public function getEntries():?Collection
     {
         return $this->entries;
     }

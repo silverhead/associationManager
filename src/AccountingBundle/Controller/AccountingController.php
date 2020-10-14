@@ -199,9 +199,9 @@ class AccountingController extends Controller
         $translator = $this->get('translator');
         
         if ($entriesOfAccount != null) {
-            var_dump("avant");
+            //var_dump("avant");
             if ($entriesOfAccount->getEntries() == null /*|| count($entriesOfAccount->getSoldes()) == 0*/) {
-                var_dump("test");die;
+                //var_dump("test");die;
                 $entity = new Solde();
                 $formHandler = $this->get('accounting.form.solde');
                 $formHandler->setForm($entity, $id);

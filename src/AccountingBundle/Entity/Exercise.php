@@ -1,8 +1,8 @@
 <?php
 namespace AccountingBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -180,12 +180,4 @@ class Exercise {
 
         return $this;
     }
-   
-    /**
-     * 
-     * @return PersistentCollection|null
-     */
-//    public function getEntries(): PersistentCollection {
-//        return $this->entries;
-//    }
 }
