@@ -4,7 +4,7 @@ namespace AccountingBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\ORM\PersistentCollection;
+use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -151,7 +151,7 @@ class AccountableAccount {
      * @return ArrayCollection|null
      */
     public function getEntries(): ArrayCollection {
-        return new ArrayCollection($this->entries);
+        return is_array($this->entries) ? new ArrayCollection($this->entries) : ($this->entries instanceof PersistentCollection ? new ArrayCollection($this->entries->getValues()) : $this->entries);
     }
     
     /**
