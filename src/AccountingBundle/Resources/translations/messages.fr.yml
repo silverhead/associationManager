@@ -25,6 +25,14 @@ accounting:
         balance_btn: Solde
         add_balance_btn: Ajout solde
         edit:
+            title: Editer un compte
+            saveSuccessText: Le compte a été sauvegardé
+            form:
+                journal: Journal
+                code: Code
+                label: Libellé
+    entry:
+        edit:
             title: Editer une opération
             saveSuccessText: L'opération a été sauvegardée
             form:
@@ -39,6 +47,8 @@ accounting:
                 form:
                     amount: Montant
                     date: Date
+        list:
+            title: Liste des comptes
     exercise:
         list:
             title: Liste des exercices

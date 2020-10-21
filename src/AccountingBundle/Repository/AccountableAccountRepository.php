@@ -11,26 +11,28 @@ class AccountableAccountRepository extends EntityRepository implements Paginator
 {
     public function getQbPaginatedList()
     {
-        $subquery = $this->_em->createQuery("
-            SELECT MAX(id) 
-            FROM AccountingBundle:AccountableAccount
-            WHERE accountableaccount = aa
-        ")->getDQL();
+//        $subquery = $this->_em->createQuery("
+//            SELECT MAX(id)
+//            FROM AccountingBundle:AccountableAccount
+//            WHERE accountableaccount = aa
+//        ")->getDQL();
 
-        $qb = $this->createQueryBuilder("aa");
+//        $qb = $this->createQueryBuilder("aa");
+//
+//        $qb->select("m ")
+//            ->leftJoin("m.statusHistorical","msh", Join::WITH, $qb->expr()->isNull("msh.endDate"))
+//            ->leftJoin("msh.status", "mshStatus" )
+//            ->leftJoin("m.subscriptions", "subscriptions")
+//            ->leftJoin("subscriptions.subscription", "subscription")
+//            ->leftJoin("m.fees", "fees")
+//            ->where(
+//                $qb->expr()->orX(
+//                    $qb->expr()->isNull("subscriptions.id")
+//                )->add($qb->expr()->in("subscriptions.id", $subquery ))
+//            )
+//            ;
 
-        $qb->select("m ")
-            ->leftJoin("m.statusHistorical","msh", Join::WITH, $qb->expr()->isNull("msh.endDate"))
-            ->leftJoin("msh.status", "mshStatus" )
-            ->leftJoin("m.subscriptions", "subscriptions")
-            ->leftJoin("subscriptions.subscription", "subscription")
-            ->leftJoin("m.fees", "fees")
-            ->where(
-                $qb->expr()->orX(
-                    $qb->expr()->isNull("subscriptions.id")
-                )->add($qb->expr()->in("subscriptions.id", $subquery ))
-            )
-            ;
+        $qb = $this->createQueryBuilder("a");
         return $qb;
     }
     

@@ -42,10 +42,10 @@ class AccountableAccountFormHandler
         $this->container = $container;
     }
 
-    public function setForm(AccountableAccount $entry) {
-        $this->entity = $entry;
+    public function setForm(AccountableAccount $account) {
+        $this->entity = $account;
 
-        $this->form = $this->formFactory->create(AccountableAccountFormType::class, $entry);
+        $this->form = $this->formFactory->create(AccountableAccountFormType::class, $account);
     }
 
     public function getForm() {
@@ -67,12 +67,6 @@ class AccountableAccountFormHandler
     }
 
     public function getData() {
-        $form = $this->form;
-        
-        //$this->entity->setAccountableAccount($accountableAccount);
-        $this->entity->setActive(true);
-        $this->entity->setUpdatedAt(new \DateTime());
-        
         return $this->entity;
     }
 }

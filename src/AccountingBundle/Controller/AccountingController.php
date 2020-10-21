@@ -61,7 +61,8 @@ class AccountingController extends Controller
             'menuSelect' => 'accounting_manager',
             'data' => $entriesOfAccounts,
             'sumOfBalance' => number_format($sumOfBalance/100, 2, ',', ' '),
-            'exerciseList' => (count($exerciseList) > 0 ? $exerciseList : array())
+            'exerciseList' => (count($exerciseList) > 0 ? $exerciseList : array()),
+            'accounts' => $accountingManager->getList()
         ));
     }
 
@@ -85,27 +86,33 @@ class AccountingController extends Controller
         }
 
         $accountingManager = $this->get('accounting.manager.accounting');
-        $formHandler = $this->get('accounting.form.solde');
-        
         if ($accountId != null) {
             $entity = $accountingManager->getAccountById($accountId);
         } else {
             $entity = new AccountableAccount();
         }
-        
+
         $pageH = $this->get('app.handler.page_historical');
         $callBackUrl = $this->generateUrl('accounting_index', []);
-        $translator = $this->get('translator');
-        
+
+        if ($callBackUrl != null) {
+            $breadcrumbs[] = [
+                'href' => $callBackUrl,
+                'title' => $translator->trans('accounting.account.title'),
+                'label' => $translator->trans('accounting.account.title')
+            ];
+        }
+        $breadcrumbs[] = [
+            'label' => $translator->trans('accounting.account.edit.title')
+        ];
+
         $formHandler = $this->get('accounting.form.account');
-        $formHandler->setForm($entity, $accountId);
+        $formHandler->setForm($entity);
         
         if ($formHandler->process($request)) {
-            $entity = $formHandler->getData($accountableAccount);
-            
-            //var_dump($entity);exit;
-            
-            if ($accountingManager->saveAccountableAccount($entity)) {
+            $entity = $formHandler->getData();
+
+            if ($accountingManager->save($entity)) {
                 $this->addFlash('success', $translator->trans('accounting.account.edit.saveSuccessText'));
 
                 if ($request->get('save_and_leave', null) !== null) {
@@ -131,32 +138,12 @@ class AccountingController extends Controller
                     '%error%' => '<br />' . implode('<br />', $accountingManager->getErrors())
             ]));
         }
-        $breadcrumbs = [
-            [
-                'href' => $this->redirectToRoute('accounting_index'),
-                'title' => $translator->trans('accounting.synthesis.callback'),
-                'label' => $translator->trans('accounting.synthesis.title')
-            ]
-        ];
-        
-        if ($callBackUrl != null) {
-            $breadcrumbs[] = [
-                'href' => $callBackUrl,
-                'title' => $translator->trans('accounting.account.title'),
-                'label' => $translator->trans('accounting.account.title')
-            ];
-        }
-        
-        $breadcrumbs[] = [
-            'label' => $translator->trans('accounting.account.edit.title')
-        ];
 
-        return $this->render('@Accounting/edit_solde.html.twig', array(
-            'menuSelect' => 'accounting_manager',
-            'formSolde' =>  $formHandler->getForm()->createView(),
-            'accountableAccount' => $accountableAccount,
-            'breadcrumbs' => $breadcrumbs,
-            'callBackUrl' => $callBackUrl
+        return $this->render('@Accounting/edit_account.html.twig', array(
+            'menuSelect'    => 'accounting_manager',
+            'form'          =>  $formHandler->getForm()->createView(),
+            'breadcrumbs'   => $breadcrumbs,
+            'callBackUrl'   => $callBackUrl
         ));
     }
     

@@ -16,6 +16,9 @@ services:
     accounting.form.exercise:
         class: AccountingBundle\Form\Handler\ExerciseFormHandler
         arguments: ['@form.factory', '@accounting.manager.exercise']
+    accounting.form.account:
+        class: AccountingBundle\Form\Handler\AccountableAccountFormHandler
+        arguments: ['@form.factory', '@service_container']
     # EVENT LISTENER
     accounting.configure_menu_listener:
         class: AccountingBundle\EventListener\ConfigureMenuListener

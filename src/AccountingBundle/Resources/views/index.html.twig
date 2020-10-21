@@ -45,54 +45,91 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="card">
-                <div class="body table-responsive">
-                    <section>
-                        <div class="row">
-                            <h3>{{ 'accounting.common.sum_of_balance'|trans }} : {{ sumOfBalance }}</h3>
+                <div class="body">
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        <li role="presentation" class="active"><a href="#exercices" data-toggle="tab">{{ 'accounting.exercise.list.title'|trans }}</a></li>
+                        <li role="presentation"><a href="#account" data-toggle="tab">{{ 'accounting.account.list.title'|trans }}</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" data-anchor="exercices" id="exercices">
+                            <section>
+                                <div class="row">
+                                    <h3>{{ 'accounting.common.sum_of_balance'|trans }} : {{ sumOfBalance }}</h3>
+                                </div>
+                            </section>
+                            {% for accounting in data %}
+                                <section id="accounting_{{ accounting.getId() }}">
+                                    <div class="row">
+                                        <h3>
+                                            <a href="{{ path('accounting_account_id', {'id':accounting.getId()}) }}">
+                                                {{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} :
+                                                {{ accounting.getCalculatedLastSolde().getFormattedAmount() }}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <table class="table table-striped orderable dataTable">
+                                        <thead>
+                                        <tr>
+                                            <th style="text-align: center;width:80px;">{{ 'accounting.common.date_value'|trans }}</th>
+                                            <th style="text-align: center;width:80px;">{{ 'accounting.common.date_accounting'|trans }}</th>
+                                            <th style="text-align: center;">{{ 'accounting.common.reference'|trans }}</th>
+                                            <th style="text-align: center;width:60px;">{{ 'accounting.common.outcome'|trans }}</th>
+                                            <th style="text-align: center;width:60px;">{{ 'accounting.common.income'|trans }}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for entry in accounting.getEntries()|slice(0, 3) %}
+                                            <tr>
+                                                <td>{{ entry.getValueDate()|date('d/m/Y') }}</td>
+                                                <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
+                                                <td>{{ entry.getReference() }}</td>
+                                                <td class="number" style="text-align: right;">
+                                                    {% if entry.getAmount() < 0 %}
+                                                        {{ entry.getFormattedAmount() }}
+                                                    {% endif %}
+                                                </td>
+                                                <td class="number" style="text-align: right;">
+                                                    {% if entry.getAmount() >= 0 %}
+                                                        {{ entry.getFormattedAmount() }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </section>
+                            {% endfor %}
                         </div>
-                    </section>
-                    {% for accounting in data %}
-                        <section id="accounting_{{ accounting.getId() }}">
+                        <div role="tabpanel" class="tab-pane fade" data-anchor="account" id="account">
                             <div class="row">
-                                <h3>
-                                    <a href="{{ path('accounting_account_id', {'id':accounting.getId()}) }}">
-                                        {{ accounting.getLabel() }} / {{ 'accounting.common.real_solde'|trans }} :
-                                        {{ accounting.getCalculatedLastSolde().getFormattedAmount() }} 
-                                    </a>
-                                </h3>
+                                <p style="float:right;margin-right:5px">
+                                    <a href="{{ path('accounting_account_add') }}" class="btn bg-green waves-effect">{{ 'app.common.addBtn'|trans }}</a>
+                                </p>
                             </div>
                             <table class="table table-striped orderable dataTable">
                                 <thead>
-                                    <tr>
-                                        <th style="text-align: center;width:80px;">{{ 'accounting.common.date_value'|trans }}</th>
-                                        <th style="text-align: center;width:80px;">{{ 'accounting.common.date_accounting'|trans }}</th>
-                                        <th style="text-align: center;">{{ 'accounting.common.reference'|trans }}</th>
-                                        <th style="text-align: center;width:60px;">{{ 'accounting.common.outcome'|trans }}</th>
-                                        <th style="text-align: center;width:60px;">{{ 'accounting.common.income'|trans }}</th>
-                                    </tr>
+                                <tr>
+                                    <th>{{ 'accounting.account.list.code'|trans }}</th>
+                                    <th>{{ 'accounting.account.list.label'|trans }}</th>
+                                    <th>{{ 'app.common.table.action'|trans }}</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    {% for entry in accounting.getEntries()|slice(0, 3) %}
-                                        <tr>
-                                            <td>{{ entry.getValueDate()|date('d/m/Y') }}</td>
-                                            <td>{{ entry.getAccountingDate()|date('d/m/Y') }}</td>
-                                            <td>{{ entry.getReference() }}</td>
-                                            <td class="number" style="text-align: right;">
-                                                {% if entry.getAmount() < 0 %}
-                                                    {{ entry.getFormattedAmount() }}
-                                                {% endif %}
-                                            </td>
-                                            <td class="number" style="text-align: right;">
-                                                {% if entry.getAmount() >= 0 %}
-                                                    {{ entry.getFormattedAmount() }}
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
+                                {% for account in accounts %}
+                                <tr>
+                                    <td>{{ account.getCode() }}</td>
+                                    <td>{{ account.getLabel() }}</td>
+                                    <td>
+                                        <a href="{{ path('accounting_account_edit', {'accountId':account.getId()}) }}" class="btn btn-warning material-icons">edit</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
-                        </section>
-                    {% endfor %}
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>

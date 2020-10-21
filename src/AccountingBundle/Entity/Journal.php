@@ -32,7 +32,13 @@ class Journal {
      * @ORM\Column(type="text", nullable=false)
      */
     protected $label;
-    
+
+    /**
+     * @var \ArrayCollection|AccountableAccount
+     * @ORM\OneToMany(targetEntity="AccountingBundle\Entity\AccountableAccount", fetch="EAGER", mappedBy="journal")
+     */
+    protected $accounts;
+
     /**
      * @return int
      */
@@ -83,6 +89,25 @@ class Journal {
     public function setLabel($label)
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * @return AccountableAccount|\ArrayCollection
+     */
+    public function getAccounts()
+    {
+        return $this->accounts;
+    }
+
+    /**
+     * @param AccountableAccount|\ArrayCollection $accounts
+     * @return Journal
+     */
+    public function setAccounts($accounts)
+    {
+        $this->accounts = $accounts;
 
         return $this;
     }

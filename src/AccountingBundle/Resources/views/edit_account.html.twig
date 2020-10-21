@@ -13,48 +13,33 @@
         <div class="col-xs-12">
             <div class="card">
                 <div class="body">
-                    {{ form_start(formEntry) }}
+                    {{ form_start(form) }}
                     <div class="row">
                         <div class="col-md-6">
-                            {{ form_row(formEntry.reference, {
-                                'label': 'accounting.account.edit.form.reference'|trans
+                            {{ form_row(form.journal, {
+                                'label': 'accounting.account.edit.form.journal'|trans
                             }) }}
                         </div>
                         <div class="col-md-6">
-                            {{ form_row(formEntry.amount, {
-                                'label': 'accounting.account.edit.form.amount'|trans
+                            {{ form_row(form.code, {
+                                'label': 'accounting.account.edit.form.code'|trans
                             }) }}
                         </div>
+
                     </div>                    
                     <div class="row">
-                        <div class="col-md-6">
-                            {{ form_row(formEntry.valueDate, {
-                                'label': 'accounting.account.edit.form.value_date'|trans,
-                                
-                                'attr': {
-                                    'placeholder': 'accounting.account.edit.form.value_date'|trans,
-                                    'class': 'form-control input-inline datetimepicker'
-                                }
-                            }) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(formEntry.accountingDate, {
-                                'label': 'accounting.account.edit.form.accounting_date'|trans,
-                                
-                                'attr': {
-                                    'placeholder': 'accounting.account.edit.form.accounting_date'|trans
-                                }
+                        <div class="col-md-12">
+                            {{ form_row(form.label, {
+                                'label': 'accounting.account.edit.form.label'|trans
                             }) }}
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="col-md-12 text-center">
                             {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
                         </div>
                     </div>
-
-                    {{ form_end(formEntry) }}
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>
