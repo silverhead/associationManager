@@ -2,6 +2,7 @@
 
 namespace AccountingBundle\Manager;
 
+use AccountingBundle\Entity\AccountableAccount;
 use AppBundle\Manager\EntityManagerTrait;
 use AppBundle\Manager\PaginatorManagerInterface;
 use AppBundle\Manager\PaginatorManagerTrait;
@@ -38,7 +39,7 @@ class AccountingManager implements PaginatorManagerInterface
 
     public function getNewEntity()
     {
-        return new Entry();
+        return new AccountableAccount();
     }
 
     public function getRepository()
@@ -46,10 +47,9 @@ class AccountingManager implements PaginatorManagerInterface
         return $this->entityManager->getRepository("AccountingBundle:AccountableAccount");
     }
     
-    public function getAccountableAccount($accountId) {
-        $accountableAccountRepo = $this->getRepository();
-        $accountableAccount = $accountableAccountRepo->findOne($accountId);
-        return count($accountableAccount) == 1 ? $accountableAccount[0] : null;
+    public function getAccountableAccount($accountId)
+    {
+        return $this->getRepository()->find($accountId);
     }
     
     public function getEntriesByAccountForSynthesis($dateStart=null, $dateEnd=null)

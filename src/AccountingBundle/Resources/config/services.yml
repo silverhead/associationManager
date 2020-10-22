@@ -3,6 +3,10 @@ services:
         class: AccountingBundle\Manager\AccountingManager
         autowire: true
         arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+    accounting.manager.journal:
+        class: AccountingBundle\Manager\JournalManager
+        autowire: true
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
     accounting.manager.exercise:
         class: AccountingBundle\Manager\ExerciseManager
         autowire: true
@@ -18,6 +22,9 @@ services:
         arguments: ['@form.factory', '@accounting.manager.exercise']
     accounting.form.account:
         class: AccountingBundle\Form\Handler\AccountableAccountFormHandler
+        arguments: ['@form.factory', '@service_container']
+    accounting.form.journal:
+        class: AccountingBundle\Form\Handler\JournalFormHandler
         arguments: ['@form.factory', '@service_container']
     # EVENT LISTENER
     accounting.configure_menu_listener:

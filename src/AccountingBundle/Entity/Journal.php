@@ -3,6 +3,8 @@
 namespace AccountingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use MemberBundle\Entity\Member;
+use MemberBundle\Entity\MemberStatusHistorical;
 
 /**
  * Class Journal
@@ -11,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @author dominique
  */
 class Journal {
-    //protected $discr = 'journal';
     
     /**
      * @var int
@@ -108,6 +109,29 @@ class Journal {
     public function setAccounts($accounts)
     {
         $this->accounts = $accounts;
+
+        return $this;
+    }
+
+    /**
+     * @param AccountableAccount $account
+     * @return $this
+     */
+    public function addAccount(AccountableAccount $account)
+    {
+        $account->setJournal($this);
+        $this->accounts->add($account);
+
+        return $this;
+    }
+
+    /**
+     * @param AccountableAccount $account
+     * @return $this
+     */
+    public function removeAccount(AccountableAccount $account)
+    {
+        $this->accounts->remove($account);
 
         return $this;
     }

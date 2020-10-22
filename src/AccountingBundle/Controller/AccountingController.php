@@ -2,6 +2,7 @@
 
 namespace AccountingBundle\Controller;
 
+use AccountingBundle\Entity\Journal;
 use AppBundle\QueryHelper\FilterQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -43,7 +44,9 @@ class AccountingController extends Controller
         $entries = array();
         $soldes = array();
         $accountingManager = $this->get('accounting.manager.accounting');
-        
+
+        $journalManager = $this->get('accounting.manager.journal');
+
         $exerciseManager = $this->get('accounting.manager.exercise');
         $exerciseList = $exerciseManager->getExerciseList();
         
@@ -62,17 +65,18 @@ class AccountingController extends Controller
             'data' => $entriesOfAccounts,
             'sumOfBalance' => number_format($sumOfBalance/100, 2, ',', ' '),
             'exerciseList' => (count($exerciseList) > 0 ? $exerciseList : array()),
-            'accounts' => $accountingManager->getList()
+            'accounts' => $accountingManager->getList(),
+            'journaux' => $journalManager->getList()
         ));
     }
 
     /**
      * @Route("/accounting/account/add/", name="accounting_account_add")
-     * @Route("/accounting/account/edit/{accountId}", name="accounting_account_edit")
+     * @Route("/accounting/account/edit/{id}", name="accounting_account_edit")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function accounteditAction(Request $request, $accountId = null) {
+    public function accounteditAction(Request $request, $id = null) {
         $translator = $this->get('translator');
 
         if (!$this->isGranted("ACCOUNTING_VIEW")) {
@@ -86,14 +90,14 @@ class AccountingController extends Controller
         }
 
         $accountingManager = $this->get('accounting.manager.accounting');
-        if ($accountId != null) {
-            $entity = $accountingManager->getAccountById($accountId);
+        if ($id != null) {
+            $entity = $accountingManager->find($id);
         } else {
             $entity = new AccountableAccount();
         }
 
         $pageH = $this->get('app.handler.page_historical');
-        $callBackUrl = $this->generateUrl('accounting_index', []);
+        $callBackUrl = $this->generateUrl('accounting_index', []).'#accounts';
 
         if ($callBackUrl != null) {
             $breadcrumbs[] = [
@@ -121,13 +125,13 @@ class AccountingController extends Controller
                     }
 
                     return $this->redirect(
-                        $this->get('router')->generate('accounting_index', array())
+                        $this->get('router')->generate('accounting_index', array()).'#accounts'
                     );
                 }
 
                 if ($request->get('save_and_stay', null) !== null) {
-                    return $this->redirectToRoute('accounting_account_id', [
-                        'accountId' => $entity->getId()
+                    return $this->redirectToRoute('accounting_account_edit', [
+                        'id' => $entity->getId()
                     ]);
                 }
             }
@@ -146,7 +150,88 @@ class AccountingController extends Controller
             'callBackUrl'   => $callBackUrl
         ));
     }
-    
+
+    /**
+     * @Route("/accounting/journal/add/", name="accounting_journal_add")
+     * @Route("/accounting/jounarl/edit/{id}", name="accounting_journal_edit")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function journaleditAction(Request $request, $id = null) {
+        $translator = $this->get('translator');
+
+        if (!$this->isGranted("ACCOUNTING_VIEW")) {
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.notAuthorizedPage'));
+
+            return $this->redirect(
+                $this->generateUrl('dashboard')
+            );
+        }
+
+        $journalManager = $this->get('accounting.manager.journal');
+        if ($id != null) {
+            $entity = $journalManager->find($id);
+        } else {
+            $entity = new Journal();
+        }
+
+        $pageH = $this->get('app.handler.page_historical');
+        $callBackUrl = $this->generateUrl('accounting_index', []).'#journaux';
+
+        if ($callBackUrl != null) {
+            $breadcrumbs[] = [
+                'href' => $callBackUrl,
+                'title' => $translator->trans('accounting.journal.title'),
+                'label' => $translator->trans('accounting.journal.title')
+            ];
+        }
+        $breadcrumbs[] = [
+            'label' => $translator->trans('accounting.journal.edit.title')
+        ];
+
+        $formHandler = $this->get('accounting.form.journal');
+        $formHandler->setForm($entity);
+
+        if ($formHandler->process($request)) {
+            $entity = $formHandler->getData();
+
+            if ($journalManager->save($entity)) {
+                $this->addFlash('success', $translator->trans('accounting.journal.edit.saveSuccessText'));
+
+                if ($request->get('save_and_leave', null) !== null) {
+                    if ($callBackUrl !== null) {
+                        return $this->redirect($callBackUrl);
+                    }
+
+                    return $this->redirect(
+                        $this->get('router')->generate('accounting_index', array()).'#journaux'
+                    );
+                }
+
+                if ($request->get('save_and_stay', null) !== null) {
+                    return $this->redirectToRoute('accounting_journal_edit', [
+                        'id' => $entity->getId()
+                    ]);
+                }
+            }
+
+            $this->addFlash(
+                'error',
+                $translator->trans('app.common.errorComming', [
+                    '%error%' => '<br />' . implode('<br />', $journalManager->getErrors())
+                ]));
+        }
+
+        return $this->render('@Accounting/edit_journal.html.twig', array(
+            'menuSelect'    => 'accounting_manager',
+            'form'          =>  $formHandler->getForm()->createView(),
+            'breadcrumbs'   => $breadcrumbs,
+            'callBackUrl'   => $callBackUrl
+        ));
+    }
+
     /**
      * @Route("/accounting/account/{id}/{dateStart}/{dateEnd}", name="accounting_account_id", options = { "expose" = true })
      * @param Request $request

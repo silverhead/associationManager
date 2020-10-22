@@ -31,6 +31,21 @@ accounting:
                 journal: Journal
                 code: Code
                 label: Libellé
+        list:
+            title: Liste des comptes
+            code: Code
+            label: Libellé
+    journal:
+        list:
+            title: Liste des journaux
+            code: Code
+            label: Libellé
+        edit:
+            title: Editer un journal
+            saveSuccessText: Le journal a été sauvegardé
+            form:
+                code: Code
+                label: Libellé
     entry:
         edit:
             title: Editer une opération

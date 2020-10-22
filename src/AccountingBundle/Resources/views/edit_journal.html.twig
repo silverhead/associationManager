@@ -1,0 +1,39 @@
+{% extends 'layoutLogin.html.twig' %}
+
+{% block content %}
+    <div class="row block-header">
+        {% include 'main/breadcrumb.html.twig' with { 'breadcrumbs': breadcrumbs } %}
+        <h2 class="col-xs-12">
+            <a href="{{ callBackUrl }}" class="btn bg-grey waves-effect">{{ 'app.common.returnBtn'|trans }}</a>&nbsp;
+            {{ 'accounting.journal.edit.title'|trans }}
+        </h2>
+    </div>
+    {% include ':main/flashMessage:flashMessageBlock.html.twig' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.code, {
+                                'label': 'accounting.journal.edit.form.code'|trans
+                            }) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.label, {
+                                'label': 'accounting.journal.edit.form.label'|trans
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            {% include 'form/bothSubmitBtnSaveLeaveAndStay.html.twig' with {} only %}
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

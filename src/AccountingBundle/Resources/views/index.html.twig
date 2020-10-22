@@ -48,7 +48,8 @@
                 <div class="body">
                     <ul class="nav nav-tabs tab-nav-right" role="tablist">
                         <li role="presentation" class="active"><a href="#exercices" data-toggle="tab">{{ 'accounting.exercise.list.title'|trans }}</a></li>
-                        <li role="presentation"><a href="#account" data-toggle="tab">{{ 'accounting.account.list.title'|trans }}</a></li>
+                        <li role="presentation"><a href="#journaux" data-toggle="tab">{{ 'accounting.journal.list.title'|trans }}</a></li>
+                        <li role="presentation"><a href="#accounts" data-toggle="tab">{{ 'accounting.account.list.title'|trans }}</a></li>
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" data-anchor="exercices" id="exercices">
@@ -100,12 +101,10 @@
                                 </section>
                             {% endfor %}
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" data-anchor="account" id="account">
-                            <div class="row">
-                                <p style="float:right;margin-right:5px">
-                                    <a href="{{ path('accounting_account_add') }}" class="btn bg-green waves-effect">{{ 'app.common.addBtn'|trans }}</a>
-                                </p>
-                            </div>
+                        <div role="tabpanel" class="tab-pane fade" data-anchor="accounts" id="accounts">
+                            <p style="float:right;margin-right:5px">
+                                <a href="{{ path('accounting_account_add') }}" class="btn bg-green waves-effect">{{ 'app.common.addBtn'|trans }}</a>
+                            </p>
                             <table class="table table-striped orderable dataTable">
                                 <thead>
                                 <tr>
@@ -120,9 +119,34 @@
                                     <td>{{ account.getCode() }}</td>
                                     <td>{{ account.getLabel() }}</td>
                                     <td>
-                                        <a href="{{ path('accounting_account_edit', {'accountId':account.getId()}) }}" class="btn btn-warning material-icons">edit</a>
+                                        <a href="{{ path('accounting_account_edit', {'id':account.getId()}) }}" class="btn btn-warning material-icons">edit</a>
                                     </td>
                                 </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" data-anchor="journaux" id="journaux">
+                            <p style="float:right;margin-right:5px">
+                                <a href="{{ path('accounting_journal_add') }}" class="btn bg-green waves-effect">{{ 'app.common.addBtn'|trans }}</a>
+                            </p>
+                            <table class="table table-striped orderable">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'accounting.journal.list.code'|trans }}</th>
+                                    <th>{{ 'accounting.journal.list.label'|trans }}</th>
+                                    <th>{{ 'app.common.table.action'|trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for journal in journaux %}
+                                    <tr>
+                                        <td>{{ journal.getCode() }}</td>
+                                        <td>{{ journal.getLabel() }}</td>
+                                        <td>
+                                            <a href="{{ path('accounting_journal_edit', {'id':journal.getId()}) }}" class="btn btn-warning material-icons">edit</a>
+                                        </td>
+                                    </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>

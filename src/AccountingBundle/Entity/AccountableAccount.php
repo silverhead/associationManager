@@ -127,15 +127,7 @@ class AccountableAccount {
 
         return $this;
     }
-    
-    /**
-     * 
-     * @return \AccountingBundle\Entity\Journal|null
-     */
-    public function getJournal():?Journal {
-        return $this->journal;
-    }
-    
+
     /**
      * @param Collection $entries
      * @return AccountableAccount 
@@ -199,6 +191,21 @@ class AccountableAccount {
         } 
         
         return $soldeToReturn;
+    }
+
+    /**
+     * @return \AccountingBundle\Entity\AccountableAccount
+     */
+    public function setJournal($journal):self {
+        $this->journal = $journal;
+        return $this;
+    }
+
+    /**
+     * @return \AccountingBundle\Entity\Journal|null
+     */
+    public function getJournal():?Journal {
+        return $this->journal;
     }
     
     public function getCalculatedLastSolde() {
